@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak/core/constatnt/app_string.dart';
 
 class SearchBarWidget extends StatelessWidget {
   const SearchBarWidget(

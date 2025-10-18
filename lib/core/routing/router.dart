@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/routing/routes.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signin_screen.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signup_screen.dart';
 
 class AppRouter {
   static Route generateRoute(RouteSettings setting) {
     switch (setting.name) {
-//Auth
-
+      //Auth
+      case Routes.singinView:
+        return _buildSlideRoute(SigninScreen());
+      case Routes.singupView:
+        return _buildSlideRoute(SignupScreen());
       default:
         return _buildSlideRoute(
           Scaffold(
