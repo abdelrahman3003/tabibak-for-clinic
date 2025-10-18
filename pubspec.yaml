@@ -1,0 +1,64 @@
+name: tabibak_for_clinic
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+environment:
+  sdk: ^3.6.1
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  dio: ^5.4.3+1
+  shared_preferences: ^2.3.2
+  get_it: ^7.7.0
+  pretty_dio_logger: ^1.4.0
+  supabase_flutter: ^2.9.1
+  flutter_dotenv: ^5.2.1
+  google_nav_bar: ^5.0.7
+  flutter_gen: ^5.10.0
+  flutter_svg: ^2.2.0
+  flutter_screenutil: ^5.9.3
+  device_preview: ^1.2.0
+  cached_network_image: ^3.4.1
+  easy_localization: ^3.0.7+1
+  image_picker: ^1.1.2
+  pinput: ^5.0.1
+  google_sign_in: ^6.3.0
+  shimmer_animation: ^2.2.2
+  logger: ^2.6.0
+  flutter_bloc: ^9.1.1
+  flutter_secure_storage: ^9.2.4
+  cupertino_icons: ^1.0.8
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  build_runner: ^2.4.10
+
+
+flutter:
+
+  assets:
+    - .env
+    - assets/fonts/
+    - assets/icons/
+    - assets/images/
+    - assets/langs/
+  fonts:
+    - family: Tajawal
+      fonts:
+        - asset: assets/fonts/Tajawal-Regular.ttf
+        - asset: assets/fonts/Tajawal-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Tajawal-Light.ttf
+          weight: 300
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter_24pt-Regular.ttf
+        - asset: assets/fonts/Inter_24pt-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter_24pt-Bold.ttf
+          weight: 700 
