@@ -12,18 +12,14 @@ class AppButton extends StatelessWidget {
     this.isLoading = false,
     this.padding,
     this.textColor,
-    this.isLoadingSide = false,
-    this.isDisabled = false,
   });
 
   final Color? color;
   final Color? textColor;
   final String title;
   final bool isLoading;
-  final void Function()? onPressed;
+  final Function()? onPressed;
   final EdgeInsetsGeometry? padding;
-  final bool isLoadingSide;
-  final bool isDisabled;
 
   @override
   Widget build(BuildContext context) {
@@ -33,44 +29,38 @@ class AppButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(5.r),
         ),
         padding: padding ?? const EdgeInsets.symmetric(vertical: 16),
-        backgroundColor: isDisabled
+        backgroundColor: onPressed == null
             ? Theme.of(context).colorScheme.secondary
             : (color ?? AppColors.primary),
+        foregroundColor: AppColors.white,
       ),
-      onPressed: isDisabled ? null : onPressed,
-      child: isLoadingSide && isLoading
-          ? Center(
-              child: SizedBox(
-                height: 15.h,
-                width: 14.w,
-                child: const CircularProgressIndicator(
-                  color: Colors.white,
+      onPressed: onPressed,
+      child: Stack(
+        children: [
+          Center(
+            child: Text(title,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontSize: 18.sp, color: AppColors.white)),
+          ),
+          if (isLoading)
+            Positioned(
+              right: 1,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: SizedBox(
+                  height: 20.h,
+                  width: 20.w,
+                  child: const CircularProgressIndicator(
+                    strokeWidth: 3,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            )
-          : Stack(
-              children: [
-                Center(
-                  child: Text(title,
-                      style: Theme.of(context).textTheme.bodyMedium),
-                ),
-                if (isLoading && !isLoadingSide)
-                  Positioned(
-                    right: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: SizedBox(
-                        height: 20.h,
-                        width: 20.w,
-                        child: const CircularProgressIndicator(
-                          strokeWidth: 3,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
             ),
+        ],
+      ),
     );
   }
 }
