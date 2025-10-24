@@ -31,6 +31,19 @@ class Validation {
     return null;
   }
 
+  static String? validateNumber(String? value,
+      {String fieldName = "هذا الحقل"}) {
+    if (value == null || value.trim().isEmpty) {
+      return "$fieldName مطلوب";
+    }
+    const pattern = r'^[0-9]+$';
+    final regex = RegExp(pattern);
+    if (!regex.hasMatch(value.trim())) {
+      return "$fieldName يجب أن يكون رقمًا";
+    }
+    return null;
+  }
+
   static String? validateRequired(String? value,
       {String fieldName = "هذا الحقل"}) {
     if (value == null || value.trim().isEmpty) {

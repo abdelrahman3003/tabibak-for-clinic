@@ -3,15 +3,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tabibak_for_clinic/core/extenstion/spacing.dart';
+import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 
 class DocumentUploadField extends StatefulWidget {
   final String title;
   final void Function(File?)? onFileSelected;
-
+  final bool isRegistered;
   const DocumentUploadField({
     super.key,
     required this.title,
     this.onFileSelected,
+    this.isRegistered = false,
   });
 
   @override
@@ -49,7 +51,10 @@ class _DocumentUploadFieldState extends State<DocumentUploadField> {
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.grey.shade400),
+                border: Border.all(
+                    color: widget.isRegistered && _selectedFile == null
+                        ? AppColors.red
+                        : Colors.grey.shade400),
                 color: Colors.grey.shade100),
             child: Row(
               children: [

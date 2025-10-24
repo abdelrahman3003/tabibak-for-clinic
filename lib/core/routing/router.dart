@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/signup/signup_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signin_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signup_screen.dart';
 
@@ -10,7 +13,14 @@ class AppRouter {
       case Routes.singinView:
         return _buildSlideRoute(SigninScreen());
       case Routes.singupView:
-        return _buildSlideRoute(SignupScreen());
+        return _buildSlideRoute(
+          BlocProvider(
+            create: (context) =>
+                SignupBloc(doctorUsecase: getit(), signUpUsecase: getit()),
+            child: SignupScreen(),
+          ),
+        );
+
       default:
         return _buildSlideRoute(
           Scaffold(

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/extenstion/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/shift_section.dart';
+import 'package:tabibak_for_clinic/feature/auth/domain/entities/clinic_day_shift.dart';
 
 class ClinicScheduleWidget extends StatefulWidget {
-  const ClinicScheduleWidget({super.key});
+  final void Function(List<WorkDayShift> workDayShifts) onScheduleChanged;
+
+  const ClinicScheduleWidget({super.key, required this.onScheduleChanged});
 
   @override
   State<ClinicScheduleWidget> createState() => _ClinicScheduleWidgetState();
@@ -42,13 +45,28 @@ class _ClinicScheduleWidgetState extends State<ClinicScheduleWidget> {
     );
   }
 
+  void _updateSchedule() {
+    final List<WorkDayShift> workDayShifts = [];
+    for (final day in _days) {
+      if (_selectedDays[day] == true) {
+        workDayShifts.add(
+          WorkDayShift(
+            day: _days.indexOf(day),
+            morningStart: _morningStart[day],
+            morningEnd: _morningEnd[day],
+            eveningStart: _eveningStart[day],
+            eveningEnd: _eveningEnd[day],
+          ),
+        );
+      }
+    }
+    widget.onScheduleChanged(workDayShifts);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ..._days.map((day) => _buildDaySection(day)),
-      ],
+      children: _days.map((day) => _buildDaySection(day)).toList(),
     );
   }
 
@@ -61,7 +79,10 @@ class _ClinicScheduleWidgetState extends State<ClinicScheduleWidget> {
           contentPadding: EdgeInsets.zero,
           title: Text(day),
           value: isSelected,
-          onChanged: (value) => setState(() => _selectedDays[day] = value!),
+          onChanged: (value) {
+            setState(() => _selectedDays[day] = value!);
+            _updateSchedule();
+          },
         ),
         if (isSelected)
           Padding(
@@ -75,11 +96,17 @@ class _ClinicScheduleWidgetState extends State<ClinicScheduleWidget> {
                   end: _morningEnd[day],
                   onStartTap: () async {
                     final time = await _pickTime(_morningStart[day]);
-                    if (time != null) setState(() => _morningStart[day] = time);
+                    if (time != null) {
+                      setState(() => _morningStart[day] = time);
+                      _updateSchedule();
+                    }
                   },
                   onEndTap: () async {
                     final time = await _pickTime(_morningEnd[day]);
-                    if (time != null) setState(() => _morningEnd[day] = time);
+                    if (time != null) {
+                      setState(() => _morningEnd[day] = time);
+                      _updateSchedule();
+                    }
                   },
                 ),
                 8.hBox,
@@ -89,11 +116,17 @@ class _ClinicScheduleWidgetState extends State<ClinicScheduleWidget> {
                   end: _eveningEnd[day],
                   onStartTap: () async {
                     final time = await _pickTime(_eveningStart[day]);
-                    if (time != null) setState(() => _eveningStart[day] = time);
+                    if (time != null) {
+                      setState(() => _eveningStart[day] = time);
+                      _updateSchedule();
+                    }
                   },
                   onEndTap: () async {
                     final time = await _pickTime(_eveningEnd[day]);
-                    if (time != null) setState(() => _eveningEnd[day] = time);
+                    if (time != null) {
+                      setState(() => _eveningEnd[day] = time);
+                      _updateSchedule();
+                    }
                   },
                 ),
               ],
@@ -101,24 +134,5 @@ class _ClinicScheduleWidgetState extends State<ClinicScheduleWidget> {
           ),
       ],
     );
-  }
-
-  Map<String, dynamic> _collectSchedule() {
-    final Map<String, dynamic> schedule = {};
-    for (final day in _days) {
-      if (_selectedDays[day] == true) {
-        schedule[day] = {
-          'morning': {
-            'start': _morningStart[day]?.format(context),
-            'end': _morningEnd[day]?.format(context),
-          },
-          'evening': {
-            'start': _eveningStart[day]?.format(context),
-            'end': _eveningEnd[day]?.format(context),
-          },
-        };
-      }
-    }
-    return schedule;
   }
 }
