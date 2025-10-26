@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/extenstion/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/shift_section.dart';
-import 'package:tabibak_for_clinic/feature/auth/domain/entities/clinic_day_shift.dart';
 
 class ClinicScheduleWidget extends StatefulWidget {
-  final void Function(List<WorkDayShift> workDayShifts) onScheduleChanged;
-
-  const ClinicScheduleWidget({super.key, required this.onScheduleChanged});
+  const ClinicScheduleWidget({super.key});
 
   @override
   State<ClinicScheduleWidget> createState() => _ClinicScheduleWidgetState();
@@ -45,23 +42,23 @@ class _ClinicScheduleWidgetState extends State<ClinicScheduleWidget> {
     );
   }
 
-  void _updateSchedule() {
-    final List<WorkDayShift> workDayShifts = [];
-    for (final day in _days) {
-      if (_selectedDays[day] == true) {
-        workDayShifts.add(
-          WorkDayShift(
-            day: _days.indexOf(day),
-            morningStart: _morningStart[day],
-            morningEnd: _morningEnd[day],
-            eveningStart: _eveningStart[day],
-            eveningEnd: _eveningEnd[day],
-          ),
-        );
-      }
-    }
-    widget.onScheduleChanged(workDayShifts);
-  }
+  // void _updateSchedule() {
+  //   final List<WorkDayShift> workDayShifts = [];
+  //   for (final day in _days) {
+  //     if (_selectedDays[day] == true) {
+  //       workDayShifts.add(
+  //         WorkDayShift(
+  //           day: _days.indexOf(day),
+  //           morningStart: _morningStart[day],
+  //           morningEnd: _morningEnd[day],
+  //           eveningStart: _eveningStart[day],
+  //           eveningEnd: _eveningEnd[day],
+  //         ),
+  //       );
+  //     }
+  //   }
+  //   widget.onScheduleChanged(workDayShifts);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +78,7 @@ class _ClinicScheduleWidgetState extends State<ClinicScheduleWidget> {
           value: isSelected,
           onChanged: (value) {
             setState(() => _selectedDays[day] = value!);
-            _updateSchedule();
+            //  _updateSchedule();
           },
         ),
         if (isSelected)
@@ -98,14 +95,14 @@ class _ClinicScheduleWidgetState extends State<ClinicScheduleWidget> {
                     final time = await _pickTime(_morningStart[day]);
                     if (time != null) {
                       setState(() => _morningStart[day] = time);
-                      _updateSchedule();
+                      //   _updateSchedule();
                     }
                   },
                   onEndTap: () async {
                     final time = await _pickTime(_morningEnd[day]);
                     if (time != null) {
                       setState(() => _morningEnd[day] = time);
-                      _updateSchedule();
+                      //   _updateSchedule();
                     }
                   },
                 ),
@@ -118,14 +115,14 @@ class _ClinicScheduleWidgetState extends State<ClinicScheduleWidget> {
                     final time = await _pickTime(_eveningStart[day]);
                     if (time != null) {
                       setState(() => _eveningStart[day] = time);
-                      _updateSchedule();
+                      //   _updateSchedule();
                     }
                   },
                   onEndTap: () async {
                     final time = await _pickTime(_eveningEnd[day]);
                     if (time != null) {
                       setState(() => _eveningEnd[day] = time);
-                      _updateSchedule();
+                      //  _updateSchedule();
                     }
                   },
                 ),

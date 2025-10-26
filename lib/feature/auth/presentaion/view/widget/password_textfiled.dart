@@ -35,6 +35,7 @@ class _PasswordTextfiledState extends State<PasswordTextfiled> {
           contentPadding: EdgeInsets.all(14)),
       obscureText: isPassword,
       validator: widget.validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
     );
   }
 }

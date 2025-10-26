@@ -9,6 +9,5 @@ void main() async {
   await EnvService.init();
   await SupabaseService.init();
   await initGetIt();
-
   runApp(const MyApp());
 }

@@ -91,7 +91,7 @@ class _SigninScreenState extends State<SigninScreen>
                 subtitle: "Create Account",
                 onTap: () {
                   context.pop();
-                  context.pushNamed(Routes.singupView);
+                  context.pushNamed(Routes.signupScreen);
                 },
               )
             ],

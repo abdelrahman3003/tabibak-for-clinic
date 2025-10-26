@@ -2,24 +2,22 @@ import 'package:equatable/equatable.dart';
 
 class DoctorEntity extends Equatable {
   final String name;
+  final String email;
   final String phone;
-  final String image;
-  final String bio;
+  final String? image;
   final int specialty;
-  final String nationalId;
   final String medicalLiecense;
 
   const DoctorEntity({
     required this.name,
     required this.phone,
-    required this.image,
-    required this.bio,
+    required this.email,
+    this.image,
     required this.specialty,
-    required this.nationalId,
     required this.medicalLiecense,
   });
 
   @override
   List<Object?> get props =>
-      [name, phone, image, specialty, bio, nationalId, medicalLiecense];
+      [name, email, phone, image, specialty, medicalLiecense];
 }

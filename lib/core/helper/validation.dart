@@ -23,10 +23,10 @@ class Validation {
 
   static String? validateName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return "الاسم مطلوب";
+      return "الحقل مطلوب";
     }
     if (value.trim().length < 3) {
-      return "الاسم يجب أن يكون 3 أحرف على الأقل";
+      return "الحقل يجب أن يكون 3 أحرف على الأقل";
     }
     return null;
   }

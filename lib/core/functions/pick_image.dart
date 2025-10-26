@@ -3,13 +3,12 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<String?> pickImageAndGetName() async {
+Future<XFile?> pickImage() async {
   final picker = ImagePicker();
   final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
   if (pickedFile != null) {
-    final fileName = pickedFile.name;
-    return fileName;
+    return pickedFile;
   } else {
     return null;
   }
