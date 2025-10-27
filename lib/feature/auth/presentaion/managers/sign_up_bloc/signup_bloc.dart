@@ -34,7 +34,6 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     );
     on<SignupRequested>((event, emit) async {
       emit(SignupLoading());
-      await Future.delayed(Duration(seconds: 3));
       final result = await signUpUsecase.call(
           doctorEntity: event.doctorEntity, password: event.password);
       result.fold(

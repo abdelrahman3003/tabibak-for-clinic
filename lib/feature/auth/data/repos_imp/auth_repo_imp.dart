@@ -18,7 +18,7 @@ class AuthRepoImp extends AuthRepo {
   Future<Either<ApiErrorModel, void>> signIn(
       {required String email, required String password}) async {
     try {
-      final result = authRemoteData.signIn(email, password);
+      final result = await authRemoteData.signIn(email, password);
       return right(result);
     } catch (e) {
       return left(ErrorHandler.handle(e));
@@ -43,8 +43,6 @@ class AuthRepoImp extends AuthRepo {
       final result = await authRemoteData.addDoctor(dotcorModel: dotcorModel);
       return right(result);
     } catch (e) {
-      log("--------------88888888888$e");
-
       return left(ErrorHandler.handle(e));
     }
   }
@@ -54,7 +52,18 @@ class AuthRepoImp extends AuthRepo {
     try {
       final result = await authRemoteData.getSpecialties();
       return right(result);
-    } on Exception catch (e) {
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, void>> signInWithGoogle() async {
+    try {
+      final result = await authRemoteData.signInWithGoogle();
+      return right(result);
+    } catch (e) {
+      log("------------- repo catch --------$e");
       return left(ErrorHandler.handle(e));
     }
   }

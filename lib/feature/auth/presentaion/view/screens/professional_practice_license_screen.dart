@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/extenstion/spacing.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/entities/doctor_entity.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/signup/signup_bloc.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_bloc/signup_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/confirm_button.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/upload_image_widget.dart';
 

@@ -11,7 +11,7 @@ class AppTheme {
     colorScheme: ColorScheme.light(
       surface: AppColors.scaffoldBG,
       primary: AppColors.primary,
-      secondary: AppColors.primaryLight,
+      secondary: Colors.grey.shade600,
       onSecondary: AppColors.primary,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(

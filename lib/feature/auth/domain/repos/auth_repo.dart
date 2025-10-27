@@ -8,5 +8,6 @@ abstract class AuthRepo {
       {required DoctorEntity doctorEntity, required String password});
   Future<Either<ApiErrorModel, void>> signIn(
       {required String email, required String password});
+  Future<Either<ApiErrorModel, void>> signInWithGoogle();
   Future<Either<ApiErrorModel, List<SpecialtyEntity>>> getSpecialties();
 }
