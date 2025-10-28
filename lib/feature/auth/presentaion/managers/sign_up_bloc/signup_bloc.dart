@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/functions/pick_image.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/entities/doctor_entity.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/entities/specialty_entity.dart';
@@ -35,11 +36,13 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     on<SignupRequested>((event, emit) async {
       emit(SignupLoading());
       final result = await signUpUsecase.call(
-          doctorEntity: event.doctorEntity, password: event.password);
+          doctorEntity: event.doctorEntity,
+          password: event.password,
+          user: event.user);
       result.fold(
         (error) =>
             emit(SignupError(errorMessage: error.message ?? 'Unknown Error')),
-        (r) => emit(SignupSuccess()),
+        (result) => emit(SignupSuccess()),
       );
     });
     on<UploadFileEvent>((event, emit) async {

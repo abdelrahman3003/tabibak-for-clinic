@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/constatnt/app_values.dart';
 import 'package:tabibak_for_clinic/core/extenstion/naviagrion.dart';
 import 'package:tabibak_for_clinic/core/extenstion/spacing.dart';
 import 'package:tabibak_for_clinic/core/helper/validation.dart';
@@ -20,9 +21,8 @@ class SigninScreen extends StatefulWidget {
 final signinKey = GlobalKey<FormState>();
 
 class _SigninScreenState extends State<SigninScreen> {
-  final emailController =
-      TextEditingController(text: "abdelrahmantemsah30@gmail.com");
-  final passwordController = TextEditingController(text: "4245646543208789");
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class _SigninScreenState extends State<SigninScreen> {
       body: SingleChildScrollView(
         child: Container(
           height: size.height,
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
           child: Form(
             key: signinKey,
             child: Column(
@@ -60,7 +60,7 @@ class _SigninScreenState extends State<SigninScreen> {
                   controller: passwordController,
                   lable: "Password",
                   icon: Icons.lock_outline,
-                  validator: Validation.validatePassord,
+                  validator: Validation.validatePassword,
                   obscureText: true,
                 ),
                 Align(

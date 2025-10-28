@@ -12,6 +12,11 @@ class ConfirmButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignupBloc, SignupState>(
+      buildWhen: (previous, current) =>
+          current is SignupSuccess ||
+          current is SignupError ||
+          current is SignupLoading ||
+          current is UploadFileSuccess,
       listener: (context, state) {
         if (state is SignupSuccess) {
           context.pushNamed(Routes.homeScreen);

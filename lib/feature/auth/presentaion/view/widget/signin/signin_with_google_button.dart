@@ -19,9 +19,11 @@ class SigninWithGoogleButton extends StatelessWidget {
       listener: (context, state) {
         if (state is SigninWithGoogleError) {
           showSnackBar(context: context, messege: state.errorMessage);
-        }
-        if (state is SigninWithGoogleSuccess) {
-          context.pushNamed(Routes.signupScreen);
+        } else if (state is SigninWithGoogleSuccess) {
+          state.signinResultEntity.isRegistered
+              ? context.pushNamed(Routes.homeScreen)
+              : context.pushNamed(Routes.signupScreen,
+                  arguments: state.signinResultEntity.user);
         }
       },
       builder: (context, state) {

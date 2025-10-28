@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tabibak_for_clinic/core/constatnt/app_values.dart';
 import 'package:tabibak_for_clinic/core/extenstion/spacing.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/entities/doctor_entity.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_bloc/signup_bloc.dart';
@@ -20,6 +22,7 @@ class ProfessionalPracticeLicenseScreen extends StatelessWidget {
     final phone = args["phone"];
     final password = args["password"];
     final specialization = args["specialization"];
+    final user = args['user'] as User?;
     String? medicalLiecense;
     return Scaffold(
       appBar: AppBar(
@@ -28,7 +31,7 @@ class ProfessionalPracticeLicenseScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.all(20.w),
+        padding: EdgeInsets.all(AppPadding.horizontal),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -67,7 +70,8 @@ class ProfessionalPracticeLicenseScreen extends StatelessWidget {
                       specialty: specialization,
                       medicalLiecense: medicalLiecense!,
                     ),
-                    password: password));
+                    password: password,
+                    user: user));
               },
             )
           ],

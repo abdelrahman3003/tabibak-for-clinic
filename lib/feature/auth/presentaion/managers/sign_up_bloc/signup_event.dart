@@ -11,8 +11,10 @@ abstract class SignupEvent extends Equatable {
 class SignupRequested extends SignupEvent {
   final DoctorEntity doctorEntity;
   final String password;
+  final User? user;
 
-  const SignupRequested({required this.doctorEntity, required this.password});
+  const SignupRequested(
+      {required this.doctorEntity, required this.password, required this.user});
 }
 
 class GetSpecialtiesRequested extends SignupEvent {

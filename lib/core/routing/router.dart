@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
+import 'package:tabibak_for_clinic/core/widgets/route_screen_wapper.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/get_specialties_usecase.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_in_bloc/signin_bloc.dart';
@@ -17,16 +18,15 @@ class AppRouter {
       //Auth
       case Routes.singinScreen:
         return _buildSlideRoute(BlocProvider(
-          create: (context) => getit<SigninBloc>(),
-          child: SigninScreen(),
-        ));
+            create: (context) => getit<SigninBloc>(),
+            child: RootScreenWrapper(child: SigninScreen())));
       case Routes.signupScreen:
         return _buildSlideRoute(
-          BlocProvider(
-            create: (context) => getit<SignupBloc>(),
-            child: SignupScreen(),
-          ),
-        );
+            BlocProvider(
+              create: (context) => getit<SignupBloc>(),
+              child: SignupScreen(),
+            ),
+            settings: setting);
       case Routes.professionalLinceseScreen:
         return _buildSlideRoute(
             BlocProvider(
@@ -39,7 +39,7 @@ class AppRouter {
 
       //Home
       case Routes.homeScreen:
-        return _buildSlideRoute(HomeScreen());
+        return _buildSlideRoute(RootScreenWrapper(child: HomeScreen()));
       default:
         return _buildSlideRoute(
           Scaffold(
@@ -53,7 +53,7 @@ class AppRouter {
 
   static PageRoute _buildSlideRoute(Widget page, {RouteSettings? settings}) {
     return PageRouteBuilder(
-      settings: settings, // ✅ مهم جدًا علشان البيانات تتنقل
+      settings: settings,
       pageBuilder: (_, __, ___) => page,
       transitionsBuilder: (_, animation, __, child) {
         const begin = Offset(1, 0);

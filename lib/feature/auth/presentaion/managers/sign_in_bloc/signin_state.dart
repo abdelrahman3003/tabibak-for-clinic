@@ -21,7 +21,11 @@ final class SigninError extends SigninState {
 
 final class SigninWithGoogleLoading extends SigninState {}
 
-final class SigninWithGoogleSuccess extends SigninState {}
+final class SigninWithGoogleSuccess extends SigninState {
+  final SigninResultEntity signinResultEntity;
+
+  const SigninWithGoogleSuccess({required this.signinResultEntity});
+}
 
 final class SigninWithGoogleError extends SigninState {
   final String errorMessage;

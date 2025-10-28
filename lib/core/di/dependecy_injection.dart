@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tabibak_for_clinic/core/helper/shared_pref_helper.dart';
 import 'package:tabibak_for_clinic/core/networking/dio_factory.dart';
 import 'package:tabibak_for_clinic/core/services/env_service.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
@@ -25,7 +26,8 @@ Future<void> initGetIt() async {
       GoogleSignIn(serverClientId: EnvService.googleClientId);
 
   //! External
-  getit.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
+  getit.registerLazySingleton<SharedPrefHelper>(
+      () => SharedPrefHelper(sharedPreferences));
   getit.registerLazySingleton<Dio>(() => dio);
   getit.registerLazySingleton<Supabase>(() => supabase);
   getit.registerLazySingleton<GoogleSignIn>(() => googleSignIn);

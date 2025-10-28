@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/models/dotcor_model.dart';
+import 'package:tabibak_for_clinic/feature/auth/data/models/signin_result_model.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/models/specialty_model.dart';
 
 class AuthRemoteDataImp implements AuthRemoteData {
@@ -77,7 +78,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
   }
 
   @override
-  Future<void> signInWithGoogle() async {
+  Future<SigninResultModel> signInWithGoogle() async {
     final googleUser = await googleSignIn.signIn();
 
     final googleAuth = await googleUser!.authentication;
@@ -90,9 +91,27 @@ class AuthRemoteDataImp implements AuthRemoteData {
     if (idToken == null) {
       throw 'No ID Token found.';
     }
-    await supabase.client.auth.signInWithIdToken(
+    final response = await supabase.client.auth.signInWithIdToken(
         provider: OAuthProvider.google,
         idToken: idToken,
         accessToken: accessToken);
+    final isRegistered = await checkDoctorRegister(response.user);
+    return SigninResultModel(
+      isRegistered: isRegistered,
+      user: response.user,
+    );
+  }
+
+  @override
+  Future<bool> checkDoctorRegister(User? user) async {
+    final doctor = await supabase.client
+        .from('doctors')
+        .select()
+        .eq('email', user!.email!)
+        .maybeSingle();
+    if (doctor == null) {
+      return false;
+    }
+    return true;
   }
 }
