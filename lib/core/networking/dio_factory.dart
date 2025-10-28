@@ -27,6 +27,7 @@ class DioFactory {
   static void addDioHEaders({bool isLogedin = true}) {
     dio?.options.headers = {
       "apikey": EnvService.apiKey,
+      "Prefer": "return=representation",
     };
   }
 }

@@ -1,132 +1,73 @@
-import 'package:easy_localization/easy_localization.dart';
+class AppString {
+  static const String signUp = "Sign up";
 
-class AppStrings {
-  static String email = "Email".tr();
-  static String forgotPassword = "Forgot Password".tr();
-  static String createAccount = "Create Account".tr();
-  static String noAccount = "No Account".tr();
-  static String loginWithGoogle = "Login With Google".tr();
-  static String login = "Login".tr();
-  static String loggingIn = "Logging In".tr();
-  static String enterEmailForCode = "Enter Email For Code".tr();
-  static String sendCode = "Send Code".tr();
-  static String sendingCode = "Sending Code".tr();
-  static String confirmCode = "Confirm Code".tr();
-  static String codeSentTo = "Code Sent To".tr();
-  static String resendAfter = "Resend After".tr();
-  static String resendCode = "Resend Code".tr();
-  static String seconds = "Seconds".tr();
-  static String confirm = "Confirm".tr();
-  static String passwordChangedSuccess = "Password Changed Success".tr();
-  static String passwordChangedMessage = "Password Changed Message".tr();
-  static String goToLogin = "Go To Login".tr();
-  static String setNewPassword = "Set New Password".tr();
-  static String enterNewPassword = "Enter New Password".tr();
-  static String newPassword = "New Password".tr();
-  static String confirmNewPassword = "Confirm New Password".tr();
-  static String passwordsNotMatch = "Passwords Not Match".tr();
-  static String savePassword = "Save Password".tr();
-  static String changing = "Changing".tr();
-  static String name = "Name".tr();
-  static String alreadyHaveAccount = "Already Have Account".tr();
-  static String creatingAccount = "Creating Account".tr();
-  static String password = "Password".tr();
-  static String welcome = "Welcome".tr();
-  static String findBestDoctor = "Find Best Doctor".tr();
-  static String doctorSpeciality = "Doctor Speciality".tr();
-  static String general = "General".tr();
-  static String urology = "Urology".tr();
-  static String neurology = "Neurology".tr();
-  static String pediatrics = "Pediatrics".tr();
-  static String dentistry = "Dentistry".tr();
-  static String optometry = "Optometry".tr();
-  static String recommendationDoctor = "Recommendation Doctor".tr();
-  static String home = "Home".tr();
-  static String favorites = "Favorites".tr();
-  static String bookings = "Bookings".tr();
-  static String search = "Search".tr();
-  static String settings = "Settings".tr();
-  static String account = "Account".tr();
-  static String language = "Language".tr();
-  static String darkMode = "Dark Mode".tr();
-  static String logout = "Logout".tr();
-  static String signOut = "Sign Out".tr();
-  static String confirmSignOut = "Confirm Sign Out".tr();
-  static String signOutMessage = "Sign Out Message".tr();
-  static String cancel = "Cancel".tr();
-  //
-  static String seeMore = "See More".tr();
-  static String seeLess = "See Less".tr();
-  static String get generalDoctors => "General Doctors".tr();
-  static String get searchDoctor => "Search Doctor".tr();
-  static String get doctorDetails => "Doctor Details".tr();
-  static String get noData => "No Data".tr();
-  static String get aboutDoctor => "About Doctor".tr();
-  static String get specialty => "Specialty".tr();
-  static String get workingHours => "Working Hours".tr();
-  static String get bookingInquiry => "Booking Inquiry".tr();
-  static String get nameNotFound => "Name Not Found".tr();
-  static String get specialtyNotAvailable => "Specialty Not Available".tr();
-  static String get rateDoctor => "Rate Doctor".tr();
-  static String get consultationPrice => "Consultation Price".tr();
-  static String get currency => "Currency".tr();
-  static String get address => "Address".tr();
-  static String get unknown => "Unknown".tr();
-  static String get phoneNumber => "Phone Number".tr();
-  static String get numberNotAvailable => "Number Not Available".tr();
-  static String get writeCommentHere => "Write Comment Here".tr();
-  static String get send => "Send".tr();
-  static String get comments => "Comments".tr();
-  static String get appLang => "App Language".tr();
-  static String get codeLange => "Code Language".tr();
-  static String get recentSearches => "Recent searches".tr();
-  static String get searchResults => "Search Resultss".tr();
-  static String get appointments => "Appointments".tr();
-  static String get codeLanguage => "Code Language".tr();
-  static String get selectDate => "Select Date".tr();
-  static String get selectTime => "Select Time".tr();
-  static String get confirmBooking => "Confirm Booking".tr();
-  static String get appointmentBookedSuccessfully =>
-      "Appointment Booked Successfully".tr();
-  static String get bookingConfirmed => "Booking Confirmed".tr();
-  static String get consultationPriceNotAvailable =>
-      "Consultation Price Not Available".tr();
-  static String get egp => "EGP".tr();
-  static String get notAvailable => "Not Available".tr();
-  static String get morning => "Morning".tr();
-  static String get evening => "Evening".tr();
-  static String get clinicIsnotAvailableOnthisDay =>
-      "The clinic is not available on this day".tr();
-  static String get bookingSuccess => "Booking Success".tr();
-  static String get bookingUnavailable => "Booking Unavailable".tr();
-  static String get bookingConfirmedMessage => "Booking Confirmed Message".tr();
-  static String get chooseAnotherDayMessage =>
-      "Choose Another Day Message".tr();
-  static String get ok => "OK".tr();
-  static String get clinicDetails => "Clinic Details".tr();
-  static String get clinicName => "Clinic Name".tr();
-  static String get book => "Book".tr();
-  static String get error => "Error".tr();
-  static String get unknownErrorOccurred => "Unknown Error Occurred".tr();
-  static String get close => "Close".tr();
-  static String get hour => "Hour".tr();
-  static String get date => "Date".tr();
-  static String get date2 => "Date2".tr();
-  static String get price => "Price".tr();
-  static String get consultation => "Consultation".tr();
-  static String get appointmentDetails => "Appointment Details";
-  static String get doctor => "Doctor".tr();
-  static String get time => "Time".tr();
-  static String get bookingTime => "Booking Time".tr();
-  static String get deleteBooking => "Delete Booking".tr();
-  static String get success => "Success".tr();
-  static String get bookingSuccessful => "Booking Successful".tr();
-  static String get appointmentDetailsTitle => "Appointment Details Title".tr();
-  static String get deleting => "Deleting".tr();
-  static String get deleteConfirmation => "Delete Confirmation".tr();
-  static String get deleteMessage => "Delete Message".tr();
-  static String get delete => "Delete".tr();
-  static String get bookingStatus => "Booking Status".tr();
-  static String get bottomRemoveMessage =>
-      "Remove This From Your Search History".tr();
+  // Section titles
+  static const String personalInformation = "Personal Information";
+  static const String clinicInformation = "Clinic Information";
+  static const String specializationInformation = "Specialization Information";
+  static const String documentsVerification = "Documents Verification";
+  static const String reviewAndSubmit = "Review & Submit";
+
+  // Personal info
+  static const String firstName = "First name";
+  static const String lastName = "Last name";
+  static const String email = "Email";
+  static const String phoneNumber = "Phone number";
+  static const String verifyOtp = "Verify OTP";
+  static const String password = "Password";
+  static const String confirmPassword = "Confirm password";
+
+  // Clinic info
+  static const String clinicName = "Clinic name";
+  static const String clinicAddress = "Clinic address";
+  static const String governorate = "Governorate";
+  static const String area = "Area";
+  static const String clinicLocation = "Clinic location";
+  static const String pickOnMap = "Pick on map";
+  static const String workingHours = "Working hours";
+  static const String daysAndTimeSlots = "Days & Time Slots";
+  static const String landlineNumber = "Landline number (optional)";
+
+  // Specialization info
+  static const String mainSpecialization = "Main specialization";
+  static const String subSpecializations = "Sub specializations (optional)";
+  static const String consultationFee = "Consultation fee";
+  static const String consultationDuration = "Consultation duration";
+
+  // Documents
+  static const String uploadDocuments = "Upload documents";
+  static const String nationalId = "National ID";
+  static const String medicalLicense = "Medical license";
+  static const String profilePhoto = "Profile photo";
+  static const String medicalSyndicateNumber =
+      "Medical syndicate number (optional)";
+
+  // Review and submission
+  static const String submit = "Submit";
+  static const String reviewData = "Review your data before submitting";
+  static const String pendingApproval = "Pending approval";
+  static const String approvalNotification = "Approval notification";
+
+  // Onboarding
+  static const String welcomeDoctor = "Welcome, Doctor!";
+  static const String manageAppointments = "Manage your appointments";
+  static const String managePatients = "Track your patients";
+  static const String manageRevenue = "Monitor your revenue";
+  static const String getStarted = "Get started";
+  static const String next = "Next";
+  static const String back = "Back";
+  static const String finish = "Finish";
+
+  // OTP
+  static const String otpSent = "OTP has been sent to your phone number";
+  static const String resendOtp = "Resend OTP";
+  static const String enterOtp = "Enter OTP";
+  static const String pleaseWait = "Please wait...";
+
+  // Upload
+  static const String upload = "Upload";
+  static const String chooseFile = "Choose file";
+  static const String takePhoto = "Take photo";
+  static const String gallery = "Gallery";
+  static const String camera = "Camera";
 }

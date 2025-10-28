@@ -1,5 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tabibak/core/networking/api_consatnt.dart';
+import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 
 import 'env_service.dart';
 
