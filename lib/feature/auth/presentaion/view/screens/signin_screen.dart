@@ -11,23 +11,20 @@ import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/do_you_h
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/signin/signin_button.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/signin/signin_with_google_button.dart';
 
+import '../widget/password_textfiled.dart';
+
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
-
   @override
   State<SigninScreen> createState() => _SigninScreenState();
 }
-
 final signinKey = GlobalKey<FormState>();
-
 class _SigninScreenState extends State<SigninScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -56,12 +53,9 @@ class _SigninScreenState extends State<SigninScreen> {
                   validator: Validation.validateEmail,
                 ),
                 const SizedBox(height: 20),
-                AuthField(
+                PasswordTextfiled(
                   controller: passwordController,
-                  lable: "Password",
-                  icon: Icons.lock_outline,
                   validator: Validation.validatePassword,
-                  obscureText: true,
                 ),
                 Align(
                   alignment: Alignment.centerRight,
