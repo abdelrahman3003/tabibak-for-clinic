@@ -8,6 +8,9 @@ class EnvService {
   }
 
   static String? get apiKey => dotenv.env['API_KEY'];
-  static String? get googleClientId => dotenv.env['Google_Client_Id'];
+  static String? get googleClientIdAndroid =>
+      dotenv.env['Google_Client_Id_Android'];
+  static String? get googleClientIdIos => dotenv.env['Google_Client_Id_Ios'];
+  static String? get googleClientIdWeb => dotenv.env['Google_Client_Id_Web'];
   static String? get baseUrl => dotenv.env['BASE_URL'];
 }

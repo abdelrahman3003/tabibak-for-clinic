@@ -4,9 +4,7 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
-        <meta-data
-            android:name="com.google.android.gms.client_id"
-            android:value="889625443752-gqauui7kc9g15t7b14g6qicgfefv9suc.apps.googleusercontent.com"/>
+
 
         <activity
             android:name=".MainActivity"

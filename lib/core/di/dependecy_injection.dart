@@ -22,8 +22,10 @@ Future<void> initGetIt() async {
   final dio = DioFactory.getDio();
   final sharedPreferences = await SharedPreferences.getInstance();
   final supabase = Supabase.instance;
-  final GoogleSignIn googleSignIn =
-      GoogleSignIn(serverClientId: EnvService.googleClientId);
+  final GoogleSignIn googleSignIn = GoogleSignIn(
+      clientId: EnvService.googleClientIdIos,
+      serverClientId: EnvService.googleClientIdWeb,
+      scopes: ['email']);
 
   //! External
   getit.registerLazySingleton<SharedPrefHelper>(

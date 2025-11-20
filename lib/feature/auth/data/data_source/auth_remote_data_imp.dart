@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -79,16 +80,21 @@ class AuthRemoteDataImp implements AuthRemoteData {
 
   @override
   Future<SigninResultModel> signInWithGoogle() async {
+    log("------------- 0");
+
     final googleUser = await googleSignIn.signIn();
+    log("------------- 00");
 
     final googleAuth = await googleUser!.authentication;
     final accessToken = googleAuth.accessToken;
     final idToken = googleAuth.idToken;
-
     if (accessToken == null) {
+      log("------------- 1");
       throw 'No Access Token found.';
     }
     if (idToken == null) {
+      log("-----------ss-- 2");
+
       throw 'No ID Token found.';
     }
     final response = await supabase.client.auth.signInWithIdToken(
@@ -96,10 +102,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
         idToken: idToken,
         accessToken: accessToken);
     final isRegistered = await checkDoctorRegister(response.user);
-    return SigninResultModel(
-      isRegistered: isRegistered,
-      user: response.user,
-    );
+    return SigninResultModel(isRegistered: isRegistered, user: response.user);
   }
 
   @override

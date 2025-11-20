@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/helper/shared_pref_helper.dart';
@@ -55,6 +57,7 @@ class AuthRepoImp extends AuthRepo {
       final result = await authRemoteData.signInWithGoogle();
       return right(result);
     } catch (e) {
+      log("-------------$e");
       return left(ErrorHandler.handle(e));
     }
   }
