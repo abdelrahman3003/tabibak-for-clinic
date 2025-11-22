@@ -1,7 +1,7 @@
 class Routes {
   //auth
-  static const String singinScreen = "/signin";
+  static const String signinScreen = "/signin";
   static const String signupScreen = "/signup";
-  static const String professionalLinceseScreen = "/professionalLinceseScreen";
-  static const String homeScreen = "/homeScreen";
+  static const String professionalLicenseScreen = "/professionalLicenseScreen";
+  static const String layOutScreen = "/layOutScreen";
 }

@@ -5,7 +5,7 @@ import 'package:tabibak_for_clinic/core/routing/routes.dart';
 String initRout() {
   final sharedPrefHelper = getit<SharedPrefHelper>();
   if (sharedPrefHelper.getInt(SharedPrefKeys.step) == 2) {
-    return Routes.homeScreen;
+    return Routes.layOutScreen;
   }
-  return Routes.singinScreen;
+  return Routes.signinScreen;
 }

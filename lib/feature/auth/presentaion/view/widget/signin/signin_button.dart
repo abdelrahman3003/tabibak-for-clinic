@@ -19,7 +19,7 @@ class SigninButton extends StatelessWidget {
           current is SigninError,
       listener: (context, state) {
         if (state is SigninSuccess) {
-          context.pushNamed(Routes.homeScreen);
+          context.pushNamed(Routes.layOutScreen);
         }
         if (state is SigninError) {
           showSnackBar(context: context, messege: state.errorMessage);

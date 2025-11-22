@@ -21,7 +21,7 @@ class SigninWithGoogleButton extends StatelessWidget {
           showSnackBar(context: context, messege: state.errorMessage);
         } else if (state is SigninWithGoogleSuccess) {
           state.signinResultEntity.isRegistered
-              ? context.pushNamed(Routes.homeScreen)
+              ? context.pushNamed(Routes.layOutScreen)
               : context.pushNamed(Routes.signupScreen,
                   arguments: state.signinResultEntity.user);
         }

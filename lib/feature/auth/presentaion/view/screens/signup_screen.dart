@@ -106,7 +106,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   onPressed: () {
                     if (signupFormKey.currentState!.validate()) {
                       context.pushNamed(
-                        Routes.professionalLinceseScreen,
+                        Routes.professionalLicenseScreen,
                         arguments: {
                           "name": nameController.text,
                           "email": emailController.text,
@@ -125,7 +125,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   subtitle: "Sign In",
                   onTap: () {
                     context.pop();
-                    context.pushNamed(Routes.singinScreen);
+                    context.pushNamed(Routes.signinScreen);
                   },
                 ),
               ],

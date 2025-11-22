@@ -9,8 +9,8 @@ import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_blo
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/confirm_button.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/upload_image_widget.dart';
 
-class ProfessionalPracticeLicenseScreen extends StatelessWidget {
-  const ProfessionalPracticeLicenseScreen({super.key});
+class ProfessionalLicenseScreen extends StatelessWidget {
+  const ProfessionalLicenseScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

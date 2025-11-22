@@ -19,7 +19,7 @@ class ConfirmButton extends StatelessWidget {
           current is UploadFileSuccess,
       listener: (context, state) {
         if (state is SignupSuccess) {
-          context.pushNamed(Routes.homeScreen);
+          context.pushNamed(Routes.layOutScreen);
         }
         if (state is SignupError) {
           ScaffoldMessenger.of(context).showSnackBar(

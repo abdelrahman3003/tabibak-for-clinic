@@ -7,39 +7,40 @@ import 'package:tabibak_for_clinic/feature/auth/domain/usecases/get_specialties_
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_in_bloc/signin_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_bloc/signup_bloc.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/home_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/professional_practice_license_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signin_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signup_screen.dart';
+
+import '../../layout_screen.dart';
 
 class AppRouter {
   static Route generateRoute(RouteSettings setting) {
     switch (setting.name) {
       //Auth
-      case Routes.singinScreen:
+      case Routes.signinScreen:
         return _buildSlideRoute(BlocProvider(
             create: (context) => getit<SigninBloc>(),
-            child: RootScreenWrapper(child: SigninScreen())));
+            child: const RootScreenWrapper(child: SigninScreen())));
       case Routes.signupScreen:
         return _buildSlideRoute(
             BlocProvider(
               create: (context) => getit<SignupBloc>(),
-              child: SignupScreen(),
+              child: const SignupScreen(),
             ),
             settings: setting);
-      case Routes.professionalLinceseScreen:
+      case Routes.professionalLicenseScreen:
         return _buildSlideRoute(
             BlocProvider(
               create: (context) => SignupBloc(
                   signUpUsecase: getit<SignUpUsecase>(),
                   getSpecialtiesUsecase: getit<GetSpecialtiesUsecase>()),
-              child: ProfessionalPracticeLicenseScreen(),
+              child: const ProfessionalLicenseScreen(),
             ),
             settings: setting);
 
       //Home
-      case Routes.homeScreen:
-        return _buildSlideRoute(RootScreenWrapper(child: HomeScreen()));
+      case Routes.layOutScreen:
+        return _buildSlideRoute(const RootScreenWrapper(child: LayoutScreen()));
       default:
         return _buildSlideRoute(
           Scaffold(
