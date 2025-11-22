@@ -1,10 +1,10 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
+import 'package:tabibak_for_clinic/core/services/env_service.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/models/dotcor_model.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/models/signin_result_model.dart';
@@ -13,11 +13,10 @@ import 'package:tabibak_for_clinic/feature/auth/data/models/specialty_model.dart
 class AuthRemoteDataImp implements AuthRemoteData {
   final Supabase supabase;
   final Dio dio;
-  final GoogleSignIn googleSignIn;
+
   AuthRemoteDataImp({
     required this.supabase,
     required this.dio,
-    required this.googleSignIn,
   });
   @override
   Future<void> signUp({required String email, required String password}) async {
@@ -80,27 +79,19 @@ class AuthRemoteDataImp implements AuthRemoteData {
 
   @override
   Future<SigninResultModel> signInWithGoogle() async {
-    log("------------- 0");
-
-    final googleUser = await googleSignIn.signIn();
-    log("------------- 00");
-
-    final googleAuth = await googleUser!.authentication;
-    final accessToken = googleAuth.accessToken;
-    final idToken = googleAuth.idToken;
-    if (accessToken == null) {
-      log("------------- 1");
+    final GoogleSignIn signIn = GoogleSignIn.instance;
+    signIn.initialize(
+        clientId: EnvService.googleClientIdIos,
+        serverClientId: EnvService.googleClientIdWeb);
+    final googleAcount = await signIn.authenticate();
+    final idToken = googleAcount.authentication.idToken;
+    if (idToken == null) {
       throw 'No Access Token found.';
     }
-    if (idToken == null) {
-      log("-----------ss-- 2");
-
-      throw 'No ID Token found.';
-    }
     final response = await supabase.client.auth.signInWithIdToken(
-        provider: OAuthProvider.google,
-        idToken: idToken,
-        accessToken: accessToken);
+      provider: OAuthProvider.google,
+      idToken: idToken,
+    );
     final isRegistered = await checkDoctorRegister(response.user);
     return SigninResultModel(isRegistered: isRegistered, user: response.user);
   }

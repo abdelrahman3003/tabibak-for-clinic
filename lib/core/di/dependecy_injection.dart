@@ -1,11 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/helper/shared_pref_helper.dart';
 import 'package:tabibak_for_clinic/core/networking/dio_factory.dart';
-import 'package:tabibak_for_clinic/core/services/env_service.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data_imp.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/repos_imp/auth_repo_imp.dart';
@@ -22,24 +20,20 @@ Future<void> initGetIt() async {
   final dio = DioFactory.getDio();
   final sharedPreferences = await SharedPreferences.getInstance();
   final supabase = Supabase.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn(
-      clientId: EnvService.googleClientIdIos,
-      serverClientId: EnvService.googleClientIdWeb,
-      scopes: ['email']);
 
   //! External
   getit.registerLazySingleton<SharedPrefHelper>(
       () => SharedPrefHelper(sharedPreferences));
   getit.registerLazySingleton<Dio>(() => dio);
   getit.registerLazySingleton<Supabase>(() => supabase);
-  getit.registerLazySingleton<GoogleSignIn>(() => googleSignIn);
+
   //! Auth Features
 
 // remote data source
   getit.registerLazySingleton<AuthRemoteData>(() => AuthRemoteDataImp(
-      supabase: getit<Supabase>(),
-      dio: getit<Dio>(),
-      googleSignIn: getit<GoogleSignIn>()));
+        supabase: getit<Supabase>(),
+        dio: getit<Dio>(),
+      ));
 // repos
   getit.registerLazySingleton<AuthRepo>(() => AuthRepoImp(
         authRemoteData: getit<AuthRemoteData>(),

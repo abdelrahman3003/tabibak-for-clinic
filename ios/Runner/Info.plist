@@ -28,6 +28,12 @@
     <string>LaunchScreen</string>
     <key>UIMainStoryboardFile</key>
     <string>Main</string>
+
+    <key>GIDClientID</key>
+    <string>634425614715-tmem909pia9s04devgji14o9cdp5vqtb.apps.googleusercontent.com</string>
+    <key>GIDServerClientID</key>
+    <string>6634425614715-t7107q9ulkmlnd7h3pk0isljvk0sgskv.apps.googleusercontent.com</string>
+
     <key>UISupportedInterfaceOrientations</key>
     <array>
         <string>UIInterfaceOrientationPortrait</string>
@@ -55,7 +61,7 @@
     		<key>CFBundleURLSchemes</key>
     		<array>
     			<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
-    			<string>com.googleusercontent.apps.889625443752-rug304jr7nuk4saeeti9t3qjr0odvdof</string>
+    			<string>com.googleusercontent.apps.634425614715-30u8hnkkccpqrp0jv7rjqe7c5ie1cteh</string>
     		</array>
     	</dict>
     </array>

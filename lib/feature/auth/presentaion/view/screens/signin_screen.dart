@@ -18,7 +18,9 @@ class SigninScreen extends StatefulWidget {
   @override
   State<SigninScreen> createState() => _SigninScreenState();
 }
+
 final signinKey = GlobalKey<FormState>();
+
 class _SigninScreenState extends State<SigninScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -29,7 +31,8 @@ class _SigninScreenState extends State<SigninScreen> {
       body: SingleChildScrollView(
         child: Container(
           height: size.height,
-          padding: EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
+          padding:
+              const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
           child: Form(
             key: signinKey,
             child: Column(
@@ -95,7 +98,7 @@ class _SigninScreenState extends State<SigninScreen> {
                   ],
                 ),
                 20.hBox,
-                SigninWithGoogleButton(),
+                const SigninWithGoogleButton(),
                 40.hBox,
                 DoHaveAccount(
                   title: "Don't have an account?",
