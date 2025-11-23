@@ -70,4 +70,16 @@ class AppString {
   static const String takePhoto = "Take photo";
   static const String gallery = "Gallery";
   static const String camera = "Camera";
+
+  // schedule
+  static const String weeklyOverview = "Weekly Overview";
+  static String weeklyDays(int daysCount) =>
+      "This week has $daysCount days scheduled";
+  static String weeklyShiftHours(String startMorning, String endMorning,
+          String startEvening, String endEvening) =>
+      "Note: Morning shifts are from $startMorning to $endMorning, Evening shifts are from $startEvening to $endEvening";
+  static const scheduleHours = "Schedule hours";
+  static const day = "Day";
+  static const morning = "Morning";
+  static const evening = "Evening";
 }

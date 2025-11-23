@@ -1,0 +1,52 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tabibak_for_clinic/core/extenstion/spacing.dart';
+
+import '../../../schedule_edit_screen.dart';
+
+class ScheduleHoursItem extends StatelessWidget {
+  const ScheduleHoursItem({super.key, required this.day});
+  final DaySchedule day;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+              width: 60.w,
+              child:
+                  Text(day.day, style: Theme.of(context).textTheme.bodyLarge)),
+          20.wBox,
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                      "${day.morning.start.format(context)} - ${day.morning.end.format(context)}",
+                      style: Theme.of(context).textTheme.bodyLarge),
+                ),
+                20.wBox,
+                Expanded(
+                  child: Text(
+                    "${day.evening.start.format(context)} - ${day.evening.end.format(context)}",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    overflow: TextOverflow.clip,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

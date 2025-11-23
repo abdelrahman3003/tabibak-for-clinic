@@ -1,49 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import 'core/theme/app_colors.dart';
+import 'feature/schedule/schedule_screen.dart';
 
-class LayoutScreen extends StatelessWidget {
+class LayoutScreen extends StatefulWidget {
   const LayoutScreen({super.key});
 
   @override
+  State<LayoutScreen> createState() => _LayoutScreenState();
+}
+
+class _LayoutScreenState extends State<LayoutScreen> {
+  int _selectedIndex = 0;
+
+  late final List<Widget> _screens;
+  late final List<GButton> _tabs;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _screens = [
+      ScheduleScreen(),
+      const Center(child: Text("Appointments Screen")),
+      const Center(child: Text("Profile Screen")),
+    ];
+
+    _tabs = [
+      GButton(
+        icon: Icons.calendar_today_outlined,
+        text: "Schedule",
+        textStyle: _tabTextStyle(),
+      ),
+      GButton(
+        icon: Icons.event,
+        text: "Appointments",
+        textStyle: _tabTextStyle(),
+      ),
+      GButton(
+        icon: Icons.person,
+        text: "Profile",
+        textStyle: _tabTextStyle(),
+      ),
+    ];
+  }
+
+  TextStyle _tabTextStyle() {
+    return TextStyle(
+        fontWeight: FontWeight.w500, color: AppColors.primary, fontSize: 15.sp);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context)
-        .textTheme
-        .bodyLarge
-        ?.copyWith(fontWeight: FontWeight.w500, color: AppColors.primary);
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-            const Expanded(
-              child: Center(child: Text("Home Screen")),
-            ),
+            Expanded(child: _screens[_selectedIndex]),
             GNav(
               gap: 12,
               activeColor: AppColors.primary,
               color: AppColors.primary,
               tabBackgroundColor: AppColors.second,
-              selectedIndex: 1,
-              onTabChange: (index) {},
+              selectedIndex: _selectedIndex,
+              onTabChange: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               tabMargin: const EdgeInsets.only(top: 4),
-              tabs: [
-                GButton(
-                  icon: Icons.person,
-                  text: "Profile",
-                  textStyle: textStyle,
-                ),
-                GButton(
-                    icon: Icons.event,
-                    text: "Appointments",
-                    textStyle: textStyle),
-                GButton(
-                  icon: Icons.calendar_today_outlined,
-                  text: "Schedule",
-                  textStyle: textStyle,
-                ),
-              ],
+              tabs: _tabs,
             ),
           ],
         ),
