@@ -10,6 +10,7 @@ import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_blo
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/professional_practice_license_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signin_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signup_screen.dart';
+import 'package:tabibak_for_clinic/feature/schedule/schedule_edit_screen.dart';
 
 import '../../layout_screen.dart';
 
@@ -38,9 +39,12 @@ class AppRouter {
             ),
             settings: setting);
 
-      //Home
+      //layout
       case Routes.layOutScreen:
         return _buildSlideRoute(const RootScreenWrapper(child: LayoutScreen()));
+      case Routes.scheduleEditScreen:
+        return _buildSlideRoute(
+            const RootScreenWrapper(child: ScheduleEditScreen()));
       default:
         return _buildSlideRoute(
           Scaffold(
