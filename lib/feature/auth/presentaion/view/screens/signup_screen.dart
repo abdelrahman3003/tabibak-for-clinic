@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tabibak_for_clinic/core/constatnt/app_values.dart';
-import 'package:tabibak_for_clinic/core/extenstion/naviagrion.dart';
-import 'package:tabibak_for_clinic/core/extenstion/spacing.dart';
+import 'package:tabibak_for_clinic/core/constant/app_values.dart';
+import 'package:tabibak_for_clinic/core/extention/navigation.dart';
+import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/helper/validation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';

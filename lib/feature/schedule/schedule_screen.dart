@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak_for_clinic/core/constatnt/app_string.dart';
-import 'package:tabibak_for_clinic/core/extenstion/naviagrion.dart';
-import 'package:tabibak_for_clinic/core/extenstion/spacing.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
+import 'package:tabibak_for_clinic/core/extention/navigation.dart';
+import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_screen/schedule_hours_list/schedule_hours_list.dart';
@@ -22,7 +22,7 @@ class ScheduleScreen extends StatelessWidget {
             10.hBox,
             _buildSectionHeader(context),
             20.hBox,
-            _buildScheduleHours(context),
+            _buildScheduleHoursRow(context),
             5.hBox,
             _buildScheduleHeader(context),
             const Expanded(child: ScheduleHoursList()),
@@ -32,7 +32,7 @@ class ScheduleScreen extends StatelessWidget {
     );
   }
 
-  Row _buildScheduleHours(BuildContext context) {
+  Row _buildScheduleHoursRow(BuildContext context) {
     return Row(
       children: [
         const Expanded(child: TitleText(title: AppString.scheduleHours)),

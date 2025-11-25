@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak_for_clinic/core/constatnt/app_string.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 
 class PasswordTextfiled extends StatefulWidget {
   const PasswordTextfiled(
@@ -33,7 +33,7 @@ class _PasswordTextfiledState extends State<PasswordTextfiled> {
                       : Icons.visibility_outlined,
                   size: 24),
               color: Colors.grey),
-          contentPadding: EdgeInsets.all(14)),
+          contentPadding: const EdgeInsets.all(14)),
       obscureText: isPassword,
       validator: widget.validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,

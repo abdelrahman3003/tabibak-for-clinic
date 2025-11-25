@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak_for_clinic/core/constatnt/app_string.dart';
-import 'package:tabibak_for_clinic/core/extenstion/spacing.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
+import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/helper/validation.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/auth_field.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/auth_subtitle_text.dart';
@@ -21,7 +21,7 @@ class ClinicSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AuthSubtitleText(title: AppString.clinicInformation),
+        const AuthSubtitleText(title: AppString.clinicInformation),
         10.hBox,
         AuthField(
           lable: AppString.clinicName,

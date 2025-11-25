@@ -23,7 +23,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
     super.initState();
 
     _screens = [
-      ScheduleScreen(),
+      const ScheduleScreen(),
       const Center(child: Text("Appointments Screen")),
       const Center(child: Text("Profile Screen")),
     ];

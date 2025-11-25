@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tabibak_for_clinic/core/extenstion/spacing.dart';
-
-import '../../../schedule_edit_screen.dart';
+import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 
 class ScheduleHoursItem extends StatelessWidget {
   const ScheduleHoursItem({super.key, required this.day});
@@ -21,7 +19,7 @@ class ScheduleHoursItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-              width: 60.w,
+              width: 75.w,
               child:
                   Text(day.day, style: Theme.of(context).textTheme.bodyLarge)),
           20.wBox,
@@ -30,16 +28,20 @@ class ScheduleHoursItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
-                  child: Text(
-                      "${day.morning.start.format(context)} - ${day.morning.end.format(context)}",
-                      style: Theme.of(context).textTheme.bodyLarge),
+                  child: FittedBox(
+                    child: Text(
+                        "${day.morning.start.format(context)} - ${day.morning.end.format(context)}",
+                        style: Theme.of(context).textTheme.bodyLarge),
+                  ),
                 ),
                 20.wBox,
                 Expanded(
-                  child: Text(
-                    "${day.evening.start.format(context)} - ${day.evening.end.format(context)}",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    overflow: TextOverflow.clip,
+                  child: FittedBox(
+                    child: Text(
+                      "${day.evening.start.format(context)} - ${day.evening.end.format(context)}",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      overflow: TextOverflow.clip,
+                    ),
                   ),
                 ),
               ],
@@ -49,4 +51,32 @@ class ScheduleHoursItem extends StatelessWidget {
       ),
     );
   }
+}
+
+class Shift {
+  String name;
+  TimeOfDay start;
+  TimeOfDay end;
+  bool enabled;
+
+  Shift({
+    required this.name,
+    required this.start,
+    required this.end,
+    this.enabled = true,
+  });
+}
+
+class DaySchedule {
+  String day;
+  Shift morning;
+  Shift evening;
+  bool active;
+
+  DaySchedule({
+    required this.day,
+    required this.morning,
+    required this.evening,
+    this.active = true,
+  });
 }

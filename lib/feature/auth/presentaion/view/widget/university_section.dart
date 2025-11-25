@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak_for_clinic/core/extenstion/spacing.dart';
+import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/helper/validation.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/auth_field.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/auth_subtitle_text.dart';
@@ -16,7 +16,7 @@ class UniversitySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AuthSubtitleText(title: "University Information"),
+        const AuthSubtitleText(title: "University Information"),
         10.hBox,
         AuthField(
             lable: "University Name",
