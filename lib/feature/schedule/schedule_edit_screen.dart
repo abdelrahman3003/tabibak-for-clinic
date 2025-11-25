@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
+import 'package:tabibak_for_clinic/core/widgets/custom_app_bar.dart';
 import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_edit_screen/schedule_day.dart';
 
 class ScheduleEditScreen extends StatelessWidget {
@@ -7,23 +7,11 @@ class ScheduleEditScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Edit Schedule'),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                "Save",
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(color: AppColors.primary),
-              ),
-            )
-          ],
+    return const Scaffold(
+        appBar: CustomAppBar(
+          title: "Edit Schedule",
         ),
-        body: const Padding(
+        body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: SingleChildScrollView(
             child: Column(
