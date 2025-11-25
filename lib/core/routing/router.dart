@@ -10,9 +10,9 @@ import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_blo
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/professional_practice_license_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signin_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signup_screen.dart';
-import 'package:tabibak_for_clinic/feature/doctor/screens/clinic_address_screen.dart';
-import 'package:tabibak_for_clinic/feature/doctor/screens/clinic_info_screen.dart';
-import 'package:tabibak_for_clinic/feature/doctor/screens/clinic_offer_screen.dart';
+import 'package:tabibak_for_clinic/feature/clinic/screens/clinic_address_screen.dart';
+import 'package:tabibak_for_clinic/feature/clinic/screens/clinic_info_screen.dart';
+import 'package:tabibak_for_clinic/feature/clinic/screens/clinic_offer_screen.dart';
 import 'package:tabibak_for_clinic/feature/doctor/screens/doctor_education_screen.dart';
 import 'package:tabibak_for_clinic/feature/doctor/screens/doctor_personal_info_screen.dart';
 import 'package:tabibak_for_clinic/feature/doctor/screens/doctor_specialty_screen.dart';
