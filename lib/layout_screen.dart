@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:tabibak_for_clinic/feature/doctor/screens/doctor_profile_screen.dart';
 
 import 'core/theme/app_colors.dart';
 import 'feature/schedule/schedule_screen.dart';
@@ -24,8 +25,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
     _screens = [
       const ScheduleScreen(),
-      const Center(child: Text("Appointments Screen")),
       const Center(child: Text("Profile Screen")),
+      const DoctorProfileScreen(),
     ];
 
     _tabs = [
