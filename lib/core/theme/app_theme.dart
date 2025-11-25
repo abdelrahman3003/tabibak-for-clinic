@@ -18,7 +18,7 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.purple,
         foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
       ),
@@ -38,7 +38,7 @@ class AppTheme {
       ),
       focusedBorder: UnderlineInputBorder(
         borderRadius: BorderRadius.circular(5.r),
-        borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+        borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
       ),
       errorBorder: UnderlineInputBorder(
         borderRadius: BorderRadius.circular(5.r),
@@ -61,7 +61,7 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
       ),
@@ -81,7 +81,7 @@ class AppTheme {
       ),
       focusedBorder: UnderlineInputBorder(
         borderRadius: BorderRadius.circular(5.r),
-        borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+        borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
       ),
       errorBorder: UnderlineInputBorder(
         borderRadius: BorderRadius.circular(5.r),

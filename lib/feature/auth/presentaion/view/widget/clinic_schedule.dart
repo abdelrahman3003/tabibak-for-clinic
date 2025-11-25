@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tabibak_for_clinic/core/extenstion/spacing.dart';
+import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/shift_section.dart';
 
 class ClinicScheduleWidget extends StatefulWidget {

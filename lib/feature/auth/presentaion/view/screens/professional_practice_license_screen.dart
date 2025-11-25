@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tabibak_for_clinic/core/constatnt/app_values.dart';
-import 'package:tabibak_for_clinic/core/extenstion/spacing.dart';
+import 'package:tabibak_for_clinic/core/constant/app_values.dart';
+import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/entities/doctor_entity.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_bloc/signup_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/confirm_button.dart';
@@ -31,7 +31,7 @@ class ProfessionalLicenseScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.all(AppPadding.horizontal),
+        padding: const EdgeInsets.all(AppPadding.horizontal),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
