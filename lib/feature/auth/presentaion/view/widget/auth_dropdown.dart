@@ -4,8 +4,9 @@ import 'package:tabibak_for_clinic/feature/auth/domain/entities/specialty_entity
 class SpecialtyDropdown extends StatefulWidget {
   final Function(int?)? onChanged;
   final List<SpecialtyEntity> items;
-
-  const SpecialtyDropdown({super.key, this.onChanged, required this.items});
+  final Color? color;
+  const SpecialtyDropdown(
+      {super.key, this.onChanged, required this.items, this.color});
 
   @override
   State<SpecialtyDropdown> createState() => _SpecialtyDropdownState();
@@ -19,12 +20,15 @@ class _SpecialtyDropdownState extends State<SpecialtyDropdown> {
     return DropdownButtonFormField<int>(
       decoration: InputDecoration(
         hintText: "Select Specialty",
+        fillColor: widget.color,
+        filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       ),
       validator: (value) => value == null ? "Please select a specialty" : null,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      value: _selectedSpecialtyId,
+      initialValue: _selectedSpecialtyId,
       items: widget.items
           .map(
             (item) => DropdownMenuItem(

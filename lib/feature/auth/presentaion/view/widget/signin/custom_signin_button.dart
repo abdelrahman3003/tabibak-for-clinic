@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tabibak_for_clinic/core/constant/app_svg.dart';
-import 'package:tabibak_for_clinic/core/widgets/app_circle_indicator.dart';
+import 'package:tabibak_for_clinic/core/widgets/circle_indicator_widget.dart';
 
 class CustomSigninButton extends StatelessWidget {
   const CustomSigninButton(
@@ -25,7 +25,7 @@ class CustomSigninButton extends StatelessWidget {
             ? const SizedBox.shrink()
             : SvgPicture.asset(AppSvg.googleIcon, height: 22.h, width: 22.w),
         label: isLoading
-            ? const AppCircleIndicator()
+            ? const CircleIndicatorWidget()
             : Text("Sign in with Google",
                 style: Theme.of(context).textTheme.bodyLarge),
         onPressed: isLoading ? null : onPressed,

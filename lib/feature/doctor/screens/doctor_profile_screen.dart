@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
+import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
-import 'package:tabibak_for_clinic/feature/doctor/widget/edit_item.dart';
-import 'package:tabibak_for_clinic/feature/doctor/widget/personal_image.dart';
-import 'package:tabibak_for_clinic/feature/doctor/widget/profile_title.dart';
+import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/edit_item.dart';
+import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/personal_image.dart';
+import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/profile_title.dart';
 
 class DoctorProfileScreen extends StatefulWidget {
   const DoctorProfileScreen({super.key});
@@ -45,7 +47,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
               12.hBox,
               Text(
                 doctorBio,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
               30.hBox,
@@ -60,17 +62,25 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                   EditItem(
                     title: "Personal Information",
                     subtitle: doctorPhone,
-                    onTap: () {},
+                    onTap: () {
+                      context.pushNamed(Routes.doctorPersonalInfo);
+                    },
                   ),
                   15.hBox,
                   EditItem(
                     title: "Specialty",
                     subtitle: doctorSpecialty,
+                    onTap: () {
+                      context.pushNamed(Routes.doctorSpecialtyScreen);
+                    },
                   ),
                   15.hBox,
                   EditItem(
                     title: "Education",
                     subtitle: doctorEducation,
+                    onTap: () {
+                      context.pushNamed(Routes.doctorEducationScreen);
+                    },
                   ),
                   30.hBox,
                   const ProfileTitle(
@@ -78,19 +88,28 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                     icon: Icons.medical_services,
                   ),
                   20.hBox,
-                  const EditItem(
+                  EditItem(
                     title: "Clinic Info",
                     subtitle: "Healthy Heart Clinic",
+                    onTap: () {
+                      context.pushNamed(Routes.clinicInfoScreen);
+                    },
                   ),
                   15.hBox,
-                  const EditItem(
+                  EditItem(
                     title: "Clinic Address",
                     subtitle: "نجع حمادي",
+                    onTap: () {
+                      context.pushNamed(Routes.clinicAddressScreen);
+                    },
                   ),
                   15.hBox,
-                  const EditItem(
+                  EditItem(
                     title: "Clinic Offer",
                     subtitle: "Sat-Thu: 9:00 AM - 5:00 PM",
+                    onTap: () {
+                      context.pushNamed(Routes.clinicOfferScreen);
+                    },
                   ),
                   10.hBox,
                 ],

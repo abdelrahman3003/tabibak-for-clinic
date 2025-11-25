@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak_for_clinic/core/widgets/custom_app_bar.dart';
+import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
 import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_edit_screen/schedule_day.dart';
 
 class ScheduleEditScreen extends StatelessWidget {
@@ -8,7 +8,7 @@ class ScheduleEditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        appBar: CustomAppBar(
+        appBar: AppBarWidget(
           title: "Edit Schedule",
         ),
         body: Padding(

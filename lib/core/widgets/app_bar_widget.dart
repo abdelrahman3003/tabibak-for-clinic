@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({
+class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
+  const AppBarWidget({
     super.key,
     this.title = '',
     this.isShowBack = true,
@@ -37,10 +37,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       scrolledUnderElevation: 1,
       shadowColor: shadow,
       leading: isShowBack == false ? null : _backButton(context),
-      centerTitle: true,
+      centerTitle: false,
       title: (title is String)
           ? Text(title,
-              style: titleStyle ?? Theme.of(context).textTheme.titleLarge)
+              style: titleStyle ?? Theme.of(context).textTheme.bodyLarge)
           : title,
       actions: actions ??
           [

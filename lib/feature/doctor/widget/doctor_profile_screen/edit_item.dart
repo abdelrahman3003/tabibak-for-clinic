@@ -11,7 +11,7 @@ class EditItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.r),
           border: Border.all(color: AppColors.grey)),
@@ -22,7 +22,7 @@ class EditItem extends StatelessWidget {
             children: [
               Expanded(
                 child:
-                    Text(title, style: Theme.of(context).textTheme.bodyLarge),
+                    Text(title, style: Theme.of(context).textTheme.titleMedium),
               ),
               InkWell(
                 onTap: onTap,
@@ -30,9 +30,8 @@ class EditItem extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
                     "Edit",
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: AppColors.primaryDark,
-                        ),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSecondary),
                   ),
                 ),
               )

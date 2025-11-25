@@ -20,8 +20,8 @@ class ScheduleHoursItem extends StatelessWidget {
         children: [
           SizedBox(
               width: 75.w,
-              child:
-                  Text(day.day, style: Theme.of(context).textTheme.bodyLarge)),
+              child: Text(day.day,
+                  style: Theme.of(context).textTheme.titleMedium)),
           20.wBox,
           Expanded(
             child: Row(
@@ -31,7 +31,7 @@ class ScheduleHoursItem extends StatelessWidget {
                   child: FittedBox(
                     child: Text(
                         "${day.morning.start.format(context)} - ${day.morning.end.format(context)}",
-                        style: Theme.of(context).textTheme.bodyLarge),
+                        style: Theme.of(context).textTheme.bodyMedium),
                   ),
                 ),
                 20.wBox,
@@ -39,7 +39,7 @@ class ScheduleHoursItem extends StatelessWidget {
                   child: FittedBox(
                     child: Text(
                       "${day.evening.start.format(context)} - ${day.evening.end.format(context)}",
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyMedium,
                       overflow: TextOverflow.clip,
                     ),
                   ),

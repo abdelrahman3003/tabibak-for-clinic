@@ -10,6 +10,12 @@ import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_blo
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/professional_practice_license_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signin_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signup_screen.dart';
+import 'package:tabibak_for_clinic/feature/doctor/screens/clinic_address_screen.dart';
+import 'package:tabibak_for_clinic/feature/doctor/screens/clinic_info_screen.dart';
+import 'package:tabibak_for_clinic/feature/doctor/screens/clinic_offer_screen.dart';
+import 'package:tabibak_for_clinic/feature/doctor/screens/doctor_education_screen.dart';
+import 'package:tabibak_for_clinic/feature/doctor/screens/doctor_personal_info_screen.dart';
+import 'package:tabibak_for_clinic/feature/doctor/screens/doctor_specialty_screen.dart';
 import 'package:tabibak_for_clinic/feature/schedule/schedule_edit_screen.dart';
 
 import '../../layout_screen.dart';
@@ -42,9 +48,32 @@ class AppRouter {
       //layout
       case Routes.layOutScreen:
         return _buildSlideRoute(const RootScreenWrapper(child: LayoutScreen()));
+
+      // schedule
       case Routes.scheduleEditScreen:
         return _buildSlideRoute(
             const RootScreenWrapper(child: ScheduleEditScreen()));
+
+      // doctor info
+      case Routes.doctorPersonalInfo:
+        return _buildSlideRoute(
+            const RootScreenWrapper(child: DoctorPersonalInfo()));
+      case Routes.doctorSpecialtyScreen:
+        return _buildSlideRoute(
+            const RootScreenWrapper(child: DoctorSpecialtyScreen()));
+      case Routes.doctorEducationScreen:
+        return _buildSlideRoute(
+            const RootScreenWrapper(child: DoctorEducationScreen()));
+      case Routes.clinicInfoScreen:
+        return _buildSlideRoute(
+            const RootScreenWrapper(child: ClinicInfoScreen()));
+      case Routes.clinicAddressScreen:
+        return _buildSlideRoute(
+            const RootScreenWrapper(child: ClinicAddressScreen()));
+      case Routes.clinicOfferScreen:
+        return _buildSlideRoute(
+            const RootScreenWrapper(child: ClinicOfferScreen()));
+
       default:
         return _buildSlideRoute(
           Scaffold(

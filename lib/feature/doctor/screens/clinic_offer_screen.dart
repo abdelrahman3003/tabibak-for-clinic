@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
 
 class ClinicOfferScreen extends StatelessWidget {
   const ClinicOfferScreen({super.key});
@@ -6,12 +7,7 @@ class ClinicOfferScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Clinic Offer",
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-      ),
+      appBar: const AppBarWidget(title: "Clinic Offer"),
       body: Container(),
     );
   }
