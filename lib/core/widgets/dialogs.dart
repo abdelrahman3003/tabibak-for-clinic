@@ -5,6 +5,7 @@ import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
 
 class Dialogs {
   static successDialog(BuildContext context, String title, subtitle) {
+    //show dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -37,7 +38,7 @@ class Dialogs {
               AppButton(
                 title: "Close",
                 color: AppColors.green,
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ],
@@ -47,6 +48,81 @@ class Dialogs {
     );
   }
 
+  static void noOffersBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      backgroundColor: Colors.white,
+      builder: (BuildContext context) {
+        return Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.thumb_up_alt_outlined,
+                size: 80.r,
+                color: AppColors.primary,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                "لا يوجد عروض حاليا",
+                style: Theme.of(context).textTheme.titleLarge,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              AppButton(
+                title: "حسناً",
+                color: AppColors.primary,
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+// Bottom Sheet
+  static void bottomSheet(BuildContext context, {required String title}) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      backgroundColor: Colors.white,
+      builder: (BuildContext context) {
+        return Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.warning_amber_outlined,
+                  size: 80.r, color: Theme.of(context).colorScheme.primary),
+              const SizedBox(height: 16),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.titleMedium,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              AppButton(
+                title: "Ok",
+                color: Theme.of(context).colorScheme.primary,
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // error dialog
   static errorDialog(BuildContext context, String title) {
     showDialog(
       context: context,
@@ -60,7 +136,7 @@ class Dialogs {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.red,
                 ),
@@ -84,7 +160,7 @@ class Dialogs {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
-              AppButton(
+              const AppButton(
                 title: "Clsoe",
                 color: Colors.red,
                 padding: EdgeInsets.symmetric(vertical: 10),
@@ -96,6 +172,7 @@ class Dialogs {
     );
   }
 
+  //alert dialog
   static alertDialog(
       {required BuildContext context,
       required String title,
@@ -116,7 +193,7 @@ class Dialogs {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -130,8 +207,8 @@ class Dialogs {
                 width: 25.w,
                 child: FittedBox(
                     child: isLoading
-                        ? Padding(
-                            padding: const EdgeInsets.all(5),
+                        ? const Padding(
+                            padding: EdgeInsets.all(5),
                             child: CircularProgressIndicator(
                               color: AppColors.white,
                             ),

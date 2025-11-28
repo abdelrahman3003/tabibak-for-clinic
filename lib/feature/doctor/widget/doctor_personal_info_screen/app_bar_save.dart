@@ -13,8 +13,9 @@ class AppBarSave extends AppBarWidget {
       actions: [
         InkWell(
           onTap: onTap,
+          borderRadius: BorderRadius.circular(8),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
             child: Text(
               "Save",
               style: Theme.of(context)

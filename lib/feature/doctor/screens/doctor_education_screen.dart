@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
@@ -12,19 +13,16 @@ class DoctorEducationScreen extends StatelessWidget {
     return Scaffold(
         appBar: const AppBarSave(text: "Doctor Education"),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding:
+              const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               10.hBox,
               const TextFormFiledWidget(label: "Country"),
-              20.hBox,
               const TextFormFiledWidget(label: "University"),
-              20.hBox,
               const TextFormFiledWidget(label: "Degree"),
-              20.hBox,
               const TextFormFiledWidget(label: "Year"),
-              20.hBox,
               Text(
                 "Certificate Photo",
                 style: Theme.of(context).textTheme.titleMedium,

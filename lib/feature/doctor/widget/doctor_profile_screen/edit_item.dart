@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
+import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/text_button_widget.dart';
 
 class EditItem extends StatelessWidget {
   const EditItem(
@@ -24,17 +25,7 @@ class EditItem extends StatelessWidget {
                 child:
                     Text(title, style: Theme.of(context).textTheme.titleMedium),
               ),
-              InkWell(
-                onTap: onTap,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Text(
-                    "Edit",
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSecondary),
-                  ),
-                ),
-              )
+              TextButtonWidget(text: 'Edit', onTap: onTap)
             ],
           ),
           Text(

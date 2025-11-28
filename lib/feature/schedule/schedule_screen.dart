@@ -3,7 +3,7 @@ import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
-import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
+import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/text_button_widget.dart';
 import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_screen/schedule_hours_list/schedule_hours_list.dart';
 import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_screen/title_text.dart';
 
@@ -36,17 +36,12 @@ class ScheduleScreen extends StatelessWidget {
     return Row(
       children: [
         const Expanded(child: TitleText(title: AppString.scheduleHours)),
-        IconButton(
-            onPressed: () {
-              context.pushNamed(Routes.scheduleEditScreen);
-            },
-            icon: Text(
-              "Edit",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: AppColors.primary),
-            ))
+        TextButtonWidget(
+          text: "Edit",
+          onTap: () {
+            context.pushNamed(Routes.scheduleEditScreen);
+          },
+        )
       ],
     );
   }
