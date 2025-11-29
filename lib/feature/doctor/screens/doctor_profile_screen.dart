@@ -4,10 +4,10 @@ import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
-import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/edit_item.dart';
 import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/personal_image.dart';
 import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/profile_title.dart';
+import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/setting_item.dart';
 
 class DoctorProfileScreen extends StatefulWidget {
   const DoctorProfileScreen({super.key});
@@ -60,7 +60,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                     title: "Doctor Information",
                     icon: Icons.medical_services,
                   ),
-                  20.hBox,
+                  10.hBox,
                   EditItem(
                     title: "Personal Information",
                     subtitle: doctorPhone,
@@ -84,37 +84,46 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                       context.pushNamed(Routes.doctorEducationScreen);
                     },
                   ),
-                  30.hBox,
-                  const ProfileTitle(
-                    title: "Clinic Information",
-                    icon: Icons.medical_services,
-                  ),
                   20.hBox,
-                  EditItem(
-                    title: "Clinic Info",
-                    subtitle: "Healthy Heart Clinic",
-                    onTap: () {
-                      context.pushNamed(Routes.clinicInfoScreen);
-                    },
-                  ),
-                  15.hBox,
-                  EditItem(
-                    title: "Clinic Address",
-                    subtitle: "نجع حمادي",
-                    onTap: () {
-                      context.pushNamed(Routes.clinicAddressScreen);
-                    },
-                  ),
-                  15.hBox,
-                  EditItem(
-                    title: "Clinic Offer",
-                    subtitle: "Sat-Thu: 9:00 AM - 5:00 PM",
-                    onTap: () {
-                      Dialogs.bottomSheet(context, title: "No Offers Current");
-                      // context.pushNamed(Routes.clinicOfferScreen);
-                    },
-                  ),
+                  const ProfileTitle(title: "Setting", icon: Icons.settings),
                   10.hBox,
+                  const SettingItem(
+                      title: "About Us", icon: Icons.info_outline),
+                  15.hBox,
+                  const SettingItem(title: "Privacy", icon: Icons.privacy_tip),
+                  15.hBox,
+                  const SettingItem(title: "LogOut", icon: Icons.logout),
+                  // 15.hBox,
+                  // const ProfileTitle(
+                  //   title: "Clinic Information",
+                  //   icon: Icons.medical_services,
+                  // ),
+                  // 20.hBox,
+                  // EditItem(
+                  //   title: "Clinic Info",
+                  //   subtitle: "Healthy Heart Clinic",
+                  //   onTap: () {
+                  //     context.pushNamed(Routes.clinicInfoScreen);
+                  //   },
+                  // ),
+                  // 15.hBox,
+                  // EditItem(
+                  //   title: "Clinic Address",
+                  //   subtitle: "نجع حمادي",
+                  //   onTap: () {
+                  //     context.pushNamed(Routes.clinicAddressScreen);
+                  //   },
+                  // ),
+                  // 15.hBox,
+                  // EditItem(
+                  //   title: "Clinic Offer",
+                  //   subtitle: "Sat-Thu: 9:00 AM - 5:00 PM",
+                  //   onTap: () {
+                  //     Dialogs.bottomSheet(context, title: "No Offers Current");
+                  //     // context.pushNamed(Routes.clinicOfferScreen);
+                  //   },
+                  // ),
+                  // 10.hBox,
                 ],
               ),
             ],

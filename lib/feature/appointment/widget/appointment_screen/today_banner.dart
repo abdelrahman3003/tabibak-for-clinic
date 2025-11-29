@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
+import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 
 class TodayBanner extends StatelessWidget {
   final int count;
@@ -16,9 +17,9 @@ class TodayBanner extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onSecondary,
-        borderRadius: const BorderRadius.only(
+      decoration: const BoxDecoration(
+        color: AppColors.second,
+        borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(25),
           bottomRight: Radius.circular(25),
         ),
@@ -26,33 +27,37 @@ class TodayBanner extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Appointments Today",
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            "$count Appointments",
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          12.hBox,
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Icons.calendar_today,
-                  color: Colors.white.withOpacity(.9), size: 18),
-              const SizedBox(width: 6),
+              const CircleAvatar(
+                radius: 20,
+                child: Icon(Icons.person),
+              ),
+              8.wBox,
               Text(
-                "$dayName - $date",
-                style: TextStyle(
-                  color: Colors.white.withOpacity(.95),
-                  fontSize: 15,
-                ),
+                "DR.Abdelrahman Temsah",
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
+          ),
+          10.hBox,
+          RichText(
+              text: TextSpan(children: [
+            TextSpan(
+                text: "$count ",
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineMedium
+                    ?.copyWith(fontWeight: FontWeight.bold)),
+            TextSpan(
+                text: "Appointments",
+                style: Theme.of(context).textTheme.titleLarge)
+          ])),
+          5.hBox,
+          Text(
+            "$dayName - $date",
+            style: Theme.of(context).textTheme.bodyMedium,
           )
         ],
       ),
