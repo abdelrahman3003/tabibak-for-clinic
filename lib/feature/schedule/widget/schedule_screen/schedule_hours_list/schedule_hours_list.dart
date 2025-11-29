@@ -102,6 +102,8 @@ class ScheduleHoursList extends StatelessWidget {
 
     return ListView.builder(
       itemCount: scheduleHoursItemList.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final day = scheduleHoursItemList[index];
         return ScheduleHoursItem(day: day);

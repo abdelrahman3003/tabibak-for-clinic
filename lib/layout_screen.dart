@@ -33,7 +33,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
     _tabs = [
       GButton(
         icon: Icons.calendar_today_outlined,
-        text: "Schedule",
+        text: "Clinic",
         textStyle: _tabTextStyle(),
       ),
       GButton(

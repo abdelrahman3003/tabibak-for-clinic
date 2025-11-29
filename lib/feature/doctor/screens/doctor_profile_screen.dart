@@ -93,37 +93,6 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                   const SettingItem(title: "Privacy", icon: Icons.privacy_tip),
                   15.hBox,
                   const SettingItem(title: "LogOut", icon: Icons.logout),
-                  // 15.hBox,
-                  // const ProfileTitle(
-                  //   title: "Clinic Information",
-                  //   icon: Icons.medical_services,
-                  // ),
-                  // 20.hBox,
-                  // EditItem(
-                  //   title: "Clinic Info",
-                  //   subtitle: "Healthy Heart Clinic",
-                  //   onTap: () {
-                  //     context.pushNamed(Routes.clinicInfoScreen);
-                  //   },
-                  // ),
-                  // 15.hBox,
-                  // EditItem(
-                  //   title: "Clinic Address",
-                  //   subtitle: "نجع حمادي",
-                  //   onTap: () {
-                  //     context.pushNamed(Routes.clinicAddressScreen);
-                  //   },
-                  // ),
-                  // 15.hBox,
-                  // EditItem(
-                  //   title: "Clinic Offer",
-                  //   subtitle: "Sat-Thu: 9:00 AM - 5:00 PM",
-                  //   onTap: () {
-                  //     Dialogs.bottomSheet(context, title: "No Offers Current");
-                  //     // context.pushNamed(Routes.clinicOfferScreen);
-                  //   },
-                  // ),
-                  // 10.hBox,
                 ],
               ),
             ],
