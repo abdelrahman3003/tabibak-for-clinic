@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
-import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_personal_info_screen/app_bar_save.dart';
 
 class ClinicAddressScreen extends StatelessWidget {
   const ClinicAddressScreen({super.key});

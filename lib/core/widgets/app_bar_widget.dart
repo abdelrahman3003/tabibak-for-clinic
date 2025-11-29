@@ -15,6 +15,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.onLeadingPressed,
     this.iconButtonBgColor,
+    this.bottom,
   });
 
   final dynamic title;
@@ -27,11 +28,13 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final double? height;
   final Future<void> Function()? onLeadingPressed;
+  final PreferredSizeWidget? bottom;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       toolbarHeight: height,
+      bottom: bottom,
       automaticallyImplyLeading: isShowBack,
       elevation: 1,
       scrolledUnderElevation: 1,

@@ -3,8 +3,8 @@ import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
-import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/text_button_widget.dart';
 import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_screen/schedule_hours_list/schedule_hours_list.dart';
+import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_screen/schedule_hours_list/title_text_row.dart';
 import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_screen/title_text.dart';
 
 class ScheduleScreen extends StatelessWidget {
@@ -22,27 +22,19 @@ class ScheduleScreen extends StatelessWidget {
             10.hBox,
             _buildSectionHeader(context),
             20.hBox,
-            _buildScheduleHoursRow(context),
-            5.hBox,
+            TitleTextRow(
+              title: "Schedule Hours",
+              subtitle: "Edit",
+              onTap: () {
+                context.pushNamed(Routes.scheduleEditScreen);
+              },
+            ),
+            10.hBox,
             _buildScheduleHeader(context),
             const Expanded(child: ScheduleHoursList()),
           ],
         ),
       ),
-    );
-  }
-
-  Row _buildScheduleHoursRow(BuildContext context) {
-    return Row(
-      children: [
-        const Expanded(child: TitleText(title: AppString.scheduleHours)),
-        TextButtonWidget(
-          text: "Edit",
-          onTap: () {
-            context.pushNamed(Routes.scheduleEditScreen);
-          },
-        )
-      ],
     );
   }
 

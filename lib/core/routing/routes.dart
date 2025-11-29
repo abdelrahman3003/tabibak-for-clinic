@@ -15,4 +15,6 @@ class Routes {
   static const String clinicOfferScreen = "/clinicOfferScreen";
   static const String clinicInfoScreen = "/clinicInfoScreen";
   static const String clinicAddressScreen = "/clinicAddressScreen";
+  static const String allAppointmentScreen = "/allAppointmentScreen";
+  static const String appointmentDetailsScreen = "/appointmentDetailsScreen";
 }

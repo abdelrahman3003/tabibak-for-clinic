@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/route_screen_wapper.dart';
+import 'package:tabibak_for_clinic/feature/appointment/all_appointment_screen.dart';
+import 'package:tabibak_for_clinic/feature/appointment/appointment_details_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/get_specialties_usecase.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_in_bloc/signin_bloc.dart';
@@ -64,6 +66,8 @@ class AppRouter {
       case Routes.doctorEducationScreen:
         return _buildSlideRoute(
             const RootScreenWrapper(child: DoctorEducationScreen()));
+
+      //clinic
       case Routes.clinicInfoScreen:
         return _buildSlideRoute(
             const RootScreenWrapper(child: ClinicInfoScreen()));
@@ -73,7 +77,13 @@ class AppRouter {
       case Routes.clinicOfferScreen:
         return _buildSlideRoute(
             const RootScreenWrapper(child: ClinicOfferScreen()));
-
+      //appointment
+      case Routes.allAppointmentScreen:
+        return _buildSlideRoute(
+            const RootScreenWrapper(child: AllAppointmentScreen()));
+      case Routes.appointmentDetailsScreen:
+        return _buildSlideRoute(
+            const RootScreenWrapper(child: AppointmentDetailsScreen()));
       default:
         return _buildSlideRoute(
           Scaffold(

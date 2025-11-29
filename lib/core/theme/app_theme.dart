@@ -12,7 +12,7 @@ class AppTheme {
       surface: AppColors.scaffoldBG,
       primary: AppColors.primary,
       secondary: Colors.grey.shade600,
-      onSecondary: AppColors.primary,
+      onSecondary: AppColors.primaryDark,
     ),
     textTheme: const TextTheme(
       bodyLarge: TextStyle(fontSize: 18),
