@@ -1,30 +1,14 @@
-class ClinicInfoModel {
-  final String clinicName;
-  final String address;
-  final String phoneNumber;
-  final int consultationFee;
-  final bool isBooking;
-  final int doctorId;
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
 
+class ClinicInfoModel extends ClinicInfoEntity {
   ClinicInfoModel({
-    required this.clinicName,
-    required this.address,
-    required this.phoneNumber,
-    required this.consultationFee,
-    required this.isBooking,
-    required this.doctorId,
+    required super.clinicName,
+    required super.address,
+    required super.phoneNumber,
+    required super.consultationFee,
+    required super.isBooking,
+    required super.doctorId,
   });
-
-  Map<String, dynamic> toJson() {
-    return {
-      "clinic_name": clinicName,
-      "address": address,
-      "phone_number": phoneNumber,
-      "consultation_fee": consultationFee,
-      "isBooking": isBooking,
-      "doctor_id": doctorId,
-    };
-  }
 
   factory ClinicInfoModel.fromJson(Map<String, dynamic> json) {
     return ClinicInfoModel(
@@ -35,5 +19,16 @@ class ClinicInfoModel {
       isBooking: json["isBooking"],
       doctorId: json["doctor_id"],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "clinic_name": clinicName,
+      "address": address,
+      "phone_number": phoneNumber,
+      "consultation_fee": consultationFee,
+      "isBooking": isBooking,
+      "doctor_id": doctorId,
+    };
   }
 }
