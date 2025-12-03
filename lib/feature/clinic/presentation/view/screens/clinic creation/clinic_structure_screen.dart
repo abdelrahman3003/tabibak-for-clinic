@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
-import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
-import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
-import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_structure_screen/clinic_info_button_states.dart';
 
 class ClinicStructureScreen extends StatelessWidget {
   const ClinicStructureScreen({super.key});
@@ -28,12 +26,7 @@ class ClinicStructureScreen extends StatelessWidget {
                 suffixText: "EGY",
               ),
               const Spacer(),
-              AppButton(
-                title: "Continue",
-                onPressed: () {
-                  context.pushNamed(Routes.clinicDaysScreen);
-                },
-              ),
+              const ClinicInfoButtonStates(),
               25.hBox,
             ],
           ),

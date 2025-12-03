@@ -5,7 +5,7 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/shift_day_time.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_shifts_screen/shift_day_time.dart';
 
 class ClinicShiftsTimeScreen extends StatelessWidget {
   const ClinicShiftsTimeScreen({super.key});

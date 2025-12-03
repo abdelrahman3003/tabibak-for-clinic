@@ -12,6 +12,9 @@ import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_blo
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/professional_practice_license_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signin_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signup_screen.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_time/clinic_time_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_working_day/clinic_working_day_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20creation/clinic_days_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20creation/clinic_shifts_time_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20creation/clinic_structure_screen.dart';
@@ -81,14 +84,23 @@ class AppRouter {
         return _buildSlideRoute(
             const RootScreenWrapper(child: ClinicOfferScreen()));
       case Routes.clinicStructureScreen:
-        return _buildSlideRoute(
-            const RootScreenWrapper(child: ClinicStructureScreen()));
+        return _buildSlideRoute(RootScreenWrapper(
+            child: BlocProvider(
+          create: (context) => getit<ClinicInfoBloc>(),
+          child: const ClinicStructureScreen(),
+        )));
       case Routes.clinicDaysScreen:
-        return _buildSlideRoute(
-            const RootScreenWrapper(child: ClinicDaysScreen()));
+        return _buildSlideRoute(RootScreenWrapper(
+            child: BlocProvider(
+          create: (context) => getit<ClinicWorkingDayBloc>(),
+          child: const ClinicDaysScreen(),
+        )));
       case Routes.clinicShiftsTimeScreen:
-        return _buildSlideRoute(
-            const RootScreenWrapper(child: ClinicShiftsTimeScreen()));
+        return _buildSlideRoute(RootScreenWrapper(
+            child: BlocProvider(
+          create: (context) => getit<ClinicTimeBloc>(),
+          child: const ClinicShiftsTimeScreen(),
+        )));
       //appointment
       case Routes.allAppointmentScreen:
         return _buildSlideRoute(

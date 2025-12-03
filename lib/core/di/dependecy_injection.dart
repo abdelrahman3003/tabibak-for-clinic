@@ -14,6 +14,18 @@ import 'package:tabibak_for_clinic/feature/auth/domain/usecases/sign_in_with_goo
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_in_bloc/signin_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_bloc/signup_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote_data.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote_data_impl.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/repos_impl/clinic_repo_impl.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/repos/clinic_repo.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_info_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_shift_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_time_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_working_day_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_shift/clinic_shift_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_time/clinic_time_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_working_day/clinic_working_day_bloc.dart';
 
 final getit = GetIt.instance;
 Future<void> initGetIt() async {
@@ -61,4 +73,31 @@ Future<void> initGetIt() async {
   getit.registerFactory(() => SigninBloc(
       signInUsecase: getit<SignInUsecase>(),
       signInWithGooglUsecase: getit<SignInWithGooglUsecase>()));
+
+  //! Clinic Feature
+// remote data source
+  getit.registerLazySingleton<ClinicRemoteData>(
+      () => ClinicRemoteDataImpl(dio: dio));
+
+  //repos
+  getit.registerLazySingleton<ClinicRepo>(
+      () => ClinicRepoImpl(clinicRemoteData: getit<ClinicRemoteData>()));
+
+  //useCases
+  getit.registerLazySingleton<CreateClinicInfoUseCase>(
+      () => CreateClinicInfoUseCase(clinicRepo: getit<ClinicRepo>()));
+  getit.registerLazySingleton<CreateClinicWorkingDayUseCase>(
+      () => CreateClinicWorkingDayUseCase(clinicRepo: getit<ClinicRepo>()));
+  getit.registerLazySingleton<CreateClinicShiftUseCase>(
+      () => CreateClinicShiftUseCase(clinicRepo: getit<ClinicRepo>()));
+  getit.registerLazySingleton<CreateClinicTimeUseCase>(
+      () => CreateClinicTimeUseCase(clinicRepo: getit<ClinicRepo>()));
+
+  // Blocs
+  getit.registerFactory(() => ClinicInfoBloc(getit<CreateClinicInfoUseCase>()));
+  getit.registerFactory(
+      () => ClinicWorkingDayBloc(getit<CreateClinicWorkingDayUseCase>()));
+  getit.registerFactory(
+      () => ClinicShiftBloc(getit<CreateClinicShiftUseCase>()));
+  getit.registerFactory(() => ClinicTimeBloc(getit<CreateClinicTimeUseCase>()));
 }

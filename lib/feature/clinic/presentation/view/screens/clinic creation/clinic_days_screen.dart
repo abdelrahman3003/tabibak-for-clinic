@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
-import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
-import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
-import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_working_day_item.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_button_states.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_item.dart';
 
 class ClinicDaysScreen extends StatelessWidget {
   const ClinicDaysScreen({super.key});
@@ -39,12 +37,7 @@ class ClinicDaysScreen extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            AppButton(
-              title: "Continue",
-              onPressed: () {
-                context.pushNamed(Routes.clinicShiftsTimeScreen);
-              },
-            ),
+            const ClinicWorkDayButtonStates(),
             25.hBox
           ],
         ),
