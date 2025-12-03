@@ -43,7 +43,11 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: false,
       title: (title is String)
           ? Text(title,
-              style: titleStyle ?? Theme.of(context).textTheme.bodyLarge)
+              style: titleStyle ??
+                  Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontWeight: FontWeight.bold))
           : title,
       actions: actions ??
           [

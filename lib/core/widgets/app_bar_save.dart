@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
 
 class AppBarSave extends AppBarWidget {
@@ -18,10 +17,9 @@ class AppBarSave extends AppBarWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
             child: Text(
               "Save",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: AppColors.primary),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold),
             ),
           ),
         )
