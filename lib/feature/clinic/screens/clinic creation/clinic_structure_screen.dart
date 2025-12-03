@@ -31,7 +31,7 @@ class ClinicStructureScreen extends StatelessWidget {
               AppButton(
                 title: "Continue",
                 onPressed: () {
-                  context.pushNamed(Routes.clinicStructureScreen);
+                  context.pushNamed(Routes.clinicDaysScreen);
                 },
               ),
               25.hBox,
