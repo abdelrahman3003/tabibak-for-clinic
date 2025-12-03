@@ -23,7 +23,6 @@ class _ShiftHoursState extends State<ShiftHours> {
             Text(
               widget.shift,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w600,
                   color: isActive ? AppColors.black : AppColors.grey),
             ),
             const Spacer(),

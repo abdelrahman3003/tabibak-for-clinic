@@ -5,47 +5,35 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
-import 'package:tabibak_for_clinic/feature/clinic/widget/clinic_working_day_item.dart';
+import 'package:tabibak_for_clinic/feature/clinic/widget/shift_day_time.dart';
 
-class ClinicDaysScreen extends StatelessWidget {
-  const ClinicDaysScreen({super.key});
+class ClinicShiftsTimeScreen extends StatelessWidget {
+  const ClinicShiftsTimeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<String> days = const [
-      "Saturday",
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday"
-    ];
-
     return Scaffold(
       appBar: const AppBarWidget(
-        title: "Clinic Working Days",
+        title: "Shift Times",
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              children: List.generate(
-                days.length,
-                (index) => ClinicWorkingDayItem(
-                  text: days[index],
-                ),
-              ),
-            ),
+            const ShiftDayTime(),
+            const ShiftDayTime(),
             const Spacer(),
             AppButton(
-              title: "Continue",
+              title: "Save",
               onPressed: () {
-                context.pushNamed(Routes.clinicShiftsTimeScreen);
+                context.pushNamedAndRemoveUntil(
+                  Routes.layOutScreen,
+                  (_) => false,
+                );
               },
             ),
-            25.hBox
+            20.hBox
           ],
         ),
       ),

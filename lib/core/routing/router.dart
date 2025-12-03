@@ -13,6 +13,7 @@ import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/profess
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signin_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signup_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/screens/clinic%20creation/clinic_days_screen.dart';
+import 'package:tabibak_for_clinic/feature/clinic/screens/clinic%20creation/clinic_shifts_time_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/screens/clinic%20creation/clinic_structure_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/screens/clinic%20details/clinic_address_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/screens/clinic%20details/clinic_info_screen.dart';
@@ -85,6 +86,9 @@ class AppRouter {
       case Routes.clinicDaysScreen:
         return _buildSlideRoute(
             const RootScreenWrapper(child: ClinicDaysScreen()));
+      case Routes.clinicShiftsTimeScreen:
+        return _buildSlideRoute(
+            const RootScreenWrapper(child: ClinicShiftsTimeScreen()));
       //appointment
       case Routes.allAppointmentScreen:
         return _buildSlideRoute(
