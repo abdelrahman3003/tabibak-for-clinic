@@ -19,11 +19,11 @@ class AuthRemoteDataImp implements AuthRemoteData {
     required this.dio,
   });
   @override
-  Future<void> signUp({required String email, required String password}) async {
-    final response =
-        await supabase.client.auth.signUp(email: email, password: password);
-
+  Future<void> signUp({required DoctorModel doctorModel}) async {
+    final response = await supabase.client.auth
+        .signUp(email: doctorModel.email, password: doctorModel.password);
     if (response.user != null) {
+      await addDoctor(doctorModel: doctorModel, id: response.user!.id);
     } else {
       throw Exception('Sign up failed');
     }
@@ -40,12 +40,13 @@ class AuthRemoteDataImp implements AuthRemoteData {
   }
 
   @override
-  Future<int> addDoctor({required DotcorModel dotcorModel}) async {
-    final response = await dio.postUri(
-        Uri.parse("${ApiConstants.apiBaseUrl}/doctors"),
-        data: dotcorModel.toJson());
+  Future<void> addDoctor(
+      {required DoctorModel doctorModel, required String id}) async {
+    final data = doctorModel.toJson();
+    data['doctor_id'] = id;
+    final response = await dio
+        .postUri(Uri.parse("${ApiConstants.apiBaseUrl}/doctors"), data: data);
     if (response.statusCode == 201 || response.statusCode == 200) {
-      return response.data[0]['id'];
     } else {
       throw DioException(requestOptions: response.requestOptions);
     }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/entities/doctor_entity.dart';
@@ -16,13 +15,11 @@ class ProfessionalLicenseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-
     final name = args["name"];
     final email = args["email"];
     final phone = args["phone"];
     final password = args["password"];
     final specialization = args["specialization"];
-    final user = args['user'] as User?;
     String? medicalLiecense;
     return Scaffold(
       appBar: AppBar(
@@ -62,16 +59,15 @@ class ProfessionalLicenseScreen extends StatelessWidget {
             const Spacer(),
             ConfirmButton(
               onPressed: () {
-                context.read<SignupBloc>().add(SignupRequested(
-                    doctorEntity: DoctorEntity(
-                      name: name,
-                      phone: phone,
-                      email: email,
-                      specialty: specialization,
-                      medicalLiecense: medicalLiecense!,
-                    ),
-                    password: password,
-                    user: user));
+                context.read<SignupBloc>().add(SignupRequestedEvent(
+                      doctorEntity: DoctorEntity(
+                          name: name,
+                          phone: phone,
+                          email: email,
+                          specialty: specialization,
+                          medicalLiecense: medicalLiecense!,
+                          password: password),
+                    ));
               },
             )
           ],

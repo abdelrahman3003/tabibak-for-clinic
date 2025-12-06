@@ -7,6 +7,7 @@ class DoctorEntity extends Equatable {
   final String? image;
   final int specialty;
   final String medicalLiecense;
+  final String password;
 
   const DoctorEntity({
     required this.name,
@@ -15,9 +16,10 @@ class DoctorEntity extends Equatable {
     this.image,
     required this.specialty,
     required this.medicalLiecense,
+    required this.password,
   });
 
   @override
   List<Object?> get props =>
-      [name, email, phone, image, specialty, medicalLiecense];
+      [name, email, phone, image, specialty, medicalLiecense, password];
 }

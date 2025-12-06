@@ -1,15 +1,14 @@
 import 'package:tabibak_for_clinic/feature/auth/domain/entities/doctor_entity.dart';
 
-class DotcorModel extends DoctorEntity {
-  final String password;
-  const DotcorModel({
+class DoctorModel extends DoctorEntity {
+  const DoctorModel({
     required super.name,
     required super.phone,
     required super.image,
     required super.specialty,
     required super.medicalLiecense,
     required super.email,
-    required this.password,
+    required super.password,
   });
   Map<String, dynamic> toJson() {
     return {

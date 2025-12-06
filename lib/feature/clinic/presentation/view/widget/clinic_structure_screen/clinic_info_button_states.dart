@@ -4,11 +4,12 @@ import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
 
 class ClinicInfoButtonStates extends StatelessWidget {
-  const ClinicInfoButtonStates({super.key});
-
+  const ClinicInfoButtonStates({super.key, required this.clinicInfoEntity});
+  final ClinicInfoEntity clinicInfoEntity;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ClinicInfoBloc, ClinicInfoState>(
@@ -24,7 +25,9 @@ class ClinicInfoButtonStates extends StatelessWidget {
           title: "Continue",
           isLoading: state is ClinicInfoLoading,
           onPressed: () {
-            context.pushNamed(Routes.clinicDaysScreen);
+            context
+                .read<ClinicInfoBloc>()
+                .add(CreateClinicInfoEvent(clinicInfoEntity: clinicInfoEntity));
           },
         );
       },

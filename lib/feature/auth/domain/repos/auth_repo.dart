@@ -6,10 +6,8 @@ import 'package:tabibak_for_clinic/feature/auth/domain/entities/specialty_entity
 
 abstract class AuthRepo {
   Future<Either<ApiErrorModel, void>> signUp(
-      {required DoctorEntity doctorEntity, required String password});
+      {required DoctorEntity doctorEntity});
   Future<Either<ApiErrorModel, String?>> uploadFile({required String filePath});
-  Future<Either<ApiErrorModel, int>> addDoctor(
-      {required DoctorEntity doctorEntity, required String password});
   Future<Either<ApiErrorModel, void>> signIn(
       {required String email, required String password});
   Future<Either<ApiErrorModel, SigninResultEntity>> signInWithGoogle();

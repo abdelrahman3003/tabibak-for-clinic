@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/functions/pick_image.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/entities/doctor_entity.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/entities/specialty_entity.dart';
@@ -10,10 +9,6 @@ import 'package:tabibak_for_clinic/feature/auth/domain/usecases/sign_up_usecase.
 
 part 'signup_event.dart';
 part 'signup_state.dart';
-
-extension SignupRequestedWorkDayShiftsExtension on SignupRequested {
-  dynamic get workDayShifts => <dynamic>[];
-}
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   final SignUpUsecase signUpUsecase;
@@ -33,12 +28,11 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         );
       },
     );
-    on<SignupRequested>((event, emit) async {
+    on<SignupRequestedEvent>((event, emit) async {
       emit(SignupLoading());
       final result = await signUpUsecase.call(
-          doctorEntity: event.doctorEntity,
-          password: event.password,
-          user: event.user);
+        doctorEntity: event.doctorEntity,
+      );
       result.fold(
         (error) =>
             emit(SignupError(errorMessage: error.message ?? 'Unknown Error')),
@@ -51,7 +45,6 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         emit(UploadFileSuccess(file: file));
       }
     });
-
     add(const GetSpecialtiesRequested());
   }
 }

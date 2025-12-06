@@ -8,13 +8,9 @@ abstract class SignupEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class SignupRequested extends SignupEvent {
+class SignupRequestedEvent extends SignupEvent {
   final DoctorEntity doctorEntity;
-  final String password;
-  final User? user;
-
-  const SignupRequested(
-      {required this.doctorEntity, required this.password, required this.user});
+  const SignupRequestedEvent({required this.doctorEntity});
 }
 
 class GetSpecialtiesRequested extends SignupEvent {
