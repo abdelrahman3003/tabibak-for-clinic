@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_in_bloc/signin_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_bloc/signup_bloc.dart';
 
 class UploadImageWidget extends StatelessWidget {
@@ -15,7 +14,7 @@ class UploadImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<SignupBloc, SignupState>(
       buildWhen: (previous, current) =>
-          current is UploadFileSuccess || current is SigninError,
+          current is UploadFileSuccess || current is SignupError,
       listener: (context, state) {
         if (state is UploadFileSuccess) {
           onChangedImageName?.call(state.file?.path);
