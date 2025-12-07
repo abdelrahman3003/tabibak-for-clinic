@@ -1,3 +1,5 @@
+import 'dart:developer' show log;
+
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
@@ -21,14 +23,15 @@ class ClinicRepoImpl implements ClinicRepo {
       ClinicInfoEntity clinicInfoEntity) async {
     final clinicInfoModel = ClinicInfoModel(
       clinicName: clinicInfoEntity.clinicName,
-      address: clinicInfoEntity.address,
       phoneNumber: clinicInfoEntity.phoneNumber,
       consultationFee: clinicInfoEntity.consultationFee,
       isBooking: clinicInfoEntity.isBooking,
-      doctorId: clinicInfoEntity.doctorId,
     );
     try {
+      log("------ repo ${clinicInfoModel.clinicName}");
+
       final result = await clinicRemoteData.createClinicInfo(clinicInfoModel);
+
       return right(result);
     } catch (e) {
       return left(ErrorHandler.handle(e));

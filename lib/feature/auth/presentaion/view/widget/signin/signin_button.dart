@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
-import 'package:tabibak_for_clinic/core/widgets/snackBar_widget.dart';
+import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_in_bloc/signin_bloc.dart';
 
 class SigninButton extends StatelessWidget {
@@ -22,7 +22,7 @@ class SigninButton extends StatelessWidget {
           context.pushNamed(Routes.layOutScreen);
         }
         if (state is SigninError) {
-          showSnackBar(context: context, messege: state.errorMessage);
+          AppSnackBar.show(context: context, message: state.errorMessage);
         }
       },
       builder: (context, state) {

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
+import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_bloc/signup_bloc.dart';
 
 class ConfirmButton extends StatelessWidget {
@@ -22,9 +23,7 @@ class ConfirmButton extends StatelessWidget {
           context.pushNamed(Routes.layOutScreen);
         }
         if (state is SignupError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage)),
-          );
+          AppSnackBar.show(context: context, message: state.errorMessage);
         }
       },
       builder: (context, state) {

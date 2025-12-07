@@ -12,9 +12,9 @@ final class ClinicInfoInitial extends ClinicInfoState {}
 final class ClinicInfoLoading extends ClinicInfoState {}
 
 final class ClinicInfoFailed extends ClinicInfoState {
-  final String errorMEssage;
+  final String errorMessage;
 
-  const ClinicInfoFailed({required this.errorMEssage});
+  const ClinicInfoFailed({required this.errorMessage});
 }
 
 final class ClinicInfoSuccess extends ClinicInfoState {}

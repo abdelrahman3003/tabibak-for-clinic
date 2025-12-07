@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
-import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
+import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
-import 'package:tabibak_for_clinic/core/helper/shared_pref_helper.dart';
+import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
 
 class CreateClinicScreen extends StatelessWidget {
@@ -22,8 +22,8 @@ class CreateClinicScreen extends StatelessWidget {
             AppButton(
               title: "Create Clinic",
               onPressed: () {
-                getit<SharedPrefHelper>().removeData(SharedPrefKeys.step);
-                // context.pushNamed(Routes.clinicStructureScreen);
+                //    getit<SharedPrefHelper>().removeData(SharedPrefKeys.step);
+                context.pushNamed(Routes.clinicStructureScreen);
               },
             ),
             10.hBox

@@ -5,7 +5,7 @@ part 'api_error_model.g.dart';
 @JsonSerializable()
 class ApiErrorModel {
   final String? message;
-  final int? code;
+  final dynamic code;
   @JsonKey(name: "data")
   final dynamic errors;
 
