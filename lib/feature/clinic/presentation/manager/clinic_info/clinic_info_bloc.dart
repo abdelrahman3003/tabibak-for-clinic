@@ -1,5 +1,3 @@
-import 'dart:developer' show log;
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
@@ -13,8 +11,6 @@ class ClinicInfoBloc extends Bloc<ClinicInfoEvent, ClinicInfoState> {
 
   ClinicInfoBloc(this.createClinicInfoUseCase) : super(ClinicInfoInitial()) {
     on<CreateClinicInfoEvent>((event, emit) async {
-      log("------bloc ${event.clinicInfoEntity.clinicName}");
-
       emit(ClinicInfoLoading());
       final result = await createClinicInfoUseCase.call(event.clinicInfoEntity);
       result.fold(

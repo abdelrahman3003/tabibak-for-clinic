@@ -12,3 +12,5 @@ class CreateClinicWorkingDayEvent extends ClinicWorkingDayEvent {
 
   const CreateClinicWorkingDayEvent({required this.clinicWorkingDayEntity});
 }
+
+class GetAllDaysEvent extends ClinicWorkingDayEvent {}

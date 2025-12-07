@@ -23,3 +23,13 @@ class ClinicShiftModel extends ClinicShiftEntity {
     };
   }
 }
+
+extension ClinicShiftMapper on ClinicShiftEntity {
+  ClinicShiftModel toModel() {
+    return ClinicShiftModel(
+      morning: morning,
+      evening: evening,
+      workingDayId: workingDayId,
+    );
+  }
+}

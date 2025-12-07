@@ -26,3 +26,14 @@ class ClinicInfoModel extends ClinicInfoEntity {
     };
   }
 }
+
+extension ClinicInfoEntityMapper on ClinicInfoEntity {
+  ClinicInfoModel toModel() {
+    return ClinicInfoModel(
+      clinicName: clinicName,
+      phoneNumber: phoneNumber,
+      consultationFee: consultationFee,
+      isBooking: isBooking,
+    );
+  }
+}

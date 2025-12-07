@@ -19,3 +19,12 @@ class ClinicWorkingDayModel extends ClinicWorkingDayEntity {
     };
   }
 }
+
+extension ClinicWorkingDayMapper on ClinicWorkingDayEntity {
+  ClinicWorkingDayModel toModel() {
+    return ClinicWorkingDayModel(
+      clinicId: clinicId,
+      day: day,
+    );
+  }
+}

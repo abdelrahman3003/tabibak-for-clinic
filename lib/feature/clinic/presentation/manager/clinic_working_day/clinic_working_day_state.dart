@@ -18,3 +18,11 @@ final class ClinicWorkingDayFailed extends ClinicWorkingDayState {
 }
 
 final class ClinicWorkingDaySuccess extends ClinicWorkingDayState {}
+
+final class GetAllDaysLoading extends ClinicWorkingDayState {}
+
+final class GetAllDaysSuccess extends ClinicWorkingDayState {
+  final List<ClinicDayEntity> days;
+
+  const GetAllDaysSuccess({required this.days});
+}
