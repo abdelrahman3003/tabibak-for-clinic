@@ -7,10 +7,4 @@ sealed class ClinicWorkingDayEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class CreateClinicWorkingDayEvent extends ClinicWorkingDayEvent {
-  final ClinicWorkingDayEntity clinicWorkingDayEntity;
-
-  const CreateClinicWorkingDayEvent({required this.clinicWorkingDayEntity});
-}
-
 class GetAllDaysEvent extends ClinicWorkingDayEvent {}

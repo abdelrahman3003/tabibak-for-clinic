@@ -21,10 +21,10 @@ import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clin
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20details/clinic_address_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20details/clinic_info_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20details/clinic_offer_screen.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20schedule/schedule_edit_screen.dart';
 import 'package:tabibak_for_clinic/feature/doctor/screens/doctor_education_screen.dart';
 import 'package:tabibak_for_clinic/feature/doctor/screens/doctor_personal_info_screen.dart';
 import 'package:tabibak_for_clinic/feature/doctor/screens/doctor_specialty_screen.dart';
-import 'package:tabibak_for_clinic/feature/schedule/schedule_edit_screen.dart';
 
 import '../../layout_screen.dart';
 

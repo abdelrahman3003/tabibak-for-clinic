@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
-import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_edit_screen/shift_hours.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_edit_screen/shift_hours.dart';
 
 class ShiftDayTime extends StatelessWidget {
   const ShiftDayTime(

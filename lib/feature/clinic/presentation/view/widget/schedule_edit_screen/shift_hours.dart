@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
-import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_edit_screen/time_field.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_edit_screen/time_field.dart';
 
 class ShiftHours extends StatefulWidget {
   const ShiftHours(

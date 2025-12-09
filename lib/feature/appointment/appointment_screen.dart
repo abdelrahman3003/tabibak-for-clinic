@@ -5,7 +5,7 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/feature/appointment/widget/appointment_screen/appointment_card.dart';
 import 'package:tabibak_for_clinic/feature/appointment/widget/appointment_screen/today_banner.dart';
-import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_screen/title_text_row.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/title_text_row.dart';
 
 class AppointmentScreen extends StatelessWidget {
   const AppointmentScreen({super.key});

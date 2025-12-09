@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_edit_screen/shift_hours.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_edit_screen/shift_hours.dart';
 
 class ScheduleDay extends StatefulWidget {
   const ScheduleDay({super.key, required this.day});

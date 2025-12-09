@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/clinic_header.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/clinic_info_section.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/schedule_hours_header.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/schedule_hours_list/schedule_hours_list.dart';
 import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/profile_title.dart';
 import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/text_button_widget.dart';
-import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_screen/clinic_header.dart';
-import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_screen/clinic_info_section.dart';
-import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_screen/schedule_hours_header.dart';
-import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_screen/schedule_hours_list/schedule_hours_list.dart';
 
 class ScheduleScreen extends StatelessWidget {
   const ScheduleScreen({super.key});

@@ -19,10 +19,7 @@ import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote
 import 'package:tabibak_for_clinic/feature/clinic/data/repos_impl/clinic_repo_impl.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/repos/clinic_repo.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_info_use_case.dart';
-import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_shift_use_case.dart';
-import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_time_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_working_day_shift_use_case.dart';
-import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_working_day_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_days_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_shift/clinic_shift_bloc.dart';
@@ -87,12 +84,7 @@ Future<void> initGetIt() async {
   //useCases
   getit.registerLazySingleton<CreateClinicInfoUseCase>(
       () => CreateClinicInfoUseCase(clinicRepo: getit<ClinicRepo>()));
-  getit.registerLazySingleton<CreateClinicWorkingDayUseCase>(
-      () => CreateClinicWorkingDayUseCase(clinicRepo: getit<ClinicRepo>()));
-  getit.registerLazySingleton<CreateClinicShiftUseCase>(
-      () => CreateClinicShiftUseCase(clinicRepo: getit<ClinicRepo>()));
-  getit.registerLazySingleton<CreateClinicTimeUseCase>(
-      () => CreateClinicTimeUseCase(clinicRepo: getit<ClinicRepo>()));
+
   getit.registerLazySingleton<GetDaysUseCase>(
       () => GetDaysUseCase(clinicRepo: getit<ClinicRepo>()));
   getit.registerLazySingleton<CreateClinicWorkingDayShiftUseCase>(() =>
@@ -100,9 +92,8 @@ Future<void> initGetIt() async {
 
   // Blocs
   getit.registerFactory(() => ClinicInfoBloc(getit<CreateClinicInfoUseCase>()));
-  getit.registerFactory(() => ClinicWorkingDayBloc(
-      clinicWorkingDayUseCase: getit<CreateClinicWorkingDayUseCase>(),
-      getDaysUseCase: getit<GetDaysUseCase>()));
+  getit.registerFactory(
+      () => ClinicWorkingDayBloc(getDaysUseCase: getit<GetDaysUseCase>()));
   getit.registerFactory(
       () => ClinicShiftBloc(getit<CreateClinicWorkingDayShiftUseCase>()));
 }
