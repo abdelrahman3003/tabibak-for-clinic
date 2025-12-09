@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/clinic_header.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/clinic_info_section.dart';
@@ -19,34 +18,30 @@ class ScheduleScreen extends StatelessWidget {
           const ClinicHeader(),
           5.hBox,
           Expanded(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    15.hBox,
-                    const ProfileTitle(
-                        title: "Clinic Information",
-                        icon: Icons.medical_services),
-                    15.hBox,
-                    const ClinicInfoSection(),
-                    20.hBox,
-                    const Row(
-                      children: [
-                        Expanded(
-                          child: ProfileTitle(
-                              title: "Schedule", icon: Icons.medical_services),
-                        ),
-                        TextButtonWidget(text: "Edit")
-                      ],
-                    ),
-                    15.hBox,
-                    const ScheduleHoursHeader(),
-                    const ScheduleHoursList()
-                  ],
-                ),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  15.hBox,
+                  const ProfileTitle(
+                      title: "Clinic Information",
+                      icon: Icons.medical_services),
+                  15.hBox,
+                  const ClinicInfoSection(),
+                  20.hBox,
+                  const Row(
+                    children: [
+                      Expanded(
+                        child: ProfileTitle(
+                            title: "Schedule", icon: Icons.medical_services),
+                      ),
+                      TextButtonWidget(text: "Edit")
+                    ],
+                  ),
+                  15.hBox,
+                  const ScheduleHoursHeader(),
+                  const ScheduleHoursList()
+                ],
               ),
             ),
           ),

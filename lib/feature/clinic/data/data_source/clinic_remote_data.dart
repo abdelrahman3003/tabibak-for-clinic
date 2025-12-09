@@ -3,6 +3,7 @@ import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_time_model.dart';
 
 abstract class ClinicRemoteData {
+  Future<List<ClinicInfoModel>> getClinicInfo();
   Future<int> createClinicInfo(ClinicInfoModel clinicInfoModel);
   Future<int> createClinicTime(ClinicTimeModel clinicTimeModel);
   Future<List<ClinicDayModel>> getAllDays();

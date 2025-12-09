@@ -5,6 +5,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_en
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_time_entity.dart';
 
 abstract class ClinicRepo {
+  Future<Either<ApiErrorModel, List<ClinicInfoEntity>>> getClinicInfo();
   Future<Either<ApiErrorModel, int>> createClinicInfo(
       ClinicInfoEntity clinicInfoEntity);
   Future<Either<ApiErrorModel, void>> addWorkingDayWithShifts(

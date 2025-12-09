@@ -71,4 +71,21 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
       },
     );
   }
+
+  @override
+  Future<List<ClinicInfoModel>> getClinicInfo() async {
+    final response = await dio.get(
+      "${ApiConstants.apiBaseUrl}/clinic_data",
+      queryParameters: {
+        "doctor_id": "eq.${getit<Supabase>().client.auth.currentUser!.id}",
+      },
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final data = response.data as List;
+      List<ClinicInfoModel> list =
+          data.map((e) => ClinicInfoModel.fromJson(e)).toList();
+      return list;
+    }
+    throw Exception('Failed request on days');
+  }
 }

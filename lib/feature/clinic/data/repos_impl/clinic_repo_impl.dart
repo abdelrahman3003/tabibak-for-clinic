@@ -57,4 +57,15 @@ class ClinicRepoImpl implements ClinicRepo {
       return left(ErrorHandler.handle(e));
     }
   }
+
+  @override
+  Future<Either<ApiErrorModel, List<ClinicInfoEntity>>> getClinicInfo() async {
+    try {
+      final response = await clinicRemoteData.getClinicInfo();
+
+      return right(response);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
 }
