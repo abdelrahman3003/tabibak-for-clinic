@@ -16,7 +16,7 @@ class ClinicInfoButtonStates extends StatelessWidget {
         if (state is ClinicInfoFailed) {
           AppSnackBar.show(context: context, message: state.errorMessage);
         } else if (state is ClinicInfoSuccess) {
-          context.pushNamed(Routes.clinicDaysScreen);
+          context.pushNamed(Routes.clinicDaysScreen, arguments: state.clinicId);
         }
       },
       builder: (context, state) {

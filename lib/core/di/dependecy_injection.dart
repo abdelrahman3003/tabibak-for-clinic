@@ -21,11 +21,11 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/repos/clinic_repo.dart'
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_info_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_time_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_working_day_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_working_day_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_days_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_shift/clinic_shift_bloc.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_time/clinic_time_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_working_day/clinic_working_day_bloc.dart';
 
 final getit = GetIt.instance;
@@ -95,6 +95,8 @@ Future<void> initGetIt() async {
       () => CreateClinicTimeUseCase(clinicRepo: getit<ClinicRepo>()));
   getit.registerLazySingleton<GetDaysUseCase>(
       () => GetDaysUseCase(clinicRepo: getit<ClinicRepo>()));
+  getit.registerLazySingleton<CreateClinicWorkingDayShiftUseCase>(() =>
+      CreateClinicWorkingDayShiftUseCase(clinicRepo: getit<ClinicRepo>()));
 
   // Blocs
   getit.registerFactory(() => ClinicInfoBloc(getit<CreateClinicInfoUseCase>()));
@@ -102,6 +104,5 @@ Future<void> initGetIt() async {
       clinicWorkingDayUseCase: getit<CreateClinicWorkingDayUseCase>(),
       getDaysUseCase: getit<GetDaysUseCase>()));
   getit.registerFactory(
-      () => ClinicShiftBloc(getit<CreateClinicShiftUseCase>()));
-  getit.registerFactory(() => ClinicTimeBloc(getit<CreateClinicTimeUseCase>()));
+      () => ClinicShiftBloc(getit<CreateClinicWorkingDayShiftUseCase>()));
 }

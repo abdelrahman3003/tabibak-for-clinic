@@ -18,7 +18,7 @@ class ClinicInfoBloc extends Bloc<ClinicInfoEvent, ClinicInfoState> {
           emit(ClinicInfoFailed(errorMessage: error.message!));
         },
         (id) {
-          emit(ClinicInfoSuccess());
+          emit(ClinicInfoSuccess(clinicId: id));
         },
       );
     });

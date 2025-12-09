@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+
 class ClinicTimeEntity {
-  final String start;
-  final String end;
+  final TimeOfDay? start;
+  final TimeOfDay? end;
 
   ClinicTimeEntity({
     required this.start,

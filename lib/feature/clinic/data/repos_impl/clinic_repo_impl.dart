@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
@@ -73,6 +75,28 @@ class ClinicRepoImpl implements ClinicRepo {
       final entities = models.map((e) => e.toEntity()).toList();
       return right(entities);
     } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, void>> addWorkingDayWithShifts(
+      {required int dayId,
+      required ClinicTimeEntity morningTime,
+      required ClinicTimeEntity eveningTime,
+      required int clinicId}) async {
+    try {
+      final morningTimeModel = morningTime.toModel();
+      final eveningTimeModel = eveningTime.toModel();
+
+      await clinicRemoteData.addWorkingDayWithShifts(
+          dayId: dayId,
+          morningTimeModel: morningTimeModel,
+          eveningTimeModel: eveningTimeModel,
+          clinicId: clinicId);
+      return right(null);
+    } catch (e) {
+      log("--------$e");
       return left(ErrorHandler.handle(e));
     }
   }

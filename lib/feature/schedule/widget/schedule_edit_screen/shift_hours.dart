@@ -4,9 +4,14 @@ import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/feature/schedule/widget/schedule_edit_screen/time_field.dart';
 
 class ShiftHours extends StatefulWidget {
-  const ShiftHours({super.key, required this.shift});
+  const ShiftHours(
+      {super.key,
+      required this.shift,
+      this.onStartTimeSelected,
+      this.onEndTimeSelected});
   final String shift;
-
+  final Function(TimeOfDay)? onStartTimeSelected;
+  final Function(TimeOfDay)? onEndTimeSelected;
   @override
   State<ShiftHours> createState() => _ShiftHoursState();
 }
@@ -39,16 +44,16 @@ class _ShiftHoursState extends State<ShiftHours> {
           children: [
             Expanded(
                 child: TimeField(
-              onTimeSelected: (time) {},
+              onTimeSelected: widget.onStartTimeSelected,
               enable: isActive,
-              value: "6:00 PM",
+              value: "Select Time",
             )),
             30.wBox,
             Expanded(
                 child: TimeField(
-              onTimeSelected: (time) {},
+              onTimeSelected: widget.onEndTimeSelected,
               enable: isActive,
-              value: "9:00 PM",
+              value: "Select Time",
             )),
           ],
         ),

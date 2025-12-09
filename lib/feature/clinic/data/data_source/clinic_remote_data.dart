@@ -10,5 +10,11 @@ abstract class ClinicRemoteData {
       ClinicWorkingDayModel clinicWorkingDayModel);
   Future<int> createClinicShift(ClinicShiftModel clinicShiftModel);
   Future<int> createClinicTime(ClinicTimeModel clinicTimeModel);
+  Future<void> addWorkingDayWithShifts({
+    required int dayId,
+    required ClinicTimeModel morningTimeModel,
+    required ClinicTimeModel eveningTimeModel,
+    required int clinicId,
+  });
   Future<List<ClinicDayModel>> getAllDays();
 }

@@ -15,5 +15,10 @@ abstract class ClinicRepo {
       ClinicShiftEntity clinicShiftEntity);
   Future<Either<ApiErrorModel, int>> createClinicTime(
       ClinicTimeEntity clinicTimeEntity);
+  Future<Either<ApiErrorModel, void>> addWorkingDayWithShifts(
+      {required int dayId,
+      required ClinicTimeEntity morningTime,
+      required ClinicTimeEntity eveningTime,
+      required int clinicId});
   Future<Either<ApiErrorModel, List<ClinicDayEntity>>> getAllDays();
 }

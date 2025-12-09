@@ -10,6 +10,7 @@ class ClinicDaysScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final clinicId = ModalRoute.of(context)!.settings.arguments as int;
     return Scaffold(
       appBar: const AppBarWidget(
         title: "Clinic Working Days",
@@ -20,7 +21,10 @@ class ClinicDaysScreen extends StatelessWidget {
           child: BlocBuilder<ClinicWorkingDayBloc, ClinicWorkingDayState>(
             builder: (context, state) {
               return state is GetAllDaysSuccess
-                  ? ClinicWorkingDayBody(days: state.days)
+                  ? ClinicWorkingDayBody(
+                      days: state.days,
+                      clinicId: clinicId,
+                    )
                   : const Center(
                       child: CircularProgressIndicator(),
                     );

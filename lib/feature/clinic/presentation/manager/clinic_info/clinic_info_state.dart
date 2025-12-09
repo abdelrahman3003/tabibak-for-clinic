@@ -17,4 +17,8 @@ final class ClinicInfoFailed extends ClinicInfoState {
   const ClinicInfoFailed({required this.errorMessage});
 }
 
-final class ClinicInfoSuccess extends ClinicInfoState {}
+final class ClinicInfoSuccess extends ClinicInfoState {
+  final int clinicId;
+
+  const ClinicInfoSuccess({required this.clinicId});
+}

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_time_entity.dart';
 
 class ClinicTimeModel extends ClinicTimeEntity {
@@ -15,9 +16,15 @@ class ClinicTimeModel extends ClinicTimeEntity {
 
   Map<String, dynamic> toJson() {
     return {
-      "start": start,
-      "end": end,
+      "start": _formatTime(start),
+      "end": _formatTime(end),
     };
+  }
+
+  String _formatTime(TimeOfDay? t) {
+    final hour = t?.hour.toString().padLeft(2, '0');
+    final minute = t?.minute.toString().padLeft(2, '0');
+    return "$hour:$minute";
   }
 }
 

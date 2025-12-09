@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
@@ -54,5 +56,41 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
       return days.map((day) => ClinicDayModel.fromJson(day)).toList();
     }
     throw Exception('Failed request on days');
+  }
+
+  @override
+  Future<void> addWorkingDayWithShifts(
+      {required int dayId,
+      required ClinicTimeModel morningTimeModel,
+      required ClinicTimeModel eveningTimeModel,
+      required int clinicId}) async {
+    log("------- 11");
+    final morningTimeId = await createClinicTime(morningTimeModel);
+    log("------- 22");
+
+    final eveningTimeId = await createClinicTime(morningTimeModel);
+    log("------- 33");
+
+    final shiftDayResponse = await dio.post(
+      '${ApiConstants.apiBaseUrl}/shifts',
+      data: {
+        'morning': morningTimeId,
+        'evening': eveningTimeId,
+      },
+    );
+    log("------- 44");
+
+    final shiftDayId = await shiftDayResponse.data[0]['id'];
+    log("------- 55");
+
+    await dio.post(
+      '${ApiConstants.apiBaseUrl}/working_day',
+      data: {
+        'clinic_id': clinicId,
+        'day_id': dayId,
+        'shift_id': shiftDayId,
+      },
+    );
+    log("------- 66");
   }
 }
