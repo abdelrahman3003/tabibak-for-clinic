@@ -12,9 +12,9 @@ import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_blo
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/professional_practice_license_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signin_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signup_screen.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_shift/clinic_shift_bloc.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_working_day/clinic_working_day_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_info/clinic_info_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_shift/clinic_shift_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_working_day/clinic_working_day_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20creation/clinic_days_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20creation/clinic_shifts_time_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20creation/clinic_structure_screen.dart';
@@ -29,107 +29,119 @@ import 'package:tabibak_for_clinic/feature/doctor/screens/doctor_specialty_scree
 import '../../layout_screen.dart';
 
 class AppRouter {
-  static Route generateRoute(RouteSettings setting) {
-    switch (setting.name) {
+  static Route generateRoute(RouteSettings settings) {
+    Widget page;
+
+    switch (settings.name) {
       //Auth
       case Routes.signinScreen:
-        return _buildSlideRoute(BlocProvider(
-            create: (context) => getit<SigninBloc>(),
-            child: const RootScreenWrapper(child: SigninScreen())));
+        page = BlocProvider(
+          create: (context) => getit<SigninBloc>(),
+          child: const RootScreenWrapper(child: SigninScreen()),
+        );
+        break;
+
       case Routes.signupScreen:
-        return _buildSlideRoute(
-            BlocProvider(
-              create: (context) => getit<SignupBloc>(),
-              child: const SignupScreen(),
-            ),
-            settings: setting);
+        page = BlocProvider(
+          create: (context) => getit<SignupBloc>(),
+          child: const SignupScreen(),
+        );
+        break;
+
       case Routes.professionalLicenseScreen:
-        return _buildSlideRoute(
-            BlocProvider(
-              create: (context) => SignupBloc(
-                  signUpUsecase: getit<SignUpUsecase>(),
-                  getSpecialtiesUsecase: getit<GetSpecialtiesUsecase>()),
-              child: const ProfessionalLicenseScreen(),
-            ),
-            settings: setting);
+        page = BlocProvider(
+          create: (context) => SignupBloc(
+            signUpUsecase: getit<SignUpUsecase>(),
+            getSpecialtiesUsecase: getit<GetSpecialtiesUsecase>(),
+          ),
+          child: const ProfessionalLicenseScreen(),
+        );
+        break;
 
       //layout
       case Routes.layOutScreen:
-        return _buildSlideRoute(const RootScreenWrapper(child: LayoutScreen()));
+        page = const RootScreenWrapper(child: LayoutScreen());
+        break;
 
       // schedule
       case Routes.scheduleEditScreen:
-        return _buildSlideRoute(
-            const RootScreenWrapper(child: ScheduleEditScreen()));
+        page = const RootScreenWrapper(child: ScheduleEditScreen());
+        break;
 
       // doctor info
       case Routes.doctorPersonalInfo:
-        return _buildSlideRoute(
-            const RootScreenWrapper(child: DoctorPersonalInfo()));
+        page = const RootScreenWrapper(child: DoctorPersonalInfo());
+        break;
+
       case Routes.doctorSpecialtyScreen:
-        return _buildSlideRoute(
-            const RootScreenWrapper(child: DoctorSpecialtyScreen()));
+        page = const RootScreenWrapper(child: DoctorSpecialtyScreen());
+        break;
+
       case Routes.doctorEducationScreen:
-        return _buildSlideRoute(
-            const RootScreenWrapper(child: DoctorEducationScreen()));
+        page = const RootScreenWrapper(child: DoctorEducationScreen());
+        break;
 
       //clinic
       case Routes.clinicInfoScreen:
-        return _buildSlideRoute(
-            const RootScreenWrapper(child: ClinicInfoScreen()));
+        page = const RootScreenWrapper(child: ClinicInfoScreen());
+        break;
+
       case Routes.clinicAddressScreen:
-        return _buildSlideRoute(
-            const RootScreenWrapper(child: ClinicAddressScreen()));
+        page = const RootScreenWrapper(child: ClinicAddressScreen());
+        break;
+
       case Routes.clinicOfferScreen:
-        return _buildSlideRoute(
-            const RootScreenWrapper(child: ClinicOfferScreen()));
+        page = const RootScreenWrapper(child: ClinicOfferScreen());
+        break;
+
       case Routes.clinicStructureScreen:
-        return _buildSlideRoute(
-          RootScreenWrapper(
-              child: BlocProvider(
+        page = RootScreenWrapper(
+          child: BlocProvider(
             create: (context) => getit<ClinicInfoBloc>(),
             child: const ClinicStructureScreen(),
-          )),
-          settings: setting,
+          ),
         );
+        break;
+
       case Routes.clinicDaysScreen:
-        return _buildSlideRoute(
-          RootScreenWrapper(
-              child: BlocProvider(
+        page = RootScreenWrapper(
+          child: BlocProvider(
             create: (context) => getit<ClinicWorkingDayBloc>(),
             child: const ClinicDaysScreen(),
-          )),
-          settings: setting,
-        );
-      case Routes.clinicShiftsTimeScreen:
-        return _buildSlideRoute(
-          RootScreenWrapper(
-            child: BlocProvider(
-              create: (context) => getit<ClinicShiftBloc>(),
-              child: const ClinicShiftsTimeScreen(),
-            ),
           ),
-          settings: setting,
         );
+        break;
+
+      case Routes.clinicShiftsTimeScreen:
+        page = RootScreenWrapper(
+          child: BlocProvider(
+            create: (context) => getit<ClinicShiftBloc>(),
+            child: const ClinicShiftsTimeScreen(),
+          ),
+        );
+        break;
+
       //appointment
       case Routes.allAppointmentScreen:
-        return _buildSlideRoute(
-            const RootScreenWrapper(child: AllAppointmentScreen()));
+        page = const RootScreenWrapper(child: AllAppointmentScreen());
+        break;
+
       case Routes.appointmentDetailsScreen:
-        return _buildSlideRoute(
-            const RootScreenWrapper(child: AppointmentDetailsScreen()));
+        page = const RootScreenWrapper(child: AppointmentDetailsScreen());
+        break;
+
       default:
-        return _buildSlideRoute(
-          Scaffold(
-            body: Center(
-              child: Text("No route defined for ${setting.name}"),
-            ),
+        page = Scaffold(
+          body: Center(
+            child: Text("No route defined for ${settings.name}"),
           ),
         );
     }
+
+    return _buildSlideRoute(page, settings);
   }
 
-  static PageRoute _buildSlideRoute(Widget page, {RouteSettings? settings}) {
+  static PageRoute _buildSlideRoute(Widget page, RouteSettings settings) {
     return PageRouteBuilder(
       settings: settings,
       pageBuilder: (_, __, ___) => page,

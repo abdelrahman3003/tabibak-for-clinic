@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/clinic_header.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/clinic_info_section.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/clinic_schedule_section.dart';
 
 class ScheduleScreen extends StatelessWidget {
-  const ScheduleScreen({super.key});
+  const ScheduleScreen({super.key, required this.clinicInfoEntity});
+  final ClinicInfoEntity clinicInfoEntity;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +21,7 @@ class ScheduleScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   15.hBox,
-                  const ClinicInfoSection(),
+                  ClinicInfoSection(clinicInfoEntity: clinicInfoEntity),
                   20.hBox,
                   const ClinicScheduleSection()
                 ],
