@@ -8,14 +8,7 @@ sealed class ClinicShiftEvent extends Equatable {
 }
 
 final class CreateClinicShiftEvent extends ClinicShiftEvent {
-  final ClinicTimeEntity morningTime;
-  final ClinicTimeEntity eveningTime;
-  final int dayId;
   final int clinicId;
-  const CreateClinicShiftEvent({
-    required this.dayId,
-    required this.morningTime,
-    required this.eveningTime,
-    required this.clinicId,
-  });
+  final List<ClinicDayWithTimes> days;
+  const CreateClinicShiftEvent(this.clinicId, this.days);
 }

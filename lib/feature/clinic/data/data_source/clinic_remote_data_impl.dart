@@ -4,6 +4,7 @@ import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_time_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_time_model.dart';
 
@@ -45,34 +46,6 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
   }
 
   @override
-  Future<void> addWorkingDayWithShifts(
-      {required int dayId,
-      required ClinicTimeModel morningTimeModel,
-      required ClinicTimeModel eveningTimeModel,
-      required int clinicId}) async {
-    final morningTimeId = await createClinicTime(morningTimeModel);
-
-    final eveningTimeId = await createClinicTime(morningTimeModel);
-
-    final shiftDayResponse = await dio.post(
-      '${ApiConstants.apiBaseUrl}/shifts',
-      data: {
-        'morning': morningTimeId,
-        'evening': eveningTimeId,
-      },
-    );
-    final shiftDayId = await shiftDayResponse.data[0]['id'];
-    await dio.post(
-      '${ApiConstants.apiBaseUrl}/working_day',
-      data: {
-        'clinic_id': clinicId,
-        'day_id': dayId,
-        'shift_id': shiftDayId,
-      },
-    );
-  }
-
-  @override
   Future<List<ClinicInfoModel>> getClinicInfo() async {
     final response = await dio.get(
       "${ApiConstants.apiBaseUrl}/clinic_data",
@@ -87,5 +60,42 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
       return list;
     }
     throw Exception('Failed request on days');
+  }
+
+  @override
+  Future<void> addWorkingDayWithShifts({
+    required int clinicId,
+    required List<ClinicDayWithTimes> days,
+  }) async {
+    for (final day in days) {
+      int? morningTimeId;
+      int? eveningTimeId;
+      if (day.morningTime?.start != null && day.morningTime?.end != null) {
+        morningTimeId = await createClinicTime(day.morningTime!);
+      }
+      if (day.eveningTime?.start != null && day.eveningTime?.end != null) {
+        eveningTimeId = await createClinicTime(day.eveningTime!);
+      }
+
+      final shiftResponse = await dio.post(
+        '${ApiConstants.apiBaseUrl}/shifts',
+        data: {
+          'morning': morningTimeId,
+          'evening': eveningTimeId,
+        },
+      );
+
+      final shiftId = shiftResponse.data[0]['id'];
+
+      // 4 — Add Working Day
+      await dio.post(
+        '${ApiConstants.apiBaseUrl}/working_day',
+        data: {
+          'clinic_id': clinicId,
+          'day_id': day.dayId,
+          'shift_id': shiftId,
+        },
+      );
+    }
   }
 }

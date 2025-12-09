@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
-import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_time_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_time_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_time_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_shift/clinic_shift_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_shifts_screen/clinic_shift_button_states.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_shifts_screen/shift_day_time.dart';
@@ -16,11 +17,9 @@ class ClinicShiftsTimeScreen extends StatefulWidget {
   State<ClinicShiftsTimeScreen> createState() => _ClinicShiftsTimeScreenState();
 }
 
+List<ClinicDayWithTimes> days = [];
+
 class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
-  TimeOfDay? startMorningTime;
-  TimeOfDay? endMorningTime;
-  TimeOfDay? startEveningTime;
-  TimeOfDay? endEveningTime;
   @override
   Widget build(BuildContext context) {
     final clinicWorkingDayArgs =
@@ -37,15 +36,24 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
               SliverToBoxAdapter(
                 child: Column(
                     children: List.generate(
-                  clinicWorkingDayArgs.selectedDays.length,
-                  (index) => ShiftDayTime(
-                    day: clinicWorkingDayArgs.selectedDays[index],
-                    onStarMorningSelected: (value) => startMorningTime = value,
-                    onEndMorningSelected: (value) => endMorningTime = value,
-                    onStartEveningSelected: (value) => startEveningTime = value,
-                    onEndEveningSelected: (value) => endEveningTime = value,
-                  ),
-                )),
+                        clinicWorkingDayArgs.selectedDays.length, (index) {
+                  final day = clinicWorkingDayArgs.selectedDays[index];
+                  return ShiftDayTime(
+                    day: day,
+                    onStarMorningSelected: (value) {
+                      _saveDayTime(day.id, morningStart: value);
+                    },
+                    onEndMorningSelected: (value) {
+                      _saveDayTime(day.id, morningEnd: value);
+                    },
+                    onStartEveningSelected: (value) {
+                      _saveDayTime(day.id, eveningStart: value);
+                    },
+                    onEndEveningSelected: (value) {
+                      _saveDayTime(day.id, eveningEnd: value);
+                    },
+                  );
+                })),
               ),
               SliverFillRemaining(
                 hasScrollBody: false,
@@ -56,17 +64,8 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
                     ClinicShiftButtonStates(
                       onPressed: () {
                         context.read<ClinicShiftBloc>().add(
-                              CreateClinicShiftEvent(
-                                clinicId: clinicWorkingDayArgs.clinicId,
-                                dayId: clinicWorkingDayArgs.selectedDays[0].id,
-                                morningTime: ClinicTimeEntity(
-                                    start: startMorningTime,
-                                    end: endMorningTime),
-                                eveningTime: ClinicTimeEntity(
-                                    start: startEveningTime,
-                                    end: endEveningTime),
-                              ),
-                            );
+                            CreateClinicShiftEvent(
+                                clinicWorkingDayArgs.clinicId, days));
                       },
                     ),
                     25.hBox
@@ -76,5 +75,44 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
             ],
           )),
     );
+  }
+
+  void _saveDayTime(
+    int dayId, {
+    TimeOfDay? morningStart,
+    TimeOfDay? morningEnd,
+    TimeOfDay? eveningStart,
+    TimeOfDay? eveningEnd,
+  }) {
+    final index = days.indexWhere((e) => e.dayId == dayId);
+
+    if (index == -1) {
+      days.add(
+        ClinicDayWithTimes(
+          dayId: dayId,
+          morningTime: ClinicTimeModel(
+            start: morningStart,
+            end: morningEnd,
+          ),
+          eveningTime: ClinicTimeModel(
+            start: eveningStart,
+            end: eveningEnd,
+          ),
+        ),
+      );
+    } else {
+      final old = days[index];
+      days[index] = ClinicDayWithTimes(
+        dayId: dayId,
+        morningTime: ClinicTimeModel(
+          start: morningStart ?? old.morningTime?.start,
+          end: morningEnd ?? old.morningTime?.end,
+        ),
+        eveningTime: ClinicTimeModel(
+          start: eveningStart ?? old.eveningTime?.start,
+          end: eveningEnd ?? old.eveningTime?.end,
+        ),
+      );
+    }
   }
 }

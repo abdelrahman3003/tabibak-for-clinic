@@ -16,9 +16,9 @@ class ShiftHours extends StatefulWidget {
   State<ShiftHours> createState() => _ShiftHoursState();
 }
 
-bool isActive = false;
-
 class _ShiftHoursState extends State<ShiftHours> {
+  bool isActive = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(

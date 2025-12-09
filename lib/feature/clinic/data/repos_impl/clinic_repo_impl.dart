@@ -3,11 +3,10 @@ import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_time_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
-import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_time_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
-import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_time_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/repos/clinic_repo.dart';
 
 class ClinicRepoImpl implements ClinicRepo {
@@ -38,20 +37,15 @@ class ClinicRepoImpl implements ClinicRepo {
   }
 
   @override
-  Future<Either<ApiErrorModel, void>> addWorkingDayWithShifts(
-      {required int dayId,
-      required ClinicTimeEntity morningTime,
-      required ClinicTimeEntity eveningTime,
-      required int clinicId}) async {
+  Future<Either<ApiErrorModel, void>> addWorkingDayWithShifts({
+    required int clinicId,
+    required List<ClinicDayWithTimes> days,
+  }) async {
     try {
-      final morningTimeModel = morningTime.toModel();
-      final eveningTimeModel = eveningTime.toModel();
-
       await clinicRemoteData.addWorkingDayWithShifts(
-          dayId: dayId,
-          morningTimeModel: morningTimeModel,
-          eveningTimeModel: eveningTimeModel,
-          clinicId: clinicId);
+        clinicId: clinicId,
+        days: days,
+      );
       return right(null);
     } catch (e) {
       return left(ErrorHandler.handle(e));
