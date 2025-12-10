@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/schedule_hours_header.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/schedule_hours_list/schedule_hours_list.dart';
 import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/profile_title.dart';
 import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/text_button_widget.dart';
 
 class ClinicScheduleSection extends StatelessWidget {
-  const ClinicScheduleSection({super.key});
-
+  const ClinicScheduleSection({super.key, required this.workingShiftsDays});
+  final List<ClinicWorkingDayEntity> workingShiftsDays;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,7 +24,7 @@ class ClinicScheduleSection extends StatelessWidget {
         ),
         15.hBox,
         const ScheduleHoursHeader(),
-        const ScheduleHoursList()
+        ScheduleHoursList(workingShiftsDays: workingShiftsDays)
       ],
     );
   }

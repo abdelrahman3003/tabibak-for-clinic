@@ -1,9 +1,12 @@
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_entity.dart';
+
 class ClinicWorkingDayEntity {
-  final int clinicId;
-  final int day;
+  final ClinicDayEntity clinicDayEntity;
+  final ClinicShiftEntity clinicShiftEntity;
 
   ClinicWorkingDayEntity({
-    required this.clinicId,
-    required this.day,
+    required this.clinicDayEntity,
+    required this.clinicShiftEntity,
   });
 }

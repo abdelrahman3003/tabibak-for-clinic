@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
@@ -7,6 +9,7 @@ import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_ti
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/repos/clinic_repo.dart';
 
 class ClinicRepoImpl implements ClinicRepo {
@@ -59,6 +62,19 @@ class ClinicRepoImpl implements ClinicRepo {
 
       return right(response);
     } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, List<ClinicWorkingDayEntity>>> getClinicSchedule(
+      {required int clinicId}) async {
+    try {
+      final response =
+          await clinicRemoteData.getClinicSchedule(clinicId: clinicId);
+      return right(response);
+    } catch (e) {
+      log("-=------ $e");
       return left(ErrorHandler.handle(e));
     }
   }

@@ -21,6 +21,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/repos/clinic_repo.dart'
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_info_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_working_day_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_info_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_working_day_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_days_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_info/clinic_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_layout/clinic_layout_bloc.dart';
@@ -93,11 +94,17 @@ Future<void> initGetIt() async {
       CreateClinicWorkingDayShiftUseCase(clinicRepo: getit<ClinicRepo>()));
   getit.registerLazySingleton<GetClinicInfoUseCase>(
       () => GetClinicInfoUseCase(clinicRepo: getit<ClinicRepo>()));
+
+  getit.registerLazySingleton<GetClinicWorkingDayShiftUseCase>(
+      () => GetClinicWorkingDayShiftUseCase(clinicRepo: getit<ClinicRepo>()));
   // Blocs
   getit.registerFactory(() => ClinicInfoBloc(getit<CreateClinicInfoUseCase>()));
   getit.registerFactory(
       () => ClinicWorkingDayBloc(getDaysUseCase: getit<GetDaysUseCase>()));
   getit.registerFactory(
       () => ClinicShiftBloc(getit<CreateClinicWorkingDayShiftUseCase>()));
-  getit.registerFactory(() => ClinicLayoutBloc(getit<GetClinicInfoUseCase>()));
+  getit.registerFactory(() => ClinicLayoutBloc(
+        getit<GetClinicInfoUseCase>(),
+        getit<GetClinicWorkingDayShiftUseCase>(),
+      ));
 }

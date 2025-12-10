@@ -7,6 +7,7 @@ import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.d
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_time_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_time_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
 
 class ClinicRemoteDataImpl implements ClinicRemoteData {
   final Dio dio;
@@ -97,5 +98,24 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
         },
       );
     }
+  }
+
+  @override
+  Future<List<ClinicWorkingDayModel>> getClinicSchedule(
+      {required int clinicId}) async {
+    final response = await dio.get(
+      "${ApiConstants.apiBaseUrl}/${ApiConstants.getWorkingShiftsDays}",
+      queryParameters: {
+        "clinic_id": "eq.$clinicId",
+      },
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final workingShiftsDays = response.data as List;
+      return workingShiftsDays
+          .map((workingShiftDay) =>
+              ClinicWorkingDayModel.fromJson(workingShiftDay))
+          .toList();
+    }
+    throw Exception('Failed request on days');
   }
 }

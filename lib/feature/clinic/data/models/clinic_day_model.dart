@@ -5,7 +5,6 @@ class ClinicDayModel extends ClinicDayEntity {
     required super.id,
     required super.dayAr,
     required super.dayEn,
-    required super.createdAt,
   });
 
   factory ClinicDayModel.fromJson(Map<String, dynamic> json) {
@@ -13,7 +12,6 @@ class ClinicDayModel extends ClinicDayEntity {
       id: json['id'],
       dayAr: json['day_ar'],
       dayEn: json['day_en'],
-      createdAt: DateTime.parse(json['created_at']),
     );
   }
 }
@@ -24,7 +22,6 @@ extension ClinicDayMapper on ClinicDayModel {
       id: id,
       dayAr: dayAr,
       dayEn: dayEn,
-      createdAt: createdAt,
     );
   }
 }

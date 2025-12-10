@@ -10,3 +10,9 @@ sealed class ClinicLayoutEvent extends Equatable {
 class GetClinicInfoEvent extends ClinicLayoutEvent {
   const GetClinicInfoEvent();
 }
+
+class GetClinicScheduleEvent extends ClinicLayoutEvent {
+  final int clinicId;
+
+  const GetClinicScheduleEvent({required this.clinicId});
+}

@@ -3,12 +3,12 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 
 class ClinicHeader extends StatelessWidget {
-  const ClinicHeader({super.key});
-
+  const ClinicHeader(
+      {super.key, required this.clinicName, required this.clinicAddress});
+  final String clinicName;
+  final String clinicAddress;
   @override
   Widget build(BuildContext context) {
-    const clinicName = "Healthy Heart Clinic";
-    const clinicAddress = "نجع حمادي";
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),

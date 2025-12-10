@@ -21,6 +21,10 @@ final class ClinicLayoutEmpty extends ClinicLayoutState {}
 
 final class ClinicLayoutSuccess extends ClinicLayoutState {
   final ClinicInfoEntity clinicInfoEntity;
+  final List<ClinicWorkingDayEntity> workingShiftsDays;
 
-  const ClinicLayoutSuccess({required this.clinicInfoEntity});
+  const ClinicLayoutSuccess({
+    required this.clinicInfoEntity,
+    required this.workingShiftsDays,
+  });
 }

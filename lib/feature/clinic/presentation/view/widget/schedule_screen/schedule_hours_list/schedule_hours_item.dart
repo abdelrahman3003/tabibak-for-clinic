@@ -1,13 +1,21 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
+import 'package:tabibak_for_clinic/core/functions/format_time.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working_day_entity.dart';
 
 class ScheduleHoursItem extends StatelessWidget {
-  const ScheduleHoursItem({super.key, required this.day});
-  final DaySchedule day;
+  const ScheduleHoursItem({super.key, required this.workingShiftDay});
+  final ClinicWorkingDayEntity workingShiftDay;
 
   @override
   Widget build(BuildContext context) {
+    final shift = workingShiftDay.clinicShiftEntity;
+    if (shift.evening != null) {
+      log("------${shift.evening!.start}");
+    }
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
       decoration: BoxDecoration(
@@ -20,7 +28,7 @@ class ScheduleHoursItem extends StatelessWidget {
         children: [
           SizedBox(
               width: 75.w,
-              child: Text(day.day,
+              child: Text(workingShiftDay.clinicDayEntity.dayEn,
                   style: Theme.of(context).textTheme.titleMedium)),
           20.wBox,
           Expanded(
@@ -28,20 +36,20 @@ class ScheduleHoursItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
-                  child: FittedBox(
-                    child: Text(
-                        "${day.morning.start.format(context)} - ${day.morning.end.format(context)}",
-                        style: Theme.of(context).textTheme.bodyMedium),
-                  ),
+                  child: Text(
+                      shift.morning == null
+                          ? "--"
+                          : "${formatTime(shift.morning!.start)} - ${formatTime(shift.morning!.end)}",
+                      style: Theme.of(context).textTheme.bodyMedium),
                 ),
                 20.wBox,
                 Expanded(
-                  child: FittedBox(
-                    child: Text(
-                      "${day.evening.start.format(context)} - ${day.evening.end.format(context)}",
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      overflow: TextOverflow.clip,
-                    ),
+                  child: Text(
+                    shift.evening == null
+                        ? "--"
+                        : "${formatTime(shift.evening!.start)} - ${formatTime(shift.evening!.end)}",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    overflow: TextOverflow.clip,
                   ),
                 ),
               ],
@@ -51,32 +59,4 @@ class ScheduleHoursItem extends StatelessWidget {
       ),
     );
   }
-}
-
-class Shift {
-  String name;
-  TimeOfDay start;
-  TimeOfDay end;
-  bool enabled;
-
-  Shift({
-    required this.name,
-    required this.start,
-    required this.end,
-    this.enabled = true,
-  });
-}
-
-class DaySchedule {
-  String day;
-  Shift morning;
-  Shift evening;
-  bool active;
-
-  DaySchedule({
-    required this.day,
-    required this.morning,
-    required this.evening,
-    this.active = true,
-  });
 }

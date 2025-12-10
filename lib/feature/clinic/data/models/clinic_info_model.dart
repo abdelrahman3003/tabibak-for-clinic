@@ -2,6 +2,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_en
 
 class ClinicInfoModel extends ClinicInfoEntity {
   ClinicInfoModel({
+    super.id,
     required super.clinicName,
     required super.phoneNumber,
     required super.consultationFee,
@@ -10,6 +11,7 @@ class ClinicInfoModel extends ClinicInfoEntity {
 
   factory ClinicInfoModel.fromJson(Map<String, dynamic> json) {
     return ClinicInfoModel(
+      id: json["id"],
       clinicName: json["clinic_name"],
       phoneNumber: json["phone_number"],
       consultationFee: json["consultation_fee"],
