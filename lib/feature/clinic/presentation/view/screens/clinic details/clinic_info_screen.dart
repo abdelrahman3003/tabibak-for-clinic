@@ -37,7 +37,10 @@ class _ClinicInfoScreenState extends State<ClinicInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const AppBarSave(text: "Clinic Info"),
+        appBar: AppBarSave(
+          text: "Clinic Info",
+          onTap: () {},
+        ),
         body: Padding(
           padding:
               const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),

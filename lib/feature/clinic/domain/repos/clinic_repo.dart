@@ -8,7 +8,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working
 abstract class ClinicRepo {
   Future<Either<ApiErrorModel, List<ClinicInfoEntity>>> getClinicInfo();
   Future<Either<ApiErrorModel, int>> createClinicInfo(
-      ClinicInfoEntity clinicInfoEntity);
+      {required ClinicInfoEntity clinicInfoEntity});
   Future<Either<ApiErrorModel, void>> addWorkingDayWithShifts({
     required int clinicId,
     required List<ClinicDayWithTimes> days,
@@ -16,4 +16,7 @@ abstract class ClinicRepo {
   Future<Either<ApiErrorModel, List<ClinicDayEntity>>> getAllDays();
   Future<Either<ApiErrorModel, List<ClinicWorkingDayEntity>>> getClinicSchedule(
       {required int clinicId});
+  Future<Either<ApiErrorModel, void>> saveClinicInfo({
+    required ClinicInfoEntity clinicInfoEntity,
+  });
 }

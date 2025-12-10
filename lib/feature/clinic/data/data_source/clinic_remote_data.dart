@@ -16,4 +16,5 @@ abstract class ClinicRemoteData {
   });
   Future<List<ClinicWorkingDayModel>> getClinicSchedule(
       {required int clinicId});
+  Future<void> saveClinicInfo({required ClinicInfoModel clinicInfoModel});
 }

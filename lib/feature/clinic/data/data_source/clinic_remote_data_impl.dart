@@ -118,4 +118,16 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
     }
     throw Exception('Failed request on days');
   }
+
+  @override
+  Future<void> saveClinicInfo(
+      {required ClinicInfoModel clinicInfoModel}) async {
+    final data = clinicInfoModel.toJson();
+    final response =
+        await dio.patch("${ApiConstants.apiBaseUrl}/clinic_data", data: data);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return;
+    }
+    throw Exception('Failed request on days');
+  }
 }

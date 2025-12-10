@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
@@ -18,7 +16,7 @@ class ClinicRepoImpl implements ClinicRepo {
   ClinicRepoImpl({required this.clinicRemoteData});
   @override
   Future<Either<ApiErrorModel, int>> createClinicInfo(
-      ClinicInfoEntity clinicInfoEntity) async {
+      {required ClinicInfoEntity clinicInfoEntity}) async {
     final model = clinicInfoEntity.toModel();
     try {
       final result = await clinicRemoteData.createClinicInfo(model);
@@ -74,7 +72,18 @@ class ClinicRepoImpl implements ClinicRepo {
           await clinicRemoteData.getClinicSchedule(clinicId: clinicId);
       return right(response);
     } catch (e) {
-      log("-=------ $e");
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, void>> saveClinicInfo(
+      {required ClinicInfoEntity clinicInfoEntity}) async {
+    try {
+      final response = await clinicRemoteData.saveClinicInfo(
+          clinicInfoModel: clinicInfoEntity.toModel());
+      return right(response);
+    } catch (e) {
       return left(ErrorHandler.handle(e));
     }
   }

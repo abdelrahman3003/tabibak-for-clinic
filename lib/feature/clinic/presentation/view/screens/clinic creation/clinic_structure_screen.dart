@@ -19,6 +19,7 @@ class ClinicStructureScreen extends StatefulWidget {
 class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
   late TextEditingController clinicNameController;
   late TextEditingController clinicPhoneController;
+  late TextEditingController clinicAddressController;
   late TextEditingController clinicConsultationFeeController;
 
   bool isOnline = false;
@@ -49,6 +50,10 @@ class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
               controller: clinicPhoneController,
             ),
             TextFormFiledWidget(
+              label: "Address",
+              controller: clinicAddressController,
+            ),
+            TextFormFiledWidget(
               label: "Consultation Fee",
               keyboardType: TextInputType.number,
               controller: clinicConsultationFeeController,
@@ -69,6 +74,7 @@ class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
                       clinicInfoEntity: ClinicInfoEntity(
                         clinicName: clinicNameController.text,
                         phoneNumber: clinicPhoneController.text,
+                        address: clinicAddressController.text,
                         consultationFee: int.tryParse(
                                 clinicConsultationFeeController.text) ??
                             0,
@@ -88,6 +94,7 @@ class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
   void dispose() {
     clinicNameController.dispose();
     clinicPhoneController.dispose();
+    clinicAddressController.dispose();
     clinicConsultationFeeController.dispose();
     super.dispose();
   }

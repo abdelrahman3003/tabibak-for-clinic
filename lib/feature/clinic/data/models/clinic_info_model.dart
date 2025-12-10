@@ -6,6 +6,7 @@ class ClinicInfoModel extends ClinicInfoEntity {
     required super.clinicName,
     required super.phoneNumber,
     required super.consultationFee,
+    required super.address,
     required super.isBooking,
   });
 
@@ -14,6 +15,7 @@ class ClinicInfoModel extends ClinicInfoEntity {
       id: json["id"],
       clinicName: json["clinic_name"],
       phoneNumber: json["phone_number"],
+      address: json['address'],
       consultationFee: json["consultation_fee"],
       isBooking: json["isBooking"],
     );
@@ -23,6 +25,7 @@ class ClinicInfoModel extends ClinicInfoEntity {
     return {
       "clinic_name": clinicName,
       "phone_number": phoneNumber,
+      "address": address,
       "consultation_fee": consultationFee,
       "isBooking": isBooking,
     };
@@ -34,6 +37,7 @@ extension ClinicInfoEntityMapper on ClinicInfoEntity {
     return ClinicInfoModel(
       clinicName: clinicName,
       phoneNumber: phoneNumber,
+      address: address,
       consultationFee: consultationFee,
       isBooking: isBooking,
     );
