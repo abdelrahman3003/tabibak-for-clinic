@@ -31,7 +31,9 @@ class ScheduleScreen extends StatelessWidget {
                   15.hBox,
                   ClinicInfoSection(clinicInfoEntity: clinicInfoEntity),
                   20.hBox,
-                  ClinicScheduleSection(workingShiftsDays: workingShiftsDays)
+                  ClinicScheduleSection(
+                      workingShiftsDays: workingShiftsDays,
+                      clinicId: clinicInfoEntity.id!)
                 ],
               ),
             ),

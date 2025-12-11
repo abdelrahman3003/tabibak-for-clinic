@@ -6,7 +6,7 @@ class Routes {
   static const String layOutScreen = "/layOutScreen";
 
   // schedule
-  static const String scheduleEditScreen = "/scheduleEditScreen";
+  static const String scheduleEditDaysScreen = "/scheduleEditDaysScreen";
 
   // doctor profile
   static const String doctorSpecialtyScreen = "/doctorSpecialtyScreen";

@@ -5,7 +5,7 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_info/clinic_info_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_structure_screen/%20clinic_is_online.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_structure_screen/clinic_info_button_states.dart';
 

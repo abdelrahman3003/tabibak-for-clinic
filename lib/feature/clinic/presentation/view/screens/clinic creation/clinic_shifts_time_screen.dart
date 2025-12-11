@@ -5,7 +5,7 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_time_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_time_model.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_shift/clinic_shift_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_shift/clinic_shift_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_shifts_screen/clinic_shift_button_states.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_shifts_screen/shift_day_time.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_args.dart';

@@ -4,6 +4,7 @@ import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_time_edit.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_time_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_time_model.dart';
@@ -132,5 +133,68 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
       return;
     }
     throw Exception('Failed request on days');
+  }
+
+  @override
+  Future<void> updateWorkingDaysWithShifts({
+    required int clinicId,
+    required List<ClinicDayWithTimeEdit> days,
+  }) async {
+    for (final day in days) {
+      int? morningTimeId = day.morningTimeId;
+      int? eveningTimeId = day.eveningTimeId;
+
+      if (day.morningTime != null && morningTimeId != null) {
+        await dio.patch(
+          '${ApiConstants.apiBaseUrl}/time?id=eq.$morningTimeId',
+          data: {
+            'start': day.morningTime!.start,
+            'end': day.morningTime!.end,
+          },
+        );
+      }
+
+      if (day.eveningTime != null && eveningTimeId != null) {
+        await dio.patch(
+          '${ApiConstants.apiBaseUrl}/time?id=eq.$eveningTimeId',
+          data: {
+            'start': day.eveningTime!.start,
+            'end': day.eveningTime!.end,
+          },
+        );
+      }
+
+      int? shiftId = day.shiftId;
+
+      if (shiftId != null) {
+        await dio.patch(
+          '${ApiConstants.apiBaseUrl}/shifts?id=eq.$shiftId',
+          data: {
+            'morning': morningTimeId,
+            'evening': eveningTimeId,
+          },
+        );
+      }
+
+      if (day.workingDayId != null) {
+        await dio.patch(
+          '${ApiConstants.apiBaseUrl}/working_day?id=eq.${day.workingDayId}',
+          data: {
+            'clinic_id': clinicId,
+            'day_id': day.dayId,
+            'shift_id': shiftId,
+          },
+        );
+      } else {
+        await dio.post(
+          '${ApiConstants.apiBaseUrl}/working_day',
+          data: {
+            'clinic_id': clinicId,
+            'day_id': day.dayId,
+            'shift_id': shiftId,
+          },
+        );
+      }
+    }
   }
 }

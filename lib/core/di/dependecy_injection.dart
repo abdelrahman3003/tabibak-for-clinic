@@ -24,11 +24,13 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_inf
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_working_day_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_days_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_info_use_case.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_info/clinic_info_bloc.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_info_save/clinic_info_save_bloc.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_layout/clinic_layout_bloc.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_shift/clinic_shift_bloc.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_working_day/clinic_working_day_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/update_clinic_schedule_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info_save/clinic_info_save_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_layout/clinic_layout_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_schedule_update/clinic_schedule_update_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_shift/clinic_shift_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_working_day/clinic_working_day_bloc.dart';
 
 final getit = GetIt.instance;
 Future<void> initGetIt() async {
@@ -100,6 +102,8 @@ Future<void> initGetIt() async {
       () => GetClinicWorkingDayShiftUseCase(clinicRepo: getit<ClinicRepo>()));
   getit.registerLazySingleton<SaveClinicInfoUseCase>(
       () => SaveClinicInfoUseCase(clinicRepo: getit<ClinicRepo>()));
+  getit.registerLazySingleton<UpdateClinicScheduleUseCase>(
+      () => UpdateClinicScheduleUseCase(clinicRepo: getit<ClinicRepo>()));
   // Blocs
   getit.registerFactory(() => ClinicInfoBloc(getit<CreateClinicInfoUseCase>()));
   getit.registerFactory(
@@ -112,4 +116,6 @@ Future<void> initGetIt() async {
       ));
   getit.registerFactory(
       () => ClinicInfoSaveBloc(getit<SaveClinicInfoUseCase>()));
+  getit.registerFactory(
+      () => ClinicScheduleUpdateBloc(getit<UpdateClinicScheduleUseCase>()));
 }

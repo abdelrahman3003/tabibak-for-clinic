@@ -7,7 +7,7 @@ import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_info_save/clinic_info_save_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info_save/clinic_info_save_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_structure_screen/%20clinic_is_online.dart';
 
 class ClinicInfoScreen extends StatefulWidget {

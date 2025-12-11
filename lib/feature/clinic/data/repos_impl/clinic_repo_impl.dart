@@ -5,6 +5,7 @@ import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_time_edit.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_time_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
@@ -87,6 +88,21 @@ class ClinicRepoImpl implements ClinicRepo {
       return right(response);
     } catch (e) {
       log("---------$e");
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, void>> updateWorkingDaysWithShifts(
+      {required int clinicId,
+      required List<ClinicDayWithTimeEdit> days}) async {
+    try {
+      await clinicRemoteData.updateWorkingDaysWithShifts(
+        clinicId: clinicId,
+        days: days,
+      );
+      return right(null);
+    } catch (e) {
       return left(ErrorHandler.handle(e));
     }
   }
