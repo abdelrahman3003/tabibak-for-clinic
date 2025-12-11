@@ -13,14 +13,15 @@ import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/profess
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signin_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signup_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_info/clinic_info_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_info_save/clinic_info_save_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_shift/clinic_shift_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_working_day/clinic_working_day_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20creation/clinic_days_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20creation/clinic_shifts_time_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20creation/clinic_structure_screen.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20details/clinic_address_screen.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20details/clinic_info_screen.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20details/clinic_offer_screen.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20edit/clinic_address_screen.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20edit/clinic_info_screen.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20edit/clinic_offer_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20schedule/schedule_edit_screen.dart';
 import 'package:tabibak_for_clinic/feature/doctor/screens/doctor_education_screen.dart';
 import 'package:tabibak_for_clinic/feature/doctor/screens/doctor_personal_info_screen.dart';
@@ -83,7 +84,11 @@ class AppRouter {
 
       //clinic
       case Routes.clinicInfoScreen:
-        page = const RootScreenWrapper(child: ClinicInfoScreen());
+        page = RootScreenWrapper(
+            child: BlocProvider(
+          create: (context) => getit<ClinicInfoSaveBloc>(),
+          child: const ClinicInfoScreen(),
+        ));
         break;
 
       case Routes.clinicAddressScreen:

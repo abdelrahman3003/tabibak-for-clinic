@@ -123,8 +123,11 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
   Future<void> saveClinicInfo(
       {required ClinicInfoModel clinicInfoModel}) async {
     final data = clinicInfoModel.toJson();
-    final response =
-        await dio.patch("${ApiConstants.apiBaseUrl}/clinic_data", data: data);
+    final response = await dio.patch(
+      "${ApiConstants.apiBaseUrl}/clinic_data",
+      data: data,
+      queryParameters: {"id": "eq.${clinicInfoModel.id}"},
+    );
     if (response.statusCode == 200 || response.statusCode == 201) {
       return;
     }

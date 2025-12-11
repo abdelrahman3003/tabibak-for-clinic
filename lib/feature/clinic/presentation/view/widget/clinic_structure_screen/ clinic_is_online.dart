@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 
 class ClinicIsOnline extends StatefulWidget {
-  const ClinicIsOnline({super.key, this.onChanged});
+  const ClinicIsOnline({super.key, this.onChanged, this.value = false});
   final void Function(bool?)? onChanged;
+  final bool value;
   @override
   State<ClinicIsOnline> createState() => _ClinicIsOnlineState();
 }
 
 class _ClinicIsOnlineState extends State<ClinicIsOnline> {
-  bool isActive = false;
+  late bool _value;
+  @override
+  void initState() {
+    _value = widget.value;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,10 +36,10 @@ class _ClinicIsOnlineState extends State<ClinicIsOnline> {
             ),
             const Spacer(),
             Checkbox(
-              value: isActive,
+              value: _value,
               onChanged: (value) {
                 setState(() {
-                  isActive = value!;
+                  _value = value!;
                 });
                 widget.onChanged?.call(value);
               },

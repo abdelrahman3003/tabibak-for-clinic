@@ -10,7 +10,7 @@ class ClinicInfoEntity {
     this.id,
     required this.clinicName,
     required this.phoneNumber,
-    required this.address,
+    this.address,
     required this.consultationFee,
     required this.isBooking,
   });

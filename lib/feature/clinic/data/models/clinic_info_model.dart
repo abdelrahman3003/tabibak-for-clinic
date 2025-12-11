@@ -35,6 +35,7 @@ class ClinicInfoModel extends ClinicInfoEntity {
 extension ClinicInfoEntityMapper on ClinicInfoEntity {
   ClinicInfoModel toModel() {
     return ClinicInfoModel(
+      id: id,
       clinicName: clinicName,
       phoneNumber: phoneNumber,
       address: address,

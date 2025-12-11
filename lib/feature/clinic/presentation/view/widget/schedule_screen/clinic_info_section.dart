@@ -27,7 +27,7 @@ class ClinicInfoSection extends StatelessWidget {
         ),
         15.hBox,
         EditItem(
-          title: "Clinic Online",
+          title: "Clinic Address",
           subtitle: clinicInfoEntity.address ?? "Address Not Available",
           onTap: () {
             context.pushNamed(Routes.clinicAddressScreen);

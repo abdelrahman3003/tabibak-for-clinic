@@ -25,6 +25,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_wor
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_days_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_info_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_info/clinic_info_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_info_save/clinic_info_save_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_layout/clinic_layout_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_shift/clinic_shift_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_creation/clinic_working_day/clinic_working_day_bloc.dart';
@@ -109,4 +110,6 @@ Future<void> initGetIt() async {
         getit<GetClinicInfoUseCase>(),
         getit<GetClinicWorkingDayShiftUseCase>(),
       ));
+  getit.registerFactory(
+      () => ClinicInfoSaveBloc(getit<SaveClinicInfoUseCase>()));
 }

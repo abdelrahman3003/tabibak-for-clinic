@@ -48,6 +48,26 @@ class Dialogs {
     );
   }
 
+  static void showLoading(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => Dialog(
+        insetPadding: EdgeInsets.zero,
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: const Padding(
+          padding: EdgeInsets.all(15),
+          child: SizedBox(
+            width: 40,
+            height: 40,
+            child: Center(child: CircularProgressIndicator()),
+          ),
+        ),
+      ),
+    );
+  }
+
   static void noOffersBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
