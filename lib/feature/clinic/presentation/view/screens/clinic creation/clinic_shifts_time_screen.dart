@@ -17,7 +17,7 @@ class ClinicShiftsTimeScreen extends StatefulWidget {
   State<ClinicShiftsTimeScreen> createState() => _ClinicShiftsTimeScreenState();
 }
 
-List<ClinicDayWithTimes> days = [];
+List<ClinicDayWithTimesModel> selectedDays = [];
 
 class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
   @override
@@ -64,8 +64,9 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
                     ClinicShiftButtonStates(
                       onPressed: () {
                         context.read<ClinicShiftBloc>().add(
-                            CreateClinicShiftEvent(
-                                clinicWorkingDayArgs.clinicId, days));
+                              CreateClinicShiftEvent(
+                                  clinicWorkingDayArgs.clinicId, selectedDays),
+                            );
                       },
                     ),
                     25.hBox
@@ -84,11 +85,11 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
     TimeOfDay? eveningStart,
     TimeOfDay? eveningEnd,
   }) {
-    final index = days.indexWhere((e) => e.dayId == dayId);
+    final index = selectedDays.indexWhere((e) => e.dayId == dayId);
 
     if (index == -1) {
-      days.add(
-        ClinicDayWithTimes(
+      selectedDays.add(
+        ClinicDayWithTimesModel(
           dayId: dayId,
           morningTime: ClinicTimeModel(
             start: morningStart,
@@ -101,8 +102,8 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
         ),
       );
     } else {
-      final old = days[index];
-      days[index] = ClinicDayWithTimes(
+      final old = selectedDays[index];
+      selectedDays[index] = ClinicDayWithTimesModel(
         dayId: dayId,
         morningTime: ClinicTimeModel(
           start: morningStart ?? old.morningTime?.start,

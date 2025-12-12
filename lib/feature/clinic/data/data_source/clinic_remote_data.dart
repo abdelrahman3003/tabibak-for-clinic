@@ -13,7 +13,7 @@ abstract class ClinicRemoteData {
 
   Future<void> addWorkingDayWithShifts({
     required int clinicId,
-    required List<ClinicDayWithTimes> days,
+    required List<ClinicDayWithTimesModel> selectedDays,
   });
   Future<void> updateWorkingDaysWithShifts({
     required int clinicId,

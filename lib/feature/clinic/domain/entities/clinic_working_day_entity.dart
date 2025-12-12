@@ -2,10 +2,14 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_ent
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_entity.dart';
 
 class ClinicWorkingDayEntity {
+  final int? id;
+  final bool? isSelected;
   final ClinicDayEntity clinicDayEntity;
   final ClinicShiftEntity clinicShiftEntity;
 
   ClinicWorkingDayEntity({
+    this.id,
+    this.isSelected,
     required this.clinicDayEntity,
     required this.clinicShiftEntity,
   });

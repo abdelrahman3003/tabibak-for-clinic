@@ -3,7 +3,7 @@ class ApiConstants {
   static const String apiBaseUrl =
       'https://wzfdmzijnyaihssxwril.supabase.co/rest/v1';
   static const String getWorkingShiftsDays =
-      'working_day?select=days(id,day_en,day_ar),shifts(morning(start,end),evening(start,end))&clinic_id=eq.103';
+      'working_day?select=id,days(id,day_en,day_ar),shifts(id,morning(start,end),evening(start,end)),is_selected';
 }
 
 class ApiErrors {

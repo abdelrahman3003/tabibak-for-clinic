@@ -32,6 +32,7 @@ class ScheduleEditDaysScreen extends StatelessWidget {
                 days.length,
                 (index) => ClinicWorkingDayItem(
                   text: days[index].clinicDayEntity.dayEn,
+                  value: days[index].isSelected ?? false,
                   onChanged: (value) {
                     if (value) {
                       selectedWorkingDays.add(days[index]);

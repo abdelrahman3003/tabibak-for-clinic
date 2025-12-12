@@ -12,7 +12,7 @@ abstract class ClinicRepo {
       {required ClinicInfoEntity clinicInfoEntity});
   Future<Either<ApiErrorModel, void>> addWorkingDayWithShifts({
     required int clinicId,
-    required List<ClinicDayWithTimes> days,
+    required List<ClinicDayWithTimesModel> days,
   });
   Future<Either<ApiErrorModel, void>> updateWorkingDaysWithShifts({
     required int clinicId,

@@ -9,7 +9,7 @@ class CreateClinicWorkingDayShiftUseCase {
   CreateClinicWorkingDayShiftUseCase({required this.clinicRepo});
   Future<Either<ApiErrorModel, void>> call({
     required int clinicId,
-    required List<ClinicDayWithTimes> days,
+    required List<ClinicDayWithTimesModel> days,
   }) async {
     final result = await clinicRepo.addWorkingDayWithShifts(
         days: days, clinicId: clinicId);

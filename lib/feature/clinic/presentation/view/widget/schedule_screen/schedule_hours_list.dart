@@ -5,14 +5,18 @@ import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/sched
 class ScheduleHoursList extends StatelessWidget {
   const ScheduleHoursList({super.key, required this.workingShiftsDays});
   final List<ClinicWorkingDayEntity> workingShiftsDays;
+
   @override
   Widget build(BuildContext context) {
+    final selectedDays =
+        workingShiftsDays.where((e) => e.isSelected ?? false).toList();
+
     return ListView.builder(
-      itemCount: workingShiftsDays.length,
+      itemCount: selectedDays.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        final workingShiftDay = workingShiftsDays[index];
+        final workingShiftDay = selectedDays[index];
         return ScheduleHoursItem(workingShiftDay: workingShiftDay);
       },
     );

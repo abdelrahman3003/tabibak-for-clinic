@@ -67,16 +67,30 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
   @override
   Future<void> addWorkingDayWithShifts({
     required int clinicId,
-    required List<ClinicDayWithTimes> days,
+    required List<ClinicDayWithTimesModel> selectedDays,
   }) async {
-    for (final day in days) {
+    final List<int> allDays = [1, 2, 3, 4, 5, 6, 7];
+
+    for (final dayId in allDays) {
+      ClinicDayWithTimesModel? selected;
+      for (final e in selectedDays) {
+        if (e.dayId == dayId) {
+          selected = e;
+          break;
+        }
+      }
+
       int? morningTimeId;
       int? eveningTimeId;
-      if (day.morningTime?.start != null && day.morningTime?.end != null) {
-        morningTimeId = await createClinicTime(day.morningTime!);
+
+      if (selected?.morningTime?.start != null &&
+          selected?.morningTime?.end != null) {
+        morningTimeId = await createClinicTime(selected!.morningTime!);
       }
-      if (day.eveningTime?.start != null && day.eveningTime?.end != null) {
-        eveningTimeId = await createClinicTime(day.eveningTime!);
+
+      if (selected?.eveningTime?.start != null &&
+          selected?.eveningTime?.end != null) {
+        eveningTimeId = await createClinicTime(selected!.eveningTime!);
       }
 
       final shiftResponse = await dio.post(
@@ -89,13 +103,13 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
 
       final shiftId = shiftResponse.data[0]['id'];
 
-      // 4 — Add Working Day
       await dio.post(
         '${ApiConstants.apiBaseUrl}/working_day',
         data: {
           'clinic_id': clinicId,
-          'day_id': day.dayId,
+          'day_id': dayId,
           'shift_id': shiftId,
+          'is_selected': selected != null,
         },
       );
     }

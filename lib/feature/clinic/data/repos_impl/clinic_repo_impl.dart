@@ -43,12 +43,12 @@ class ClinicRepoImpl implements ClinicRepo {
   @override
   Future<Either<ApiErrorModel, void>> addWorkingDayWithShifts({
     required int clinicId,
-    required List<ClinicDayWithTimes> days,
+    required List<ClinicDayWithTimesModel> days,
   }) async {
     try {
       await clinicRemoteData.addWorkingDayWithShifts(
         clinicId: clinicId,
-        days: days,
+        selectedDays: days,
       );
       return right(null);
     } catch (e) {

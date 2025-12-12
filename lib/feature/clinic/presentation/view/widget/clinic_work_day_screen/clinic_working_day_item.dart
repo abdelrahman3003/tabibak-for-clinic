@@ -15,6 +15,7 @@ class _ClinicWorkingDayItemState extends State<ClinicWorkingDayItem> {
   @override
   void initState() {
     _value = widget.value;
+
     super.initState();
   }
 

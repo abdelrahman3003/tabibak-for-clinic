@@ -9,6 +9,6 @@ sealed class ClinicShiftEvent extends Equatable {
 
 final class CreateClinicShiftEvent extends ClinicShiftEvent {
   final int clinicId;
-  final List<ClinicDayWithTimes> days;
+  final List<ClinicDayWithTimesModel> days;
   const CreateClinicShiftEvent(this.clinicId, this.days);
 }
