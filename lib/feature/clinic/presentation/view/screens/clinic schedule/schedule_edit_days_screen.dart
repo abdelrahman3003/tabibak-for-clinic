@@ -4,54 +4,60 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
-import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_schedule_argument_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_args.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_item.dart';
 
-class ScheduleEditDaysScreen extends StatelessWidget {
+class ScheduleEditDaysScreen extends StatefulWidget {
   const ScheduleEditDaysScreen({super.key});
 
   @override
+  State<ScheduleEditDaysScreen> createState() => _ScheduleEditDaysScreenState();
+}
+
+class _ScheduleEditDaysScreenState extends State<ScheduleEditDaysScreen> {
+  late List<ClinicWorkingDayEntity> days;
+  late ClinicWorkingDayArgs args;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    args = ModalRoute.of(context)!.settings.arguments as ClinicWorkingDayArgs;
+    days = List.from(args.selectedDays);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final clinicScheduleArgumentModel = ModalRoute.of(context)!
-        .settings
-        .arguments as ClinicScheduleArgumentModel;
-    final List<ClinicWorkingDayEntity> selectedWorkingDays = [];
-    final days = clinicScheduleArgumentModel.workingShiftsDays;
     return Scaffold(
-      appBar: const AppBarWidget(
-        title: "Clinic Working Days",
-      ),
+      appBar: const AppBarWidget(title: "Clinic Working Days"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           children: [
-            Column(
-              children: List.generate(
-                days.length,
-                (index) => ClinicWorkingDayItem(
-                  text: days[index].clinicDayEntity.dayEn,
-                  value: days[index].isSelected ?? false,
-                  onChanged: (value) {
-                    if (value) {
-                      selectedWorkingDays.add(days[index]);
-                    } else {
-                      selectedWorkingDays.remove(days[index]);
-                    }
-                  },
-                ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: days.length,
+                itemBuilder: (context, index) {
+                  final day = days[index];
+                  return ClinicWorkingDayItem(
+                    text: day.clinicDayEntity!.dayEn!,
+                    value: day.isSelected ?? false,
+                    onChanged: (value) {
+                      day.isSelected = value;
+                    },
+                  );
+                },
               ),
             ),
-            const Spacer(),
             AppButton(
               title: "Continue",
               onPressed: () {
+                final selectedDays =
+                    days.where((e) => e.isSelected == true).toList();
                 context.pushNamed(
                   Routes.clinicShiftsTimeScreen,
                   arguments: ClinicWorkingDayArgs(
-                      selectedDays: [],
-                      clinicId: clinicScheduleArgumentModel.clinicId),
+                      selectedDays: selectedDays, clinicId: args.clinicId),
                 );
               },
             ),

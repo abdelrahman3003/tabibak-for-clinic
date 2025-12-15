@@ -5,9 +5,8 @@ import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
-import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_time_edit.dart';
-import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_time_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working_day_entity.dart';
@@ -43,7 +42,7 @@ class ClinicRepoImpl implements ClinicRepo {
   @override
   Future<Either<ApiErrorModel, void>> addWorkingDayWithShifts({
     required int clinicId,
-    required List<ClinicDayWithTimesModel> days,
+    required List<ClinicWorkingDayModel> days,
   }) async {
     try {
       await clinicRemoteData.addWorkingDayWithShifts(
@@ -52,6 +51,8 @@ class ClinicRepoImpl implements ClinicRepo {
       );
       return right(null);
     } catch (e) {
+      log("---------create $e");
+
       return left(ErrorHandler.handle(e));
     }
   }
@@ -63,6 +64,8 @@ class ClinicRepoImpl implements ClinicRepo {
 
       return right(response);
     } catch (e) {
+      log("---------clinic $e");
+
       return left(ErrorHandler.handle(e));
     }
   }
@@ -75,6 +78,8 @@ class ClinicRepoImpl implements ClinicRepo {
           await clinicRemoteData.getClinicSchedule(clinicId: clinicId);
       return right(response);
     } catch (e) {
+      log("---------schedule $e");
+
       return left(ErrorHandler.handle(e));
     }
   }
@@ -87,7 +92,6 @@ class ClinicRepoImpl implements ClinicRepo {
           clinicInfoModel: clinicInfoEntity.toModel());
       return right(response);
     } catch (e) {
-      log("---------$e");
       return left(ErrorHandler.handle(e));
     }
   }
@@ -95,14 +99,15 @@ class ClinicRepoImpl implements ClinicRepo {
   @override
   Future<Either<ApiErrorModel, void>> updateWorkingDaysWithShifts(
       {required int clinicId,
-      required List<ClinicDayWithTimeEdit> days}) async {
+      required List<ClinicWorkingDayModel> days}) async {
     try {
       await clinicRemoteData.updateWorkingDaysWithShifts(
         clinicId: clinicId,
-        days: days,
+        selectedDays: days,
       );
       return right(null);
     } catch (e) {
+      log("--------- update $e");
       return left(ErrorHandler.handle(e));
     }
   }

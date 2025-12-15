@@ -9,7 +9,7 @@ sealed class ClinicScheduleUpdateEvent extends Equatable {
 
 class SaveClinicScheduleEvent extends ClinicScheduleUpdateEvent {
   final int clinicId;
-  final List<ClinicDayWithTimeEdit> days;
+  final List<ClinicWorkingDayModel> days;
 
   const SaveClinicScheduleEvent({required this.clinicId, required this.days});
 

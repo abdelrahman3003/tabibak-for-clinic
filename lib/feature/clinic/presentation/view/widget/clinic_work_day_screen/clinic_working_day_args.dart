@@ -1,7 +1,7 @@
-import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working_day_entity.dart';
 
 class ClinicWorkingDayArgs {
-  final List<ClinicDayEntity> selectedDays;
+  final List<ClinicWorkingDayEntity> selectedDays;
   final int clinicId;
 
   ClinicWorkingDayArgs({

@@ -21,3 +21,12 @@ class ClinicTimeModel extends ClinicTimeEntity {
     };
   }
 }
+
+extension ClinicTimeEntityX on ClinicTimeEntity {
+  ClinicTimeModel toModel() {
+    return ClinicTimeModel(
+      start: start,
+      end: end,
+    );
+  }
+}

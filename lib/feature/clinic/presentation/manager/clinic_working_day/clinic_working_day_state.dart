@@ -22,7 +22,7 @@ final class ClinicWorkingDaySuccess extends ClinicWorkingDayState {}
 final class GetAllDaysLoading extends ClinicWorkingDayState {}
 
 final class GetAllDaysSuccess extends ClinicWorkingDayState {
-  final List<ClinicDayEntity> days;
+  final List<ClinicWorkingDayModel> days;
 
   const GetAllDaysSuccess({required this.days});
 }

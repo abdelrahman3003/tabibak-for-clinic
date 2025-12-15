@@ -1,6 +1,4 @@
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
-import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_time_edit.dart';
-import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_time_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_time_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
@@ -13,11 +11,11 @@ abstract class ClinicRemoteData {
 
   Future<void> addWorkingDayWithShifts({
     required int clinicId,
-    required List<ClinicDayWithTimesModel> selectedDays,
+    required List<ClinicWorkingDayModel> selectedDays,
   });
   Future<void> updateWorkingDaysWithShifts({
     required int clinicId,
-    required List<ClinicDayWithTimeEdit> days,
+    required List<ClinicWorkingDayModel> selectedDays,
   });
   Future<List<ClinicWorkingDayModel>> getClinicSchedule(
       {required int clinicId});

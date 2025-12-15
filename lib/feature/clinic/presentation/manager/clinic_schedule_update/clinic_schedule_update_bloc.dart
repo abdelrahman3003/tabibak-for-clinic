@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_with_time_edit.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/update_clinic_schedule_use_case.dart';
 
 part 'clinic_schedule_update_event.dart';
@@ -13,8 +13,8 @@ class ClinicScheduleUpdateBloc
       : super(ClinicScheduleUpdateInitial()) {
     on<SaveClinicScheduleEvent>((event, emit) async {
       emit(ClinicScheduleUpdateLoading());
-      final result =
-          await updateClinicScheduleUseCase.call(event.clinicId, event.days);
+      final result = await updateClinicScheduleUseCase.call(
+          clinicId: event.clinicId, days: event.days);
       result.fold(
         (error) {
           emit(ClinicScheduleUpdateFailed(errorMessage: error.message!));

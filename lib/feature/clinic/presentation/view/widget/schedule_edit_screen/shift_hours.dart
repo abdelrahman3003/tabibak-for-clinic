@@ -8,10 +8,14 @@ class ShiftHours extends StatefulWidget {
       {super.key,
       required this.shift,
       this.onStartTimeSelected,
-      this.onEndTimeSelected});
+      this.onEndTimeSelected,
+      this.initialStart,
+      this.initialEnd});
   final String shift;
   final Function(TimeOfDay)? onStartTimeSelected;
   final Function(TimeOfDay)? onEndTimeSelected;
+  final TimeOfDay? initialStart;
+  final TimeOfDay? initialEnd;
   @override
   State<ShiftHours> createState() => _ShiftHoursState();
 }
@@ -46,14 +50,14 @@ class _ShiftHoursState extends State<ShiftHours> {
                 child: TimeField(
               onTimeSelected: widget.onStartTimeSelected,
               enable: isActive,
-              value: "Select Time",
+              value: widget.initialStart,
             )),
             30.wBox,
             Expanded(
                 child: TimeField(
               onTimeSelected: widget.onEndTimeSelected,
               enable: isActive,
-              value: "Select Time",
+              value: widget.initialEnd,
             )),
           ],
         ),

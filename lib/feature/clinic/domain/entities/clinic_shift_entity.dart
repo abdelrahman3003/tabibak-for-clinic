@@ -1,11 +1,15 @@
-import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_time_entity.dart';
+import 'package:flutter/material.dart';
 
 class ClinicShiftEntity {
-  final ClinicTimeEntity? morning;
-  final ClinicTimeEntity? evening;
+  final TimeOfDay? morningStart;
+  final TimeOfDay? morningEnd;
+  final TimeOfDay? eveningStart;
+  final TimeOfDay? eveningEnd;
 
-  ClinicShiftEntity({
-    required this.morning,
-    required this.evening,
-  });
+  ClinicShiftEntity(
+    this.morningStart,
+    this.morningEnd,
+    this.eveningStart,
+    this.eveningEnd,
+  );
 }

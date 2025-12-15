@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
-import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_schedule_argument_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working_day_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_args.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/schedule_hours_header.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/schedule_hours_list.dart';
 import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/profile_title.dart';
@@ -29,8 +29,8 @@ class ClinicScheduleSection extends StatelessWidget {
               onTap: () {
                 context.pushNamed(
                   Routes.scheduleEditDaysScreen,
-                  arguments: ClinicScheduleArgumentModel(
-                      workingShiftsDays: workingShiftsDays, clinicId: clinicId),
+                  arguments: ClinicWorkingDayArgs(
+                      selectedDays: workingShiftsDays, clinicId: clinicId),
                 );
               },
             )

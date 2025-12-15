@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_working_day/clinic_working_day_bloc.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_body.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_day_body.dart';
 
 class ClinicDaysScreen extends StatelessWidget {
   const ClinicDaysScreen({super.key});
@@ -21,7 +21,7 @@ class ClinicDaysScreen extends StatelessWidget {
           child: BlocBuilder<ClinicWorkingDayBloc, ClinicWorkingDayState>(
             builder: (context, state) {
               return state is GetAllDaysSuccess
-                  ? ClinicWorkingDayBody(
+                  ? ClinicDayBody(
                       days: state.days,
                       clinicId: clinicId,
                     )

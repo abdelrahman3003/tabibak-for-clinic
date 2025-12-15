@@ -3,30 +3,36 @@ import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
-import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_args.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_item.dart';
 
-class ClinicWorkingDayBody extends StatelessWidget {
-  const ClinicWorkingDayBody(
-      {super.key, required this.days, required this.clinicId});
-  final List<ClinicDayEntity> days;
+class ClinicDayBody extends StatefulWidget {
+  const ClinicDayBody({super.key, required this.days, required this.clinicId});
+  final List<ClinicWorkingDayModel> days;
   final int clinicId;
+
+  @override
+  State<ClinicDayBody> createState() => _ClinicDayBodyState();
+}
+
+class _ClinicDayBodyState extends State<ClinicDayBody> {
+  final List<ClinicWorkingDayModel> selectedDays = [];
+
   @override
   Widget build(BuildContext context) {
-    final List<ClinicDayEntity> selectedDays = [];
     return Column(
       children: [
         Column(
           children: List.generate(
-            days.length,
+            widget.days.length,
             (index) => ClinicWorkingDayItem(
-              text: days[index].dayEn,
+              text: widget.days[index].clinicDayEntity!.dayEn!,
               onChanged: (value) {
                 if (value) {
-                  selectedDays.add(days[index]);
+                  selectedDays.add(widget.days[index]);
                 } else {
-                  selectedDays.remove(days[index]);
+                  selectedDays.remove(widget.days[index]);
                 }
               },
             ),
@@ -39,7 +45,7 @@ class ClinicWorkingDayBody extends StatelessWidget {
             context.pushNamed(
               Routes.clinicShiftsTimeScreen,
               arguments: ClinicWorkingDayArgs(
-                  selectedDays: selectedDays, clinicId: clinicId),
+                  selectedDays: selectedDays, clinicId: widget.clinicId),
             );
           },
         ),

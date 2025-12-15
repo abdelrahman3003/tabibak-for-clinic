@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
@@ -13,9 +11,7 @@ class ScheduleHoursItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final shift = workingShiftDay.clinicShiftEntity;
-    if (shift.evening != null) {
-      log("------${shift.evening!.start}");
-    }
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
       decoration: BoxDecoration(
@@ -28,7 +24,7 @@ class ScheduleHoursItem extends StatelessWidget {
         children: [
           SizedBox(
               width: 75.w,
-              child: Text(workingShiftDay.clinicDayEntity.dayEn,
+              child: Text(workingShiftDay.clinicDayEntity!.dayEn!,
                   style: Theme.of(context).textTheme.titleMedium)),
           20.wBox,
           Expanded(
@@ -37,17 +33,17 @@ class ScheduleHoursItem extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                      shift.morning == null
+                      shift?.morningStart == null
                           ? "--"
-                          : "${formatTime(shift.morning!.start)} - ${formatTime(shift.morning!.end)}",
+                          : "${formatTime(shift?.morningStart)} - ${formatTime(shift?.morningEnd)}",
                       style: Theme.of(context).textTheme.bodyMedium),
                 ),
                 20.wBox,
                 Expanded(
                   child: Text(
-                    shift.evening == null
+                    shift?.eveningStart == null
                         ? "--"
-                        : "${formatTime(shift.evening!.start)} - ${formatTime(shift.evening!.end)}",
+                        : "${formatTime(shift?.eveningStart)} - ${formatTime(shift?.eveningEnd)}",
                     style: Theme.of(context).textTheme.bodyMedium,
                     overflow: TextOverflow.clip,
                   ),

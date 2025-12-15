@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_days_use_case.dart';
 
@@ -17,10 +18,18 @@ class ClinicWorkingDayBloc
       result.fold(
         (error) {},
         (days) {
-          emit(GetAllDaysSuccess(days: days));
+          emit(GetAllDaysSuccess(days: _mapDaysToWorkingDays(days)));
         },
       );
     });
     add(GetAllDaysEvent());
   }
+}
+
+List<ClinicWorkingDayModel> _mapDaysToWorkingDays(
+  List<ClinicDayEntity> days,
+) {
+  return days.map((day) {
+    return ClinicWorkingDayModel(clinicDayEntity: day);
+  }).toList();
 }

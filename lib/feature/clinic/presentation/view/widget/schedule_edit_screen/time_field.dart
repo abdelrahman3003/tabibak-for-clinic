@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TimeField extends StatefulWidget {
   final void Function(TimeOfDay time)? onTimeSelected;
   final bool enable;
-  final String? value;
+  final TimeOfDay? value;
   const TimeField(
       {super.key,
       this.onTimeSelected,
@@ -58,7 +58,7 @@ class _TimeFieldState extends State<TimeField> {
           ),
           controller: TextEditingController(
             text: selectedTime == null
-                ? widget.value ?? "Select Time"
+                ? widget.value?.format(context) ?? "Select Time"
                 : selectedTime!.format(context),
           ),
           readOnly: true,

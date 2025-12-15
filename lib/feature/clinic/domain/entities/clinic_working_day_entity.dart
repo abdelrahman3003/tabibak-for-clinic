@@ -3,14 +3,14 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_e
 
 class ClinicWorkingDayEntity {
   final int? id;
-  final bool? isSelected;
-  final ClinicDayEntity clinicDayEntity;
-  final ClinicShiftEntity clinicShiftEntity;
+  bool? isSelected;
+  final ClinicDayEntity? clinicDayEntity;
+  final ClinicShiftEntity? clinicShiftEntity;
 
   ClinicWorkingDayEntity({
     this.id,
     this.isSelected,
     required this.clinicDayEntity,
-    required this.clinicShiftEntity,
+    this.clinicShiftEntity,
   });
 }

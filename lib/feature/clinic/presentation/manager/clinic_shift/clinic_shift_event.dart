@@ -9,6 +9,17 @@ sealed class ClinicShiftEvent extends Equatable {
 
 final class CreateClinicShiftEvent extends ClinicShiftEvent {
   final int clinicId;
-  final List<ClinicDayWithTimesModel> days;
+  final List<ClinicWorkingDayModel> days;
+
   const CreateClinicShiftEvent(this.clinicId, this.days);
+}
+
+class UpdateClinicShiftEvent extends ClinicShiftEvent {
+  final int clinicId;
+  final List<ClinicWorkingDayModel> days;
+
+  const UpdateClinicShiftEvent({required this.clinicId, required this.days});
+
+  @override
+  List<Object> get props => [clinicId, days];
 }

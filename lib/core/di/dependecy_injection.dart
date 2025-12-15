@@ -108,8 +108,9 @@ Future<void> initGetIt() async {
   getit.registerFactory(() => ClinicInfoBloc(getit<CreateClinicInfoUseCase>()));
   getit.registerFactory(
       () => ClinicWorkingDayBloc(getDaysUseCase: getit<GetDaysUseCase>()));
-  getit.registerFactory(
-      () => ClinicShiftBloc(getit<CreateClinicWorkingDayShiftUseCase>()));
+  getit.registerFactory(() => ClinicShiftBloc(
+      getit<CreateClinicWorkingDayShiftUseCase>(),
+      getit<UpdateClinicScheduleUseCase>()));
   getit.registerFactory(() => ClinicLayoutBloc(
         getit<GetClinicInfoUseCase>(),
         getit<GetClinicWorkingDayShiftUseCase>(),
