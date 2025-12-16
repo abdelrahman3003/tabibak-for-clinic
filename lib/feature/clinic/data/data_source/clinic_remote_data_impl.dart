@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -68,6 +70,7 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
       },
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
+      log("======1$clinicId");
       final workingShiftsDays = response.data as List;
       return workingShiftsDays
           .map((workingShiftDay) =>
@@ -98,6 +101,7 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
     required List<ClinicWorkingDayModel> selectedDays,
   }) async {
     final supabase = Supabase.instance.client;
+
     for (int dayId = 1; dayId <= 7; dayId++) {
       final selectedDay = selectedDays.firstWhereOrNull(
         (e) => e.clinicDayEntity?.id == dayId,
@@ -105,7 +109,8 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
 
       final isSelected = selectedDay != null;
 
-      int? shiftId;
+      int? shiftId = selectedDay?.id;
+
       if (selectedDay?.clinicShiftEntity != null) {
         final shiftPayload = {
           'morning_start':
@@ -118,9 +123,10 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
 
         final shiftResponse = await supabase
             .from('shifts')
-            .insert(shiftPayload)
+            .upsert(shiftPayload)
             .select()
             .single();
+
         shiftId = shiftResponse['id'];
       }
 
@@ -131,7 +137,10 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
         'shift_id': shiftId,
       };
 
-      await supabase.from('working_day').insert(payload).select();
+      await supabase.from('working_day').upsert(
+            payload,
+            onConflict: 'day_id',
+          );
     }
   }
 }

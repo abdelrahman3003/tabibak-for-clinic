@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
@@ -83,6 +85,8 @@ class ClinicRepoImpl implements ClinicRepo {
       );
       return right(null);
     } catch (e) {
+      log("--------$e");
+
       return left(ErrorHandler.handle(e));
     }
   }
