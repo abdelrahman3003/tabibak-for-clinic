@@ -107,11 +107,11 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
         (e) => e.clinicDayEntity?.id == dayId,
       );
 
-      final isSelected = selectedDay != null;
+      final isSelected = selectedDay?.isSelected ?? false;
 
-      int? shiftId = selectedDay?.id;
+      int? shiftId;
 
-      if (selectedDay?.clinicShiftEntity != null) {
+      if (isSelected) {
         final shiftPayload = {
           'morning_start':
               formatTime(selectedDay!.clinicShiftEntity!.morningStart),
@@ -134,12 +134,12 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
         'clinic_id': clinicId,
         'day_id': dayId,
         'is_selected': isSelected,
-        'shift_id': shiftId,
+        'shift_id': shiftId
       };
 
       await supabase.from('working_day').upsert(
             payload,
-            onConflict: 'day_id',
+            onConflict: 'clinic_id,day_id',
           );
     }
   }
