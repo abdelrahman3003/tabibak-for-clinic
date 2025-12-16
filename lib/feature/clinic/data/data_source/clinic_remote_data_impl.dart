@@ -7,7 +7,6 @@ import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
-import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_time_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
 
 class ClinicRemoteDataImpl implements ClinicRemoteData {
@@ -30,11 +29,6 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
     final data = model.toJson();
     data["doctor_id"] = getit<Supabase>().client.auth.currentUser!.id;
     return _postAndReturnId('clinic_data', data);
-  }
-
-  @override
-  Future<int> createClinicTime(ClinicTimeModel model) async {
-    return _postAndReturnId('times', model.toJson());
   }
 
   @override
@@ -62,59 +56,6 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
       return list;
     }
     throw Exception('Failed request on days');
-  }
-
-  @override
-  Future<void> addWorkingDayWithShifts({
-    required int clinicId,
-    required List<ClinicWorkingDayModel> selectedDays,
-  }) async {
-    final List<int> allDays = [1, 2, 3, 4, 5, 6, 7];
-
-    for (final dayId in allDays) {
-      ClinicWorkingDayModel? selected;
-      for (final e in selectedDays) {
-        if (e.clinicDayEntity?.id == dayId) {
-          selected = e;
-          break;
-        }
-      }
-
-      int? morningTimeId;
-      int? eveningTimeId;
-
-      // if (selected?.clinicShiftEntity?.morning?.start != null &&
-      //     selected?.clinicShiftEntity?.morning?.end != null) {
-      //   morningTimeId = await createClinicTime(
-      //       selected!.clinicShiftEntity!.morning!.toModel());
-      // }
-
-      // if (selected?.clinicShiftEntity?.evening?.start != null &&
-      //     selected?.clinicShiftEntity?.evening?.end != null) {
-      //   eveningTimeId = await createClinicTime(
-      //       selected!.clinicShiftEntity!.evening!.toModel());
-      // }
-
-      final shiftResponse = await dio.post(
-        '${ApiConstants.apiBaseUrl}/shifts',
-        data: {
-          'morning': morningTimeId,
-          'evening': eveningTimeId,
-        },
-      );
-
-      final shiftId = shiftResponse.data[0]['id'];
-
-      await dio.post(
-        '${ApiConstants.apiBaseUrl}/working_day',
-        data: {
-          'clinic_id': clinicId,
-          'day_id': dayId,
-          'shift_id': shiftId,
-          'is_selected': selected != null,
-        },
-      );
-    }
   }
 
   @override
@@ -152,7 +93,7 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
   }
 
   @override
-  Future<void> updateWorkingDaysWithShifts({
+  Future<void> saveClinicWorkingDays({
     required int clinicId,
     required List<ClinicWorkingDayModel> selectedDays,
   }) async {
@@ -164,7 +105,6 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
 
       final isSelected = selectedDay != null;
 
-      // 1️⃣ حضّر shift payload
       int? shiftId;
       if (selectedDay?.clinicShiftEntity != null) {
         final shiftPayload = {
@@ -184,12 +124,11 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
         shiftId = shiftResponse['id'];
       }
 
-      // 2️⃣ حضّر working_day payload
       final payload = {
         'clinic_id': clinicId,
         'day_id': dayId,
         'is_selected': isSelected,
-        'shift_id': shiftId, // هنا نحط الـ shift_id
+        'shift_id': shiftId,
       };
 
       await supabase.from('working_day').insert(payload).select();

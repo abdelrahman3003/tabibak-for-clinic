@@ -6,7 +6,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_inf
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_working_day_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_layout/clinic_layout_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20schedule/schedule_screen.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_layout_screen.dart/clinic_init.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_layout_screen/clinic_init.dart';
 
 class ClinicLayout extends StatelessWidget {
   const ClinicLayout({super.key});

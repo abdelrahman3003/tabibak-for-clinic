@@ -19,12 +19,11 @@ import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote
 import 'package:tabibak_for_clinic/feature/clinic/data/repos_impl/clinic_repo_impl.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/repos/clinic_repo.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_info_use_case.dart';
-import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_working_day_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_info_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_working_day_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_days_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_info_use_case.dart';
-import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/update_clinic_schedule_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_working_day_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info_save/clinic_info_save_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_layout/clinic_layout_bloc.dart';
@@ -94,23 +93,21 @@ Future<void> initGetIt() async {
 
   getit.registerLazySingleton<GetDaysUseCase>(
       () => GetDaysUseCase(clinicRepo: getit<ClinicRepo>()));
-  getit.registerLazySingleton<CreateClinicWorkingDayShiftUseCase>(() =>
-      CreateClinicWorkingDayShiftUseCase(clinicRepo: getit<ClinicRepo>()));
+
   getit.registerLazySingleton<GetClinicInfoUseCase>(
       () => GetClinicInfoUseCase(clinicRepo: getit<ClinicRepo>()));
   getit.registerLazySingleton<GetClinicWorkingDayShiftUseCase>(
       () => GetClinicWorkingDayShiftUseCase(clinicRepo: getit<ClinicRepo>()));
   getit.registerLazySingleton<SaveClinicInfoUseCase>(
       () => SaveClinicInfoUseCase(clinicRepo: getit<ClinicRepo>()));
-  getit.registerLazySingleton<UpdateClinicScheduleUseCase>(
-      () => UpdateClinicScheduleUseCase(clinicRepo: getit<ClinicRepo>()));
+  getit.registerLazySingleton<SaveClinicWorkingDayUseCase>(
+      () => SaveClinicWorkingDayUseCase(clinicRepo: getit<ClinicRepo>()));
   // Blocs
   getit.registerFactory(() => ClinicInfoBloc(getit<CreateClinicInfoUseCase>()));
   getit.registerFactory(
       () => ClinicWorkingDayBloc(getDaysUseCase: getit<GetDaysUseCase>()));
-  getit.registerFactory(() => ClinicShiftBloc(
-      getit<CreateClinicWorkingDayShiftUseCase>(),
-      getit<UpdateClinicScheduleUseCase>()));
+  getit.registerFactory(
+      () => ClinicShiftBloc(getit<SaveClinicWorkingDayUseCase>()));
   getit.registerFactory(() => ClinicLayoutBloc(
         getit<GetClinicInfoUseCase>(),
         getit<GetClinicWorkingDayShiftUseCase>(),
@@ -118,5 +115,5 @@ Future<void> initGetIt() async {
   getit.registerFactory(
       () => ClinicInfoSaveBloc(getit<SaveClinicInfoUseCase>()));
   getit.registerFactory(
-      () => ClinicScheduleUpdateBloc(getit<UpdateClinicScheduleUseCase>()));
+      () => ClinicScheduleUpdateBloc(getit<SaveClinicWorkingDayUseCase>()));
 }

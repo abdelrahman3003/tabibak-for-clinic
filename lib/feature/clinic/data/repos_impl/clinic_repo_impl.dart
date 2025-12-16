@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
@@ -40,32 +38,12 @@ class ClinicRepoImpl implements ClinicRepo {
   }
 
   @override
-  Future<Either<ApiErrorModel, void>> addWorkingDayWithShifts({
-    required int clinicId,
-    required List<ClinicWorkingDayModel> days,
-  }) async {
-    try {
-      await clinicRemoteData.addWorkingDayWithShifts(
-        clinicId: clinicId,
-        selectedDays: days,
-      );
-      return right(null);
-    } catch (e) {
-      log("---------create $e");
-
-      return left(ErrorHandler.handle(e));
-    }
-  }
-
-  @override
   Future<Either<ApiErrorModel, List<ClinicInfoEntity>>> getClinicInfo() async {
     try {
       final response = await clinicRemoteData.getClinicInfo();
 
       return right(response);
     } catch (e) {
-      log("---------clinic $e");
-
       return left(ErrorHandler.handle(e));
     }
   }
@@ -78,8 +56,6 @@ class ClinicRepoImpl implements ClinicRepo {
           await clinicRemoteData.getClinicSchedule(clinicId: clinicId);
       return right(response);
     } catch (e) {
-      log("---------schedule $e");
-
       return left(ErrorHandler.handle(e));
     }
   }
@@ -97,17 +73,16 @@ class ClinicRepoImpl implements ClinicRepo {
   }
 
   @override
-  Future<Either<ApiErrorModel, void>> updateWorkingDaysWithShifts(
+  Future<Either<ApiErrorModel, void>> saveClinicWorkingDays(
       {required int clinicId,
       required List<ClinicWorkingDayModel> days}) async {
     try {
-      await clinicRemoteData.updateWorkingDaysWithShifts(
+      await clinicRemoteData.saveClinicWorkingDays(
         clinicId: clinicId,
         selectedDays: days,
       );
       return right(null);
     } catch (e) {
-      log("--------- update $e");
       return left(ErrorHandler.handle(e));
     }
   }

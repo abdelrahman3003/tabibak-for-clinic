@@ -9,11 +9,8 @@ abstract class ClinicRepo {
   Future<Either<ApiErrorModel, List<ClinicInfoEntity>>> getClinicInfo();
   Future<Either<ApiErrorModel, int>> createClinicInfo(
       {required ClinicInfoEntity clinicInfoEntity});
-  Future<Either<ApiErrorModel, void>> addWorkingDayWithShifts({
-    required int clinicId,
-    required List<ClinicWorkingDayModel> days,
-  });
-  Future<Either<ApiErrorModel, void>> updateWorkingDaysWithShifts({
+
+  Future<Either<ApiErrorModel, void>> saveClinicWorkingDays({
     required int clinicId,
     required List<ClinicWorkingDayModel> days,
   });

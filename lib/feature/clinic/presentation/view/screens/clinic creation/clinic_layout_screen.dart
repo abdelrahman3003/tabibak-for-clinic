@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_layout_screen.dart/clinic_init.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_layout_screen/clinic_init.dart';
 
 class CreateClinicScreen extends StatelessWidget {
   const CreateClinicScreen({super.key});
