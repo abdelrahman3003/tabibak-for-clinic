@@ -6,8 +6,8 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_args.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/schedule_hours_header.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/schedule_hours_list.dart';
-import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/profile_title.dart';
-import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/text_button_widget.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/widget/doctor_profile_screen/profile_title.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/widget/doctor_profile_screen/text_button_widget.dart';
 
 class ClinicScheduleSection extends StatelessWidget {
   const ClinicScheduleSection(

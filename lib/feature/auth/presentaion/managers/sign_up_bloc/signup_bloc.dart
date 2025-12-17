@@ -2,10 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tabibak_for_clinic/core/functions/pick_image.dart';
-import 'package:tabibak_for_clinic/feature/auth/domain/entities/doctor_entity.dart';
-import 'package:tabibak_for_clinic/feature/auth/domain/entities/specialty_entity.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/get_specialties_usecase.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/sign_up_usecase.dart';
+import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
+import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_entity.dart';
 
 part 'signup_event.dart';
 part 'signup_state.dart';

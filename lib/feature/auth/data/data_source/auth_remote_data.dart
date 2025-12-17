@@ -1,7 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tabibak_for_clinic/feature/auth/data/models/dotcor_model.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/models/signin_result_model.dart';
-import 'package:tabibak_for_clinic/feature/auth/data/models/specialty_model.dart';
+import 'package:tabibak_for_clinic/feature/doctor/data/model/dotcor_model.dart';
+import 'package:tabibak_for_clinic/feature/doctor/data/model/specialty_model.dart';
 
 abstract class AuthRemoteData {
   Future<void> signUp({required DoctorModel doctorModel});

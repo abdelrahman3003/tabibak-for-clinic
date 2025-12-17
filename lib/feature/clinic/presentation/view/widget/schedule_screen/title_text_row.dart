@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/title_text.dart';
-import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/text_button_widget.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/widget/doctor_profile_screen/text_button_widget.dart';
 
 class TitleTextRow extends StatelessWidget {
   const TitleTextRow(

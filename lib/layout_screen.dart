@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:tabibak_for_clinic/feature/appointment/appointment_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic_layout.dart';
-import 'package:tabibak_for_clinic/feature/doctor/screens/doctor_profile_screen.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/screens/doctor_profile_screen.dart';
 
 import 'core/theme/app_colors.dart';
 

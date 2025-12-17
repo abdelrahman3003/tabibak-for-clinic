@@ -1,4 +1,4 @@
-import 'package:tabibak_for_clinic/feature/auth/domain/entities/specialty_entity.dart';
+import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_entity.dart';
 
 class SpecialtyModel extends SpecialtyEntity {
   const SpecialtyModel({

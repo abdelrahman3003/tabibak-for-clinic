@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
-import 'package:tabibak_for_clinic/feature/auth/domain/entities/specialty_entity.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/auth_dropdown.dart';
+import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_entity.dart';
 
 class DoctorSpecialtyScreen extends StatelessWidget {
   const DoctorSpecialtyScreen({super.key});

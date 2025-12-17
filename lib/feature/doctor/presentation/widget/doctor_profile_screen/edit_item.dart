@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
-import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/text_button_widget.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/widget/doctor_profile_screen/text_button_widget.dart';
 
 class EditItem extends StatelessWidget {
   const EditItem(

@@ -4,10 +4,10 @@ import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
-import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/edit_item.dart';
-import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/personal_image.dart';
-import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/profile_title.dart';
-import 'package:tabibak_for_clinic/feature/doctor/widget/doctor_profile_screen/setting_item.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/widget/doctor_profile_screen/edit_item.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/widget/doctor_profile_screen/personal_image.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/widget/doctor_profile_screen/profile_title.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/widget/doctor_profile_screen/setting_item.dart';
 
 class DoctorProfileScreen extends StatefulWidget {
   const DoctorProfileScreen({super.key});

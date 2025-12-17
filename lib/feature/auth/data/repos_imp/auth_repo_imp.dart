@@ -2,11 +2,11 @@ import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
-import 'package:tabibak_for_clinic/feature/auth/data/models/dotcor_model.dart';
-import 'package:tabibak_for_clinic/feature/auth/domain/entities/doctor_entity.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/entities/signin_result_entity.dart';
-import 'package:tabibak_for_clinic/feature/auth/domain/entities/specialty_entity.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/repos/auth_repo.dart';
+import 'package:tabibak_for_clinic/feature/doctor/data/model/dotcor_model.dart';
+import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
+import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_entity.dart';
 
 class AuthRepoImp extends AuthRepo {
   final AuthRemoteData authRemoteData;

@@ -6,9 +6,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 import 'package:tabibak_for_clinic/core/services/env_service.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
-import 'package:tabibak_for_clinic/feature/auth/data/models/dotcor_model.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/models/signin_result_model.dart';
-import 'package:tabibak_for_clinic/feature/auth/data/models/specialty_model.dart';
+import 'package:tabibak_for_clinic/feature/doctor/data/model/dotcor_model.dart';
+import 'package:tabibak_for_clinic/feature/doctor/data/model/specialty_model.dart';
 
 class AuthRemoteDataImp implements AuthRemoteData {
   final Supabase supabase;
@@ -21,7 +21,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
   @override
   Future<void> signUp({required DoctorModel doctorModel}) async {
     final response = await supabase.client.auth
-        .signUp(email: doctorModel.email, password: doctorModel.password);
+        .signUp(email: doctorModel.email, password: doctorModel.password!);
     if (response.user != null) {
       await addDoctor(doctorModel: doctorModel, id: response.user!.id);
     } else {
