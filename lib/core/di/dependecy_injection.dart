@@ -30,6 +30,12 @@ import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_la
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_schedule_update/clinic_schedule_update_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_shift/clinic_shift_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_working_day/clinic_working_day_bloc.dart';
+import 'package:tabibak_for_clinic/feature/doctor/data/data_source/doctor_profile_remote_data.dart';
+import 'package:tabibak_for_clinic/feature/doctor/data/data_source/doctor_profile_remote_data_impl.dart';
+import 'package:tabibak_for_clinic/feature/doctor/data/repo_imp/doctor_profile_repo_imp.dart';
+import 'package:tabibak_for_clinic/feature/doctor/domain/repos/doctor_profile_repo.dart';
+import 'package:tabibak_for_clinic/feature/doctor/domain/usecase/get_doctor_use_case.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/manager/doctor_profile/doctor_profile_bloc.dart';
 
 final getit = GetIt.instance;
 Future<void> initGetIt() async {
@@ -55,7 +61,7 @@ Future<void> initGetIt() async {
         authRemoteData: getit<AuthRemoteData>(),
       ));
 
-  //usecses
+  //useCases
   getit.registerLazySingleton<SignUpUsecase>(
       () => SignUpUsecase(authRepo: getit<AuthRepo>()));
   getit
@@ -69,7 +75,7 @@ Future<void> initGetIt() async {
       () => SignInWithGooglUsecase(
             authRepo: getit<AuthRepo>(),
           ));
-  // Blocs
+  // blocs
   getit.registerFactory(() => SignupBloc(
         signUpUsecase: getit<SignUpUsecase>(),
         getSpecialtiesUsecase: getit<GetSpecialtiesUsecase>(),
@@ -102,7 +108,7 @@ Future<void> initGetIt() async {
       () => SaveClinicInfoUseCase(clinicRepo: getit<ClinicRepo>()));
   getit.registerLazySingleton<SaveClinicWorkingDayUseCase>(
       () => SaveClinicWorkingDayUseCase(clinicRepo: getit<ClinicRepo>()));
-  // Blocs
+  // blocs
   getit.registerFactory(() => ClinicInfoBloc(getit<CreateClinicInfoUseCase>()));
   getit.registerFactory(
       () => ClinicWorkingDayBloc(getDaysUseCase: getit<GetDaysUseCase>()));
@@ -116,4 +122,22 @@ Future<void> initGetIt() async {
       () => ClinicInfoSaveBloc(getit<SaveClinicInfoUseCase>()));
   getit.registerFactory(
       () => ClinicScheduleUpdateBloc(getit<SaveClinicWorkingDayUseCase>()));
+
+  //! Doctor Feature
+  // remote data source
+  getit.registerLazySingleton<DoctorProfileRemoteData>(
+      () => DoctorProfileRemoteDataImpl(supabase: getit<Supabase>()));
+
+  // repos
+  getit.registerLazySingleton<DoctorProfileRepo>(() => DoctorProfileRepoImp(
+      doctorProfileRemoteData: getit<DoctorProfileRemoteData>()));
+
+  //useCases
+  getit.registerLazySingleton<GetDoctorUseCase>(
+      () => GetDoctorUseCase(doctorProfileRepo: getit<DoctorProfileRepo>()));
+
+  //blocs
+  getit.registerFactory(
+    () => DoctorProfileBloc(getit<GetDoctorUseCase>()),
+  );
 }

@@ -24,9 +24,9 @@ import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clin
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20edit/clinic_info_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20edit/clinic_offer_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20schedule/schedule_edit_days_screen.dart';
-import 'package:tabibak_for_clinic/feature/doctor/presentation/screens/doctor_education_screen.dart';
-import 'package:tabibak_for_clinic/feature/doctor/presentation/screens/doctor_personal_info_screen.dart';
-import 'package:tabibak_for_clinic/feature/doctor/presentation/screens/doctor_specialty_screen.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_education_screen.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_personal_info_screen.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_specialty_screen.dart';
 
 import '../../layout_screen.dart';
 

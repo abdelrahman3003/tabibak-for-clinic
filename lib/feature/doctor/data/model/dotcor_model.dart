@@ -38,7 +38,6 @@ class DoctorModel extends DoctorEntity {
       image: json['image'] as String?,
       specialty: json['specialty'] as int,
       medicalLiecense: json['medical_liecense'] as String,
-      password: json['password'] as String,
       bio: json['bio'] as String?,
       isVerified: json['is_verified'] as bool?,
       isRegistered: json['is_registered'] as bool?,

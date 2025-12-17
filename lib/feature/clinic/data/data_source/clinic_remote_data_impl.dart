@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -70,7 +68,6 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
       },
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
-      log("======1$clinicId");
       final workingShiftsDays = response.data as List;
       return workingShiftsDays
           .map((workingShiftDay) =>
