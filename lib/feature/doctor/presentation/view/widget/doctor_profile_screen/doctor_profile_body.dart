@@ -20,8 +20,8 @@ class DoctorProfileBody extends StatelessWidget {
       padding: const EdgeInsets.all(AppPadding.horizontal),
       child: Column(
         children: [
-          const PersonalImage(
-            imageUrl: null,
+          PersonalImage(
+            imageUrl: doctor.image,
           ),
           16.hBox,
           Text(doctor.name ?? "No Name",
@@ -37,7 +37,7 @@ class DoctorProfileBody extends StatelessWidget {
                   ?.copyWith(color: AppColors.grey)),
           12.hBox,
           Text(
-            doctor.bio ?? "--",
+            doctor.bio ?? "",
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),

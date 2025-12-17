@@ -20,7 +20,19 @@ class DoctorProfileRepoImp implements DoctorProfileRepo {
       }
       return right(doctorModel);
     } catch (e) {
-      log("====== $e");
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, void>> uploadImage(String imagePath) async {
+    try {
+      final imageUrl = await doctorProfileRemoteData.uploadImage(imagePath);
+      log("-------11");
+
+      return right(imageUrl);
+    } catch (e) {
+      log("-------$e");
       return left(ErrorHandler.handle(e));
     }
   }

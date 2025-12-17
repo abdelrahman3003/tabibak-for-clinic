@@ -4,4 +4,5 @@ import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.
 
 abstract class DoctorProfileRepo {
   Future<Either<ApiErrorModel, DoctorEntity>> getDoctor();
+  Future<Either<ApiErrorModel, void>> uploadImage(String imagePath);
 }

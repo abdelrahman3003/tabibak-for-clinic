@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tabibak_for_clinic/core/functions/upload_file.dart';
 import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 import 'package:tabibak_for_clinic/core/services/env_service.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
@@ -53,16 +52,15 @@ class AuthRemoteDataImp implements AuthRemoteData {
   }
 
   @override
-  Future<String?> uploadFile(String filePath) async {
-    final file = File(filePath);
-    final uniqueName =
-        '${DateTime.now().millisecondsSinceEpoch}_${file.uri.pathSegments.last}';
+  Future<void> uploadFile(String filePath) async {
+    final imageUrl = await uploadFileSupabase(
+      bucket: 'profile_images',
+      filePath: filePath,
+    );
 
-    final storage = supabase.client.storage.from('profile_images');
-    await storage.upload(uniqueName, file);
-
-    final publicUrl = storage.getPublicUrl(uniqueName);
-    return publicUrl;
+    if (imageUrl == null) return;
+    await supabase.client.from('doctors').update({'image': imageUrl}).eq(
+        'doctor_id', supabase.client.auth.currentUser!.id);
   }
 
   @override

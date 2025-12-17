@@ -64,7 +64,7 @@ class AuthRepoImp extends AuthRepo {
   }
 
   @override
-  Future<Either<ApiErrorModel, String?>> uploadFile(
+  Future<Either<ApiErrorModel, void>> uploadFile(
       {required String filePath}) async {
     try {
       final result = await authRemoteData.uploadFile(filePath);

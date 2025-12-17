@@ -22,3 +22,9 @@ final class DoctorProfileSuccess extends DoctorProfileState {
 
   const DoctorProfileSuccess({required this.doctorEntity});
 }
+
+final class UploadImageProfileLoading extends DoctorProfileState {}
+
+final class UploadImageProfileSuccess extends DoctorProfileState {}
+
+final class UploadImageProfileFailed extends DoctorProfileState {}

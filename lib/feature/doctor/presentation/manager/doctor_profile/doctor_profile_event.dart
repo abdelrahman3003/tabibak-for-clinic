@@ -8,3 +8,9 @@ sealed class DoctorProfileEvent extends Equatable {
 }
 
 class GetDoctorProfileEvent extends DoctorProfileEvent {}
+
+class UploadImageProfileEvent extends DoctorProfileEvent {
+  final String imagePath;
+
+  const UploadImageProfileEvent({required this.imagePath});
+}

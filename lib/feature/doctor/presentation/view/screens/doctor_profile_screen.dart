@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
-import 'package:tabibak_for_clinic/feature/doctor/domain/usecase/get_doctor_use_case.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/manager/doctor_profile/doctor_profile_bloc.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/doctor_profile_body.dart';
 
@@ -11,10 +10,14 @@ class DoctorProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => DoctorProfileBloc(getit<GetDoctorUseCase>()),
+      create: (context) => getit<DoctorProfileBloc>(),
       child: Scaffold(
-        body:
-            SafeArea(child: BlocBuilder<DoctorProfileBloc, DoctorProfileState>(
+        body: SafeArea(
+            child: BlocBuilder<DoctorProfileBloc, DoctorProfileState>(
+          buildWhen: (previous, current) =>
+              current is DoctorProfileLoading ||
+              current is DoctorProfileSuccess ||
+              current is DoctorProfileFailed,
           builder: (context, state) {
             if (state is DoctorProfileLoading) {
               return const Center(child: CircularProgressIndicator());
