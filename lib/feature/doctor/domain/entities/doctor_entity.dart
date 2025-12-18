@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:tabibak_for_clinic/feature/doctor/domain/entities/education_entity.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_entity.dart';
 
 class DoctorEntity extends Equatable {
@@ -12,6 +13,7 @@ class DoctorEntity extends Equatable {
   final String? bio;
   final bool? isVerified;
   final bool? isRegistered;
+  final EducationEntity? education;
   final SpecialtyEntity? specialtyData;
 
   const DoctorEntity({
@@ -25,6 +27,7 @@ class DoctorEntity extends Equatable {
     this.bio,
     this.isVerified,
     this.isRegistered,
+    this.education,
     this.specialtyData,
   });
 

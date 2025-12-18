@@ -1,3 +1,4 @@
+import 'package:tabibak_for_clinic/feature/doctor/data/model/education_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/specialty_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
 
@@ -13,6 +14,7 @@ class DoctorModel extends DoctorEntity {
     super.bio,
     super.isVerified,
     super.isRegistered,
+    super.education,
     super.specialtyData,
   });
   Map<String, dynamic> toJson() {
@@ -26,6 +28,7 @@ class DoctorModel extends DoctorEntity {
       "bio": bio,
       "is_verified": isVerified,
       "is_registered": isRegistered,
+      "education": education,
       "specialties": specialtyData,
     };
   }
@@ -41,6 +44,9 @@ class DoctorModel extends DoctorEntity {
       bio: json['bio'] as String?,
       isVerified: json['is_verified'] as bool?,
       isRegistered: json['is_registered'] as bool?,
+      education: json['education'] != null
+          ? EducationModel.fromJson(json['education'])
+          : null,
       specialtyData: json['specialties'] != null
           ? SpecialtyModel.fromJson(json['specialties'])
           : null,

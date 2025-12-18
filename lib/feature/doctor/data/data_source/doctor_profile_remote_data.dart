@@ -5,4 +5,5 @@ abstract class DoctorProfileRemoteData {
   Future<void> uploadImage(String imageUrl);
   Future<void> updateDoctorInfo(
       {String? name, String? phone, String? address, String? bio});
+  //  Future<void> updateEducation({String? country ,String? university,int?degree?})
 }
