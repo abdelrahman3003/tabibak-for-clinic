@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
 
@@ -169,7 +170,7 @@ class Dialogs {
               ),
               const SizedBox(height: 16),
               Text(
-                "UnKnwon error",
+                "UnKnown error",
                 style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
@@ -180,10 +181,11 @@ class Dialogs {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
-              const AppButton(
-                title: "Clsoe",
+              AppButton(
+                title: "Close",
                 color: Colors.red,
-                padding: EdgeInsets.symmetric(vertical: 10),
+                onPressed: () => context.pop(),
+                padding: const EdgeInsets.symmetric(vertical: 10),
               ),
             ],
           ),

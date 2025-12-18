@@ -12,23 +12,33 @@ class EducationModel extends EducationEntity {
 
   factory EducationModel.fromJson(Map<String, dynamic> json) {
     return EducationModel(
-      id: json['id'] as int,
-      university: json['university'] as String,
-      year: json['year'] as int,
-      doctorId: json['doctor_id'] as String,
-      degree: (json['degree'] as num).toDouble(),
-      country: json['country'] as String,
+      id: json['id'] as int?,
+      university: json['university'] as String?,
+      year: json['year'] as int?,
+      doctorId: json['doctor_id'] as String?,
+      degree: json['degree'] as String?,
+      country: json['country'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'university': university,
       'year': year,
       'doctor_id': doctorId,
       'degree': degree,
       'country': country,
     };
+  }
+
+  factory EducationModel.toModel(EducationEntity entity) {
+    return EducationModel(
+      id: entity.id,
+      university: entity.university,
+      year: entity.year,
+      doctorId: entity.doctorId,
+      degree: entity.degree,
+      country: entity.country,
+    );
   }
 }

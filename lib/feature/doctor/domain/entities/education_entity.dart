@@ -3,7 +3,7 @@ class EducationEntity {
   final String? university;
   final int? year;
   final String? doctorId;
-  final double? degree;
+  final String? degree;
   final String? country;
 
   EducationEntity({

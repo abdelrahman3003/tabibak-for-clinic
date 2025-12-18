@@ -24,6 +24,7 @@ import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clin
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20edit/clinic_info_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20edit/clinic_offer_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20schedule/schedule_edit_days_screen.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/manager/doctor_education/doctor_education_bloc.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/manager/doctor_info/doctor_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_education_screen.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_personal_info_screen.dart';
@@ -89,7 +90,11 @@ class AppRouter {
         break;
 
       case Routes.doctorEducationScreen:
-        page = const RootScreenWrapper(child: DoctorEducationScreen());
+        page = RootScreenWrapper(
+            child: BlocProvider(
+          create: (context) => getit<DoctorEducationBloc>(),
+          child: const DoctorEducationScreen(),
+        ));
         break;
 
       //clinic

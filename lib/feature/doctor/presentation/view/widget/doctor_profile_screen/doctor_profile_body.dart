@@ -69,9 +69,12 @@ class DoctorProfileBody extends StatelessWidget {
               15.hBox,
               EditItem(
                 title: "Education",
-                subtitle: "MBBS, MD Cardiology",
+                subtitle: doctor.education?.university ?? "Education is empty",
                 onTap: () {
-                  context.pushNamed(Routes.doctorEducationScreen);
+                  context.pushNamed(
+                    Routes.doctorEducationScreen,
+                    arguments: doctor.education,
+                  );
                 },
               ),
               20.hBox,
