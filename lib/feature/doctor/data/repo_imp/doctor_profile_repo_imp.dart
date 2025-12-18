@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
@@ -28,11 +26,22 @@ class DoctorProfileRepoImp implements DoctorProfileRepo {
   Future<Either<ApiErrorModel, void>> uploadImage(String imagePath) async {
     try {
       final imageUrl = await doctorProfileRemoteData.uploadImage(imagePath);
-      log("-------11");
 
       return right(imageUrl);
     } catch (e) {
-      log("-------$e");
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, void>> updateDoctorInfo(
+      {String? name, String? phone, String? address, String? bio}) async {
+    try {
+      final imageUrl = await doctorProfileRemoteData.updateDoctorInfo(
+          name: name, phone: phone, address: address, bio: bio);
+
+      return right(imageUrl);
+    } catch (e) {
       return left(ErrorHandler.handle(e));
     }
   }
