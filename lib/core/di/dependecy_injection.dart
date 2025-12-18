@@ -34,6 +34,7 @@ import 'package:tabibak_for_clinic/feature/doctor/data/data_source/doctor_profil
 import 'package:tabibak_for_clinic/feature/doctor/data/data_source/doctor_profile_remote_data_impl.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/repo_imp/doctor_profile_repo_imp.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/repos/doctor_profile_repo.dart';
+import 'package:tabibak_for_clinic/feature/doctor/domain/usecase/get_doctor_certificates_use_case.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/usecase/get_doctor_use_case.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/usecase/update_doctor_education_use_case.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/usecase/update_doctor_info_use_case.dart';
@@ -147,6 +148,9 @@ Future<void> initGetIt() async {
   getit.registerLazySingleton<UpdateDoctorEducationUseCase>(() =>
       UpdateDoctorEducationUseCase(
           doctorProfileRepo: getit<DoctorProfileRepo>()));
+  getit.registerLazySingleton<GetDoctorCertificatesUseCase>(() =>
+      GetDoctorCertificatesUseCase(
+          doctorProfileRepo: getit<DoctorProfileRepo>()));
   //blocs
   getit.registerFactory(
     () => DoctorProfileBloc(
@@ -156,6 +160,7 @@ Future<void> initGetIt() async {
     () => DoctorInfoBloc(getit<UpdateDoctorInfoUseCase>()),
   );
   getit.registerFactory(
-    () => DoctorEducationBloc(getit<UpdateDoctorEducationUseCase>()),
+    () => DoctorEducationBloc(getit<UpdateDoctorEducationUseCase>(),
+        getit<GetDoctorCertificatesUseCase>()),
   );
 }

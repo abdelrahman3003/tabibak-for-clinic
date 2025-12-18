@@ -3,20 +3,20 @@ import 'package:tabibak_for_clinic/feature/doctor/data/model/specialty_model.dar
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
 
 class DoctorModel extends DoctorEntity {
-  const DoctorModel({
-    super.name,
-    super.phone,
-    super.image,
-    super.specialty,
-    super.medicalLiecense,
-    super.email,
-    super.password,
-    super.bio,
-    super.isVerified,
-    super.isRegistered,
-    super.education,
-    super.specialtyData,
-  });
+  const DoctorModel(
+      {super.name,
+      super.phone,
+      super.image,
+      super.specialty,
+      super.medicalLiecense,
+      super.email,
+      super.password,
+      super.bio,
+      super.isVerified,
+      super.isRegistered,
+      super.education,
+      super.specialtyData,
+      super.files});
   Map<String, dynamic> toJson() {
     return {
       "name": name,
@@ -30,6 +30,7 @@ class DoctorModel extends DoctorEntity {
       "is_registered": isRegistered,
       "education": education,
       "specialties": specialtyData,
+      "doctor_file": files
     };
   }
 
@@ -49,6 +50,10 @@ class DoctorModel extends DoctorEntity {
           : null,
       specialtyData: json['specialties'] != null
           ? SpecialtyModel.fromJson(json['specialties'])
+          : null,
+      files: json['files'] != null
+          ? List<String>.from(
+              (json['files'] as List).map((f) => f['file'] as String))
           : null,
     );
   }

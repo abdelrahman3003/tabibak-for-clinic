@@ -7,6 +7,10 @@ sealed class DoctorEducationEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class GetDoctorCertificatesEvent extends DoctorEducationEvent {
+  const GetDoctorCertificatesEvent();
+}
+
 class UpdateDoctorEducationEvent extends DoctorEducationEvent {
   final List<XFile?> files;
   final EducationEntity educationEntity;

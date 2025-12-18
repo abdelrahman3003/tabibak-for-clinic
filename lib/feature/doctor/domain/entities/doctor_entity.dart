@@ -15,6 +15,7 @@ class DoctorEntity extends Equatable {
   final bool? isRegistered;
   final EducationEntity? education;
   final SpecialtyEntity? specialtyData;
+  final List<String>? files;
 
   const DoctorEntity({
     this.name,
@@ -29,7 +30,14 @@ class DoctorEntity extends Equatable {
     this.isRegistered,
     this.education,
     this.specialtyData,
+    this.files,
   });
+
+  Map<String, dynamic> filesMap() {
+    return {
+      'files': files ?? [],
+    };
+  }
 
   @override
   List<Object?> get props => [
@@ -43,6 +51,7 @@ class DoctorEntity extends Equatable {
         bio,
         isVerified,
         isRegistered,
-        specialtyData
+        specialtyData,
+        files,
       ];
 }

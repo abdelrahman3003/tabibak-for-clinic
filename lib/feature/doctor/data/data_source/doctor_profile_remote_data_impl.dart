@@ -2,6 +2,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/functions/upload_file.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/data_source/doctor_profile_remote_data.dart';
+import 'package:tabibak_for_clinic/feature/doctor/data/model/doctor_file_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/dotcor_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/education_model.dart';
 
@@ -12,11 +13,10 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
   String get currentDoctorId => supabase.client.auth.currentUser!.id;
   @override
   Future<DoctorModel?> getDoctor() async {
-    final doctorId = supabase.client.auth.currentUser!.id;
     final data = await supabase.client
         .from('doctors')
         .select('*, specialties(*),education(*)')
-        .eq('doctor_id', doctorId)
+        .eq('doctor_id', currentDoctorId)
         .maybeSingle();
     if (data == null) return null;
     return DoctorModel.fromJson(data);
@@ -85,7 +85,9 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
         bucket: 'profile_images',
         filePath: file!.path,
       );
+
       if (imageUrl == null) continue;
+
       await supabase.client
           .from('doctor_file')
           .insert({'file': imageUrl, 'doctor_id': currentDoctorId});
@@ -100,5 +102,15 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
         .maybeSingle();
 
     return data != null;
+  }
+
+  @override
+  Future<List<DoctorFileModel>> getCertificates() async {
+    final data = await supabase.client
+        .from("doctor_file")
+        .select("id,file")
+        .eq("doctor_id", currentDoctorId) as List;
+
+    return data.map((e) => DoctorFileModel.fromJson(e)).toList();
   }
 }

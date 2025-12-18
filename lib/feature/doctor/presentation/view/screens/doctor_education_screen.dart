@@ -4,15 +4,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
-import 'package:tabibak_for_clinic/core/functions/pick_image.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
-import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/education_entity.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/manager/doctor_education/doctor_education_bloc.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/education_certificates.dart';
 
 class DoctorEducationScreen extends StatefulWidget {
   const DoctorEducationScreen({super.key});
@@ -26,12 +25,12 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
   final universityController = TextEditingController();
   final degreeController = TextEditingController();
   final yearController = TextEditingController();
-  List<XFile?> files = [];
-
+  List<XFile> files = [];
   @override
   void didChangeDependencies() {
     final education =
         ModalRoute.of(context)?.settings.arguments as EducationEntity?;
+
     if (education != null) {
       countryController.text = education.country ?? "";
       universityController.text = education.university ?? "";
@@ -64,6 +63,10 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
           padding:
               const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
           child: BlocListener<DoctorEducationBloc, DoctorEducationState>(
+            listenWhen: (previous, current) =>
+                current is DoctorEducationLoading ||
+                current is DoctorEducationSuccess ||
+                current is DoctorEducationFailed,
             listener: (context, state) {
               if (state is DoctorEducationLoading) {
                 Dialogs.showLoading(context);
@@ -103,39 +106,26 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 10.hBox,
-                _buildCertificatePhoto(context)
+                BlocBuilder<DoctorEducationBloc, DoctorEducationState>(
+                  buildWhen: (previous, current) =>
+                      current is DoctorCertificatesLoading ||
+                      current is DoctorCertificatesSuccess,
+                  builder: (context, state) {
+                    if (state is DoctorCertificatesSuccess) {}
+                    return EducationCertificates(
+                      onUpdatedFiles: (updatedFiles) {
+                        files = updatedFiles;
+                      },
+                      imageUrlList: state is DoctorCertificatesSuccess
+                          ? state.doctorFilesEntities
+                          : [],
+                    );
+                  },
+                )
               ],
             ),
           ),
         ));
-  }
-
-  _buildCertificatePhoto(BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        final file = await pickImage();
-        files.add(file);
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-        decoration: BoxDecoration(border: Border.all(color: AppColors.primary)),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.add, color: Theme.of(context).colorScheme.primary),
-            5.wBox,
-            Text(
-              "Certificate Photo",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: Theme.of(context).colorScheme.primary),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   @override

@@ -9,6 +9,14 @@ sealed class DoctorEducationState extends Equatable {
 
 final class DoctorEducationInitial extends DoctorEducationState {}
 
+final class DoctorCertificatesLoading extends DoctorEducationState {}
+
+final class DoctorCertificatesSuccess extends DoctorEducationState {
+  final List<DoctorFileEntity> doctorFilesEntities;
+
+  const DoctorCertificatesSuccess({required this.doctorFilesEntities});
+}
+
 final class DoctorEducationLoading extends DoctorEducationState {}
 
 final class DoctorEducationFailed extends DoctorEducationState {
