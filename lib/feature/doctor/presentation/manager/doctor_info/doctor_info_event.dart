@@ -9,13 +9,10 @@ sealed class DoctorInfoEvent extends Equatable {
 
 class UpdateDoctorInfo extends DoctorInfoEvent {
   final String? name;
-  final String? address;
+
   final String? phone;
   final String? bio;
 
   const UpdateDoctorInfo(
-      {required this.name,
-      required this.address,
-      required this.phone,
-      required this.bio});
+      {required this.name, required this.phone, required this.bio});
 }

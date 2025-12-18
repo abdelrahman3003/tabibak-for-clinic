@@ -54,7 +54,8 @@ class DoctorProfileBody extends StatelessWidget {
                 title: "Personal Information",
                 subtitle: doctor.phone ?? "",
                 onTap: () {
-                  context.pushNamed(Routes.doctorPersonalInfo);
+                  context.pushNamed(Routes.doctorPersonalInfo,
+                      arguments: doctor);
                 },
               ),
               15.hBox,

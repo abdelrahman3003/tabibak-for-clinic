@@ -11,10 +11,7 @@ class DoctorInfoBloc extends Bloc<DoctorInfoEvent, DoctorInfoState> {
     on<UpdateDoctorInfo>((event, emit) async {
       emit(DoctorInfoLoading());
       final result = await updateDoctorInfoUseCase.call(
-          name: event.name,
-          address: event.address,
-          phone: event.phone,
-          bio: event.bio);
+          name: event.name, phone: event.phone, bio: event.bio);
       result.fold(
         (error) {
           emit(DoctorInfoFailed(errorMessage: error.message!));
