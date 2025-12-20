@@ -11,12 +11,10 @@ class EducationImage extends StatelessWidget {
     super.key,
     this.file,
     this.imageUrl,
-    required this.onRemove,
   });
 
   final XFile? file;
   final String? imageUrl;
-  final VoidCallback onRemove;
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +49,6 @@ class EducationImage extends StatelessWidget {
                   ),
                 ),
             ],
-          ),
-          10.wBox,
-          TextButton(
-            onPressed: onRemove,
-            child: const Text("Remove"),
           ),
         ],
       ),

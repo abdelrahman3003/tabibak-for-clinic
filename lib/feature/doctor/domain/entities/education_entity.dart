@@ -5,6 +5,7 @@ class EducationEntity {
   final String? doctorId;
   final String? degree;
   final String? country;
+  final String? certificate;
 
   EducationEntity({
     this.id,
@@ -13,5 +14,6 @@ class EducationEntity {
     this.doctorId,
     this.degree,
     this.country,
+    this.certificate,
   });
 }

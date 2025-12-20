@@ -1,5 +1,4 @@
 import 'package:image_picker/image_picker.dart';
-import 'package:tabibak_for_clinic/feature/doctor/data/model/doctor_file_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/dotcor_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/education_model.dart';
 
@@ -8,7 +7,6 @@ abstract class DoctorProfileRemoteData {
   Future<void> uploadImage(String imageUrl);
   Future<void> updateDoctorInfo(
       {String? name, String? phone, String? address, String? bio});
-  Future<List<DoctorFileModel>> getCertificates();
   Future<void> updateEducation(
-      {EducationModel? educationModel, List<XFile?>? files});
+      {required EducationModel educationModel, XFile? file});
 }

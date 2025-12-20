@@ -8,14 +8,14 @@ import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doct
 import 'core/theme/app_colors.dart';
 
 class LayoutScreen extends StatefulWidget {
-  const LayoutScreen({super.key});
-
+  const LayoutScreen({super.key, this.initialIndex = 0});
+  final int initialIndex;
   @override
   State<LayoutScreen> createState() => _LayoutScreenState();
 }
 
 class _LayoutScreenState extends State<LayoutScreen> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
 
   late final List<Widget> _screens;
   late final List<GButton> _tabs;
@@ -23,7 +23,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
   @override
   void initState() {
     super.initState();
-
+    _selectedIndex = widget.initialIndex;
     _screens = [
       const ClinicLayout(),
       const AppointmentScreen(),

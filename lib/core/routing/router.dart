@@ -64,7 +64,9 @@ class AppRouter {
 
       //layout
       case Routes.layOutScreen:
-        page = const RootScreenWrapper(child: LayoutScreen());
+        final initialIndex = settings.arguments as int? ?? 0;
+        page =
+            RootScreenWrapper(child: LayoutScreen(initialIndex: initialIndex));
         break;
 
       // schedule

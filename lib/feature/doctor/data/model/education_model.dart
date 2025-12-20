@@ -1,14 +1,14 @@
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/education_entity.dart';
 
 class EducationModel extends EducationEntity {
-  EducationModel({
-    super.id,
-    super.university,
-    super.year,
-    super.doctorId,
-    super.degree,
-    super.country,
-  });
+  EducationModel(
+      {super.id,
+      super.university,
+      super.year,
+      super.doctorId,
+      super.degree,
+      super.country,
+      super.certificate});
 
   factory EducationModel.fromJson(Map<String, dynamic> json) {
     return EducationModel(
@@ -18,6 +18,7 @@ class EducationModel extends EducationEntity {
       doctorId: json['doctor_id'] as String?,
       degree: json['degree'] as String?,
       country: json['country'] as String?,
+      certificate: json['certificate'] as String?,
     );
   }
 
@@ -28,6 +29,7 @@ class EducationModel extends EducationEntity {
       'doctor_id': doctorId,
       'degree': degree,
       'country': country,
+      'certificate': certificate,
     };
   }
 
@@ -39,6 +41,7 @@ class EducationModel extends EducationEntity {
       doctorId: entity.doctorId,
       degree: entity.degree,
       country: entity.country,
+      certificate: entity.certificate,
     );
   }
 }

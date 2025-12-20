@@ -5,7 +5,6 @@ import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/data_source/doctor_profile_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/education_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
-import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_file_entity.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/education_entity.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/repos/doctor_profile_repo.dart';
 
@@ -52,22 +51,11 @@ class DoctorProfileRepoImp implements DoctorProfileRepo {
 
   @override
   Future<Either<ApiErrorModel, void>> updateEducation(
-      {EducationEntity? educationEntity, List<XFile?>? files}) async {
+      {EducationEntity? educationEntity, XFile? file}) async {
     try {
       final educationModel = EducationModel.toModel(educationEntity!);
       final result = await doctorProfileRemoteData.updateEducation(
-          educationModel: educationModel, files: files);
-      return right(result);
-    } catch (e) {
-      return left(ErrorHandler.handle(e));
-    }
-  }
-
-  @override
-  Future<Either<ApiErrorModel, List<DoctorFileEntity>>>
-      getCertificates() async {
-    try {
-      final result = await doctorProfileRemoteData.getCertificates();
+          educationModel: educationModel, file: file);
       return right(result);
     } catch (e) {
       return left(ErrorHandler.handle(e));

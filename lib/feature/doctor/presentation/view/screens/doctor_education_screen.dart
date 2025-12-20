@@ -25,17 +25,17 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
   final universityController = TextEditingController();
   final degreeController = TextEditingController();
   final yearController = TextEditingController();
-  List<XFile> files = [];
+  XFile? file;
+  EducationEntity? education;
   @override
   void didChangeDependencies() {
-    final education =
-        ModalRoute.of(context)?.settings.arguments as EducationEntity?;
+    education = ModalRoute.of(context)?.settings.arguments as EducationEntity?;
 
     if (education != null) {
-      countryController.text = education.country ?? "";
-      universityController.text = education.university ?? "";
-      degreeController.text = education.degree ?? "";
-      yearController.text = education.year?.toString() ?? "";
+      countryController.text = education?.country ?? "";
+      universityController.text = education?.university ?? "";
+      degreeController.text = education?.degree ?? "";
+      yearController.text = education?.year?.toString() ?? "";
     }
 
     super.didChangeDependencies();
@@ -49,12 +49,15 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
           onTap: () {
             context.read<DoctorEducationBloc>().add(
                   UpdateDoctorEducationEvent(
-                      files: files,
+                      file: file,
                       educationEntity: EducationEntity(
                         university: universityController.text,
                         country: countryController.text,
                         degree: degreeController.text,
-                        year: int.tryParse(yearController.text),
+                        year: int.tryParse(
+                          yearController.text,
+                        ),
+                        certificate: education?.certificate,
                       )),
                 );
           },
@@ -73,7 +76,7 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
               }
               if (state is DoctorEducationSuccess) {
                 context.pop();
-                context.pushNamed(Routes.layOutScreen);
+                context.pushNamed(Routes.layOutScreen, arguments: 2);
               }
               if (state is DoctorEducationFailed) {
                 context.pop();
@@ -106,20 +109,10 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 10.hBox,
-                BlocBuilder<DoctorEducationBloc, DoctorEducationState>(
-                  buildWhen: (previous, current) =>
-                      current is DoctorCertificatesLoading ||
-                      current is DoctorCertificatesSuccess,
-                  builder: (context, state) {
-                    if (state is DoctorCertificatesSuccess) {}
-                    return EducationCertificates(
-                      onUpdatedFiles: (updatedFiles) {
-                        files = updatedFiles;
-                      },
-                      imageUrlList: state is DoctorCertificatesSuccess
-                          ? state.doctorFilesEntities
-                          : [],
-                    );
+                EducationCertificates(
+                  imageUrl: education?.certificate,
+                  onSelected: (selectedFile) {
+                    file = selectedFile;
                   },
                 )
               ],

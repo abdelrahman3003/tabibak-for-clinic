@@ -9,8 +9,8 @@ class UpdateDoctorEducationUseCase {
 
   UpdateDoctorEducationUseCase({required this.doctorProfileRepo});
   Future<Either<ApiErrorModel, void>> call(
-      {EducationEntity? educationEntity, List<XFile?>? files}) async {
+      {EducationEntity? educationEntity, XFile? file}) async {
     return doctorProfileRepo.updateEducation(
-        educationEntity: educationEntity, files: files);
+        educationEntity: educationEntity, file: file);
   }
 }
