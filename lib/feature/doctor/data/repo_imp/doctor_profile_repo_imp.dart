@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
@@ -6,6 +8,7 @@ import 'package:tabibak_for_clinic/feature/doctor/data/data_source/doctor_profil
 import 'package:tabibak_for_clinic/feature/doctor/data/model/education_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/education_entity.dart';
+import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_entity.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/repos/doctor_profile_repo.dart';
 
 class DoctorProfileRepoImp implements DoctorProfileRepo {
@@ -58,6 +61,32 @@ class DoctorProfileRepoImp implements DoctorProfileRepo {
           educationModel: educationModel, file: file);
       return right(result);
     } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, List<SpecialtyEntity>>> getSpecialties() async {
+    try {
+      final specialties = await doctorProfileRemoteData.getSpecialties();
+
+      return right(specialties);
+    } catch (e) {
+      log("===== upd sp$e");
+
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, void>> updateSpecialty(
+      {required int specialtyId}) async {
+    try {
+      final result = await doctorProfileRemoteData.updateSpecialty(
+          specialtyId: specialtyId);
+      return right(result);
+    } catch (e) {
+      log("===== get sp$e");
       return left(ErrorHandler.handle(e));
     }
   }

@@ -4,6 +4,7 @@ import 'package:tabibak_for_clinic/core/functions/upload_file.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/data_source/doctor_profile_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/dotcor_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/education_model.dart';
+import 'package:tabibak_for_clinic/feature/doctor/data/model/specialty_model.dart';
 
 class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
   final Supabase supabase;
@@ -69,5 +70,19 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
         .from('education')
         .update(data)
         .eq('doctor_id', currentDoctorId);
+  }
+
+  @override
+  Future<void> updateSpecialty({required int specialtyId}) async {
+    await supabase.client
+        .from('doctors')
+        .update({'specialty': specialtyId}).eq('doctor_id', currentDoctorId);
+  }
+
+  @override
+  Future<List<SpecialtyModel>> getSpecialties() async {
+    final response = await supabase.client.from("specialties").select();
+    final data = response as List<dynamic>;
+    return data.map((json) => SpecialtyModel.fromJson(json)).toList();
   }
 }

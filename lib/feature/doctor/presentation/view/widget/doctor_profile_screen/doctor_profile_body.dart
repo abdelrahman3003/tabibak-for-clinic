@@ -63,7 +63,8 @@ class DoctorProfileBody extends StatelessWidget {
                 title: "Specialty",
                 subtitle: doctor.specialtyData?.nameEn ?? "Not Specified",
                 onTap: () {
-                  context.pushNamed(Routes.doctorSpecialtyScreen);
+                  context.pushNamed(Routes.doctorSpecialtyScreen,
+                      arguments: doctor.specialty);
                 },
               ),
               15.hBox,

@@ -5,16 +5,22 @@ class SpecialtyDropdown extends StatefulWidget {
   final Function(int?)? onChanged;
   final List<SpecialtyEntity> items;
   final Color? color;
+  final int? value;
   const SpecialtyDropdown(
-      {super.key, this.onChanged, required this.items, this.color});
+      {super.key, this.onChanged, required this.items, this.color, this.value});
 
   @override
   State<SpecialtyDropdown> createState() => _SpecialtyDropdownState();
 }
 
-int? _selectedSpecialtyId;
-
 class _SpecialtyDropdownState extends State<SpecialtyDropdown> {
+  late int? _selectedSpecialtyId;
+  @override
+  void initState() {
+    _selectedSpecialtyId = widget.value;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<int>(
