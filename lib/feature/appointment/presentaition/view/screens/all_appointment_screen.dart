@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tabibak_for_clinic/feature/appointment/widget/appointment_screen/appointment_type_list.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/appointment_screen/appointment_type_list.dart';
 
 class AllAppointmentScreen extends StatefulWidget {
   const AllAppointmentScreen({super.key});

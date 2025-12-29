@@ -4,6 +4,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/helper/shared_pref_helper.dart';
 import 'package:tabibak_for_clinic/core/networking/dio_factory.dart';
+import 'package:tabibak_for_clinic/feature/appointment/data/data_source/appointment_remote_data.dart';
+import 'package:tabibak_for_clinic/feature/appointment/data/data_source/appointment_remote_data_imp.dart';
+import 'package:tabibak_for_clinic/feature/appointment/data/repo_impl/appointment_repo_impl.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/repos/appointment_repos.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointments_use_case.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data_imp.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/repos_imp/auth_repo_imp.dart';
@@ -170,4 +176,23 @@ Future<void> initGetIt() async {
         getit<GetSpecialtiesUseCase>(),
         getit<UpdateDoctorSpecialtyUseCae>(),
       ));
+
+  //! Appointment Feature
+
+  // remote data source
+  getit.registerLazySingleton<AppointmentRemoteData>(
+      () => AppointmentRemoteDataImp(supabase: getit<Supabase>()));
+
+  //repos
+  getit.registerLazySingleton<AppointmentRepo>(() => AppointmentRepoImpl(
+      appointmentRemoteData: getit<AppointmentRemoteData>()));
+
+  //useCases
+  getit.registerLazySingleton<GetAppointmentsUseCase>(
+      () => GetAppointmentsUseCase(appointmentRepos: getit<AppointmentRepo>()));
+
+  //blocs
+  getit.registerFactory(
+    () => AppointmentBloc(getit<GetAppointmentsUseCase>()),
+  );
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak_for_clinic/feature/appointment/widget/appointment_screen/appointment_card.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/appointment_screen/appointment_card.dart';
 
 class AppointmentTypeList extends StatelessWidget {
   const AppointmentTypeList({super.key, required this.type});
