@@ -4,14 +4,16 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 
 class TodayBanner extends StatelessWidget {
-  final int count;
+  final String doctorName;
+  final int appointmentLength;
 
-  const TodayBanner({super.key, required this.count});
+  const TodayBanner(
+      {super.key, required this.appointmentLength, required this.doctorName});
 
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
-    final dayName = _getArabicDay(now.weekday);
+    final dayName = now.weekday;
     final date = DateFormat('d MMM yyyy').format(now);
 
     return Container(
@@ -27,25 +29,15 @@ class TodayBanner extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const CircleAvatar(
-                radius: 20,
-                child: Icon(Icons.person),
-              ),
-              8.wBox,
-              Text(
-                "DR.Abdelrahman Temsah",
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-            ],
+          Text(
+            doctorName,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           10.hBox,
           RichText(
               text: TextSpan(children: [
             TextSpan(
-                text: "$count ",
+                text: "$appointmentLength ",
                 style: Theme.of(context)
                     .textTheme
                     .headlineMedium
@@ -56,7 +48,7 @@ class TodayBanner extends StatelessWidget {
           ])),
           5.hBox,
           Text(
-            "$dayName - $date",
+            date,
             style: Theme.of(context).textTheme.bodyMedium,
           )
         ],

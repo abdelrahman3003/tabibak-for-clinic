@@ -1,33 +1,29 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
+import 'package:tabibak_for_clinic/core/functions/format_time.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
+import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 
 class AppointmentCard extends StatelessWidget {
   final String name;
-  final String time;
+  final String date;
   final String status;
+  final String? image;
 
   const AppointmentCard({
     super.key,
     required this.name,
-    required this.time,
+    required this.image,
     required this.status,
+    required this.date,
   });
 
   Color getBadgeColor() {
-    if (status == "today") return Colors.blue;
-    if (status == "upcoming") return Colors.orange;
-    if (status == "finished") return Colors.green;
-    if (status == "cancelled") return Colors.red;
+    if (status == "Upcoming") return Colors.orange;
+    if (status == "Finished") return Colors.green;
+    if (status == "Cancelled") return Colors.red;
     return Colors.grey;
-  }
-
-  String getBadgeText() {
-    if (status == "today") return "اليوم";
-    if (status == "upcoming") return "قادم";
-    if (status == "finished") return "مكتمل";
-    if (status == "cancelled") return "ملغي";
-    return "";
   }
 
   @override
@@ -53,8 +49,9 @@ class AppointmentCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 26,
-              backgroundColor: Colors.blue.shade100,
-              child: const Icon(Icons.person, size: 28, color: Colors.blue),
+              backgroundColor: Colors.grey.shade100,
+              backgroundImage:
+                  image == null ? null : CachedNetworkImageProvider(image!),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -65,7 +62,7 @@ class AppointmentCard extends StatelessWidget {
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.w600)),
                   const SizedBox(height: 4),
-                  Text(time,
+                  Text(formatDayMonth(date),
                       style:
                           TextStyle(fontSize: 14, color: Colors.grey.shade700)),
                 ],
@@ -74,17 +71,14 @@ class AppointmentCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                color: getBadgeColor().withOpacity(.15),
+                color: getBadgeColor(),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text(
-                getBadgeText(),
-                style: TextStyle(
-                  color: getBadgeColor(),
-                  fontWeight: FontWeight.w600,
-                  fontSize: 13,
-                ),
-              ),
+              child: Text(status,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: AppColors.white)),
             )
           ],
         ),

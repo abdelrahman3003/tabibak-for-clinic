@@ -16,9 +16,10 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
         .from('appointments')
         .select(
             'appointments_status(status),appointment_time,appointment_date,users(name,image)')
-        .eq('doctor_id', currentDoctorId)
-        .eq('appointment_date', today);
+        .eq('doctor_id', currentDoctorId);
+
     final data = response as List;
-    return data.map((json) => AppointmentModel.fromJson(json)).toList();
+    final result = data.map((json) => AppointmentModel.fromJson(json)).toList();
+    return result;
   }
 }

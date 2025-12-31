@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 String? formatTime(TimeOfDay? t) {
@@ -15,4 +16,9 @@ TimeOfDay? parseTime(String? time) {
     hour: int.parse(parts[0]),
     minute: int.parse(parts[1]),
   );
+}
+
+String formatDayMonth(String date) {
+  final dateTime = DateTime.parse(date);
+  return DateFormat('dd/MM').format(dateTime);
 }

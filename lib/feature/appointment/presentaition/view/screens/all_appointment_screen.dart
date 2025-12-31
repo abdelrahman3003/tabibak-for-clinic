@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/appointment_screen/appointment_type_list.dart';
 
 class AllAppointmentScreen extends StatefulWidget {
   const AllAppointmentScreen({super.key});
@@ -41,12 +40,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen>
       ),
       body: TabBarView(
         controller: controller,
-        children: const [
-          AppointmentTypeList(type: "today"),
-          AppointmentTypeList(type: "upcoming"),
-          AppointmentTypeList(type: "finished"),
-          AppointmentTypeList(type: "cancelled"),
-        ],
+        children: const [],
       ),
     );
   }

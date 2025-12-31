@@ -17,7 +17,6 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
         },
         (appointmentsList) {
           emit(AppointmentSuccess(
-            appointmentLength: appointmentsList.length,
             appointmentList: appointmentsList,
           ));
         },

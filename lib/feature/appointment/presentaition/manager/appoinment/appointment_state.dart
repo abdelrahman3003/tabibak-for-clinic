@@ -10,12 +10,10 @@ sealed class AppointmentState extends Equatable {
 final class AppointmentInitial extends AppointmentState {}
 
 final class AppointmentSuccess extends AppointmentState {
-  final int? appointmentLength;
   final List<AppointmentEntity>? appointmentList;
 
   const AppointmentSuccess({
     this.appointmentList,
-    this.appointmentLength,
   });
 }
 
