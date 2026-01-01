@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class AppointmentEntity extends Equatable {
+  final int? appointmentId;
   final String? appointmentTime;
   final DateTime? appointmentDate;
   final String? status;
@@ -8,6 +9,7 @@ class AppointmentEntity extends Equatable {
   final String? userImage;
 
   const AppointmentEntity({
+    required this.appointmentId,
     required this.appointmentTime,
     required this.appointmentDate,
     required this.status,
@@ -17,6 +19,7 @@ class AppointmentEntity extends Equatable {
 
   @override
   List<Object?> get props => [
+        appointmentId,
         appointmentDate,
         appointmentTime,
         status,

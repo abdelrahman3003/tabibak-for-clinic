@@ -1,19 +1,37 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 import 'package:tabibak_for_clinic/feature/appointment/data/data_source/appointment_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_home_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/repos/appointment_repos.dart';
 
 class AppointmentRepoImpl extends AppointmentRepo {
   final AppointmentRemoteData appointmentRemoteData;
 
   AppointmentRepoImpl({required this.appointmentRemoteData});
+
+  @override
+  Future<Either<ApiErrorModel, AppointmentHomeEntity>>
+      getAppointmentHome() async {
+    try {
+      final response = await appointmentRemoteData.getAppointmentHome();
+      return right(response);
+    } catch (e) {
+      log("-------$e}");
+
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
   @override
   Future<Either<ApiErrorModel, List<AppointmentEntity>>>
-      getAppointments() async {
+      updateAppointmentStatus(int statusIndex, int appointmentId) async {
     try {
-      final response = await appointmentRemoteData.getAppointments();
+      final response = await appointmentRemoteData.updateAppointmentStatus(
+          statusIndex, appointmentId);
       return right(response);
     } catch (e) {
       return left(ErrorHandler.handle(e));

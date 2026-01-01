@@ -2,6 +2,7 @@ import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointme
 
 class AppointmentModel extends AppointmentEntity {
   const AppointmentModel({
+    super.appointmentId,
     required super.appointmentTime,
     required super.appointmentDate,
     required super.status,
@@ -11,6 +12,7 @@ class AppointmentModel extends AppointmentEntity {
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
     return AppointmentModel(
+      appointmentId: json['id'],
       appointmentTime: json['appointment_time'],
       appointmentDate: DateTime.parse(json['appointment_date']),
       status: json['appointments_status']['status'],

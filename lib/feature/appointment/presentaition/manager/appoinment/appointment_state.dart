@@ -10,10 +10,10 @@ sealed class AppointmentState extends Equatable {
 final class AppointmentInitial extends AppointmentState {}
 
 final class AppointmentSuccess extends AppointmentState {
-  final List<AppointmentEntity>? appointmentList;
+  final AppointmentHomeEntity appointmentHomeEntity;
 
   const AppointmentSuccess({
-    this.appointmentList,
+    required this.appointmentHomeEntity,
   });
 }
 
@@ -23,4 +23,18 @@ final class AppointmentFailed extends AppointmentState {
   final String errorMessage;
 
   const AppointmentFailed({required this.errorMessage});
+}
+
+final class UpdateAppointmentStatusLoading extends AppointmentState {}
+
+final class UpdateAppointmentStatusFailed extends AppointmentState {
+  final String errorMessage;
+
+  const UpdateAppointmentStatusFailed({required this.errorMessage});
+}
+
+final class UpdateAppointmentStatusSuccess extends AppointmentState {
+  final List<AppointmentEntity>? updatedAppointmentList;
+
+  const UpdateAppointmentStatusSuccess({required this.updatedAppointmentList});
 }

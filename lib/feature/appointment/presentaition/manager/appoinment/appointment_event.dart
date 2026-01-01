@@ -8,3 +8,11 @@ sealed class AppointmentEvent extends Equatable {
 }
 
 class GetAppointmentEvent extends AppointmentEvent {}
+
+class UpdateAppointmentStatusEvent extends AppointmentEvent {
+  final int statusIndex;
+  final int appointmentId;
+
+  const UpdateAppointmentStatusEvent(
+      {required this.statusIndex, required this.appointmentId});
+}
