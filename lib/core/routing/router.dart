@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/route_screen_wapper.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/appointment_type/appointment_type_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/screens/all_appointment_screen.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/screens/appointment_details_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/get_specialties_usecase.dart';
@@ -150,7 +151,11 @@ class AppRouter {
 
       //appointment
       case Routes.allAppointmentScreen:
-        page = const RootScreenWrapper(child: AllAppointmentScreen());
+        page = RootScreenWrapper(
+            child: BlocProvider(
+          create: (context) => getit<AppointmentTypeBloc>(),
+          child: const AllAppointmentScreen(),
+        ));
         break;
 
       case Routes.appointmentDetailsScreen:

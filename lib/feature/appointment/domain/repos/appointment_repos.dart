@@ -7,4 +7,10 @@ abstract class AppointmentRepo {
   Future<Either<ApiErrorModel, AppointmentHomeEntity>> getAppointmentHome();
   Future<Either<ApiErrorModel, List<AppointmentEntity>>>
       updateAppointmentStatus(int statusIndex, int appointmentId);
+  Future<Either<ApiErrorModel, List<AppointmentEntity>>>
+      getUpcomingAppointments();
+  Future<Either<ApiErrorModel, List<AppointmentEntity>>>
+      getFinishedAppointments();
+  Future<Either<ApiErrorModel, List<AppointmentEntity>>>
+      getCanceledAppointments();
 }

@@ -3,24 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/functions/format_time.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status_entity.dart';
 
 class AppointmentCard extends StatelessWidget {
-  final String name;
-  final String date;
-  final String status;
-  final String? image;
+  final AppointmentEntity appointmentEntity;
   final List<AppointmentStatusEntity> appointmentStatusLis;
   final ValueChanged<int> onStatusChanged;
 
   const AppointmentCard({
     super.key,
-    required this.name,
-    required this.date,
-    required this.status,
-    required this.image,
     required this.onStatusChanged,
     required this.appointmentStatusLis,
+    required this.appointmentEntity,
   });
 
   Color _badgeColor(String status) {
@@ -56,8 +51,9 @@ class AppointmentCard extends StatelessWidget {
           CircleAvatar(
             radius: 26,
             backgroundColor: Colors.grey.shade100,
-            backgroundImage:
-                image == null ? null : CachedNetworkImageProvider(image!),
+            backgroundImage: appointmentEntity.userImage == null
+                ? null
+                : CachedNetworkImageProvider(appointmentEntity.userImage!),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -65,7 +61,7 @@ class AppointmentCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
+                  appointmentEntity.userName ?? "",
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -73,7 +69,7 @@ class AppointmentCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  formatDayMonth(date),
+                  formatDayMonth(appointmentEntity.appointmentDate.toString()),
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey.shade700,
@@ -87,11 +83,11 @@ class AppointmentCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                color: _badgeColor(status),
+                color: _badgeColor(appointmentEntity.status!),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                status,
+                appointmentEntity.status ?? "",
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!

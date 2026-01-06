@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
@@ -20,8 +18,6 @@ class AppointmentRepoImpl extends AppointmentRepo {
       final response = await appointmentRemoteData.getAppointmentHome();
       return right(response);
     } catch (e) {
-      log("-------$e}");
-
       return left(ErrorHandler.handle(e));
     }
   }
@@ -32,6 +28,39 @@ class AppointmentRepoImpl extends AppointmentRepo {
     try {
       final response = await appointmentRemoteData.updateAppointmentStatus(
           statusIndex, appointmentId);
+      return right(response);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, List<AppointmentEntity>>>
+      getCanceledAppointments() async {
+    try {
+      final response = await appointmentRemoteData.getUpcomingAppointments();
+      return right(response);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, List<AppointmentEntity>>>
+      getFinishedAppointments() async {
+    try {
+      final response = await appointmentRemoteData.getFinishedAppointments();
+      return right(response);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, List<AppointmentEntity>>>
+      getUpcomingAppointments() async {
+    try {
+      final response = await appointmentRemoteData.getCanceledAppointments();
       return right(response);
     } catch (e) {
       return left(ErrorHandler.handle(e));

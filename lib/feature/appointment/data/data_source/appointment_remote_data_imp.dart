@@ -10,13 +10,13 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
   AppointmentRemoteDataImp({required this.supabase});
   String get currentDoctorId => supabase.client.auth.currentUser!.id;
 
-  @override
-  Future<List<AppointmentModel>> getAppointments() async {
+  Future<List<AppointmentModel>> getAppointments(int type) async {
     final response = await supabase.client
         .from('appointments')
         .select(
             'appointments_status(status),id,appointment_time,appointment_date,users(name,image)')
-        .eq('doctor_id', currentDoctorId);
+        .eq('doctor_id', currentDoctorId)
+        .eq("status", type);
 
     final data = response as List;
     final result = data.map((json) => AppointmentModel.fromJson(json)).toList();
@@ -29,8 +29,6 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
     await supabase.client.from('appointments').update({
       'status': statusIndex,
     }).eq('id', appointmentId);
-
-    // جلب كل الحجوزات بعد التحديث
     final response = await supabase.client.from('appointments').select(
           'appointments_status(status),id,appointment_time,appointment_date,users(name,image)',
         );
@@ -50,10 +48,25 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
 
   @override
   Future<AppointmentHomeEntity> getAppointmentHome() async {
-    final appointmentList = await getAppointments();
+    final appointmentList = await getAppointments(1);
     final appointmentStatusList = await getAppointmentStatus();
     return AppointmentHomeEntity(
-        appointmentList: appointmentList,
+        appointmentTodayList: appointmentList,
         appointmentStatusList: appointmentStatusList);
+  }
+
+  @override
+  Future<List<AppointmentModel>> getCanceledAppointments() async {
+    return await getAppointments(1);
+  }
+
+  @override
+  Future<List<AppointmentModel>> getFinishedAppointments() async {
+    return await getAppointments(2);
+  }
+
+  @override
+  Future<List<AppointmentModel>> getUpcomingAppointments() async {
+    return await getAppointments(3);
   }
 }

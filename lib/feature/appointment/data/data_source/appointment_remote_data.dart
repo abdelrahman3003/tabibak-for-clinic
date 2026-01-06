@@ -4,7 +4,9 @@ import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointme
 
 abstract class AppointmentRemoteData {
   Future<List<AppointmentStatusModel>> getAppointmentStatus();
-  Future<List<AppointmentModel>> getAppointments();
+  Future<List<AppointmentModel>> getUpcomingAppointments();
+  Future<List<AppointmentModel>> getFinishedAppointments();
+  Future<List<AppointmentModel>> getCanceledAppointments();
   Future<AppointmentHomeEntity> getAppointmentHome();
   Future<List<AppointmentModel>> updateAppointmentStatus(
       int statusIndex, int appointmentId);

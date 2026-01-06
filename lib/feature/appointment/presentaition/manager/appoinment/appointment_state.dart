@@ -9,20 +9,20 @@ sealed class AppointmentState extends Equatable {
 
 final class AppointmentInitial extends AppointmentState {}
 
-final class AppointmentSuccess extends AppointmentState {
-  final AppointmentHomeEntity appointmentHomeEntity;
-
-  const AppointmentSuccess({
-    required this.appointmentHomeEntity,
-  });
-}
-
 final class AppointmentLoading extends AppointmentState {}
 
 final class AppointmentFailed extends AppointmentState {
   final String errorMessage;
 
   const AppointmentFailed({required this.errorMessage});
+}
+
+final class AppointmentSuccess extends AppointmentState {
+  final AppointmentHomeEntity appointmentHomeEntity;
+
+  const AppointmentSuccess({
+    required this.appointmentHomeEntity,
+  });
 }
 
 final class UpdateAppointmentStatusLoading extends AppointmentState {}
