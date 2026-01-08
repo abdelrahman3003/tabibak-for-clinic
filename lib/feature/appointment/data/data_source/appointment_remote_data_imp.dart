@@ -10,31 +10,23 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
   AppointmentRemoteDataImp({required this.supabase});
   String get currentDoctorId => supabase.client.auth.currentUser!.id;
 
-  Future<List<AppointmentModel>> getAppointments(int type) async {
-    final response = await supabase.client
+  Future<List<AppointmentModel>> getAppointments(int type,
+      {bool isToday = false}) async {
+    final query = supabase.client
         .from('appointments')
         .select(
             'appointments_status(status),id,appointment_time,appointment_date,users(name,image)')
         .eq('doctor_id', currentDoctorId)
-        .eq("status", type);
+        .eq('status', type);
 
-    final data = response as List;
-    final result = data.map((json) => AppointmentModel.fromJson(json)).toList();
-    return result;
-  }
+    if (isToday) {
+      final today = DateTime.now().toIso8601String().split('T').first;
+      query.eq('appointment_date', today);
+    }
 
-  @override
-  Future<List<AppointmentModel>> updateAppointmentStatus(
-      int statusIndex, int appointmentId) async {
-    await supabase.client.from('appointments').update({
-      'status': statusIndex,
-    }).eq('id', appointmentId);
-    final response = await supabase.client.from('appointments').select(
-          'appointments_status(status),id,appointment_time,appointment_date,users(name,image)',
-        );
+    final response = await query;
     final data = response as List;
-    final result = data.map((json) => AppointmentModel.fromJson(json)).toList();
-    return result;
+    return data.map((json) => AppointmentModel.fromJson(json)).toList();
   }
 
   @override
@@ -47,12 +39,8 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
   }
 
   @override
-  Future<AppointmentHomeEntity> getAppointmentHome() async {
-    final appointmentList = await getAppointments(1);
-    final appointmentStatusList = await getAppointmentStatus();
-    return AppointmentHomeEntity(
-        appointmentTodayList: appointmentList,
-        appointmentStatusList: appointmentStatusList);
+  Future<List<AppointmentModel>> getUpcomingAppointments() async {
+    return await getAppointments(3);
   }
 
   @override
@@ -66,7 +54,25 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
   }
 
   @override
-  Future<List<AppointmentModel>> getUpcomingAppointments() async {
-    return await getAppointments(3);
+  Future<AppointmentHomeEntity> getAppointmentHome() async {
+    final appointmentList = await getAppointments(1, isToday: true);
+    final appointmentStatusList = await getAppointmentStatus();
+    return AppointmentHomeEntity(
+        appointmentTodayList: appointmentList,
+        appointmentStatusList: appointmentStatusList);
+  }
+
+  @override
+  Future<List<AppointmentModel>> updateAppointmentStatus(
+      {required int statusIndex,
+      required int appointmentId,
+      bool isToday = false,
+      required int type}) async {
+    await supabase.client.from('appointments').update({
+      'status': statusIndex,
+    }).eq('id', appointmentId);
+    final result = await getAppointments(type, isToday: isToday);
+
+    return result;
   }
 }

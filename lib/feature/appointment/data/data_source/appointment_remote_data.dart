@@ -9,5 +9,8 @@ abstract class AppointmentRemoteData {
   Future<List<AppointmentModel>> getCanceledAppointments();
   Future<AppointmentHomeEntity> getAppointmentHome();
   Future<List<AppointmentModel>> updateAppointmentStatus(
-      int statusIndex, int appointmentId);
+      {required int statusIndex,
+      required int appointmentId,
+      bool isToday = false,
+      required int type});
 }

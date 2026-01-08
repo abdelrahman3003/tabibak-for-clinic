@@ -4,6 +4,7 @@ import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointme
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_canceled_appointments_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_finished_appointments_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_upcoming_appointments_use_case.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/update_appointment_status_use_case.dart';
 
 part 'appointment_type_event.dart';
 part 'appointment_type_state.dart';
@@ -13,8 +14,12 @@ class AppointmentTypeBloc
   final GetUpcomingAppointmentsUseCase getUpcomingAppointmentsUseCase;
   final GetFinishedAppointmentsUseCase getFinishedAppointmentsUseCase;
   final GetCanceledAppointmentsUseCase getCanceledAppointmentsUseCase;
-  AppointmentTypeBloc(this.getUpcomingAppointmentsUseCase,
-      this.getFinishedAppointmentsUseCase, this.getCanceledAppointmentsUseCase)
+  final UpdateAppointmentStatusUseCase updateAppointmentStatusUseCase;
+  AppointmentTypeBloc(
+      this.getUpcomingAppointmentsUseCase,
+      this.getFinishedAppointmentsUseCase,
+      this.getCanceledAppointmentsUseCase,
+      this.updateAppointmentStatusUseCase)
       : super(AppointmentTypeInitial()) {
     on<GetUpcomingAppointmentsEvent>((event, emit) async {
       emit(UpcomingAppointmentsLoading());
@@ -38,7 +43,7 @@ class AppointmentTypeBloc
           emit(FinishedAppointmentsFailed(errorMessage: error.message!));
         },
         (list) {
-          emit(FinishedAppointmentsSuccess(upcomingList: list));
+          emit(FinishedAppointmentsSuccess(finishedList: list));
         },
       );
     });
@@ -51,7 +56,25 @@ class AppointmentTypeBloc
           emit(CanceledAppointmentsFailed(errorMessage: error.message!));
         },
         (list) {
-          emit(CanceledAppointmentsSuccess(upcomingList: list));
+          emit(CanceledAppointmentsSuccess(canceledList: list));
+        },
+      );
+    });
+    on<UpdateAppointmentTypeStatusEvent>((event, emit) async {
+      emit(UpdateAppointmentTypeStatusLoading());
+
+      final result = await updateAppointmentStatusUseCase.call(
+          statusIndex: event.statusIndex,
+          appointmentId: event.appointmentId,
+          type: event.type,
+          isToday: event.isToday);
+      result.fold(
+        (error) {
+          emit(UpdateAppointmentTypeStatusFailed(errorMessage: error.message!));
+        },
+        (list) {
+          emit(
+              UpdateAppointmentTypeStatusSuccess(updatedAppointmentList: list));
         },
       );
     });

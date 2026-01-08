@@ -24,10 +24,18 @@ class AppointmentRepoImpl extends AppointmentRepo {
 
   @override
   Future<Either<ApiErrorModel, List<AppointmentEntity>>>
-      updateAppointmentStatus(int statusIndex, int appointmentId) async {
+      updateAppointmentStatus(
+          {required int statusIndex,
+          required int appointmentId,
+          bool isToday = false,
+          required int type}) async {
     try {
       final response = await appointmentRemoteData.updateAppointmentStatus(
-          statusIndex, appointmentId);
+          statusIndex: statusIndex,
+          appointmentId: appointmentId,
+          type: type,
+          isToday: isToday);
+
       return right(response);
     } catch (e) {
       return left(ErrorHandler.handle(e));

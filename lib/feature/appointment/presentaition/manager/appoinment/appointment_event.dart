@@ -12,7 +12,13 @@ class GetAppointmentEvent extends AppointmentEvent {}
 class UpdateAppointmentStatusEvent extends AppointmentEvent {
   final int statusIndex;
   final int appointmentId;
+  final int type;
+  final bool isToday;
 
-  const UpdateAppointmentStatusEvent(
-      {required this.statusIndex, required this.appointmentId});
+  const UpdateAppointmentStatusEvent({
+    required this.statusIndex,
+    required this.appointmentId,
+    required this.type,
+    required this.isToday,
+  });
 }

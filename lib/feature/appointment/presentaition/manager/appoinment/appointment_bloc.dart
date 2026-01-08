@@ -30,7 +30,10 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
     on<UpdateAppointmentStatusEvent>((event, emit) async {
       emit(UpdateAppointmentStatusLoading());
       final result = await updateAppointmentStatusUseCase.call(
-          statusIndex: event.statusIndex, appointmentId: event.appointmentId);
+          statusIndex: event.statusIndex,
+          appointmentId: event.appointmentId,
+          type: event.type,
+          isToday: event.isToday);
       result.fold(
         (error) {
           emit(UpdateAppointmentStatusFailed(errorMessage: error.message!));

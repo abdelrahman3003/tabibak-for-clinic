@@ -32,9 +32,9 @@ final class FinishedAppointmentsFailed extends AppointmentTypeState {
 }
 
 final class FinishedAppointmentsSuccess extends AppointmentTypeState {
-  final List<AppointmentEntity> upcomingList;
+  final List<AppointmentEntity> finishedList;
 
-  const FinishedAppointmentsSuccess({required this.upcomingList});
+  const FinishedAppointmentsSuccess({required this.finishedList});
 }
 
 final class CanceledAppointmentsLoading extends AppointmentTypeState {}
@@ -46,7 +46,22 @@ final class CanceledAppointmentsFailed extends AppointmentTypeState {
 }
 
 final class CanceledAppointmentsSuccess extends AppointmentTypeState {
-  final List<AppointmentEntity> upcomingList;
+  final List<AppointmentEntity> canceledList;
 
-  const CanceledAppointmentsSuccess({required this.upcomingList});
+  const CanceledAppointmentsSuccess({required this.canceledList});
+}
+
+final class UpdateAppointmentTypeStatusLoading extends AppointmentTypeState {}
+
+final class UpdateAppointmentTypeStatusFailed extends AppointmentTypeState {
+  final String errorMessage;
+
+  const UpdateAppointmentTypeStatusFailed({required this.errorMessage});
+}
+
+final class UpdateAppointmentTypeStatusSuccess extends AppointmentTypeState {
+  final List<AppointmentEntity>? updatedAppointmentList;
+
+  const UpdateAppointmentTypeStatusSuccess(
+      {required this.updatedAppointmentList});
 }

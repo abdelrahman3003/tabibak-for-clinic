@@ -26,7 +26,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen>
     super.initState();
     controller = TabController(length: 3, vsync: this);
     controller.addListener(() {
-      if (controller.indexIsChanging) return; // لما animation شغال
+      if (controller.indexIsChanging) return;
       final bloc = context.read<AppointmentTypeBloc>();
       switch (controller.index) {
         case 0:

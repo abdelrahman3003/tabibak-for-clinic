@@ -8,9 +8,15 @@ class UpdateAppointmentStatusUseCase {
 
   UpdateAppointmentStatusUseCase({required this.appointmentRepos});
   Future<Either<ApiErrorModel, List<AppointmentEntity>>> call(
-      {required int statusIndex, required int appointmentId}) async {
+      {required int statusIndex,
+      required int appointmentId,
+      bool isToday = false,
+      required int type}) async {
     final result = await appointmentRepos.updateAppointmentStatus(
-        statusIndex, appointmentId);
+        statusIndex: statusIndex,
+        appointmentId: appointmentId,
+        type: type,
+        isToday: isToday);
     return result;
   }
 }

@@ -6,7 +6,12 @@ import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointme
 abstract class AppointmentRepo {
   Future<Either<ApiErrorModel, AppointmentHomeEntity>> getAppointmentHome();
   Future<Either<ApiErrorModel, List<AppointmentEntity>>>
-      updateAppointmentStatus(int statusIndex, int appointmentId);
+      updateAppointmentStatus({
+    required int statusIndex,
+    required int appointmentId,
+    bool isToday = false,
+    required int type,
+  });
   Future<Either<ApiErrorModel, List<AppointmentEntity>>>
       getUpcomingAppointments();
   Future<Either<ApiErrorModel, List<AppointmentEntity>>>

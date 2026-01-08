@@ -42,8 +42,12 @@ class AppointmentBody extends StatelessWidget {
               ),
               10.hBox,
               appointmentList.isEmpty
-                  ? const EmptyWidget(message: "No appointments today")
+                  ? const Center(
+                      child: EmptyWidget(message: "No Appointments Today"))
                   : AppointmentList(
+                      type: 1,
+                      isToday: true,
+                      isType: false,
                       appointmentList: appointmentList,
                       appointmentStatusList: appointmentStatusList)
             ],

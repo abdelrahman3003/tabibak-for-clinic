@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/widgets/circle_indicator_widget.dart';
+import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
+import 'package:tabibak_for_clinic/core/widgets/empty_widget.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/appointment_type/appointment_type_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/appointment_screen/appointment_list.dart';
@@ -11,21 +15,37 @@ class CanceledAppointmentListStates extends StatelessWidget {
   final List<AppointmentStatusEntity> appointmentStatusList;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppointmentTypeBloc, AppointmentTypeState>(
+    List<AppointmentEntity>? appointmentList;
+    return BlocConsumer<AppointmentTypeBloc, AppointmentTypeState>(
+      listener: (context, state) {
+        if (state is UpdateAppointmentTypeStatusLoading) {
+          Dialogs.showLoading(context);
+        }
+        if (state is UpdateAppointmentTypeStatusSuccess) {
+          appointmentList = state.updatedAppointmentList!;
+          context.pop();
+        }
+        if (state is CanceledAppointmentsSuccess) {
+          appointmentList = state.canceledList;
+        }
+      },
       builder: (context, state) {
-        if (state is CanceledAppointmentsLoading) {
+        if (state is CanceledAppointmentsLoading || appointmentList == null) {
           return const CircleIndicatorWidget();
         }
         if (state is CanceledAppointmentsFailed) {
           return ErrorWidget(state.errorMessage);
         }
-        if (state is CanceledAppointmentsSuccess) {
-          return AppointmentList(
-            appointmentList: state.upcomingList,
-            appointmentStatusList: appointmentStatusList,
-          );
-        }
-        return const SizedBox.shrink();
+
+        return appointmentList!.isEmpty
+            ? const EmptyWidget(
+                message: "NO Canceled Appointments",
+              )
+            : AppointmentList(
+                type: 3,
+                appointmentList: appointmentList!,
+                appointmentStatusList: appointmentStatusList,
+              );
       },
     );
   }
