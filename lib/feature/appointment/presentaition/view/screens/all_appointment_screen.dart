@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status_entity.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/appointment_type/appointment_type_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/all_appointment_screen/canceled_appointment_list_states.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/all_appointment_screen/finished_appointment_list_states.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/all_appointment_screen/upcoming_appointment_list_states.dart';
@@ -27,7 +27,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen>
     controller = TabController(length: 3, vsync: this);
     controller.addListener(() {
       if (controller.indexIsChanging) return;
-      final bloc = context.read<AppointmentTypeBloc>();
+      final bloc = context.read<AppointmentBloc>();
       switch (controller.index) {
         case 0:
           bloc.add(GetUpcomingAppointmentsEvent());

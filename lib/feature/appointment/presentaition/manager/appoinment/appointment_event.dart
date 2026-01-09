@@ -7,7 +7,17 @@ sealed class AppointmentEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetAppointmentEvent extends AppointmentEvent {}
+class GetAppointmentEvent extends AppointmentEvent {
+  final bool isUpdate;
+
+  const GetAppointmentEvent({this.isUpdate = true});
+}
+
+class GetUpcomingAppointmentsEvent extends AppointmentEvent {}
+
+class GetFinishedAppointmentsEvent extends AppointmentEvent {}
+
+class GetCanceledAppointmentsEvent extends AppointmentEvent {}
 
 class UpdateAppointmentStatusEvent extends AppointmentEvent {
   final int statusIndex;

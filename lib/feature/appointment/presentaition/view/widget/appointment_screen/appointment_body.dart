@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
-import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/empty_widget.dart';
@@ -36,7 +35,7 @@ class AppointmentBody extends StatelessWidget {
                 title: "Appointments's Today",
                 subtitle: "See All",
                 onTap: () {
-                  context.pushNamed(Routes.allAppointmentScreen,
+                  Navigator.pushNamed(context, Routes.allAppointmentScreen,
                       arguments: appointmentStatusList);
                 },
               ),
@@ -47,7 +46,6 @@ class AppointmentBody extends StatelessWidget {
                   : AppointmentList(
                       type: 1,
                       isToday: true,
-                      isType: false,
                       appointmentList: appointmentList,
                       appointmentStatusList: appointmentStatusList)
             ],

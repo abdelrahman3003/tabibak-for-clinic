@@ -6,7 +6,7 @@ import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/core/widgets/empty_widget.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status_entity.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/appointment_type/appointment_type_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/appointment_screen/appointment_list.dart';
 
 class CanceledAppointmentListStates extends StatelessWidget {
@@ -16,12 +16,12 @@ class CanceledAppointmentListStates extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<AppointmentEntity>? appointmentList;
-    return BlocConsumer<AppointmentTypeBloc, AppointmentTypeState>(
+    return BlocConsumer<AppointmentBloc, AppointmentState>(
       listener: (context, state) {
-        if (state is UpdateAppointmentTypeStatusLoading) {
+        if (state is UpdateAppointmentStatusLoading) {
           Dialogs.showLoading(context);
         }
-        if (state is UpdateAppointmentTypeStatusSuccess) {
+        if (state is UpdateAppointmentStatusSuccess) {
           appointmentList = state.updatedAppointmentList!;
           context.pop();
         }
