@@ -144,10 +144,10 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
           clinicDayEntity: day,
           isSelected: true,
           clinicShiftEntity: ClinicShiftEntity(
-            morningStart,
-            morningEnd,
-            eveningStart,
-            eveningEnd,
+            morningStart: morningStart,
+            morningEnd: morningEnd,
+            eveningStart: eveningStart,
+            eveningEnd: eveningEnd,
           ),
         ),
       );
@@ -158,10 +158,10 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
         isSelected: true,
         clinicDayEntity: day,
         clinicShiftEntity: ClinicShiftEntity(
-          morningStart ?? old.clinicShiftEntity?.morningStart,
-          morningEnd ?? old.clinicShiftEntity?.morningEnd,
-          eveningStart ?? old.clinicShiftEntity?.eveningStart,
-          eveningEnd ?? old.clinicShiftEntity?.eveningEnd,
+          morningStart: morningStart ?? old.clinicShiftEntity?.morningStart,
+          morningEnd: morningEnd ?? old.clinicShiftEntity?.morningEnd,
+          eveningStart: eveningStart ?? old.clinicShiftEntity?.eveningStart,
+          eveningEnd: eveningEnd ?? old.clinicShiftEntity?.eveningEnd,
         ),
       );
     }

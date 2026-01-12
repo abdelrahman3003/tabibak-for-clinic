@@ -15,7 +15,7 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
     final query = supabase.client
         .from('appointments')
         .select(
-            'appointments_status(status),id,appointment_time,appointment_date,users(name,image)')
+            'appointments_status(status),id,appointment_date,users(name,image)')
         .eq('doctor_id', currentDoctorId)
         .eq('status', type);
 
@@ -74,5 +74,10 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
     final result = await getAppointments(type, isToday: isToday);
 
     return result;
+  }
+
+  @override
+  Future<void> addAppointment(AppointmentModel appointment) async {
+    await supabase.client.from('appointments').insert(appointment.toJson());
   }
 }

@@ -91,7 +91,7 @@ class AppointmentCard extends StatelessWidget {
           .toList(),
       child: Text(
         appointmentEntity.status ?? "",
-        textAlign: TextAlign.center, // يضمن أن النص في المنتصف
+        textAlign: TextAlign.center,
         style: Theme.of(context)
             .textTheme
             .bodyMedium!

@@ -1,0 +1,1 @@
+enum ShiftType { morning, evening }

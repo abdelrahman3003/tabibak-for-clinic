@@ -18,4 +18,6 @@ abstract class AppointmentRepo {
       getFinishedAppointments();
   Future<Either<ApiErrorModel, List<AppointmentEntity>>>
       getCanceledAppointments();
+  Future<Either<ApiErrorModel, void>> addAppointment(
+      AppointmentEntity appointment);
 }

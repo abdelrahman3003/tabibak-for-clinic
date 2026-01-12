@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
+import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 
 class TodayBanner extends StatelessWidget {
@@ -28,9 +30,30 @@ class TodayBanner extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            doctorName,
-            style: Theme.of(context).textTheme.bodyLarge,
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  doctorName,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    context.pushNamed(Routes.addAppointmentScreen);
+                  },
+                  icon: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                ),
+              )
+            ],
           ),
           10.hBox,
           RichText(

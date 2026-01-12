@@ -24,4 +24,5 @@ class Routes {
   // appointment
   static const String allAppointmentScreen = "/allAppointmentScreen";
   static const String appointmentDetailsScreen = "/appointmentDetailsScreen";
+  static const String addAppointmentScreen = "/addAppointmentScreen";
 }

@@ -13,4 +13,5 @@ abstract class AppointmentRemoteData {
       required int appointmentId,
       bool isToday = false,
       required int type});
+  Future<void> addAppointment(AppointmentModel appointment);
 }

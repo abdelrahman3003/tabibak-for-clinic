@@ -1,51 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_entity.dart';
 
-class SpecialtyDropdown extends StatefulWidget {
-  final Function(int?)? onChanged;
-  final List<SpecialtyEntity> items;
+class AppDropdown<T> extends StatefulWidget {
+  final List<T> items;
+  final T? value;
+  final String hint;
   final Color? color;
-  final int? value;
-  const SpecialtyDropdown(
-      {super.key, this.onChanged, required this.items, this.color, this.value});
+  final String Function(T item) labelBuilder;
+  final void Function(T? value)? onChanged;
+  final String? Function(T?)? validator;
+
+  const AppDropdown({
+    super.key,
+    required this.items,
+    required this.labelBuilder,
+    required this.hint,
+    this.value,
+    this.color,
+    this.onChanged,
+    this.validator,
+  });
 
   @override
-  State<SpecialtyDropdown> createState() => _SpecialtyDropdownState();
+  State<AppDropdown<T>> createState() => _AppDropdownState<T>();
 }
 
-class _SpecialtyDropdownState extends State<SpecialtyDropdown> {
-  late int? _selectedSpecialtyId;
+class _AppDropdownState<T> extends State<AppDropdown<T>> {
+  T? selectedItem;
+
   @override
   void initState() {
-    _selectedSpecialtyId = widget.value;
+    selectedItem = widget.value;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<int>(
+    return DropdownButtonFormField<T>(
+      initialValue: selectedItem,
       decoration: InputDecoration(
-        hintText: "Select Specialty",
-        fillColor: widget.color,
+        hintText: widget.hint,
+        hintStyle: Theme.of(context).textTheme.titleMedium,
+        fillColor: Colors.transparent,
         filled: true,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+        contentPadding: EdgeInsets.zero, // <--- هنا شيل البادينج
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
       ),
-      validator: (value) => value == null ? "Please select a specialty" : null,
+      validator: widget.validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      initialValue: _selectedSpecialtyId,
       items: widget.items
           .map(
-            (item) => DropdownMenuItem(
-              value: item.id,
-              child: Text(item.nameEn),
+            (item) => DropdownMenuItem<T>(
+              value: item,
+              child: Text(widget.labelBuilder(item)),
             ),
           )
           .toList(),
       onChanged: (value) {
-        setState(() => _selectedSpecialtyId = value);
-        if (widget.onChanged != null) widget.onChanged!(value);
+        setState(() => selectedItem = value);
+        widget.onChanged?.call(value);
       },
     );
   }

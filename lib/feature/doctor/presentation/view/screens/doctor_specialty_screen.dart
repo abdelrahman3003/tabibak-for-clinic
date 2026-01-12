@@ -67,12 +67,14 @@ class _DoctorSpecialtyScreenState extends State<DoctorSpecialtyScreen> {
 
                 if (state is DoctorGetSpecialtiesSuccess) {
                   specialties = state.specialties;
-                  return SpecialtyDropdown(
-                    color: Colors.transparent,
+                  return AppDropdown<SpecialtyEntity>(
                     items: specialties,
-                    value: _selectedSpecialtyId,
-                    onChanged: (specialtyId) {
-                      _selectedSpecialtyId = specialtyId;
+                    hint: 'Select Specialty',
+                    labelBuilder: (item) => item.nameEn,
+                    validator: (value) =>
+                        value == null ? 'Please select a specialty' : null,
+                    onChanged: (value) {
+                      _selectedSpecialtyId = value?.id;
                     },
                   );
                 }

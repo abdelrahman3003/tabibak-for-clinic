@@ -5,18 +5,29 @@ import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/auth_dro
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_entity.dart';
 
 class SpecailtiesDropdwon extends StatelessWidget {
-  const SpecailtiesDropdwon({super.key, this.onChangedSpecialization});
+  const SpecailtiesDropdwon({
+    super.key,
+    this.onChangedSpecialization,
+  });
+
   final Function(int?)? onChangedSpecialization;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignupBloc, SignupState>(
       builder: (context, state) {
-        final items = state is GetSpecialtiesRequestedSuccess
-            ? state.specialties
-            : <SpecialtyEntity>[];
-        return SpecialtyDropdown(
+        final List<SpecialtyEntity> items =
+            state is GetSpecialtiesRequestedSuccess ? state.specialties : [];
+
+        return AppDropdown<SpecialtyEntity>(
           items: items,
-          onChanged: onChangedSpecialization,
+          hint: "Select Specialty",
+          labelBuilder: (item) => item.nameEn,
+          validator: (value) =>
+              value == null ? 'Please select a specialty' : null,
+          onChanged: (value) {
+            onChangedSpecialization?.call(value?.id);
+          },
         );
       },
     );
