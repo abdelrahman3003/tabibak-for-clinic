@@ -1,12 +1,16 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
+import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
+import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
+import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/auth_dropdown.dart';
-import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_entity.dart';
-import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_entity_extention.dart';
-import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_type.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/create_appointment/create_appointment_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/create_appoinemnt_screen/drop_down_states.dart';
 
 class AddAppointmentScreen extends StatefulWidget {
   const AddAppointmentScreen({super.key});
@@ -20,69 +24,96 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
   late TextEditingController phonePhoneController;
   late TextEditingController descriptionController;
   late TextEditingController dateController;
-  ShiftType? selectedShiftType;
-  ClinicShiftEntity selectedShiftEntity = ClinicShiftEntity(
-    morningStart: const TimeOfDay(hour: 8, minute: 0),
-    morningEnd: const TimeOfDay(hour: 12, minute: 0),
-    eveningStart: const TimeOfDay(hour: 16, minute: 0),
-    eveningEnd: const TimeOfDay(hour: 20, minute: 0),
-  );
-  List<ShiftType> shiftItems = [];
+  DateTime? dateTime;
   @override
   void initState() {
     patientNameController = TextEditingController();
     phonePhoneController = TextEditingController();
     descriptionController = TextEditingController();
     dateController = TextEditingController();
-    shiftItems = selectedShiftEntity.availableShiftTypes();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarSave(
+      appBar: AppBarSave(
         text: "Add Appointment",
+        onTap: () {
+          context.read<CreateAppointmentBloc>().add(AddAppointmentEvent(
+                  appointment: AppointmentEntity(
+                name: patientNameController.text,
+                phone: phonePhoneController.text,
+                appointmentDate: dateTime,
+              )));
+        },
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
-        child: Column(
-          children: [
-            TextFormFiledWidget(
-              label: "Patient Name",
-              controller: patientNameController,
-            ),
-            TextFormFiledWidget(
-              label: "Phone Number",
-              keyboardType: TextInputType.number,
-              controller: phonePhoneController,
-            ),
-            TextFormFiledWidget(
-              label: "Date",
-              keyboardType: TextInputType.number,
-              controller: dateController,
-            ),
-            10.hBox,
-            AppDropdown<ShiftType>(
-                items: shiftItems,
-                labelBuilder: (item) =>
-                    item == ShiftType.morning ? "Morning" : "Evening",
-                validator: (item) =>
-                    item == null ? "Please select a shift" : null,
-                onChanged: (value) {
-                  selectedShiftType = value;
+      body: BlocListener<CreateAppointmentBloc, CreateAppointmentState>(
+        listener: (context, state) {
+          if (state is AddAppointmentLoading) {
+            Dialogs.showLoading(context);
+          }
+          if (state is AddAppointmentSuccess) {
+            context.pop();
+          }
+          if (state is AddAppointmentFailed) {
+            AppSnackBar.show(context: context, message: state.errorMessage);
+            context.pop();
+          }
+        },
+        child: Padding(
+          padding:
+              const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
+          child: Column(
+            children: [
+              TextFormFiledWidget(
+                label: "Patient Name",
+                controller: patientNameController,
+              ),
+              TextFormFiledWidget(
+                label: "Phone Number",
+                keyboardType: TextInputType.number,
+                controller: phonePhoneController,
+              ),
+              TextFormFiledWidget(
+                label: "Date",
+                onTap: () async {
+                  dateTime = await _pickDate(context);
                 },
-                hint: "Select Shift"),
-            TextFormFiledWidget(
-              label: "Description",
-              maxLines: 3,
-              keyboardType: TextInputType.number,
-              controller: descriptionController,
-            ),
-          ],
+                controller: dateController,
+              ),
+              10.hBox,
+              const DropDownStates(),
+              TextFormFiledWidget(
+                label: "Description",
+                maxLines: 3,
+                keyboardType: TextInputType.number,
+                controller: descriptionController,
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Future<DateTime?> _pickDate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(DateTime.now().year + 1),
+    );
+
+    if (pickedDate != null) {
+      final selectedDayName = DateFormat('EEEE', 'en_US').format(pickedDate);
+      context.read<CreateAppointmentBloc>().add(
+            GetAppointmentShiftEvent(dayEn: selectedDayName),
+          );
+      dateController.text = "${pickedDate.day}/${pickedDate.month}";
+      return pickedDate;
+    }
+    return null;
   }
 
   @override

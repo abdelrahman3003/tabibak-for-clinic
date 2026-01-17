@@ -8,18 +8,21 @@ class TextFormFiledWidget extends StatelessWidget {
       required this.label,
       this.keyboardType,
       this.suffixText,
-      this.maxLines});
+      this.maxLines,
+      this.onTap});
   final TextEditingController? controller;
   final String label;
   final TextInputType? keyboardType;
   final String? suffixText;
   final int? maxLines;
+  final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 15.h),
       child: TextFormField(
         maxLines: maxLines,
+        onTap: onTap,
         controller: controller,
         keyboardType: keyboardType,
         decoration: InputDecoration(

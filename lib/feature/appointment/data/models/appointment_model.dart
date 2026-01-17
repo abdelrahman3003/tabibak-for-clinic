@@ -7,6 +7,10 @@ class AppointmentModel extends AppointmentEntity {
     required super.status,
     required super.userName,
     required super.userImage,
+    super.appointmentShift,
+    super.phone,
+    super.name,
+    super.description,
   });
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
@@ -16,6 +20,10 @@ class AppointmentModel extends AppointmentEntity {
       status: json['appointments_status']['status'],
       userName: json['users']['name'],
       userImage: json['users']['image'],
+      appointmentShift: json['shift'],
+      phone: json['users']['phone'],
+      name: json['name'],
+      description: json['description'],
     );
   }
 
@@ -32,6 +40,10 @@ class AppointmentModel extends AppointmentEntity {
       status: entity.status,
       userName: entity.userName,
       userImage: entity.userImage,
+      appointmentShift: entity.appointmentShift,
+      phone: entity.phone,
+      name: entity.name,
+      description: entity.description,
     );
   }
 }

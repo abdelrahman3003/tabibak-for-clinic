@@ -3,6 +3,7 @@ import 'package:tabibak_for_clinic/feature/appointment/data/data_source/appointm
 import 'package:tabibak_for_clinic/feature/appointment/data/models/appointment_model.dart';
 import 'package:tabibak_for_clinic/feature/appointment/data/models/appointment_status_model.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_home_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_shift_model.dart';
 
 class AppointmentRemoteDataImp implements AppointmentRemoteData {
   final Supabase supabase;
@@ -79,5 +80,16 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
   @override
   Future<void> addAppointment(AppointmentModel appointment) async {
     await supabase.client.from('appointments').insert(appointment.toJson());
+  }
+
+  @override
+  Future<ClinicShiftModel?> getAppointmentShift(String dayEn) async {
+    final response = await supabase.client.rpc(
+      'get_shift_by_day',
+      params: {'p_day_en': dayEn},
+    );
+    if (response == null) return null;
+
+    return ClinicShiftModel.fromJson(response);
   }
 }

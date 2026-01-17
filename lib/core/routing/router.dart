@@ -4,6 +4,7 @@ import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/route_screen_wapper.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/appoinment/appointment_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/create_appointment/create_appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/screens/add_appointment_screen.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/screens/all_appointment_screen.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/screens/appointment_details_screen.dart';
@@ -161,7 +162,11 @@ class AppRouter {
         );
         break;
       case Routes.addAppointmentScreen:
-        page = const RootScreenWrapper(child: AddAppointmentScreen());
+        page = RootScreenWrapper(
+            child: BlocProvider(
+          create: (context) => getit<CreateAppointmentBloc>(),
+          child: const AddAppointmentScreen(),
+        ));
         break;
       case Routes.appointmentDetailsScreen:
         page = const RootScreenWrapper(child: AppointmentDetailsScreen());

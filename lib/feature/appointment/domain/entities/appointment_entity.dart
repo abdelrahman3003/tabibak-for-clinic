@@ -6,13 +6,21 @@ class AppointmentEntity extends Equatable {
   final String? status;
   final String? userName;
   final String? userImage;
+  final String? appointmentShift;
+  final String? phone;
+  final String? name;
+  final String? description;
 
   const AppointmentEntity({
-    required this.appointmentId,
-    required this.appointmentDate,
-    required this.status,
-    required this.userName,
-    required this.userImage,
+    this.appointmentId,
+    this.appointmentDate,
+    this.status,
+    this.userName,
+    this.userImage,
+    this.appointmentShift,
+    this.phone,
+    this.name,
+    this.description,
   });
 
   @override
