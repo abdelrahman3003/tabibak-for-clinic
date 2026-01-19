@@ -3,8 +3,10 @@ import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointme
 class AppointmentModel extends AppointmentEntity {
   const AppointmentModel({
     super.appointmentId,
-    required super.appointmentDate,
-    required super.status,
+    super.appointmentDate,
+    super.status,
+    super.statusId,
+    super.doctorId,
     super.userId,
     super.userImage,
     super.appointmentShift,
@@ -17,7 +19,7 @@ class AppointmentModel extends AppointmentEntity {
     return AppointmentModel(
       appointmentId: json['id'],
       appointmentDate: DateTime.parse(json['appointment_date']),
-      userImage: json['users']['image'],
+      userImage: json['users']?['image'],
       status: json['appointments_status']['status'],
       phone: json['phone'],
       name: json['name'],
@@ -26,27 +28,26 @@ class AppointmentModel extends AppointmentEntity {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': appointmentId,
+      "doctor_id": doctorId,
       "user_id": userId,
-      'appointment_date': appointmentDate?.toIso8601String(),
-      'status': status,
-      'shift': appointmentShift,
-      'phone': phone,
       'name': name,
+      'appointment_date': appointmentDate?.toIso8601String(),
+      'status': statusId,
+      'appointment_shift': appointmentShift,
+      'phone': phone,
       'description': description,
     };
   }
 
   factory AppointmentModel.fromEntity(AppointmentEntity entity) {
     return AppointmentModel(
-      appointmentId: entity.appointmentId,
-      appointmentDate: entity.appointmentDate,
-      status: entity.status,
+      name: entity.name,
+      doctorId: entity.doctorId,
       userId: entity.userId,
-      userImage: entity.userImage,
+      statusId: entity.statusId,
+      appointmentDate: entity.appointmentDate,
       appointmentShift: entity.appointmentShift,
       phone: entity.phone,
-      name: entity.name,
       description: entity.description,
     );
   }

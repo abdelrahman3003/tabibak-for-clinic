@@ -22,7 +22,7 @@ class ClinicShiftModel extends ClinicShiftEntity {
       parseTime(json['morning_end']),
       parseTime(json['evening_start']),
       parseTime(json['evening_end']),
-      shiftId: json['shift_id'],
+      shiftId: json['id'],
     );
   }
 }

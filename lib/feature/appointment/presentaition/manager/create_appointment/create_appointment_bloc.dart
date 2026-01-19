@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
@@ -23,6 +25,8 @@ class CreateAppointmentBloc
           emit(GetAppointmentShiftFailed(errorMessage: error.message!));
         },
         (shift) {
+          log("---------${shift?.shiftId}");
+
           emit(GetAppointmentShiftSuccess(clinicShiftEntity: shift));
         },
       );

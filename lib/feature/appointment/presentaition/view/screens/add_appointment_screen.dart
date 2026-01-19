@@ -6,15 +6,14 @@ import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
-import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/create_appointment/create_appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/create_appoinemnt_screen/drop_down_states.dart';
+import 'package:tabibak_for_clinic/layout_screen.dart';
 
 class AddAppointmentScreen extends StatefulWidget {
   const AddAppointmentScreen({super.key});
@@ -45,10 +44,13 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
       appBar: AppBarSave(
         text: "Add Appointment",
         onTap: () {
+          final doctorId = getit<Supabase>().client.auth.currentUser!.id;
           context.read<CreateAppointmentBloc>().add(AddAppointmentEvent(
                   appointment: AppointmentEntity(
-                doctorId: getit<Supabase>().client.auth.currentUser!.id,
+                doctorId: doctorId,
+                userId: doctorId,
                 name: patientNameController.text,
+                statusId: 1,
                 phone: phonePhoneController.text,
                 appointmentDate: dateTime,
                 description: descriptionController.text,
@@ -62,9 +64,11 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
             Dialogs.showLoading(context);
           }
           if (state is AddAppointmentSuccess) {
-            context.read<AppointmentBloc>().add(const GetAppointmentEvent());
             context.pop();
-            context.pushNamed(Routes.layOutScreen);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const LayoutScreen(initialIndex: 1)));
           }
           if (state is AddAppointmentFailed) {
             AppSnackBar.show(context: context, message: state.errorMessage);

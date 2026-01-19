@@ -22,6 +22,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
     final response = await supabase.client.auth
         .signUp(email: doctorModel.email, password: doctorModel.password!);
     if (response.user != null) {
+      await addUserData(response.user!.id);
       await addDoctor(doctorModel: doctorModel, id: response.user!.id);
     } else {
       throw Exception('Sign up failed');
@@ -43,6 +44,15 @@ class AuthRemoteDataImp implements AuthRemoteData {
       {required DoctorModel doctorModel, required String id}) async {
     final data = doctorModel.toJson();
     data['doctor_id'] = id;
+    final supabaseResponse = await supabase.client.from('doctor_file').insert({
+      "doctor_id": id,
+      "file": doctorModel.medicalLiecense,
+    });
+
+    if (supabaseResponse.error != null) {
+      throw supabaseResponse.error!;
+    }
+
     final response = await dio
         .postUri(Uri.parse("${ApiConstants.apiBaseUrl}/doctors"), data: data);
     if (response.statusCode == 201 || response.statusCode == 200) {
@@ -52,15 +62,12 @@ class AuthRemoteDataImp implements AuthRemoteData {
   }
 
   @override
-  Future<void> uploadFile(String filePath) async {
+  Future<String?> uploadFile(String filePath) async {
     final imageUrl = await uploadFileSupabase(
       bucket: 'profile_images',
       filePath: filePath,
     );
-
-    if (imageUrl == null) return;
-    await supabase.client.from('doctors').update({'image': imageUrl}).eq(
-        'doctor_id', supabase.client.auth.currentUser!.id);
+    return imageUrl;
   }
 
   @override
@@ -91,6 +98,9 @@ class AuthRemoteDataImp implements AuthRemoteData {
       provider: OAuthProvider.google,
       idToken: idToken,
     );
+    if (response.user != null) {
+      await addUserData(response.user!.id);
+    }
     final isRegistered = await checkDoctorRegister(response.user);
     return SigninResultModel(isRegistered: isRegistered, user: response.user);
   }
@@ -106,5 +116,12 @@ class AuthRemoteDataImp implements AuthRemoteData {
       return false;
     }
     return true;
+  }
+
+  Future<void> addUserData(String userId) async {
+    await supabase.client.from('users').upsert({
+      'user_id': userId,
+      'image': supabase.client.auth.currentUser!.userMetadata!['picture'],
+    }, onConflict: 'user_id');
   }
 }

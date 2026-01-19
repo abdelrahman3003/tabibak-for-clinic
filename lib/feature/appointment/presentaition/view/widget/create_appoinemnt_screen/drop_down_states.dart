@@ -26,7 +26,7 @@ class _DropDownStatesState extends State<DropDownStates> {
           current is GetAppointmentShiftSuccess ||
           current is GetAppointmentShiftFailed,
       builder: (context, state) {
-        List<String> shiftItems = [];
+        Map<String, int> shiftMap = {};
 
         if (state is GetAppointmentShiftFailed) {
           errorMessage = state.errorMessage;
@@ -37,8 +37,7 @@ class _DropDownStatesState extends State<DropDownStates> {
             shiftId = null;
           } else {
             errorMessage = null;
-            shiftItems = _getShiftList(state.clinicShiftEntity!);
-            shiftId = state.clinicShiftEntity!.shiftId;
+            shiftMap = _getShiftMap(state.clinicShiftEntity!);
           }
         }
 
@@ -46,18 +45,18 @@ class _DropDownStatesState extends State<DropDownStates> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppDropdown<String>(
-              items: shiftItems,
+              items: shiftMap.keys.toList(),
               labelBuilder: (item) => item,
               validator: (item) =>
                   item == null ? "Please select a shift" : null,
               onChanged: (value) {
+                if (value != null) {
+                  shiftId = shiftMap[value];
+                  widget.onShiftSelected?.call(shiftId!);
+                }
                 setState(() {
                   selectedShift = value;
                 });
-
-                if (value != null && shiftId != null) {
-                  widget.onShiftSelected?.call(shiftId!);
-                }
               },
               hint: "Select Shift",
             ),
@@ -76,20 +75,18 @@ class _DropDownStatesState extends State<DropDownStates> {
   }
 }
 
-List<String> _getShiftList(ClinicShiftEntity shift) {
-  List<String> list = [];
+Map<String, int> _getShiftMap(ClinicShiftEntity shift) {
+  final map = <String, int>{};
 
   if (shift.morningStart != null && shift.morningEnd != null) {
-    list.add(
-      'Morning ${formatTime(shift.morningStart!)} - ${formatTime(shift.morningEnd!)}',
-    );
+    map['Morning ${formatTime(shift.morningStart!)} - ${formatTime(shift.morningEnd!)}'] =
+        shift.shiftId ?? 0;
   }
 
   if (shift.eveningStart != null && shift.eveningEnd != null) {
-    list.add(
-      'Evening ${formatTime(shift.eveningStart!)} - ${formatTime(shift.eveningEnd!)}',
-    );
+    map['Evening ${formatTime(shift.eveningStart!)} - ${formatTime(shift.eveningEnd!)}'] =
+        shift.shiftId ?? 0;
   }
 
-  return list;
+  return map;
 }
