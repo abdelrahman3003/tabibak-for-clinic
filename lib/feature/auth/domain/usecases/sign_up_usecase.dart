@@ -12,11 +12,6 @@ class SignUpUsecase {
   Future<Either<ApiErrorModel, void>> call(
       {required DoctorEntity doctorEntity}) async {
     final signUpResult = await authRepo.signUp(doctorEntity: doctorEntity);
-    // final uploadResult =
-    //     await authRepo.uploadFile(filePath: doctorEntity.medicalLiecense);
-    // if (uploadResult.isLeft()) return uploadResult;
-    // final addDoctorResult =
-    //     await authRepo.addDoctor(doctorEntity: doctorEntity);
     signUpResult.fold(
       (_) {},
       (_) {

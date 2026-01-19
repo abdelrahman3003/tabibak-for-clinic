@@ -5,8 +5,8 @@ class AppointmentModel extends AppointmentEntity {
     super.appointmentId,
     required super.appointmentDate,
     required super.status,
-    required super.userName,
-    required super.userImage,
+    super.userId,
+    super.userImage,
     super.appointmentShift,
     super.phone,
     super.name,
@@ -17,19 +17,23 @@ class AppointmentModel extends AppointmentEntity {
     return AppointmentModel(
       appointmentId: json['id'],
       appointmentDate: DateTime.parse(json['appointment_date']),
-      status: json['appointments_status']['status'],
-      userName: json['users']['name'],
       userImage: json['users']['image'],
-      appointmentShift: json['shift'],
-      phone: json['users']['phone'],
+      status: json['appointments_status']['status'],
+      phone: json['phone'],
       name: json['name'],
-      description: json['description'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'appointment_date': appointmentDate?.toIso8601String().split('T').first,
+      'id': appointmentId,
+      "user_id": userId,
+      'appointment_date': appointmentDate?.toIso8601String(),
+      'status': status,
+      'shift': appointmentShift,
+      'phone': phone,
+      'name': name,
+      'description': description,
     };
   }
 
@@ -38,7 +42,7 @@ class AppointmentModel extends AppointmentEntity {
       appointmentId: entity.appointmentId,
       appointmentDate: entity.appointmentDate,
       status: entity.status,
-      userName: entity.userName,
+      userId: entity.userId,
       userImage: entity.userImage,
       appointmentShift: entity.appointmentShift,
       phone: entity.phone,

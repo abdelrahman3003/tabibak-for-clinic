@@ -1,14 +1,18 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
+import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
+import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/create_appointment/create_appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/create_appoinemnt_screen/drop_down_states.dart';
 
@@ -25,6 +29,7 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
   late TextEditingController descriptionController;
   late TextEditingController dateController;
   DateTime? dateTime;
+  int? shiftId;
   @override
   void initState() {
     patientNameController = TextEditingController();
@@ -42,9 +47,12 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
         onTap: () {
           context.read<CreateAppointmentBloc>().add(AddAppointmentEvent(
                   appointment: AppointmentEntity(
+                doctorId: getit<Supabase>().client.auth.currentUser!.id,
                 name: patientNameController.text,
                 phone: phonePhoneController.text,
                 appointmentDate: dateTime,
+                description: descriptionController.text,
+                appointmentShift: shiftId,
               )));
         },
       ),
@@ -54,7 +62,9 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
             Dialogs.showLoading(context);
           }
           if (state is AddAppointmentSuccess) {
+            context.read<AppointmentBloc>().add(const GetAppointmentEvent());
             context.pop();
+            context.pushNamed(Routes.layOutScreen);
           }
           if (state is AddAppointmentFailed) {
             AppSnackBar.show(context: context, message: state.errorMessage);
@@ -83,11 +93,15 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
                 controller: dateController,
               ),
               10.hBox,
-              const DropDownStates(),
+              DropDownStates(
+                onShiftSelected: (value) {
+                  shiftId = value;
+                },
+              ),
               TextFormFiledWidget(
                 label: "Description",
                 maxLines: 3,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.text,
                 controller: descriptionController,
               ),
             ],

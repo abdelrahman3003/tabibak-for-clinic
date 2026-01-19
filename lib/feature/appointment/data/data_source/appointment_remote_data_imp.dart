@@ -11,22 +11,26 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
   AppointmentRemoteDataImp({required this.supabase});
   String get currentDoctorId => supabase.client.auth.currentUser!.id;
 
-  Future<List<AppointmentModel>> getAppointments(int type,
-      {bool isToday = false}) async {
-    final query = supabase.client
+  Future<List<AppointmentModel>> getAppointments(
+    int type, {
+    bool isToday = false,
+  }) async {
+    var query = supabase.client
         .from('appointments')
         .select(
-            'appointments_status(status),id,appointment_date,users(name,image)')
+            'name,appointments_status(status),id,appointment_date,users(image)')
         .eq('doctor_id', currentDoctorId)
         .eq('status', type);
 
     if (isToday) {
       final today = DateTime.now().toIso8601String().split('T').first;
-      query.eq('appointment_date', today);
+
+      query = query.eq('appointment_date', today);
     }
 
     final response = await query;
     final data = response as List;
+
     return data.map((json) => AppointmentModel.fromJson(json)).toList();
   }
 
