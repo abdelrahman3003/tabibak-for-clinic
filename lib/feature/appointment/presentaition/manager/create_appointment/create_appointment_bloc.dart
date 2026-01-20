@@ -1,10 +1,10 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/add_appointment_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointment_shift_use_case.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_entity.dart';
 
 part 'create_appointment_event.dart';
@@ -25,8 +25,6 @@ class CreateAppointmentBloc
           emit(GetAppointmentShiftFailed(errorMessage: error.message!));
         },
         (shift) {
-          log("---------${shift?.shiftId}");
-
           emit(GetAppointmentShiftSuccess(clinicShiftEntity: shift));
         },
       );
@@ -39,6 +37,7 @@ class CreateAppointmentBloc
           emit(AddAppointmentFailed(errorMessage: error.message!));
         },
         (shift) {
+          getit<AppointmentBloc>().add(const GetAppointmentEvent());
           emit(AddAppointmentSuccess());
         },
       );
