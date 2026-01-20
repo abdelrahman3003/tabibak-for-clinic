@@ -5,7 +5,7 @@ import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-    fontFamily: "Tajawal",
+    fontFamily: "Inter",
     primaryColor: AppColors.primary,
     scaffoldBackgroundColor: AppColors.scaffoldBG,
     colorScheme: ColorScheme.light(
@@ -56,7 +56,7 @@ class AppTheme {
       secondary: Colors.grey.shade500,
       onSecondary: AppColors.white,
     ),
-    fontFamily: "Tajawal",
+    fontFamily: "Inter",
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.deepPurple,

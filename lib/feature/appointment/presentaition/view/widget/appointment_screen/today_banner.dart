@@ -23,7 +23,7 @@ class TodayBanner extends StatelessWidget {
       decoration: BoxDecoration(
           color: const Color(0xffE9E7FF),
           borderRadius: BorderRadius.circular(40),
-          border: Border.all(color: AppColors.black)),
+          border: Border.all(color: AppColors.grey)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,8 +34,11 @@ class TodayBanner extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Hello",
-                      style: Theme.of(context).textTheme.bodySmall,
+                      "Hello,",
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(fontWeight: FontWeight.w500),
                     ),
                     Text(doctorName,
                         style: Theme.of(context)
@@ -62,7 +65,7 @@ class TodayBanner extends StatelessWidget {
               )
             ],
           ),
-          32.hBox,
+          28.hBox,
           RichText(
               text: TextSpan(children: [
             TextSpan(
@@ -76,15 +79,9 @@ class TodayBanner extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall
-                    ?.copyWith(color: const Color(0xff475569)))
+                    ?.copyWith(fontWeight: FontWeight.w400, height: 18 / 28))
           ])),
-          Text(
-            date,
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge
-                ?.copyWith(height: 14 / 20),
-          )
+          Text(date, style: Theme.of(context).textTheme.titleSmall)
         ],
       ),
     );

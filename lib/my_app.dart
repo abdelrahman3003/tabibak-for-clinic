@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Tabibak For Clinic',
+
             theme: AppTheme.lightTheme,
             // localizationsDelegates: context.localizationDelegates,
             // supportedLocales: context.supportedLocales,
