@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
+import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
-import 'package:tabibak_for_clinic/core/helper/validation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/auth_field.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/do_you_have_account.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/password_textfiled.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/specailties_dropdwon.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -25,18 +23,15 @@ final TextEditingController phoneController = TextEditingController();
 
 int? selectedSpecialization;
 final GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
-User? user;
+User user = getit<Supabase>().client.auth.currentUser!;
 
 class _SignupScreenState extends State<SignupScreen> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    user = ModalRoute.of(context)?.settings.arguments as User?;
-    if (user != null) {
-      nameController.text = user!.userMetadata?['full_name'] ?? "";
-      emailController.text = user!.email ?? "";
-      phoneController.text = user!.phone ?? "";
-    }
+  void initState() {
+    nameController.text = user.userMetadata?['full_name'] ?? "";
+    emailController.text = user.email ?? "";
+    phoneController.text = user.phone ?? "";
+    super.initState();
   }
 
   @override
@@ -67,39 +62,20 @@ class _SignupScreenState extends State<SignupScreen> {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 40.hBox,
-                AuthField(
-                  lable: "Full Name",
-                  controller: nameController,
-                  icon: Icons.person_outline,
-                  validator: (v) => v == null || v.isEmpty ? "Required" : null,
-                ),
                 const SizedBox(height: 20),
-                AuthField(
-                  controller: emailController,
-                  lable: "Email",
-                  icon: Icons.email_outlined,
-                  validator: Validation.validateEmail,
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 20),
+                ...[
+                  Text(" ${user.userMetadata?['full_name'] ?? ''}"),
+                  Text(" ${user.email ?? ''}"),
+                  Text(user.phone ?? ''),
+                  const SizedBox(height: 20),
+                ],
                 SpecailtiesDropdwon(
                   onChangedSpecialization: (value) {
                     selectedSpecialization = value;
                   },
                 ),
-                const SizedBox(height: 20),
-                AuthField(
-                  controller: phoneController,
-                  lable: "Phone Number",
-                  icon: Icons.phone_outlined,
-                  validator: Validation.validateNumber,
-                  keyboardType: TextInputType.phone,
-                ),
-                const SizedBox(height: 20),
-                PasswordTextfiled(
-                  controller: passwordController,
-                  validator: Validation.validatePassword,
-                ),
+                // لو اليوزر موجود، عرض معلوماته فقط
+
                 30.hBox,
                 AppButton(
                   title: "Continue",
