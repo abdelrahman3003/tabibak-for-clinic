@@ -8,7 +8,7 @@ abstract class AuthRemoteData {
   Future<void> signIn(String email, String password);
   Future<SigninResultModel> signInWithGoogle();
   Future<void> addDoctor(
-      {required DoctorModel doctorModel, required String id});
+      {required DoctorModel doctorModel, required User user});
   Future<String?> uploadFile(String filePath);
   Future<List<SpecialtyModel>> getSpecialties();
   Future<bool> checkDoctorRegister(User? user);

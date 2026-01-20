@@ -28,7 +28,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
 
     if (user != null) {
       await addUserData(user.id);
-      await addDoctor(doctorModel: doctorModel, id: user.id);
+      await addDoctor(doctorModel: doctorModel, user: user);
     } else {
       throw Exception('Sign up failed');
     }
@@ -46,9 +46,11 @@ class AuthRemoteDataImp implements AuthRemoteData {
 
   @override
   Future<void> addDoctor(
-      {required DoctorModel doctorModel, required String id}) async {
+      {required DoctorModel doctorModel, required User user}) async {
+    final id = user.id;
     final data = doctorModel.toJson();
     data['doctor_id'] = id;
+    data['image'] = user.userMetadata?['avatar_url'] ?? '';
 
     await supabase.client.from('doctors').insert(data);
     await supabase.client.from('doctor_file').insert({
