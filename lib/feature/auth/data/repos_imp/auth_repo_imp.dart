@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
@@ -39,6 +41,7 @@ class AuthRepoImp extends AuthRepo {
       final result = await authRemoteData.signUp(doctorModel: doctorModel);
       return right(result);
     } catch (e) {
+      log("-------$e");
       return left(ErrorHandler.handle(e));
     }
   }
@@ -59,6 +62,8 @@ class AuthRepoImp extends AuthRepo {
       final result = await authRemoteData.signInWithGoogle();
       return right(result);
     } catch (e) {
+      log("--------- $e");
+
       return left(ErrorHandler.handle(e));
     }
   }

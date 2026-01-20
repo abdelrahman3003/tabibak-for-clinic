@@ -28,9 +28,6 @@ class DoctorModel extends DoctorEntity {
       "bio": bio,
       "is_verified": isVerified,
       "is_registered": isRegistered,
-      "education": education,
-      "specialties": specialtyData,
-      "doctor_file": files
     };
   }
 

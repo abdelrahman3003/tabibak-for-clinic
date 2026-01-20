@@ -19,11 +19,16 @@ class AuthRemoteDataImp implements AuthRemoteData {
   });
   @override
   Future<void> signUp({required DoctorModel doctorModel}) async {
-    final response = await supabase.client.auth
-        .signUp(email: doctorModel.email, password: doctorModel.password!);
-    if (response.user != null) {
-      await addUserData(response.user!.id);
-      await addDoctor(doctorModel: doctorModel, id: response.user!.id);
+    var user = supabase.client.auth.currentUser;
+    if (user == null) {
+      final response = await supabase.client.auth
+          .signUp(email: doctorModel.email, password: doctorModel.password!);
+      user = response.user;
+    }
+
+    if (user != null) {
+      await addUserData(user.id);
+      await addDoctor(doctorModel: doctorModel, id: user.id);
     } else {
       throw Exception('Sign up failed');
     }
@@ -44,21 +49,12 @@ class AuthRemoteDataImp implements AuthRemoteData {
       {required DoctorModel doctorModel, required String id}) async {
     final data = doctorModel.toJson();
     data['doctor_id'] = id;
-    final supabaseResponse = await supabase.client.from('doctor_file').insert({
-      "doctor_id": id,
-      "file": doctorModel.medicalLiecense,
+
+    await supabase.client.from('doctors').insert(data);
+    await supabase.client.from('doctor_file').insert({
+      'doctor_id': id,
+      'file': doctorModel.medicalLiecense,
     });
-
-    if (supabaseResponse.error != null) {
-      throw supabaseResponse.error!;
-    }
-
-    final response = await dio
-        .postUri(Uri.parse("${ApiConstants.apiBaseUrl}/doctors"), data: data);
-    if (response.statusCode == 201 || response.statusCode == 200) {
-    } else {
-      throw DioException(requestOptions: response.requestOptions);
-    }
   }
 
   @override
@@ -121,7 +117,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
   Future<void> addUserData(String userId) async {
     await supabase.client.from('users').upsert({
       'user_id': userId,
-      'image': supabase.client.auth.currentUser!.userMetadata!['picture'],
+      'is_doctor': true,
     }, onConflict: 'user_id');
   }
 }
