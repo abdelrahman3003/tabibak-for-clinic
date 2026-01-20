@@ -18,18 +18,20 @@ class AppointmentBody extends StatelessWidget {
     final appointmentList = appointmentHomeEntity.appointmentTodayList ?? [];
     final appointmentStatusList =
         appointmentHomeEntity.appointmentStatusList ?? [];
-    return Column(
-      children: [
-        TodayBanner(
-          doctorName:
-              getit<Supabase>().client.auth.currentUser?.userMetadata?['name'],
-          appointmentLength: appointmentList.length,
-        ),
-        20.hBox,
-        Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
-          child: Column(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
+      child: Column(
+        children: [
+          TodayBanner(
+            doctorName: getit<Supabase>()
+                .client
+                .auth
+                .currentUser
+                ?.userMetadata?['name'],
+            appointmentLength: appointmentList.length,
+          ),
+          32.hBox,
+          Column(
             children: [
               TitleTextRow(
                 title: "Appointments's Today",
@@ -49,9 +51,9 @@ class AppointmentBody extends StatelessWidget {
                       appointmentList: appointmentList,
                       appointmentStatusList: appointmentStatusList)
             ],
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }

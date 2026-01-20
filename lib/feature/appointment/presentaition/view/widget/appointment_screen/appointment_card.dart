@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/functions/format_time.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
@@ -28,10 +29,13 @@ class AppointmentCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          ImageCircle(imageUrl: appointmentEntity.userImage),
+          ImageCircle(
+            imageUrl: appointmentEntity.userImage,
+            radius: 28.r,
+          ),
           14.wBox,
           Expanded(
-            child: _buildNameAndDate(),
+            child: _buildNameAndDate(context),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -46,24 +50,26 @@ class AppointmentCard extends StatelessWidget {
     );
   }
 
-  Column _buildNameAndDate() {
+  Column _buildNameAndDate(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          appointmentEntity.name ?? "",
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        Text(appointmentEntity.name ?? "",
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(fontWeight: FontWeight.bold)),
         const SizedBox(height: 4),
-        Text(
-          formatDayMonth(appointmentEntity.appointmentDate.toString()),
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey.shade700,
-          ),
+        Row(
+          children: [
+            Text(
+              "${formatDayMonth(appointmentEntity.appointmentDate.toString())} .11:00 AM",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(color: const Color(0xff64748B), height: 12 / 16),
+            ),
+          ],
         ),
       ],
     );
@@ -79,13 +85,11 @@ class AppointmentCard extends StatelessWidget {
           .map(
             (e) => PopupMenuItem<int>(
               value: e.id!,
-              child: Text(
-                e.status ?? '',
-                style: TextStyle(
-                  color: _badgeColor(e.status!),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              child: Text(e.status ?? '',
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: _badgeColor(e.status!),
+                      )),
             ),
           )
           .toList(),

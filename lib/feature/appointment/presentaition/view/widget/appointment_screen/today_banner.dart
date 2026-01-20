@@ -19,29 +19,36 @@ class TodayBanner extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
-        color: AppColors.second,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(25),
-          bottomRight: Radius.circular(25),
-        ),
-      ),
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+          color: const Color(0xffE9E7FF),
+          borderRadius: BorderRadius.circular(40),
+          border: Border.all(color: AppColors.black)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Expanded(
-                child: Text(
-                  doctorName,
-                  style: Theme.of(context).textTheme.titleLarge,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Hello",
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    Text(doctorName,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(fontWeight: FontWeight.bold)),
+                  ],
                 ),
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onSecondary,
-                  shape: BoxShape.circle,
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: BorderRadius.circular(16),
                 ),
                 child: IconButton(
                   onPressed: () {
@@ -55,23 +62,28 @@ class TodayBanner extends StatelessWidget {
               )
             ],
           ),
-          10.hBox,
+          32.hBox,
           RichText(
               text: TextSpan(children: [
             TextSpan(
                 text: "$appointmentLength ",
                 style: Theme.of(context)
                     .textTheme
-                    .headlineMedium
+                    .displaySmall
                     ?.copyWith(fontWeight: FontWeight.bold)),
             TextSpan(
                 text: "Appointments",
-                style: Theme.of(context).textTheme.titleLarge)
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(color: const Color(0xff475569)))
           ])),
-          5.hBox,
           Text(
             date,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(height: 14 / 20),
           )
         ],
       ),

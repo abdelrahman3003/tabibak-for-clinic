@@ -31,20 +31,23 @@ class _LayoutScreenState extends State<LayoutScreen> {
     ];
 
     _tabs = [
-      GButton(
-        icon: Icons.calendar_today_outlined,
+      const GButton(
+        icon: Icons.home,
+        iconActiveColor: AppColors.primary,
+        iconColor: Colors.grey,
         text: "Clinic",
-        textStyle: _tabTextStyle(),
       ),
-      GButton(
+      const GButton(
         icon: Icons.event,
+        iconActiveColor: AppColors.primary,
+        iconColor: Colors.grey,
         text: "Appointments",
-        textStyle: _tabTextStyle(),
       ),
-      GButton(
+      const GButton(
         icon: Icons.person,
+        iconActiveColor: AppColors.primary,
+        iconColor: Colors.grey,
         text: "Profile",
-        textStyle: _tabTextStyle(),
       ),
     ];
   }
@@ -67,6 +70,9 @@ class _LayoutScreenState extends State<LayoutScreen> {
               color: AppColors.primary,
               tabBackgroundColor: AppColors.second,
               selectedIndex: _selectedIndex,
+              textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary),
               onTabChange: (index) {
                 setState(() {
                   _selectedIndex = index;

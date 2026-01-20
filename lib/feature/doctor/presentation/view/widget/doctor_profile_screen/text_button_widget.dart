@@ -12,10 +12,10 @@ class TextButtonWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         child: Text(
           text,
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium
-              ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSecondary,
+                fontWeight: FontWeight.bold,
+              ),
         ),
       ),
     );

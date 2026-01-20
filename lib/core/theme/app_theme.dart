@@ -14,9 +14,6 @@ class AppTheme {
       secondary: Colors.grey.shade600,
       onSecondary: AppColors.primaryDark,
     ),
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(fontSize: 18),
-    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.purple,
