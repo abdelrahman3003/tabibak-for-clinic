@@ -41,7 +41,6 @@ class AuthRepoImp extends AuthRepo {
       final result = await authRemoteData.signUp(doctorModel: doctorModel);
       return right(result);
     } catch (e) {
-      log("-------$e");
       return left(ErrorHandler.handle(e));
     }
   }

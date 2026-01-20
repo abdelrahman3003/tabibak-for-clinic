@@ -94,9 +94,11 @@ class AuthRemoteDataImp implements AuthRemoteData {
       provider: OAuthProvider.google,
       idToken: idToken,
     );
+
     if (response.user != null) {
       await addUserData(response.user!.id);
     }
+
     final isRegistered = await checkDoctorRegister(response.user);
     return SigninResultModel(isRegistered: isRegistered, user: response.user);
   }

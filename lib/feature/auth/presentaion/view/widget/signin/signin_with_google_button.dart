@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
+import 'package:tabibak_for_clinic/core/helper/shared_pref_helper.dart'
+    show SharedPrefKeys, SharedPrefHelper;
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_in_bloc/signin_bloc.dart';
@@ -20,10 +23,14 @@ class SigninWithGoogleButton extends StatelessWidget {
         if (state is SigninWithGoogleError) {
           AppSnackBar.show(context: context, message: state.errorMessage);
         } else if (state is SigninWithGoogleSuccess) {
-          state.signinResultEntity.isRegistered
-              ? context.pushNamed(Routes.layOutScreen)
-              : context.pushNamed(Routes.signupScreen,
-                  arguments: state.signinResultEntity.user);
+          if (state.signinResultEntity.isRegistered) {
+            getit<SharedPrefHelper>()
+                .setData(key: SharedPrefKeys.step, value: 2);
+            context.pushNamed(Routes.layOutScreen);
+          } else {
+            context.pushNamed(Routes.signupScreen,
+                arguments: state.signinResultEntity.user);
+          }
         }
       },
       builder: (context, state) {
