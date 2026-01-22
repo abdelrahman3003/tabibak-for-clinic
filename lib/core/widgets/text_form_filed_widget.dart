@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 
 class TextFormFiledWidget extends StatelessWidget {
   const TextFormFiledWidget(
@@ -28,7 +29,10 @@ class TextFormFiledWidget extends StatelessWidget {
         decoration: InputDecoration(
           suffixIcon: _buildSuffixText(context),
           labelText: label,
-          labelStyle: Theme.of(context).textTheme.titleMedium,
+          labelStyle: Theme.of(context)
+              .textTheme
+              .labelLarge
+              ?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w500),
           contentPadding: EdgeInsets.zero,
           border: const UnderlineInputBorder(),
           fillColor: Colors.transparent,
