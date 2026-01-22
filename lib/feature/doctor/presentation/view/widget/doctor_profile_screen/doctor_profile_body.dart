@@ -33,7 +33,7 @@ class DoctorProfileBody extends StatelessWidget {
           Text(doctor.email ?? "No Email",
               style: Theme.of(context)
                   .textTheme
-                  .titleSmall
+                  .titleMedium
                   ?.copyWith(color: AppColors.grey)),
           12.hBox,
           Text(
