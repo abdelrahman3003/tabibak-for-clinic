@@ -12,18 +12,20 @@ class ProfileTitle extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
                 color: const Color(0xffE0E7FF),
                 borderRadius: BorderRadius.circular(12)),
-            child: Icon(icon, color: const Color(0xff475569))),
+            child: Icon(
+              icon,
+              color: const Color(0xff475569),
+              size: 20,
+            )),
         10.wBox,
         Text(
           title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-                fontSize: 18.sp,
-              ),
+              fontWeight: FontWeight.w500, fontSize: 18.sp, height: 18 / 28),
         ),
       ],
     );

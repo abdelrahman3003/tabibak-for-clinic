@@ -11,6 +11,7 @@ class AppTheme {
     colorScheme: ColorScheme.light(
       surface: AppColors.scaffoldBG,
       primary: AppColors.primary,
+      onSecondaryContainer: const Color(0xFFF0F0F0),
       secondary: Colors.grey.shade600,
       onSecondary: AppColors.primaryDark,
     ),
@@ -51,11 +52,11 @@ class AppTheme {
     brightness: Brightness.dark,
     primaryColor: AppColors.primaryDark,
     colorScheme: ColorScheme.dark(
-      surface: Colors.grey.shade900,
-      primary: Colors.grey.shade700,
-      secondary: Colors.grey.shade500,
-      onSecondary: AppColors.white,
-    ),
+        surface: Colors.grey.shade900,
+        primary: Colors.grey.shade700,
+        secondary: Colors.grey.shade500,
+        onSecondary: AppColors.white,
+        onSecondaryContainer: Colors.grey),
     fontFamily: "Inter",
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
