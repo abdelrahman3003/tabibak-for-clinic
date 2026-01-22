@@ -27,13 +27,13 @@ class DoctorProfileBody extends StatelessWidget {
           Text(doctor.name ?? "No Name",
               style: Theme.of(context)
                   .textTheme
-                  .titleLarge
+                  .headlineSmall
                   ?.copyWith(fontWeight: FontWeight.bold)),
           4.hBox,
           Text(doctor.email ?? "No Email",
               style: Theme.of(context)
                   .textTheme
-                  .titleMedium
+                  .titleSmall
                   ?.copyWith(color: AppColors.grey)),
           12.hBox,
           Text(
