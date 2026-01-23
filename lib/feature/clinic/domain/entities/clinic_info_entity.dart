@@ -1,8 +1,10 @@
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_address_entity.dart';
+
 class ClinicInfoEntity {
   final int? id;
   final String? clinicName;
   final String? phoneNumber;
-  final String? address;
+  final ClinicAddressEntity? address;
   final int? consultationFee;
   final bool? isBooking;
 

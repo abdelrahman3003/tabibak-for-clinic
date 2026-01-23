@@ -4,9 +4,11 @@ import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote_data.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_address_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_address_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working_day_entity.dart';
@@ -46,6 +48,7 @@ class ClinicRepoImpl implements ClinicRepo {
 
       return right(response);
     } catch (e) {
+      log("-----$e");
       return left(ErrorHandler.handle(e));
     }
   }
@@ -85,8 +88,20 @@ class ClinicRepoImpl implements ClinicRepo {
       );
       return right(null);
     } catch (e) {
-      log("--------$e");
+      return left(ErrorHandler.handle(e));
+    }
+  }
 
+  @override
+  Future<Either<ApiErrorModel, void>> saveClinicAddress(
+      {required ClinicAddressEntity clinicAddressEntity}) async {
+    try {
+      await clinicRemoteData.saveClinicAddress(
+        clinicAddressModel: ClinicAddressModel(
+            clinicAddress: clinicAddressEntity.clinicAddress),
+      );
+      return right(null);
+    } catch (e) {
       return left(ErrorHandler.handle(e));
     }
   }

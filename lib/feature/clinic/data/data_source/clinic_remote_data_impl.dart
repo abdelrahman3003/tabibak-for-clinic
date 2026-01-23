@@ -5,6 +5,7 @@ import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/functions/format_time.dart';
 import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote_data.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_address_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
@@ -43,19 +44,18 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
 
   @override
   Future<List<ClinicInfoModel>> getClinicInfo() async {
-    final response = await dio.get(
-      "${ApiConstants.apiBaseUrl}/clinic_data",
-      queryParameters: {
-        "doctor_id": "eq.${getit<Supabase>().client.auth.currentUser!.id}",
-      },
-    );
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      final data = response.data as List;
-      List<ClinicInfoModel> list =
-          data.map((e) => ClinicInfoModel.fromJson(e)).toList();
-      return list;
-    }
-    throw Exception('Failed request on days');
+    final client = getit<Supabase>().client;
+
+    final response = await client
+        .from('clinic_data')
+        .select('*, clinic_address(*)')
+        .eq('doctor_id', client.auth.currentUser!.id);
+
+    final data = response as List<dynamic>;
+    List<ClinicInfoModel> list = data
+        .map((e) => ClinicInfoModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+    return list;
   }
 
   @override
@@ -139,5 +139,15 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
             onConflict: 'clinic_id,day_id',
           );
     }
+  }
+
+  @override
+  Future<void> saveClinicAddress({
+    required ClinicAddressModel clinicAddressModel,
+  }) async {
+    await getit<Supabase>().client.from('clinic_address').upsert(
+          clinicAddressModel.toJson(),
+          onConflict: 'clinic_id',
+        );
   }
 }

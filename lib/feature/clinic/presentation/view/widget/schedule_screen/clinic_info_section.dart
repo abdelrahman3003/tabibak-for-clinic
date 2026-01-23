@@ -28,9 +28,11 @@ class ClinicInfoSection extends StatelessWidget {
         15.hBox,
         EditItem(
           title: "Clinic Address",
-          subtitle: clinicInfoEntity.address ?? "Address Not Available",
+          subtitle: clinicInfoEntity.address?.clinicAddress ??
+              "Address Not Available",
           onTap: () {
-            context.pushNamed(Routes.clinicAddressScreen);
+            context.pushNamed(Routes.clinicAddressScreen,
+                arguments: clinicInfoEntity.address);
           },
         ),
         15.hBox,

@@ -1,3 +1,4 @@
+import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_address_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
 
 class ClinicInfoModel extends ClinicInfoEntity {
@@ -15,7 +16,10 @@ class ClinicInfoModel extends ClinicInfoEntity {
       id: json["id"],
       clinicName: json["clinic_name"],
       phoneNumber: json["phone_number"],
-      address: json['address'],
+      address: (json['clinic_address'] as List?)?.isNotEmpty == true
+          ? ClinicAddressModel.fromJson(
+              json['clinic_address'][0] as Map<String, dynamic>)
+          : null,
       consultationFee: json["consultation_fee"],
       isBooking: json["isBooking"],
     );
@@ -25,7 +29,6 @@ class ClinicInfoModel extends ClinicInfoEntity {
     return {
       "clinic_name": clinicName,
       "phone_number": phoneNumber,
-      "address": address,
       "consultation_fee": consultationFee,
       "isBooking": isBooking,
     };
