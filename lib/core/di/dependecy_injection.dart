@@ -38,6 +38,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_days_use_c
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_address_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_info_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_working_day_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_address/clinic_address_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info_save/clinic_info_save_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_layout/clinic_layout_bloc.dart';
@@ -146,6 +147,8 @@ Future<void> initGetIt() async {
       () => ClinicInfoSaveBloc(getit<SaveClinicInfoUseCase>()));
   getit.registerFactory(
       () => ClinicScheduleUpdateBloc(getit<SaveClinicWorkingDayUseCase>()));
+  getit.registerFactory(
+      () => ClinicAddressBloc(getit<SaveClinicAddressUseCase>()));
 
   //! Doctor Feature
   // remote data source

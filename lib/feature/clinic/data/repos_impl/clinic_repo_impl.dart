@@ -49,6 +49,7 @@ class ClinicRepoImpl implements ClinicRepo {
       return right(response);
     } catch (e) {
       log("-----$e");
+
       return left(ErrorHandler.handle(e));
     }
   }
@@ -98,7 +99,8 @@ class ClinicRepoImpl implements ClinicRepo {
     try {
       await clinicRemoteData.saveClinicAddress(
         clinicAddressModel: ClinicAddressModel(
-            clinicAddress: clinicAddressEntity.clinicAddress),
+            clinicAddress: clinicAddressEntity.clinicAddress,
+            clinicId: clinicAddressEntity.clinicId),
       );
       return right(null);
     } catch (e) {

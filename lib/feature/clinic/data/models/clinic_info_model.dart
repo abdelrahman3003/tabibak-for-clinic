@@ -16,9 +16,10 @@ class ClinicInfoModel extends ClinicInfoEntity {
       id: json["id"],
       clinicName: json["clinic_name"],
       phoneNumber: json["phone_number"],
-      address: (json['clinic_address'] as List?)?.isNotEmpty == true
+      address: json['clinic_address'] != null
           ? ClinicAddressModel.fromJson(
-              json['clinic_address'][0] as Map<String, dynamic>)
+              json['clinic_address'] as Map<String, dynamic>,
+            )
           : null,
       consultationFee: json["consultation_fee"],
       isBooking: json["isBooking"],

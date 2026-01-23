@@ -32,7 +32,7 @@ class ClinicInfoSection extends StatelessWidget {
               "Address Not Available",
           onTap: () {
             context.pushNamed(Routes.clinicAddressScreen,
-                arguments: clinicInfoEntity.address);
+                arguments: clinicInfoEntity);
           },
         ),
         15.hBox,

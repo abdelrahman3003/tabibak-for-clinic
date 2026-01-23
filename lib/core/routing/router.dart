@@ -15,6 +15,7 @@ import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_blo
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/professional_practice_license_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signin_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signup_screen.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_address/clinic_address_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info_save/clinic_info_save_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_schedule_update/clinic_schedule_update_bloc.dart';
@@ -117,7 +118,11 @@ class AppRouter {
         break;
 
       case Routes.clinicAddressScreen:
-        page = const RootScreenWrapper(child: ClinicAddressScreen());
+        page = RootScreenWrapper(
+            child: BlocProvider(
+          create: (context) => getit<ClinicAddressBloc>(),
+          child: const ClinicAddressScreen(),
+        ));
         break;
 
       case Routes.clinicOfferScreen:
