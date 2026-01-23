@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_edit_screen/custom_switch.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_edit_screen/time_field.dart';
 
 class ShiftHours extends StatefulWidget {
@@ -31,33 +32,47 @@ class _ShiftHoursState extends State<ShiftHours> {
           children: [
             Text(
               widget.shift,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: isActive ? AppColors.black : AppColors.grey),
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: isActive ? AppColors.black : const Color(0xff334155),
+                  fontWeight: isActive ? FontWeight.bold : FontWeight.w400),
             ),
             const Spacer(),
-            Checkbox(
+            CustomSwitch(
               value: isActive,
               onChanged: (value) {
-                isActive = value!;
+                isActive = value;
                 setState(() {});
               },
             )
           ],
         ),
+        18.hBox,
         Row(
           children: [
             Expanded(
-                child: TimeField(
-              onTimeSelected: widget.onStartTimeSelected,
-              enable: isActive,
-              value: widget.initialStart,
-            )),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TimeField(
+                    title: "Start Time",
+                    onTimeSelected: widget.onStartTimeSelected,
+                    enable: isActive,
+                    value: widget.initialStart,
+                  ),
+                ],
+              ),
+            ),
             30.wBox,
             Expanded(
-                child: TimeField(
-              onTimeSelected: widget.onEndTimeSelected,
-              enable: isActive,
-              value: widget.initialEnd,
+                child: Column(
+              children: [
+                TimeField(
+                  title: "End Time",
+                  onTimeSelected: widget.onEndTimeSelected,
+                  enable: isActive,
+                  value: widget.initialEnd,
+                ),
+              ],
             )),
           ],
         ),

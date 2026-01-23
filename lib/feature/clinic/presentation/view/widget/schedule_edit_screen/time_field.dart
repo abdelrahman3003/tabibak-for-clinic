@@ -4,11 +4,13 @@ class TimeField extends StatefulWidget {
   final void Function(TimeOfDay time)? onTimeSelected;
   final bool enable;
   final TimeOfDay? value;
+  final String title;
   const TimeField(
       {super.key,
       this.onTimeSelected,
       required this.enable,
-      required this.value});
+      required this.value,
+      required this.title});
 
   @override
   State<TimeField> createState() => _TimeFieldState();
@@ -36,34 +38,46 @@ class _TimeFieldState extends State<TimeField> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.enable ? pickTime : null,
-      child: AbsorbPointer(
-        child: TextFormField(
-          enabled: widget.enable,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.zero,
-            filled: true,
-            fillColor: Colors.transparent,
-            border: const UnderlineInputBorder(),
-            enabledBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Theme.of(context).primaryColor,
-                width: 2,
-              ),
-            ),
-          ),
-          controller: TextEditingController(
-            text: selectedTime == null
-                ? widget.value?.format(context) ?? "Select Time"
-                : selectedTime!.format(context),
-          ),
-          readOnly: true,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.title,
+          style: Theme.of(context)
+              .textTheme
+              .labelMedium
+              ?.copyWith(color: const Color(0xff94A3B8)),
         ),
-      ),
+        GestureDetector(
+          onTap: widget.enable ? pickTime : null,
+          child: AbsorbPointer(
+            child: TextFormField(
+              enabled: widget.enable,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.zero,
+                filled: true,
+                fillColor: Colors.transparent,
+                border: const UnderlineInputBorder(),
+                enabledBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).primaryColor,
+                    width: 2,
+                  ),
+                ),
+              ),
+              controller: TextEditingController(
+                text: selectedTime == null
+                    ? widget.value?.format(context) ?? "Select Time"
+                    : selectedTime!.format(context),
+              ),
+              readOnly: true,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
