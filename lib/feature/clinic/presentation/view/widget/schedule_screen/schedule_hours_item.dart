@@ -12,47 +12,57 @@ class ScheduleHoursItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final shift = workingShiftDay.clinicShiftEntity;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Colors.grey.shade300, width: 1),
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-              width: 75.w,
-              child: Text(workingShiftDay.clinicDayEntity!.dayEn!,
-                  style: Theme.of(context).textTheme.titleMedium)),
-          20.wBox,
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Text(
-                      shift?.morningStart == null
-                          ? "--"
-                          : "${formatTime(shift?.morningStart)} - ${formatTime(shift?.morningEnd)}",
-                      style: Theme.of(context).textTheme.bodyMedium),
-                ),
-                20.wBox,
-                Expanded(
-                  child: Text(
-                    shift?.eveningStart == null
-                        ? "--"
-                        : "${formatTime(shift?.eveningStart)} - ${formatTime(shift?.eveningEnd)}",
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    overflow: TextOverflow.clip,
-                  ),
-                ),
-              ],
-            ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+            width: 75.w,
+            child: Text(workingShiftDay.clinicDayEntity!.dayEn!,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xff334155)))),
+        20.wBox,
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: shift?.morningStart == null
+                    ? _buildHourText("--", context)
+                    : Column(
+                        children: [
+                          _buildHourText(
+                              "${formatTime(shift?.morningStart)}", context),
+                          _buildHourText(
+                              "${formatTime(shift?.morningEnd)}", context),
+                        ],
+                      ),
+              ),
+              20.wBox,
+              Expanded(
+                child: shift?.eveningStart == null
+                    ? _buildHourText("--", context)
+                    : Column(
+                        children: [
+                          _buildHourText(
+                              "${formatTime(shift?.eveningStart)}", context),
+                          _buildHourText(
+                              "${formatTime(shift?.eveningStart)}", context),
+                        ],
+                      ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
+  }
+
+  Text _buildHourText(String text, BuildContext context) {
+    return Text(text,
+        style: Theme.of(context)
+            .textTheme
+            .labelLarge
+            ?.copyWith(color: const Color(0xff475569)));
   }
 }

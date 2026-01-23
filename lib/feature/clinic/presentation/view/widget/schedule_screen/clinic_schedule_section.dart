@@ -21,8 +21,7 @@ class ClinicScheduleSection extends StatelessWidget {
         Row(
           children: [
             const Expanded(
-              child:
-                  ProfileTitle(title: "Schedule", icon: Icons.medical_services),
+              child: ProfileTitle(title: "Schedule", icon: Icons.date_range),
             ),
             TextButtonWidget(
               text: "Edit",
