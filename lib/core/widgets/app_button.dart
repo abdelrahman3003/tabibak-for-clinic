@@ -39,10 +39,8 @@ class AppButton extends StatelessWidget {
         children: [
           Center(
             child: Text(title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontSize: 18.sp,
-                    color: AppColors.white,
-                    fontWeight: FontWeight.bold)),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: AppColors.white, fontWeight: FontWeight.bold)),
           ),
           if (isLoading)
             Positioned(
