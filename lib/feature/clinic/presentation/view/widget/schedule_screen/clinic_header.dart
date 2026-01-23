@@ -9,24 +9,31 @@ class ClinicHeader extends StatelessWidget {
   final String clinicAddress;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      decoration: const BoxDecoration(
-        color: AppColors.second,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(24),
-          bottomRight: Radius.circular(24),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(clinicName,
+            style: Theme.of(context)
+                .textTheme
+                .headlineMedium
+                ?.copyWith(fontWeight: FontWeight.bold, height: 30 / 36)),
+        6.hBox,
+        Row(
+          children: [
+            const Icon(
+              Icons.location_on_outlined,
+              size: 15,
+              color: AppColors.grey,
+            ),
+            5.hBox,
+            Text(clinicAddress,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(color: AppColors.grey)),
+          ],
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(clinicName, style: Theme.of(context).textTheme.titleLarge),
-          6.hBox,
-          Text(clinicAddress, style: Theme.of(context).textTheme.bodyMedium),
-        ],
-      ),
+      ],
     );
   }
 }
