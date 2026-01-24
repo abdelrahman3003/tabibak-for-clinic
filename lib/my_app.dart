@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tabibak_for_clinic/core/functions/init_rout.dart';
 import 'package:tabibak_for_clinic/core/routing/router.dart';
+import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/theme/app_theme.dart';
 
 class MyApp extends StatelessWidget {
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
             // supportedLocales: context.supportedLocales,
             // locale: context.locale,
             onGenerateRoute: AppRouter.generateRoute,
-            initialRoute: initRout(),
+            initialRoute: Routes.splashScreen,
           );
         });
   }

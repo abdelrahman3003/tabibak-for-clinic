@@ -34,6 +34,7 @@ import 'package:tabibak_for_clinic/feature/doctor/presentation/manager/doctor_sp
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_education_screen.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_personal_info_screen.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_specialty_screen.dart';
+import 'package:tabibak_for_clinic/feature/splash_screen/splash_screen.dart';
 
 import '../../layout_screen.dart';
 
@@ -43,13 +44,15 @@ class AppRouter {
 
     switch (settings.name) {
       //Auth
+      case Routes.splashScreen:
+        page = const RootScreenWrapper(child: SplashScreen());
+        break;
       case Routes.signinScreen:
         page = BlocProvider(
           create: (context) => getit<SigninBloc>(),
           child: const RootScreenWrapper(child: SigninScreen()),
         );
         break;
-
       case Routes.signupScreen:
         page = BlocProvider(
           create: (context) => getit<SignupBloc>(),

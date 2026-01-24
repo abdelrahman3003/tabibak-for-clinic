@@ -1,4 +1,6 @@
 class Routes {
+  static const String splashScreen = "/splashScreen";
+
   // auth
   static const String signinScreen = "/signin";
   static const String signupScreen = "/signup";
