@@ -11,8 +11,8 @@ class AppointmentEmpty extends StatelessWidget {
       children: [
         Image.asset(
           "assets/images/appointment_empty.png",
-          height: 80,
-          width: 80,
+          height: 170,
+          width: 170,
         ),
         10.hBox,
         Text(
