@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/auth_subtitle_text.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/decumentaion_upload_file.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_subtitle_text.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/decumentaion_upload_file.dart';
 
 class DecumentSection extends StatelessWidget {
   const DecumentSection(

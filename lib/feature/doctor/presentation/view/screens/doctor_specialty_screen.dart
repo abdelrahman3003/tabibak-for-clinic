@@ -6,7 +6,7 @@ import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/auth_dropdown.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_dropdown.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_entity.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/manager/doctor_specialty/doctor_specialty_bloc.dart';
 

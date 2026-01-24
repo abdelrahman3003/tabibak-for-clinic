@@ -6,8 +6,8 @@ import 'package:tabibak_for_clinic/core/helper/shared_pref_helper.dart'
     show SharedPrefKeys, SharedPrefHelper;
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_in_bloc/signin_bloc.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/signin/custom_signin_button.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_in_bloc/signin_bloc.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/signin/custom_signin_button.dart';
 
 class SigninWithGoogleButton extends StatelessWidget {
   const SigninWithGoogleButton({super.key});

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/functions/format_time.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/create_appointment/create_appointment_bloc.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/auth_dropdown.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_dropdown.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_entity.dart';
 
 class DropDownStates extends StatefulWidget {

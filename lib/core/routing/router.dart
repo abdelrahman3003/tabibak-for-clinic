@@ -10,11 +10,11 @@ import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens/appointment_details_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/get_specialties_usecase.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/sign_up_usecase.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_in_bloc/signin_bloc.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/managers/sign_up_bloc/signup_bloc.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/professional_practice_license_screen.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signin_screen.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/screens/signup_screen.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_in_bloc/signin_bloc.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/professional_practice_license_screen.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/signin_screen.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/signup_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_address/clinic_address_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info_save/clinic_info_save_bloc.dart';

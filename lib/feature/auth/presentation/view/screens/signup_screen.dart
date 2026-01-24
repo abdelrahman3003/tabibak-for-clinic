@@ -7,10 +7,10 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/helper/validation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/auth_field.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/do_you_have_account.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/password_textfiled.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentaion/view/widget/specailties_dropdwon.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_field.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/do_you_have_account.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/password_textfiled.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/specailties_dropdwon.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
