@@ -56,7 +56,7 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
               context.pushNamed(Routes.layOutScreen);
             }
             if (state is DoctorInfoFailed) {
-              Dialogs.bottomSheet(context, title: state.errorMessage);
+              //  Dialogs.bottomSheet(context, title: state.errorMessage);
             }
           },
           child: Column(

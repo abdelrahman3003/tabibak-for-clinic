@@ -40,7 +40,9 @@ class ClinicInfoSection extends StatelessWidget {
           title: "Clinic Offer",
           subtitle: "Known Offer",
           onTap: () {
-            Dialogs.bottomSheet(context, title: "This Section no available");
+            Dialogs.noticeDialog(context,
+                title:
+                    "This section is currently unavailable. We are working on enhancing this feature to provide you with a better experience.");
             // context.pushNamed(Routes.clinicOfferScreen);
           },
         )

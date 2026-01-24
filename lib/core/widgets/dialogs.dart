@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
+import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
 
@@ -108,38 +110,52 @@ class Dialogs {
   }
 
 // Bottom Sheet
-  static void bottomSheet(BuildContext context, {required String title}) {
-    showModalBottomSheet(
+  static void noticeDialog(BuildContext context, {required String title}) {
+    showDialog(
       context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      backgroundColor: Colors.white,
-      builder: (BuildContext context) {
-        return Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.warning_amber_outlined,
-                  size: 80.r, color: Theme.of(context).colorScheme.primary),
-              const SizedBox(height: 16),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleMedium,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-              AppButton(
-                title: "Ok",
-                color: Theme.of(context).colorScheme.primary,
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
+      builder: (context) => Dialog(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
           ),
-        );
-      },
+          child: Padding(
+            padding: const EdgeInsets.all(AppPadding.horizontal),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                32.hBox,
+                Image.asset(
+                  "assets/images/info.png",
+                  height: 80,
+                  width: 80,
+                ),
+                32.hBox,
+                Text(
+                  "Notice",
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                32.hBox,
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.labelMedium,
+                  textAlign: TextAlign.center,
+                ),
+                32.hBox,
+                AppButton(
+                  title: "OK",
+                  onPressed: () {
+                    context.pop();
+                  },
+                ),
+                32.hBox,
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
