@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/create_appointment/create_appointment_bloc.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/create_appoinemnt_screen/drop_down_states.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/create_appointment/create_appointment_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/create_appoinemnt_screen/drop_down_states.dart';
 
 class AddAppointmentBody extends StatefulWidget {
   const AddAppointmentBody({super.key});

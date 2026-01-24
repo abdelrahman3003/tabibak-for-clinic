@@ -15,8 +15,8 @@ import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_cancel
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_finished_appointments_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_upcoming_appointments_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/update_appointment_status_use_case.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/appoinment/appointment_bloc.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/create_appointment/create_appointment_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/create_appointment/create_appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data_imp.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/repos_imp/auth_repo_imp.dart';

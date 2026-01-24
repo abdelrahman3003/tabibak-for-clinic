@@ -4,7 +4,7 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/appoinment_details_screen/appointment_details_item.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/appointment_details_item.dart';
 
 class AppointmentDetailsScreen extends StatelessWidget {
   const AppointmentDetailsScreen({super.key});

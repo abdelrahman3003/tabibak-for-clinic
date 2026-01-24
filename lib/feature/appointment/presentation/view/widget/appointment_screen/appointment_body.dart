@@ -6,8 +6,8 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/empty_widget.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_home_entity.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/appointment_screen/appointment_list.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/appointment_screen/today_banner.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_list.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/today_banner.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/title_text_row.dart';
 
 class AppointmentBody extends StatelessWidget {

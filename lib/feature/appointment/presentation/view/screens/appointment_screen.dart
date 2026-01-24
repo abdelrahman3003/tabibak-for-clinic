@@ -6,8 +6,8 @@ import 'package:tabibak_for_clinic/core/widgets/app_text_error.dart';
 import 'package:tabibak_for_clinic/core/widgets/circle_indicator_widget.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_home_entity.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/appoinment/appointment_bloc.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/appointment_screen/appointment_body.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_body.dart';
 
 class AppointmentScreen extends StatelessWidget {
   const AppointmentScreen({super.key});

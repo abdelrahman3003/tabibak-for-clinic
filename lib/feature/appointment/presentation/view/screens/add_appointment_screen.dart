@@ -11,8 +11,8 @@ import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/create_appointment/create_appointment_bloc.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/create_appoinemnt_screen/drop_down_states.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/create_appointment/create_appointment_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/create_appoinemnt_screen/drop_down_states.dart';
 import 'package:tabibak_for_clinic/layout_screen.dart';
 
 class AddAppointmentScreen extends StatefulWidget {

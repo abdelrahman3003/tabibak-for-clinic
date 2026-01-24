@@ -4,11 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status_entity.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/manager/appoinment/appointment_bloc.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/all_appointment_screen/canceled_appointment_list_states.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/all_appointment_screen/finished_appointment_list_states.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/all_appointment_screen/item_bar.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentaition/view/widget/all_appointment_screen/upcoming_appointment_list_states.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/canceled_appointment_list_states.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/finished_appointment_list_states.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/item_bar.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/upcoming_appointment_list_states.dart';
 
 class AllAppointmentScreen extends StatefulWidget {
   const AllAppointmentScreen({super.key});
