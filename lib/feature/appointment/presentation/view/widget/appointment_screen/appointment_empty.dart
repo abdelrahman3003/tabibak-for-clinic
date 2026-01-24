@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 
 class AppointmentEmpty extends StatelessWidget {
-  const AppointmentEmpty({super.key});
-
+  const AppointmentEmpty({super.key, required this.title});
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -16,7 +16,7 @@ class AppointmentEmpty extends StatelessWidget {
         ),
         10.hBox,
         Text(
-          "No Appointments Today",
+          title,
           style: Theme.of(context)
               .textTheme
               .titleLarge
@@ -24,7 +24,7 @@ class AppointmentEmpty extends StatelessWidget {
         ),
         20.hBox,
         Text(
-          "You have a clear schedule for now. Enjoy your free time!",
+          "You have a clear schedule for now. \nEnjoy your free time!",
           style: Theme.of(context).textTheme.titleMedium?.copyWith(),
           textAlign: TextAlign.center,
         )

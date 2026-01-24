@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/widgets/circle_indicator_widget.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
-import 'package:tabibak_for_clinic/core/widgets/empty_widget.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_empty.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_list.dart';
 
 class FinishedAppointmentListStates extends StatelessWidget {
@@ -39,8 +39,8 @@ class FinishedAppointmentListStates extends StatelessWidget {
         }
 
         return appointmentList!.isEmpty
-            ? const EmptyWidget(
-                message: "NO Finished Appointments",
+            ? const AppointmentEmpty(
+                title: "NO Finished Appointments",
               )
             : AppointmentList(
                 type: 2,

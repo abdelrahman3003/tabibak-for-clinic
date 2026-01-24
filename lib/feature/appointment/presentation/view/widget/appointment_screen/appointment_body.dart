@@ -41,7 +41,8 @@ class AppointmentBody extends StatelessWidget {
           ),
           10.hBox,
           appointmentList.isEmpty
-              ? const Expanded(child: AppointmentEmpty())
+              ? const Expanded(
+                  child: AppointmentEmpty(title: "No Appointments Today"))
               : AppointmentList(
                   type: 1,
                   isToday: true,
