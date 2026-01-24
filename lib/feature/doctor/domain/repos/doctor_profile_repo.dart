@@ -15,4 +15,5 @@ abstract class DoctorProfileRepo {
   Future<Either<ApiErrorModel, void>> updateSpecialty(
       {required int specialtyId});
   Future<Either<ApiErrorModel, List<SpecialtyEntity>>> getSpecialties();
+  Future<Either<ApiErrorModel, void>> logOut();
 }

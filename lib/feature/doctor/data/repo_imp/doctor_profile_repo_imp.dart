@@ -86,6 +86,16 @@ class DoctorProfileRepoImp implements DoctorProfileRepo {
           specialtyId: specialtyId);
       return right(result);
     } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, void>> logOut() async {
+    try {
+      final result = await doctorProfileRemoteData.logOut();
+      return right(result);
+    } catch (e) {
       log("===== get sp$e");
       return left(ErrorHandler.handle(e));
     }

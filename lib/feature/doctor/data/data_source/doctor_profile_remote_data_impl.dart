@@ -85,4 +85,9 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
     final data = response as List<dynamic>;
     return data.map((json) => SpecialtyModel.fromJson(json)).toList();
   }
+
+  @override
+  Future<void> logOut() async {
+    await supabase.client.auth.signOut();
+  }
 }

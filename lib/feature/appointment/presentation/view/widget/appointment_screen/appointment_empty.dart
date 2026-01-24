@@ -25,7 +25,10 @@ class AppointmentEmpty extends StatelessWidget {
         20.hBox,
         Text(
           "You have a clear schedule for now. \nEnjoy your free time!",
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(),
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium
+              ?.copyWith(color: const Color(0xff64748B)),
           textAlign: TextAlign.center,
         )
       ],

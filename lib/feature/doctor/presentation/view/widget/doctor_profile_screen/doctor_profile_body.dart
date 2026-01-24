@@ -4,9 +4,9 @@ import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
-import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/edit_item.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/log_out_dialog_states.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/personal_image.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/profile_title.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/setting_item.dart';
@@ -90,16 +90,9 @@ class DoctorProfileBody extends StatelessWidget {
                 title: "LogOut",
                 icon: Icons.logout,
                 onTap: () {
-                  Dialogs.alertDialog(
+                  showDialog(
                     context: context,
-                    title: "Log Out",
-                    subtitle: "Are you sure you want to log out?",
-                    confirmString: "Log Out",
-                    color: AppColors.red,
-                    isLoading: false,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
+                    builder: (context) => const LogOutDialogStates(),
                   );
                 },
               ),

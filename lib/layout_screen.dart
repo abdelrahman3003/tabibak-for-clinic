@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens/appointment_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic_layout.dart';
@@ -50,11 +49,6 @@ class _LayoutScreenState extends State<LayoutScreen> {
         text: "Profile",
       ),
     ];
-  }
-
-  TextStyle _tabTextStyle() {
-    return TextStyle(
-        fontWeight: FontWeight.w500, color: AppColors.primary, fontSize: 15.sp);
   }
 
   @override

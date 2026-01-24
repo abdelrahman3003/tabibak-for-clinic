@@ -28,3 +28,13 @@ final class UploadImageProfileLoading extends DoctorProfileState {}
 final class UploadImageProfileSuccess extends DoctorProfileState {}
 
 final class UploadImageProfileFailed extends DoctorProfileState {}
+
+final class LogOutDoctorLoading extends DoctorProfileState {}
+
+final class LogOutDoctorSuccess extends DoctorProfileState {}
+
+final class LogOutDoctorFailed extends DoctorProfileState {
+  final String errorMessage;
+
+  const LogOutDoctorFailed({required this.errorMessage});
+}

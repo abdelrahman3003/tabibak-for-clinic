@@ -12,4 +12,5 @@ abstract class DoctorProfileRemoteData {
       {required EducationModel educationModel, XFile? file});
   Future<void> updateSpecialty({required int specialtyId});
   Future<List<SpecialtyModel>> getSpecialties();
+  Future<void> logOut();
 }
