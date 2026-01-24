@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/extention/spacing.dart';
+
+class AppointmentEmpty extends StatelessWidget {
+  const AppointmentEmpty({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(
+          "assets/images/appointment_empty.png",
+          height: 80,
+          width: 80,
+        ),
+        10.hBox,
+        Text(
+          "No Appointments Today",
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge
+              ?.copyWith(fontWeight: FontWeight.bold),
+        ),
+        20.hBox,
+        Text(
+          "You have a clear schedule for now. Enjoy your free time!",
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(),
+          textAlign: TextAlign.center,
+        )
+      ],
+    );
+  }
+}
