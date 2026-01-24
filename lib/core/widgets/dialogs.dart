@@ -226,8 +226,13 @@ class Dialogs {
         return AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          title: Text(title, style: Theme.of(context).textTheme.titleLarge),
-          content: Text(title, style: Theme.of(context).textTheme.titleMedium),
+          title: Text(title,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(fontWeight: FontWeight.bold)),
+          content:
+              Text(subtitle, style: Theme.of(context).textTheme.titleSmall),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
@@ -241,17 +246,22 @@ class Dialogs {
               ),
               onPressed: onPressed,
               child: SizedBox(
-                height: 25.h,
-                width: 25.w,
                 child: FittedBox(
                     child: isLoading
-                        ? const Padding(
-                            padding: EdgeInsets.all(5),
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
                             child: CircularProgressIndicator(
                               color: AppColors.white,
                             ),
                           )
-                        : Text(confirmString)),
+                        : Text(
+                            confirmString,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: AppColors.white),
+                          )),
               ),
             ),
           ],
