@@ -37,7 +37,10 @@ class _DropDownStatesState extends State<DropDownStates> {
             shiftId = null;
           } else {
             errorMessage = null;
-            shiftMap = _getShiftMap(state.clinicShiftEntity!);
+            shiftMap = _getShiftMap(
+              shiftMorning: state.clinicShiftEntity!,
+              shiftEvening: state.clinicShiftEntity!,
+            );
           }
         }
 
@@ -75,17 +78,19 @@ class _DropDownStatesState extends State<DropDownStates> {
   }
 }
 
-Map<String, int> _getShiftMap(ClinicShiftEntity shift) {
+Map<String, int> _getShiftMap(
+    {required ClinicShiftEntity shiftMorning,
+    required ClinicShiftEntity shiftEvening}) {
   final map = <String, int>{};
 
-  if (shift.morningStart != null && shift.morningEnd != null) {
-    map['Morning ${formatTime(shift.morningStart!)} - ${formatTime(shift.morningEnd!)}'] =
-        shift.shiftId ?? 0;
+  if (shiftMorning.start != null && shiftMorning.end != null) {
+    map['Morning ${formatTime(shiftMorning.start!)} - ${formatTime(shiftMorning.start!)}'] =
+        shiftMorning.shiftId ?? 0;
   }
 
-  if (shift.eveningStart != null && shift.eveningEnd != null) {
-    map['Evening ${formatTime(shift.eveningStart!)} - ${formatTime(shift.eveningEnd!)}'] =
-        shift.shiftId ?? 0;
+  if (shiftEvening.start != null && shiftEvening.end != null) {
+    map['Evening ${formatTime(shiftEvening.start!)} - ${formatTime(shiftEvening.start!)}'] =
+        shiftEvening.shiftId ?? 0;
   }
 
   return map;

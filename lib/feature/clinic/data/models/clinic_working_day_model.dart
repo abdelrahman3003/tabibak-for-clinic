@@ -7,7 +7,8 @@ class ClinicWorkingDayModel extends ClinicWorkingDayEntity {
     super.id,
     super.isSelected,
     required super.clinicDayEntity,
-    super.clinicShiftEntity,
+    super.clinicShiftMorningEntity,
+    super.clinicShiftEveningEntity,
   });
 
   factory ClinicWorkingDayModel.fromJson(Map<String, dynamic> json) {
@@ -15,8 +16,11 @@ class ClinicWorkingDayModel extends ClinicWorkingDayEntity {
       id: json['id'],
       isSelected: json['is_selected'] ?? false,
       clinicDayEntity: ClinicDayModel.fromJson(json['days']),
-      clinicShiftEntity: json['shifts'] != null
-          ? ClinicShiftModel.fromJson(json['shifts'])
+      clinicShiftMorningEntity: json['shifts_morning'] != null
+          ? ClinicShiftModel.fromJson(json['shifts_morning'])
+          : null,
+      clinicShiftEveningEntity: json['shift_evening'] != null
+          ? ClinicShiftModel.fromJson(json['shift_evening'])
           : null,
     );
   }

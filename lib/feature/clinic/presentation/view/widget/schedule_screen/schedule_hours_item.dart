@@ -10,7 +10,8 @@ class ScheduleHoursItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shift = workingShiftDay.clinicShiftEntity;
+    final shiftMorning = workingShiftDay.clinicShiftMorningEntity;
+    final shiftEvening = workingShiftDay.clinicShiftEveningEntity;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,27 +28,27 @@ class ScheduleHoursItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
-                child: shift?.morningStart == null
+                child: shiftMorning?.start == null
                     ? _buildHourText("--", context)
                     : Column(
                         children: [
                           _buildHourText(
-                              "${formatTime(shift?.morningStart)}", context),
+                              "${formatTime(shiftMorning?.start)}", context),
                           _buildHourText(
-                              "${formatTime(shift?.morningEnd)}", context),
+                              "${formatTime(shiftMorning?.end)}", context),
                         ],
                       ),
               ),
               20.wBox,
               Expanded(
-                child: shift?.eveningStart == null
+                child: shiftEvening?.start == null
                     ? _buildHourText("--", context)
                     : Column(
                         children: [
                           _buildHourText(
-                              "${formatTime(shift?.eveningStart)}", context),
+                              "${formatTime(shiftEvening?.start)}", context),
                           _buildHourText(
-                              "${formatTime(shift?.eveningStart)}", context),
+                              "${formatTime(shiftEvening?.end)}", context),
                         ],
                       ),
               ),

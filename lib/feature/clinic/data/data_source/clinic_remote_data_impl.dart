@@ -61,20 +61,18 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
   @override
   Future<List<ClinicWorkingDayModel>> getClinicSchedule(
       {required int clinicId}) async {
-    final response = await dio.get(
-      "${ApiConstants.apiBaseUrl}/${ApiConstants.getWorkingShiftsDays}",
-      queryParameters: {
-        "clinic_id": "eq.$clinicId",
-      },
-    );
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      final workingShiftsDays = response.data as List;
-      return workingShiftsDays
-          .map((workingShiftDay) =>
-              ClinicWorkingDayModel.fromJson(workingShiftDay))
-          .toList();
-    }
-    throw Exception('Failed request on days');
+    final client = getit<Supabase>().client;
+
+    final response = await client
+        .from('working_day')
+        .select(ApiConstants.getWorkingShiftsDays)
+        .eq('clinic_id', clinicId);
+
+    final workingShiftsDays = response as List;
+    return workingShiftsDays
+        .map((workingShiftDay) =>
+            ClinicWorkingDayModel.fromJson(workingShiftDay))
+        .toList();
   }
 
   @override
@@ -106,32 +104,44 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
 
       final isSelected = selectedDay?.isSelected ?? false;
 
-      int? shiftId;
+      int? shiftMorningId;
+      int? shiftEveningId;
 
       if (isSelected) {
-        final shiftPayload = {
+        final shiftMorningPayload = {
           'morning_start':
-              formatTime(selectedDay!.clinicShiftEntity!.morningStart),
-          'morning_end': formatTime(selectedDay.clinicShiftEntity!.morningEnd),
+              formatTime(selectedDay!.clinicShiftMorningEntity!.start),
+          'morning_end': formatTime(selectedDay.clinicShiftMorningEntity!.end),
+        };
+        final shiftEveningPayload = {
           'evening_start':
-              formatTime(selectedDay.clinicShiftEntity!.eveningStart),
-          'evening_end': formatTime(selectedDay.clinicShiftEntity!.eveningEnd),
+              formatTime(selectedDay.clinicShiftEveningEntity!.start),
+          'evening_end': formatTime(selectedDay.clinicShiftEveningEntity!.end),
         };
 
-        final shiftResponse = await supabase
-            .from('shifts')
-            .upsert(shiftPayload)
+        final shiftMorningResponse = await supabase
+            .from('shifts_morning')
+            .upsert(shiftMorningPayload)
             .select()
             .single();
 
-        shiftId = shiftResponse['id'];
+        shiftMorningId = shiftMorningResponse['id'];
+
+        final shiftEveningResponse = await supabase
+            .from('shift_evening')
+            .upsert(shiftEveningPayload)
+            .select()
+            .single();
+
+        shiftEveningId = shiftEveningResponse['id'];
       }
 
       final payload = {
         'clinic_id': clinicId,
         'day_id': dayId,
         'is_selected': isSelected,
-        'shift_id': shiftId
+        'shift_morning_id': shiftMorningId,
+        'shift_evening_id': shiftEveningId
       };
 
       await supabase.from('working_day').upsert(

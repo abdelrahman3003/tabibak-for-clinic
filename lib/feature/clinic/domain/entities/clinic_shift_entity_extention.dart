@@ -5,11 +5,11 @@ extension ClinicShiftEntityX on ClinicShiftEntity {
   List<ShiftType> availableShiftTypes() {
     final List<ShiftType> result = [];
 
-    if (morningStart != null) {
+    if (start != null) {
       result.add(ShiftType.morning);
     }
 
-    if (eveningStart != null) {
+    if (end != null) {
       result.add(ShiftType.evening);
     }
 

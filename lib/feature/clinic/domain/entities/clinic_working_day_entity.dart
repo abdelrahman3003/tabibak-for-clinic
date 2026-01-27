@@ -5,12 +5,14 @@ class ClinicWorkingDayEntity {
   final int? id;
   bool? isSelected;
   final ClinicDayEntity? clinicDayEntity;
-  final ClinicShiftEntity? clinicShiftEntity;
+  final ClinicShiftEntity? clinicShiftMorningEntity;
+  final ClinicShiftEntity? clinicShiftEveningEntity;
 
   ClinicWorkingDayEntity({
     this.id,
     this.isSelected,
     required this.clinicDayEntity,
-    this.clinicShiftEntity,
+    this.clinicShiftMorningEntity,
+    this.clinicShiftEveningEntity,
   });
 }

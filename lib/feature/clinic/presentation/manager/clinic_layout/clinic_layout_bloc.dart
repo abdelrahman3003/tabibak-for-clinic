@@ -27,15 +27,16 @@ class ClinicLayoutBloc extends Bloc<ClinicLayoutEvent, ClinicLayoutState> {
             final result2 =
                 await getClinicWorkingDayShiftUseCase.call(list[0].id!);
             await result2.fold(
-              (error) async =>
-                  emit(ClinicLayoutFailed(errorMessage: error.message!)),
-              (workingShiftsDays) async => emit(
+                (error) async =>
+                    emit(ClinicLayoutFailed(errorMessage: error.message!)),
+                (workingShiftsDays) async {
+              emit(
                 ClinicLayoutSuccess(
                   clinicInfoEntity: list[0],
                   workingShiftsDays: workingShiftsDays,
                 ),
-              ),
-            );
+              );
+            });
           }
         },
       );
