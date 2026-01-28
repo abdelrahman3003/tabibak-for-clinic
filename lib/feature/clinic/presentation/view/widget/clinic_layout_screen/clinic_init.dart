@@ -18,7 +18,6 @@ class ClinicInit extends StatelessWidget {
         AppButton(
           title: "Create Clinic",
           onPressed: () {
-            //    getit<SharedPrefHelper>().removeData(SharedPrefKeys.step);
             context.pushNamed(Routes.clinicStructureScreen);
           },
         ),

@@ -15,21 +15,19 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
 
   ClinicRemoteDataImpl({required this.dio});
 
-  Future<int> _postAndReturnId(
-      String endpoint, Map<String, dynamic> body) async {
-    final response =
-        await dio.post("${ApiConstants.apiBaseUrl}/$endpoint", data: body);
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return response.data[0]['id'];
-    }
-    throw Exception('Failed request on $endpoint');
-  }
-
   @override
   Future<int> createClinicInfo(ClinicInfoModel model) async {
-    final data = model.toJson();
-    data["doctor_id"] = getit<Supabase>().client.auth.currentUser!.id;
-    return _postAndReturnId('clinic_data', data);
+    final data = model.toJson()
+      ..['doctor_id'] = getit<Supabase>().client.auth.currentUser!.id;
+
+    final response = await getit<Supabase>()
+        .client
+        .from('clinic_data')
+        .insert(data)
+        .select('id')
+        .single();
+
+    return response['id'] as int;
   }
 
   @override
@@ -109,14 +107,12 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
 
       if (isSelected) {
         final shiftMorningPayload = {
-          'morning_start':
-              formatTime(selectedDay!.clinicShiftMorningEntity!.start),
-          'morning_end': formatTime(selectedDay.clinicShiftMorningEntity!.end),
+          'start': formatTime(selectedDay!.clinicShiftMorningEntity!.start),
+          'end': formatTime(selectedDay.clinicShiftMorningEntity!.end),
         };
         final shiftEveningPayload = {
-          'evening_start':
-              formatTime(selectedDay.clinicShiftEveningEntity!.start),
-          'evening_end': formatTime(selectedDay.clinicShiftEveningEntity!.end),
+          'start': formatTime(selectedDay.clinicShiftEveningEntity!.start),
+          'end': formatTime(selectedDay.clinicShiftEveningEntity!.end),
         };
 
         final shiftMorningResponse = await supabase

@@ -31,7 +31,7 @@ class ClinicInfoModel extends ClinicInfoEntity {
       "clinic_name": clinicName,
       "phone_number": phoneNumber,
       "consultation_fee": consultationFee,
-      "isBooking": isBooking,
+      "is_booking": isBooking,
     };
   }
 }
