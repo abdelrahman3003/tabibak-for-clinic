@@ -29,19 +29,12 @@ class AuthRepoImp extends AuthRepo {
   @override
   Future<Either<ApiErrorModel, void>> signUp(
       {required DoctorEntity doctorEntity}) async {
-    final doctorModel = DoctorModel(
-        name: doctorEntity.name,
-        phone: doctorEntity.phone,
-        image: doctorEntity.image,
-        specialty: doctorEntity.specialty,
-        medicalLicense: doctorEntity.medicalLicense,
-        email: doctorEntity.email,
-        password: doctorEntity.password);
+    log("-----${doctorEntity.email}");
     try {
-      final result = await authRemoteData.signUp(doctorModel: doctorModel);
+      final result = await authRemoteData.signUp(
+          doctorModel: DoctorModel.fromEntity(doctorEntity));
       return right(result);
     } catch (e) {
-      log("-------$e");
       return left(ErrorHandler.handle(e));
     }
   }

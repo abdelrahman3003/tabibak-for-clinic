@@ -10,7 +10,8 @@ class DoctorEntity extends Equatable {
   final int? specialty;
   final String? medicalLicense;
   final String? password;
-  final String? bio;
+  final String? bioAr;
+  final String? bioEn;
   final bool? isVerified;
   final bool? isRegistered;
   final EducationEntity? education;
@@ -25,7 +26,8 @@ class DoctorEntity extends Equatable {
     this.specialty,
     this.medicalLicense,
     this.password,
-    this.bio,
+    this.bioAr,
+    this.bioEn,
     this.isVerified,
     this.isRegistered,
     this.education,
@@ -50,7 +52,8 @@ class DoctorEntity extends Equatable {
       specialty: specialty,
       medicalLicense: medicalLicense ?? this.medicalLicense,
       password: password,
-      bio: bio,
+      bioAr: bioAr,
+      bioEn: bioAr,
       isVerified: isVerified,
       isRegistered: isRegistered,
       education: education,
@@ -68,7 +71,8 @@ class DoctorEntity extends Equatable {
         specialty,
         medicalLicense,
         password,
-        bio,
+        bioAr,
+        bioEn,
         isVerified,
         isRegistered,
         specialtyData,

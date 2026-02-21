@@ -19,9 +19,12 @@ class AuthRemoteDataImp implements AuthRemoteData {
   });
   @override
   Future<void> signUp({required DoctorModel doctorModel}) async {
-    await supabase.client.auth
+    final response = await supabase.client.auth
         .signUp(email: doctorModel.email, password: doctorModel.password!);
-    await addDoctor(doctorModel: doctorModel);
+
+    if (response.user != null) {
+      await addDoctor(user: response.user!, doctorModel: doctorModel);
+    }
   }
 
   @override
@@ -34,13 +37,12 @@ class AuthRemoteDataImp implements AuthRemoteData {
     }
   }
 
-  Future<void> addDoctor({required DoctorModel doctorModel}) async {
-    final user = supabase.client.auth.currentUser;
-    final id = user?.id;
+  Future<void> addDoctor(
+      {required User user, required DoctorModel doctorModel}) async {
+    final id = user.id;
     final data = doctorModel.toJson();
     data['doctor_id'] = id;
-    data['image'] = user?.userMetadata?['avatar_url'] ?? '';
-
+    data['image'] = user.userMetadata?['avatar_url'] ?? '';
     await supabase.client.from('doctors').insert(data);
     await supabase.client.from('doctor_file').insert({
       'doctor_id': id,

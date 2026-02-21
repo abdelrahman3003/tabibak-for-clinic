@@ -38,7 +38,7 @@ class DoctorProfileBody extends StatelessWidget {
                   ?.copyWith(color: AppColors.grey)),
           12.hBox,
           Text(
-            doctor.bio ?? "",
+            doctor.bioAr ?? "",
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),

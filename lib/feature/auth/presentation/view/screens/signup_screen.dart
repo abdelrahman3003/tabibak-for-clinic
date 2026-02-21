@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
@@ -7,6 +8,7 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/helper/validation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_field.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/do_you_have_account.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/password_text_field.dart';
@@ -37,9 +39,11 @@ class _SignupScreenState extends State<SignupScreen> {
   void initState() {
     super.initState();
     nameController = TextEditingController(text: "abdo");
-    emailController = TextEditingController(text: "abdo@gmail.com");
+    emailController =
+        TextEditingController(text: "abdelrahmatemsah29@gmail.com");
     passwordController = TextEditingController(text: "Abdo123#");
     phoneController = TextEditingController(text: "01032970712");
+    context.read<SignupBloc>().add(const GetSpecialtiesRequested());
   }
 
   @override
@@ -118,11 +122,13 @@ class _SignupScreenState extends State<SignupScreen> {
                     if (signupFormKey.currentState!.validate()) {
                       context.pushNamed(Routes.professionalLicenseScreen,
                           arguments: DoctorEntity(
-                              name: nameController?.text,
-                              email: emailController?.text,
-                              phone: phoneController?.text,
-                              password: passwordController?.text,
-                              specialty: selectedSpecialization));
+                            name: nameController?.text,
+                            email: emailController?.text,
+                            phone: phoneController?.text,
+                            password: passwordController?.text,
+                            specialty: selectedSpecialization,
+                            isRegistered: true,
+                          ));
                     }
                   },
                 ),

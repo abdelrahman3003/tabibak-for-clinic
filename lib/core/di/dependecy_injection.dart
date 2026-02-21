@@ -66,7 +66,7 @@ Future<void> initGetIt() async {
   final dio = DioFactory.getDio();
   final sharedPreferences = await SharedPreferences.getInstance();
   final supabase = Supabase.instance;
-
+  sharedPreferences.clear();
   //! External
   getit.registerLazySingleton<SharedPrefHelper>(
       () => SharedPrefHelper(sharedPreferences));
@@ -100,7 +100,7 @@ Future<void> initGetIt() async {
             authRepo: getit<AuthRepo>(),
           ));
   // blocs
-  getit.registerFactory(() => SignupBloc(
+  getit.registerLazySingleton(() => SignupBloc(
         signUpUsecase: getit<SignUpUsecase>(),
         getSpecialtiesUsecase: getit<GetSpecialtiesUsecase>(),
       ));

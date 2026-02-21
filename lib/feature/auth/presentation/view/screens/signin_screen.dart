@@ -22,8 +22,9 @@ class SigninScreen extends StatefulWidget {
 final signinKey = GlobalKey<FormState>();
 
 class _SigninScreenState extends State<SigninScreen> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final emailController =
+      TextEditingController(text: "abdelrahmatemsah29@gmail.com");
+  final passwordController = TextEditingController(text: "Abdo123#");
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);

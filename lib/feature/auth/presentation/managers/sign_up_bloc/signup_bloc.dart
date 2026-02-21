@@ -45,6 +45,6 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         emit(UploadFileSuccess(file: file));
       }
     });
-    add(const GetSpecialtiesRequested());
+    // add(const GetSpecialtiesRequested());
   }
 }

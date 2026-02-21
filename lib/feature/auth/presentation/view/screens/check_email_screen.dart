@@ -76,7 +76,7 @@ class CheckEmailScreen extends StatelessWidget {
               onPressed: () {
                 context.pushNamedAndRemoveUntil(
                   Routes.signinScreen,
-                  (_) => false,
+                  (_) => true,
                 );
               },
               title: AppString.backToLogin,

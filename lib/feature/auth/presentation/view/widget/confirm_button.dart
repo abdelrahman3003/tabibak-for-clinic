@@ -7,8 +7,8 @@ import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
 
 class ConfirmButton extends StatelessWidget {
-  const ConfirmButton({super.key, this.onPressed});
-
+  const ConfirmButton({super.key, this.onPressed, required this.email});
+  final String email;
   final Function()? onPressed;
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ConfirmButton extends StatelessWidget {
           current is UploadFileSuccess,
       listener: (context, state) {
         if (state is SignupSuccess) {
-          context.pushNamed(Routes.layOutScreen);
+          context.pushNamed(Routes.checkEmailScreen, arguments: email);
         }
         if (state is SignupError) {
           AppSnackBar.show(context: context, message: state.errorMessage);

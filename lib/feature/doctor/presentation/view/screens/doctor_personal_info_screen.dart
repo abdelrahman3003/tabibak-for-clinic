@@ -25,7 +25,7 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
     final doctor = ModalRoute.of(context)!.settings.arguments as DoctorEntity;
     nameController.text = doctor.name ?? "";
     phoneController.text = doctor.phone ?? "";
-    bioController.text = doctor.bio ?? "";
+    bioController.text = doctor.bioAr ?? "";
     super.didChangeDependencies();
   }
 

@@ -12,6 +12,10 @@ class ErrorHandler {
       return _handleSupabaseAuthError(error);
     }
 
+    if (error is PostgrestException) {
+      return _handlePostgrestError(error);
+    }
+
     return ApiErrorModel(message: "An unknown error occurred");
   }
 
@@ -60,8 +64,22 @@ class ErrorHandler {
         return ApiErrorModel(message: "Invalid email format");
       case "otp_expired":
         return ApiErrorModel(message: "OTP has expired");
+      case "User already registered":
+        return ApiErrorModel(message: "User is already registered");
       default:
         return ApiErrorModel(message: message);
+    }
+  }
+
+  static ApiErrorModel _handlePostgrestError(PostgrestException error) {
+    switch (error.code) {
+      case '23505': // Unique violation
+        if (error.message.contains('doctors')) {
+          return ApiErrorModel(message: "This email is already registered as a doctor");
+        }
+        return ApiErrorModel(message: "Record already exists");
+      default:
+        return ApiErrorModel(message: error.message);
     }
   }
 
