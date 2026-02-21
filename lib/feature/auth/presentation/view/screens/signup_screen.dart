@@ -11,6 +11,7 @@ import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_fi
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/do_you_have_account.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/password_textfiled.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/specailties_dropdwon.dart';
+import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -77,7 +78,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   Text(user!.phone ?? ''),
                   const SizedBox(height: 20),
                 ] else ...[
-                  // لو اليوزر مش موجود، تظهر الحقول لإدخال البيانات
                   AuthField(
                     label: "Full Name",
                     controller: nameController,
@@ -118,17 +118,13 @@ class _SignupScreenState extends State<SignupScreen> {
                   title: "Continue",
                   onPressed: () {
                     if (signupFormKey.currentState!.validate()) {
-                      context.pushNamed(
-                        Routes.professionalLicenseScreen,
-                        arguments: {
-                          "name": nameController.text,
-                          "email": emailController.text,
-                          "phone": phoneController.text,
-                          "password": passwordController.text,
-                          "specialization": selectedSpecialization,
-                          "user": user
-                        },
-                      );
+                      context.pushNamed(Routes.professionalLicenseScreen,
+                          arguments: DoctorEntity(
+                              name: nameController.text,
+                              email: emailController.text,
+                              phone: phoneController.text,
+                              password: passwordController.text,
+                              specialty: selectedSpecialization));
                     }
                   },
                 ),

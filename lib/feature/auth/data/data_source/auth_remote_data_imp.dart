@@ -55,7 +55,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
     await supabase.client.from('doctors').insert(data);
     await supabase.client.from('doctor_file').insert({
       'doctor_id': id,
-      'file': doctorModel.medicalLiecense,
+      'file': doctorModel.medicalLicense,
     });
   }
 

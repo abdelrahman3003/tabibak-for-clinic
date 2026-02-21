@@ -32,7 +32,7 @@ class AuthRepoImp extends AuthRepo {
         phone: doctorEntity.phone,
         image: doctorEntity.image,
         specialty: doctorEntity.specialty,
-        medicalLiecense: doctorEntity.medicalLiecense,
+        medicalLicense: doctorEntity.medicalLicense,
         email: doctorEntity.email,
         password: doctorEntity.password);
     try {

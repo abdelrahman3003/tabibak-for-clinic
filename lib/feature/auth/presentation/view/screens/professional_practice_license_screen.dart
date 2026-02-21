@@ -13,14 +13,9 @@ class ProfessionalLicenseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final name = args["name"];
-    final email = args["email"];
-    final phone = args["phone"];
-    final password = args["password"];
-    final specialization = args["specialization"];
-    String? medicalLiecense;
+    final doctor = ModalRoute.of(context)!.settings.arguments as DoctorEntity;
+
+    String? medicalLicense;
     return Scaffold(
       appBar: AppBar(
         title: Text("Professional Practice License",
@@ -53,21 +48,15 @@ class ProfessionalLicenseScreen extends StatelessWidget {
             40.hBox,
             UploadImageWidget(
               onChangedImageName: (imageName) {
-                medicalLiecense = imageName;
+                medicalLicense = imageName;
               },
             ),
             const Spacer(),
             ConfirmButton(
               onPressed: () {
                 context.read<SignupBloc>().add(SignupRequestedEvent(
-                      doctorEntity: DoctorEntity(
-                          name: name,
-                          phone: phone,
-                          email: email,
-                          specialty: specialization,
-                          medicalLiecense: medicalLiecense!,
-                          password: password),
-                    ));
+                    doctorEntity:
+                        doctor.copyWith(medicalLicense: medicalLicense)));
               },
             )
           ],

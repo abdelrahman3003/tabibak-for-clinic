@@ -8,7 +8,7 @@ class DoctorEntity extends Equatable {
   final String? phone;
   final String? image;
   final int? specialty;
-  final String? medicalLiecense;
+  final String? medicalLicense;
   final String? password;
   final String? bio;
   final bool? isVerified;
@@ -23,7 +23,7 @@ class DoctorEntity extends Equatable {
     this.email,
     this.image,
     this.specialty,
-    this.medicalLiecense,
+    this.medicalLicense,
     this.password,
     this.bio,
     this.isVerified,
@@ -39,6 +39,26 @@ class DoctorEntity extends Equatable {
     };
   }
 
+  DoctorEntity copyWith({
+    String? medicalLicense,
+  }) {
+    return DoctorEntity(
+      name: name,
+      phone: phone,
+      email: email,
+      image: image,
+      specialty: specialty,
+      medicalLicense: medicalLicense ?? this.medicalLicense,
+      password: password,
+      bio: bio,
+      isVerified: isVerified,
+      isRegistered: isRegistered,
+      education: education,
+      specialtyData: specialtyData,
+      files: files,
+    );
+  }
+
   @override
   List<Object?> get props => [
         name,
@@ -46,7 +66,7 @@ class DoctorEntity extends Equatable {
         phone,
         image,
         specialty,
-        medicalLiecense,
+        medicalLicense,
         password,
         bio,
         isVerified,
