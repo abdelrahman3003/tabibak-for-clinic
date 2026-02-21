@@ -51,7 +51,7 @@ class _SigninScreenState extends State<SigninScreen> {
                 40.hBox,
                 AuthField(
                   controller: emailController,
-                  lable: "Email",
+                  label: "Email",
                   icon: Icons.email_outlined,
                   validator: Validation.validateEmail,
                 ),

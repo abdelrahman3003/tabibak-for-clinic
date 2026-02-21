@@ -79,7 +79,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ] else ...[
                   // لو اليوزر مش موجود، تظهر الحقول لإدخال البيانات
                   AuthField(
-                    lable: "Full Name",
+                    label: "Full Name",
                     controller: nameController,
                     icon: Icons.person_outline,
                     validator: (v) =>
@@ -88,7 +88,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   const SizedBox(height: 20),
                   AuthField(
                     controller: emailController,
-                    lable: "Email",
+                    label: "Email",
                     icon: Icons.email_outlined,
                     validator: Validation.validateEmail,
                     keyboardType: TextInputType.emailAddress,
@@ -96,7 +96,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   const SizedBox(height: 20),
                   AuthField(
                     controller: phoneController,
-                    lable: "Phone Number",
+                    label: "Phone Number",
                     icon: Icons.phone_outlined,
                     validator: Validation.validateNumber,
                     keyboardType: TextInputType.phone,

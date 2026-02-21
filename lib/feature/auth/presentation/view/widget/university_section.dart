@@ -19,12 +19,12 @@ class UniversitySection extends StatelessWidget {
         const AuthSubtitleText(title: "University Information"),
         10.hBox,
         AuthField(
-            lable: "University Name",
+            label: "University Name",
             controller: universityNameController,
             validator: (value) => Validation.validateName(value)),
         10.hBox,
         AuthField(
-            lable: "Graduation Year",
+            label: "Graduation Year",
             controller: graduationYearController,
             keyboardType: TextInputType.number,
             validator: (value) => Validation.validateNumber(value)),

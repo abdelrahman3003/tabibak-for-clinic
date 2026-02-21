@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AuthField extends StatelessWidget {
   final TextEditingController? controller;
-  final String? lable;
+  final String? label;
   final IconData? icon;
   final String? Function(String?)? validator;
   final bool obscureText;
@@ -11,7 +11,7 @@ class AuthField extends StatelessWidget {
   const AuthField({
     super.key,
     this.controller,
-    this.lable,
+    this.label,
     this.icon,
     this.validator,
     this.obscureText = false,
@@ -27,7 +27,7 @@ class AuthField extends StatelessWidget {
       obscureText: obscureText,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
-        hintText: lable,
+        hintText: label,
         contentPadding: const EdgeInsets.all(14),
         prefixIcon: icon != null ? Icon(icon) : null,
       ),
