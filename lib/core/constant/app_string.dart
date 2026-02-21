@@ -82,4 +82,10 @@ class AppString {
   static const day = "Day";
   static const morning = "Morning";
   static const evening = "Evening";
+
+  // Check Email
+  static const String checkEmail = "Check your email";
+  static const String verificationEmailSent =
+      "We have sent a verification email to your email address. Please check your inbox and follow the instructions to verify your account.";
+  static const String backToLogin = "Back to Sign In";
 }

@@ -13,6 +13,7 @@ import 'package:tabibak_for_clinic/feature/auth/domain/usecases/sign_up_usecase.
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_in_bloc/signin_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/professional_practice_license_screen.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/check_email_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/signin_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/signup_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_address/clinic_address_bloc.dart';
@@ -58,6 +59,10 @@ class AppRouter {
           create: (context) => getit<SignupBloc>(),
           child: const SignupScreen(),
         );
+        break;
+      case Routes.checkEmailScreen:
+        final email = settings.arguments as String;
+        page = RootScreenWrapper(child: CheckEmailScreen(email: email));
         break;
 
       case Routes.professionalLicenseScreen:

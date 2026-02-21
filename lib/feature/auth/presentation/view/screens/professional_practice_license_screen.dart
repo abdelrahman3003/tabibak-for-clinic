@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
+import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
+import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/confirm_button.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/upload_image_widget.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
@@ -54,9 +54,11 @@ class ProfessionalLicenseScreen extends StatelessWidget {
             const Spacer(),
             ConfirmButton(
               onPressed: () {
-                context.read<SignupBloc>().add(SignupRequestedEvent(
-                    doctorEntity:
-                        doctor.copyWith(medicalLicense: medicalLicense)));
+                context.pushNamed(Routes.checkEmailScreen,
+                    arguments: doctor.email);
+                // context.read<SignupBloc>().add(SignupRequestedEvent(
+                //     doctorEntity:
+                //         doctor.copyWith(medicalLicense: medicalLicense)));
               },
             )
           ],
