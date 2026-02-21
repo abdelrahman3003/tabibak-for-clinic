@@ -4,8 +4,8 @@ import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bl
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_dropdown.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_entity.dart';
 
-class SpecailtiesDropdwon extends StatelessWidget {
-  const SpecailtiesDropdwon({
+class SpecialtiesDropDown extends StatelessWidget {
+  const SpecialtiesDropDown({
     super.key,
     this.onChangedSpecialization,
   });

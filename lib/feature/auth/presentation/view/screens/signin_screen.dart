@@ -11,7 +11,7 @@ import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/do_you_
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/signin/signin_button.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/signin/signin_with_google_button.dart';
 
-import '../widget/password_textfiled.dart';
+import '../widget/password_text_field.dart';
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -56,7 +56,7 @@ class _SigninScreenState extends State<SigninScreen> {
                   validator: Validation.validateEmail,
                 ),
                 const SizedBox(height: 20),
-                PasswordTextfiled(
+                PasswordTextField(
                   controller: passwordController,
                   validator: Validation.validatePassword,
                 ),

@@ -33,7 +33,7 @@ class EducationModel extends EducationEntity {
     };
   }
 
-  factory EducationModel.toModel(EducationEntity entity) {
+  factory EducationModel.fromEntity(EducationEntity entity) {
     return EducationModel(
       id: entity.id,
       university: entity.university,

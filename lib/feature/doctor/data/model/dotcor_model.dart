@@ -54,4 +54,25 @@ class DoctorModel extends DoctorEntity {
           : null,
     );
   }
+  factory DoctorModel.fromEntity(DoctorEntity entity) {
+    return DoctorModel(
+      name: entity.name,
+      phone: entity.phone,
+      email: entity.email,
+      image: entity.image,
+      specialty: entity.specialty,
+      medicalLicense: entity.medicalLicense,
+      password: entity.password,
+      bio: entity.bio,
+      isVerified: entity.isVerified,
+      isRegistered: entity.isRegistered,
+      education: entity.education != null
+          ? EducationModel.fromEntity(entity.education!)
+          : null,
+      specialtyData: entity.specialtyData != null
+          ? SpecialtyModel.fromEntity(entity.specialtyData!)
+          : null,
+      files: entity.files,
+    );
+  }
 }

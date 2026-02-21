@@ -56,7 +56,7 @@ class DoctorProfileRepoImp implements DoctorProfileRepo {
   Future<Either<ApiErrorModel, void>> updateEducation(
       {EducationEntity? educationEntity, XFile? file}) async {
     try {
-      final educationModel = EducationModel.toModel(educationEntity!);
+      final educationModel = EducationModel.fromEntity(educationEntity!);
       final result = await doctorProfileRemoteData.updateEducation(
           educationModel: educationModel, file: file);
       return right(result);

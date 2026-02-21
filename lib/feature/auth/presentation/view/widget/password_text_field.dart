@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 
-class PasswordTextfiled extends StatefulWidget {
-  const PasswordTextfiled(
+class PasswordTextField extends StatefulWidget {
+  const PasswordTextField(
       {super.key, this.controller, this.validator, this.errorText, this.hint});
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final String? errorText;
   final String? hint;
   @override
-  State<PasswordTextfiled> createState() => _PasswordTextfiledState();
+  State<PasswordTextField> createState() => _PasswordTextFieldState();
 }
 
 bool isPassword = true;
 
-class _PasswordTextfiledState extends State<PasswordTextfiled> {
+class _PasswordTextFieldState extends State<PasswordTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
