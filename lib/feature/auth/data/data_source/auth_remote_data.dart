@@ -11,4 +11,5 @@ abstract class AuthRemoteData {
   Future<String?> uploadFile(String filePath);
   Future<List<SpecialtyModel>> getSpecialties();
   Future<bool> checkDoctorRegister(User? user);
+  Future<void> deleteDoctor(String doctorId);
 }

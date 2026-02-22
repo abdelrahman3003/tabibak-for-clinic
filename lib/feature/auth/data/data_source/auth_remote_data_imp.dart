@@ -31,9 +31,12 @@ class AuthRemoteDataImp implements AuthRemoteData {
   Future<void> signIn(String email, String password) async {
     final response = await supabase.client.auth
         .signInWithPassword(email: email, password: password);
-    if (response.user != null) {
-    } else {
-      throw Exception('Sign in failed');
+    final user = response.user;
+    if (user == null) throw const AuthException('Login failed');
+    if (user.emailConfirmedAt == null) {
+      await supabase.client.auth.signOut();
+      deleteDoctor(user.id);
+      throw const AuthException('email_not_confirmed');
     }
   }
 
@@ -89,7 +92,12 @@ class AuthRemoteDataImp implements AuthRemoteData {
     );
 
     if (response.user != null) {
-      await addUserData(response.user!.id);
+      await addDoctor(
+          user: response.user!,
+          doctorModel: DoctorModel(
+            name: response.user!.userMetadata?['full_name'] ?? '',
+            email: response.user!.email!,
+          ));
     }
 
     final isRegistered = await checkDoctorRegister(response.user);
@@ -114,5 +122,14 @@ class AuthRemoteDataImp implements AuthRemoteData {
       'user_id': userId,
       'is_doctor': true,
     }, onConflict: 'user_id');
+  }
+
+  @override
+  Future<void> deleteDoctor(String doctorId) async {
+    await supabase.client
+        .from('doctor_file')
+        .delete()
+        .eq('doctor_id', doctorId);
+    await supabase.client.from('doctors').delete().eq('doctor_id', doctorId);
   }
 }

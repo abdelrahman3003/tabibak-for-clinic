@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
@@ -29,7 +27,6 @@ class AuthRepoImp extends AuthRepo {
   @override
   Future<Either<ApiErrorModel, void>> signUp(
       {required DoctorEntity doctorEntity}) async {
-    log("-----${doctorEntity.email}");
     try {
       final result = await authRemoteData.signUp(
           doctorModel: DoctorModel.fromEntity(doctorEntity));
