@@ -12,6 +12,9 @@ import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_in_bl
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/check_email_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/professional_practice_license_screen.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/forgot_password_screen.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/otp_verification_screen.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/reset_password_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/signin_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/signup_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_address/clinic_address_bloc.dart';
@@ -61,6 +64,16 @@ class AppRouter {
       case Routes.checkEmailScreen:
         final email = settings.arguments as String;
         page = RootScreenWrapper(child: CheckEmailScreen(email: email));
+        break;
+      case Routes.forgotPasswordScreen:
+        page = const RootScreenWrapper(child: ForgotPasswordScreen());
+        break;
+      case Routes.otpVerificationScreen:
+        final email = settings.arguments as String;
+        page = RootScreenWrapper(child: OtpVerificationScreen(email: email));
+        break;
+      case Routes.resetPasswordScreen:
+        page = const RootScreenWrapper(child: ResetPasswordScreen());
         break;
 
       case Routes.professionalLicenseScreen:

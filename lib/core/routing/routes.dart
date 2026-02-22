@@ -5,6 +5,9 @@ class Routes {
   static const String signinScreen = "/signin";
   static const String signupScreen = "/signup";
   static const String checkEmailScreen = "/checkEmailScreen";
+  static const String forgotPasswordScreen = "/forgotPassword";
+  static const String otpVerificationScreen = "/otpVerification";
+  static const String resetPasswordScreen = "/resetPassword";
   static const String professionalLicenseScreen = "/professionalLicenseScreen";
   static const String layOutScreen = "/layOutScreen";
 

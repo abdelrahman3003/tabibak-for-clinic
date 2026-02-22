@@ -88,4 +88,21 @@ class AppString {
   static const String verificationEmailSent =
       "We have sent a verification email to your email address. Please check your inbox and follow the instructions to verify your account.";
   static const String backToLogin = "Back to Sign In";
+
+  // Forgot Password
+  static const String forgotPassword = "Forgot Password";
+  static const String forgotPasswordSubtitle =
+      "Enter your email address and we will send you a code to reset your password.";
+  static const String sendCode = "Send Code";
+  static const String verifyCode = "Verify Code";
+  static const String resendCode = "Resend Code";
+  static const String createNewPassword = "Create New Password";
+  static const String resetPasswordSubtitle =
+      "Your new password must be different from previous used passwords.";
+  static const String newPassword = "New Password";
+  static const String confirmNewPassword = "Confirm New Password";
+  static const String resetPassword = "Reset Password";
+  static const String passwordResetSuccess = "Password Reset Successful";
+  static const String passwordResetSuccessSubtitle =
+      "Your password has been successfully reset. You can now sign in with your new password.";
 }

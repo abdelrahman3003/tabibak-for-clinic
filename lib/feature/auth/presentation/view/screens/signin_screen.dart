@@ -64,7 +64,9 @@ class _SigninScreenState extends State<SigninScreen> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.pushNamed(Routes.forgotPasswordScreen);
+                    },
                     child: Text(
                       "Forgot Password?",
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(

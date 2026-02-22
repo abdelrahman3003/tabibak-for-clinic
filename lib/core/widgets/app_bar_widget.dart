@@ -36,7 +36,6 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: height,
       bottom: bottom,
       automaticallyImplyLeading: isShowBack,
-      elevation: 1,
       scrolledUnderElevation: 1,
       shadowColor: shadow,
       leading: isShowBack == false ? null : _backButton(context),
