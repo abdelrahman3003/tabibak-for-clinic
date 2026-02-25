@@ -8,10 +8,10 @@ class SupabaseService {
 
   static Future<void> init() async {
     final apiKey = EnvService.apiKey;
-    final baseUrl = ApiConstants.supabaseApi;
+    final baseUrl = EnvService.baseUrl ?? ApiConstants.supabaseApi;
 
-    if (apiKey == null) {
-      throw Exception("API_KEY أو BASE_URL غير موجودين في ملف .env");
+    if (apiKey == null || baseUrl == null) {
+      throw Exception("Supabase API_KEY or BASE_URL is missing in .env or ApiConstants");
     }
 
     await Supabase.initialize(url: baseUrl, anonKey: apiKey);

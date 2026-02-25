@@ -4,6 +4,7 @@ class AppDropdown<T> extends StatefulWidget {
   final List<T> items;
   final T? value;
   final String hint;
+  final Widget? prefixIcon;
   final Color? color;
   final String Function(T item) labelBuilder;
   final void Function(T? value)? onChanged;
@@ -15,6 +16,7 @@ class AppDropdown<T> extends StatefulWidget {
     required this.labelBuilder,
     required this.hint,
     this.value,
+    this.prefixIcon,
     this.color,
     this.onChanged,
     this.validator,
@@ -36,16 +38,11 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<T>(
-      initialValue: selectedItem,
+      value: selectedItem,
       decoration: InputDecoration(
         hintText: widget.hint,
-        hintStyle: Theme.of(context).textTheme.titleMedium,
-        fillColor: Colors.transparent,
-        filled: true,
-        contentPadding: EdgeInsets.zero, // <--- هنا شيل البادينج
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+        prefixIcon: widget.prefixIcon,
+        contentPadding: const EdgeInsets.all(14),
       ),
       validator: widget.validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,

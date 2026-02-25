@@ -10,13 +10,13 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
   final Supabase supabase;
 
   DoctorProfileRemoteDataImpl({required this.supabase});
-  String get currentDoctorId => supabase.client.auth.currentUser!.id;
+  String? get currentDoctorId => supabase.client.auth.currentUser?.id;
   @override
   Future<DoctorModel?> getDoctor() async {
     final data = await supabase.client
         .from('doctors')
         .select('*, specialties(*),education(*)')
-        .eq('doctor_id', currentDoctorId)
+        .eq('doctor_id', currentDoctorId!)
         .maybeSingle();
     if (data == null) return null;
     return DoctorModel.fromJson(data);
@@ -32,7 +32,7 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
     if (imageUrl == null) return;
     await supabase.client
         .from('doctors')
-        .update({'image': imageUrl}).eq('doctor_id', currentDoctorId);
+        .update({'image': imageUrl}).eq('doctor_id', currentDoctorId!);
   }
 
   @override
@@ -48,7 +48,7 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
     await supabase.client
         .from('doctors')
         .update(updateData)
-        .eq('doctor_id', currentDoctorId);
+        .eq('doctor_id', currentDoctorId!);
   }
 
   @override
@@ -69,14 +69,14 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
     await supabase.client
         .from('education')
         .update(data)
-        .eq('doctor_id', currentDoctorId);
+        .eq('doctor_id', currentDoctorId!);
   }
 
   @override
   Future<void> updateSpecialty({required int specialtyId}) async {
     await supabase.client
         .from('doctors')
-        .update({'specialty': specialtyId}).eq('doctor_id', currentDoctorId);
+        .update({'specialty': specialtyId}).eq('doctor_id', currentDoctorId!);
   }
 
   @override

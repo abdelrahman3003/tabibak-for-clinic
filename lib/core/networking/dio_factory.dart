@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 import 'package:tabibak_for_clinic/core/services/env_service.dart';
 
 class DioFactory {
@@ -29,5 +30,6 @@ class DioFactory {
       "apikey": EnvService.apiKey,
       "Prefer": "return=representation",
     };
+    dio?.options.baseUrl = ApiConstants.apiBaseUrl;
   }
 }

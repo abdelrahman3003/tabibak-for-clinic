@@ -66,7 +66,7 @@ Future<void> initGetIt() async {
   final dio = DioFactory.getDio();
   final sharedPreferences = await SharedPreferences.getInstance();
   final supabase = Supabase.instance;
-  sharedPreferences.clear();
+
   //! External
   getit.registerLazySingleton<SharedPrefHelper>(
       () => SharedPrefHelper(sharedPreferences));
