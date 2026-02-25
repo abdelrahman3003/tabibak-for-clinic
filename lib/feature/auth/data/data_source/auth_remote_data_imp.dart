@@ -105,6 +105,26 @@ class AuthRemoteDataImp implements AuthRemoteData {
   }
 
   @override
+  Future<void> sendOtp(String email) async {
+    return await supabase.client.auth.signInWithOtp(email: email);
+  }
+
+  @override
+  Future<void> verifyOtp({required String email, required String otp}) async {
+    await supabase.client.auth.verifyOTP(
+      email: email,
+      token: otp,
+      type: OtpType.email,
+    );
+  }
+
+  @override
+  Future<UserResponse> resetPassword(String newPassword) async {
+    return await supabase.client.auth
+        .updateUser(UserAttributes(password: newPassword));
+  }
+
+  @override
   Future<bool> checkDoctorRegister(User? user) async {
     final doctor = await supabase.client
         .from('doctors')

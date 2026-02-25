@@ -10,6 +10,10 @@ abstract class AuthRepo {
   Future<Either<ApiErrorModel, void>> uploadFile({required String filePath});
   Future<Either<ApiErrorModel, void>> signIn(
       {required String email, required String password});
+  Future<Either<ApiErrorModel, void>> sendOtp(String email);
+  Future<Either<ApiErrorModel, void>> resetPassword(String newPassword);
+  Future<Either<ApiErrorModel, void>> verifyOtp(
+      {required String email, required String otp});
   Future<Either<ApiErrorModel, SigninResultEntity>> signInWithGoogle();
   Future<Either<ApiErrorModel, List<SpecialtyEntity>>> getSpecialties();
 }

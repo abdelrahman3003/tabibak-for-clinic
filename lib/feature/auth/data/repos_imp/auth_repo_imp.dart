@@ -69,4 +69,35 @@ class AuthRepoImp extends AuthRepo {
       return left(ErrorHandler.handle(e));
     }
   }
+
+  @override
+  Future<Either<ApiErrorModel, void>> resetPassword(String newPassword) async {
+    try {
+      final result = await authRemoteData.resetPassword(newPassword);
+      return right(result);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, void>> sendOtp(String email) async {
+    try {
+      final result = await authRemoteData.sendOtp(email);
+      return right(result);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, void>> verifyOtp(
+      {required String email, required String otp}) async {
+    try {
+      final result = await authRemoteData.verifyOtp(email: email, otp: otp);
+      return right(result);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
 }
