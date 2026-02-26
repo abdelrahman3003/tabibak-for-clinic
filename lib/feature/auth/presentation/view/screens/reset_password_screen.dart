@@ -4,11 +4,9 @@ import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/helper/validation.dart';
-import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
-import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
-import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/password_text_field.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/reset_password/reset_button_states.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});
@@ -18,14 +16,14 @@ class ResetPasswordScreen extends StatefulWidget {
 }
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -46,7 +44,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -68,29 +66,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
                 40.hBox,
                 PasswordTextField(
-                  controller: _passwordController,
+                  controller: passwordController,
                   hint: AppString.newPassword,
                 ),
                 20.hBox,
                 PasswordTextField(
-                  controller: _confirmPasswordController,
+                  controller: confirmPasswordController,
                   hint: AppString.confirmNewPassword,
                   validator: (value) => Validation.validateEmail(value),
                 ),
                 60.hBox,
-                AppButton(
-                  title: AppString.resetPassword,
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      AppSnackBar.show(
-                        context: context,
-                        message: AppString.passwordResetSuccess,
-                      );
-                      context.pushNamedAndRemoveUntil(
-                          Routes.signinScreen, (route) => false);
-                    }
-                  },
-                ),
+                ResetButtonStates(
+                    formKey: formKey,
+                    passwordController: passwordController,
+                    confirmPasswordController: confirmPasswordController)
               ],
             ),
           ),

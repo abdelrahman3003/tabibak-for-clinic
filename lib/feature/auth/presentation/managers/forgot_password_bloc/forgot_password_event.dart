@@ -11,4 +11,6 @@ class SendOtpEvent extends ForgotPasswordEvent {
   final String email;
 
   const SendOtpEvent({required this.email});
+  @override
+  List<Object> get props => [email];
 }

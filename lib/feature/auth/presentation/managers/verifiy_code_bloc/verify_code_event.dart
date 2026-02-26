@@ -12,4 +12,6 @@ class VerifyOtpEvent extends VerifyCodeEvent {
   final String otp;
 
   const VerifyOtpEvent({required this.email, required this.otp});
+  @override
+  List<Object> get props => [email, otp];
 }
