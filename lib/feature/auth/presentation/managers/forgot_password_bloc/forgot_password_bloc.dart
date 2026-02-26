@@ -10,7 +10,7 @@ class ForgotPasswordBloc
   final SendOtpUseCase sendOtpUseCase;
 
   ForgotPasswordBloc(this.sendOtpUseCase) : super(ForgotPasswordInitial()) {
-    on<ForgotPasswordEvent>((event, emit) async {
+    on<SendOtpEvent>((event, emit) async {
       final result = await sendOtpUseCase.call(event.email);
       result.fold(
         (error) {
