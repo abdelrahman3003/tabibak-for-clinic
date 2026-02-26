@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
-import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
-import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
-import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/otp_verified/otp_nodes.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/verify_code/verify_buttons_states.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({super.key, required this.email});
@@ -87,12 +85,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 ),
               ),
               40.hBox,
-              AppButton(
-                title: AppString.verifyCode,
-                onPressed: () {
-                  context.pushNamed(Routes.resetPasswordScreen);
-                },
-              ),
+              VerifyButtonsStates(email: widget.email, focusNodes: _focusNodes)
             ],
           ),
         ),

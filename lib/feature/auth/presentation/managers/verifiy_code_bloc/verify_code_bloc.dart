@@ -8,7 +8,7 @@ part 'verify_code_state.dart';
 class VerifyCodeBloc extends Bloc<VerifyCodeEvent, VerifyCodeState> {
   final VerifiedCodeUseCase verifiedCodeUseCase;
   VerifyCodeBloc(this.verifiedCodeUseCase) : super(VerifyCodeInitial()) {
-    on<VerifyCodeEvent>((event, emit) async {
+    on<VerifyOtpEvent>((event, emit) async {
       final result =
           await verifiedCodeUseCase.call(email: event.email, otp: event.otp);
       result.fold(
