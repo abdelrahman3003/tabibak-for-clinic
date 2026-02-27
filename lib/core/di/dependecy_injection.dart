@@ -127,9 +127,8 @@ Future<void> initGetIt() async {
   getit.registerFactory(() => ForgotPasswordBloc(
         getit<SendOtpUseCase>(),
       ));
-  getit.registerFactory(() => VerifyCodeBloc(
-        getit<VerifiedCodeUseCase>(),
-      ));
+  getit.registerFactory(() =>
+      VerifyCodeBloc(getit<VerifiedCodeUseCase>(), getit<SendOtpUseCase>()));
   getit.registerFactory(() => ResetPasswordBloc(
         getit<ResetPasswordUseCase>(),
       ));

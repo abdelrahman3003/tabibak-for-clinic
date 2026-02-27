@@ -105,4 +105,6 @@ class AppString {
   static const String passwordResetSuccess = "Password Reset Successful";
   static const String passwordResetSuccessSubtitle =
       "Your password has been successfully reset. You can now sign in with your new password.";
+  static const String resendAfter = "Resend after";
+  static const String seconds = "seconds";
 }

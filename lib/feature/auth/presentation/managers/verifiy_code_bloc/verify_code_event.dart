@@ -15,3 +15,11 @@ class VerifyOtpEvent extends VerifyCodeEvent {
   @override
   List<Object> get props => [email, otp];
 }
+
+class ResendOtp extends VerifyCodeEvent {
+  final String email;
+
+  const ResendOtp({required this.email});
+  @override
+  List<Object> get props => [email];
+}

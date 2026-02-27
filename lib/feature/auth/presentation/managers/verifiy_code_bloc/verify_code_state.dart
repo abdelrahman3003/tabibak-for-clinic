@@ -18,3 +18,9 @@ final class VerifyCodeFailure extends VerifyCodeState {
 
   const VerifyCodeFailure({required this.errorMessage});
 }
+
+final class ResendOtpFailure extends VerifyCodeState {
+  final String errorMessage;
+
+  const ResendOtpFailure({required this.errorMessage});
+}

@@ -9,14 +9,21 @@ import 'package:tabibak_for_clinic/feature/auth/presentation/managers/verifiy_co
 
 class VerifyButtonsStates extends StatelessWidget {
   const VerifyButtonsStates(
-      {super.key, required this.email, required this.focusNodes});
+      {super.key,
+      required this.email,
+      required this.focusNodes,
+      required this.controllers});
   final String email;
   final List<FocusNode> focusNodes;
+  final List<TextEditingController> controllers;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<VerifyCodeBloc, VerifyCodeState>(
       listener: (context, state) {
         if (state is VerifyCodeFailure) {
+          AppSnackBar.show(context: context, message: state.errorMessage);
+        }
+        if (state is ResendOtpFailure) {
           AppSnackBar.show(context: context, message: state.errorMessage);
         }
         if (state is VerifyCodeSuccess) {
@@ -28,9 +35,10 @@ class VerifyButtonsStates extends StatelessWidget {
           title: AppString.verifyCode,
           isLoading: state is VerifyCodeLoading,
           onPressed: () {
+            final otp = controllers.map((e) => e.text).join();
             context
                 .read<VerifyCodeBloc>()
-                .add(VerifyOtpEvent(email: email, otp: focusNodes.toString()));
+                .add(VerifyOtpEvent(email: email, otp: otp));
           },
         );
       },

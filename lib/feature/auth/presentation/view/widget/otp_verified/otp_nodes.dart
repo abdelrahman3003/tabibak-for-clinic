@@ -12,15 +12,15 @@ class OtpNodes extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List.generate(
-        4,
+        controllers.length,
         (index) => SizedBox(
-          width: 70.w,
-          height: 70.h,
+          width: 50.w,
+          height: 60.h,
           child: TextFormField(
             controller: controllers[index],
             focusNode: focusNodes[index],
             onChanged: (value) {
-              if (value.length == 1 && index < 3) {
+              if (value.length == 1 && index < controllers.length - 1) {
                 focusNodes[index + 1].requestFocus();
               } else if (value.isEmpty && index > 0) {
                 focusNodes[index - 1].requestFocus();
