@@ -8,12 +8,15 @@ import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/crea
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens/add_appointment_screen.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens/all_appointment_screen.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens/appointment_details_screen.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/managers/forgot_password_bloc/forgot_password_bloc.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/managers/reset_password_bloc/reset_password_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_in_bloc/signin_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/managers/verifiy_code_bloc/verify_code_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/check_email_screen.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/professional_practice_license_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/forgot_password_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/otp_verification_screen.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/professional_practice_license_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/reset_password_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/signin_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/signup_screen.dart';
@@ -66,14 +69,26 @@ class AppRouter {
         page = RootScreenWrapper(child: CheckEmailScreen(email: email));
         break;
       case Routes.forgotPasswordScreen:
-        page = const RootScreenWrapper(child: ForgotPasswordScreen());
+        page = RootScreenWrapper(
+            child: BlocProvider(
+          create: (context) => getit<ForgotPasswordBloc>(),
+          child: const ForgotPasswordScreen(),
+        ));
         break;
       case Routes.otpVerificationScreen:
         final email = settings.arguments as String;
-        page = RootScreenWrapper(child: OtpVerificationScreen(email: email));
+        page = RootScreenWrapper(
+            child: BlocProvider(
+          create: (context) => getit<VerifyCodeBloc>(),
+          child: OtpVerificationScreen(email: email),
+        ));
         break;
       case Routes.resetPasswordScreen:
-        page = const RootScreenWrapper(child: ResetPasswordScreen());
+        page = RootScreenWrapper(
+            child: BlocProvider(
+          create: (context) => getit<ResetPasswordBloc>(),
+          child: const ResetPasswordScreen(),
+        ));
         break;
 
       case Routes.professionalLicenseScreen:

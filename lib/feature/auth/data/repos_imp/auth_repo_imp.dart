@@ -82,10 +82,13 @@ class AuthRepoImp extends AuthRepo {
 
   @override
   Future<Either<ApiErrorModel, void>> sendOtp(String email) async {
+    log("-0------11");
+
     try {
       final result = await authRemoteData.sendOtp(email);
       return right(result);
     } catch (e) {
+      log("-0------$e");
       return left(ErrorHandler.handle(e));
     }
   }

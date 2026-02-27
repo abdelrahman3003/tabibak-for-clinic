@@ -9,6 +9,8 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
   final ResetPasswordUseCase resetPasswordUseCase;
   ResetPasswordBloc(this.resetPasswordUseCase) : super(ResetPasswordInitial()) {
     on<ResetEvent>((event, emit) async {
+      emit(ResetPasswordLoading());
+
       final result = await resetPasswordUseCase.call(event.newPassword);
       result.fold(
         (error) {

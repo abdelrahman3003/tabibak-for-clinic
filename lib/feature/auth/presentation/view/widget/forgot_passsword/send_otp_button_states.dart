@@ -20,7 +20,8 @@ class SendOtpButtonStates extends StatelessWidget {
           AppSnackBar.show(context: context, message: state.errorMessage);
         }
         if (state is ForgotPasswordSuccess) {
-          context.pushNamed(Routes.otpVerificationScreen);
+          context.pushNamed(Routes.otpVerificationScreen,
+              arguments: emailController.text);
         }
       },
       builder: (context, state) {

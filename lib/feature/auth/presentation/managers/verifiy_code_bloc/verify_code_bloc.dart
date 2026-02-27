@@ -9,6 +9,7 @@ class VerifyCodeBloc extends Bloc<VerifyCodeEvent, VerifyCodeState> {
   final VerifiedCodeUseCase verifiedCodeUseCase;
   VerifyCodeBloc(this.verifiedCodeUseCase) : super(VerifyCodeInitial()) {
     on<VerifyOtpEvent>((event, emit) async {
+      emit(VerifyCodeLoading());
       final result =
           await verifiedCodeUseCase.call(email: event.email, otp: event.otp);
       result.fold(
