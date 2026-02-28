@@ -22,6 +22,7 @@ class SpecialtiesDropDown extends StatelessWidget {
         return AppDropdown<SpecialtyEntity>(
           items: items,
           hint: "Select Specialty",
+          prefixIcon: const Icon(Icons.medical_services_outlined),
           labelBuilder: (item) => item.nameEn,
           validator: (value) =>
               value == null ? 'Please select a specialty' : null,

@@ -21,6 +21,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       controller: widget.controller,
       decoration: InputDecoration(
           hintText: widget.hint ?? AppString.password,
+          prefixIcon: const Icon(Icons.password_outlined),
           errorText: widget.errorText,
           suffixIcon: IconButton(
               onPressed: () {
