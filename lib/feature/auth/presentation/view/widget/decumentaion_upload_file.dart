@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 
@@ -63,7 +64,7 @@ class _DocumentUploadFieldState extends State<DocumentUploadField> {
                 Expanded(
                   child: Text(
                     _selectedFile == null
-                        ? "Upload Image / File"
+                        ? AppString.uploadImageFile
                         : _selectedFile!.path.split('/').last,
                     style: TextStyle(
                       color:

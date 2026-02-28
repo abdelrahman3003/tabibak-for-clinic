@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
@@ -28,7 +29,7 @@ class ConfirmButton extends StatelessWidget {
       },
       builder: (context, state) {
         return AppButton(
-          title: "Confirm",
+          title: AppString.confirm,
           isLoading: state is SignupLoading,
           onPressed: state is UploadFileSuccess ? onPressed : null,
         );

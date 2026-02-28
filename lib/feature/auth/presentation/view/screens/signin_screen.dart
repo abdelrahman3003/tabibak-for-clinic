@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
@@ -22,9 +23,8 @@ class SigninScreen extends StatefulWidget {
 final signinKey = GlobalKey<FormState>();
 
 class _SigninScreenState extends State<SigninScreen> {
-  final emailController =
-      TextEditingController(text: "abdelrahmatemsah29@gmail.com");
-  final passwordController = TextEditingController(text: "Abdo123#");
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   @override
   void dispose() {
     super.dispose();
@@ -47,19 +47,19 @@ class _SigninScreenState extends State<SigninScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Welcome Back",
+                  AppString.welcomeBack,
                   style: Theme.of(context)
                       .textTheme
                       .headlineMedium
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 8),
-                Text("Sign in to continue to Tabibak Clinic",
+                Text(AppString.signinSubtitle,
                     style: Theme.of(context).textTheme.titleMedium),
                 40.hBox,
                 AuthField(
                   controller: emailController,
-                  label: "Email",
+                  label: AppString.email,
                   icon: Icons.email_outlined,
                   validator: Validation.validateEmail,
                 ),
@@ -75,7 +75,7 @@ class _SigninScreenState extends State<SigninScreen> {
                       context.pushNamed(Routes.forgotPasswordScreen);
                     },
                     child: Text(
-                      "Forgot Password?",
+                      AppString.forgotPasswordQuestion,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: Theme.of(context).colorScheme.primary),
@@ -99,7 +99,7 @@ class _SigninScreenState extends State<SigninScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
-                        "OR",
+                        AppString.or,
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.secondary),
                       ),
@@ -111,8 +111,8 @@ class _SigninScreenState extends State<SigninScreen> {
                 const SigninWithGoogleButton(),
                 40.hBox,
                 DoHaveAccount(
-                  title: "Don't have an account?",
-                  subtitle: "Create Account",
+                  title: AppString.dontHaveAccount,
+                  subtitle: AppString.createAccount,
                   onTap: () {
                     context.pop();
                     context.pushNamed(Routes.signupScreen);

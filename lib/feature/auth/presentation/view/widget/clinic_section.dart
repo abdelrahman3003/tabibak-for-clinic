@@ -30,7 +30,7 @@ class ClinicSection extends StatelessWidget {
         ),
         10.hBox,
         AuthField(
-          label: "Clinic number",
+          label: AppString.clinicNumber,
           keyboardType: TextInputType.number,
           controller: clinicPhoneController,
           validator: (value) => Validation.validateName(value),

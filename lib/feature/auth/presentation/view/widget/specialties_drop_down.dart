@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_dropdown.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_entity.dart';
@@ -21,11 +22,11 @@ class SpecialtiesDropDown extends StatelessWidget {
 
         return AppDropdown<SpecialtyEntity>(
           items: items,
-          hint: "Select Specialty",
+          hint: AppString.selectSpecialty,
           prefixIcon: const Icon(Icons.medical_services_outlined),
           labelBuilder: (item) => item.nameEn,
           validator: (value) =>
-              value == null ? 'Please select a specialty' : null,
+              value == null ? AppString.selectSpecialtyValidator : null,
           onChanged: (value) {
             onChangedSpecialization?.call(value?.id);
           },

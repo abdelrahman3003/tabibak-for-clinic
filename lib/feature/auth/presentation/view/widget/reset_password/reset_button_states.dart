@@ -26,7 +26,7 @@ class ResetButtonStates extends StatelessWidget {
         if (state is ResetPasswordSuccess) {
           AppSnackBar.show(
               context: context,
-              message: "Password has been changed successfully");
+              message: AppString.passwordChangedSuccess);
           context.pushNamed(Routes.signinScreen);
         }
       },
@@ -39,7 +39,7 @@ class ResetButtonStates extends StatelessWidget {
               if (passwordController.text != confirmPasswordController.text) {
                 AppSnackBar.show(
                   context: context,
-                  message: "Not Matching Password",
+                  message: AppString.passwordsNotMatching,
                 );
                 return;
               }

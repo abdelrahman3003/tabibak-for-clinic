@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/helper/validation.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_field.dart';
@@ -16,15 +17,15 @@ class UniversitySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const AuthSubtitleText(title: "University Information"),
+        AuthSubtitleText(title: AppString.universityInformation),
         10.hBox,
         AuthField(
-            label: "University Name",
+            label: AppString.universityName,
             controller: universityNameController,
             validator: (value) => Validation.validateName(value)),
         10.hBox,
         AuthField(
-            label: "Graduation Year",
+            label: AppString.graduationYear,
             controller: graduationYearController,
             keyboardType: TextInputType.number,
             validator: (value) => Validation.validateNumber(value)),

@@ -84,7 +84,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         height: 1.5,
                       ),
                   children: [
-                    const TextSpan(text: "Enter the code sent to "),
+                    TextSpan(text: AppString.enterCodeSentTo),
                     TextSpan(
                       text: widget.email,
                       style: const TextStyle(

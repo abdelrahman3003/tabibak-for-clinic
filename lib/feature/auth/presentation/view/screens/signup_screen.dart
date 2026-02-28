@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
@@ -34,11 +35,10 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   void initState() {
     super.initState();
-    nameController = TextEditingController(text: "abdo");
-    emailController =
-        TextEditingController(text: "abdelrahmatemsah29@gmail.com");
-    passwordController = TextEditingController(text: "Abdo123#");
-    phoneController = TextEditingController(text: "01032970712");
+    nameController = TextEditingController();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    phoneController = TextEditingController();
   }
 
   @override
@@ -57,7 +57,7 @@ class _SignupScreenState extends State<SignupScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Create Account",
+                  AppString.createAccount,
                   style: Theme.of(context)
                       .textTheme
                       .headlineMedium
@@ -65,7 +65,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  "Sign up to continue to Tabibak Clinic",
+                  AppString.signupSubtitle,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 40.hBox,
@@ -76,16 +76,16 @@ class _SignupScreenState extends State<SignupScreen> {
                   const SizedBox(height: 20),
                 ] else ...[
                   AuthField(
-                    label: "Full Name",
+                    label: AppString.fullName,
                     controller: nameController,
                     icon: Icons.person_outline,
                     validator: (v) =>
-                        v == null || v.isEmpty ? "Required" : null,
+                        v == null || v.isEmpty ? AppString.required : null,
                   ),
                   const SizedBox(height: 20),
                   AuthField(
                     controller: emailController,
-                    label: "Email",
+                    label: AppString.email,
                     icon: Icons.email_outlined,
                     validator: Validation.validateEmail,
                     keyboardType: TextInputType.emailAddress,
@@ -93,7 +93,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   const SizedBox(height: 20),
                   AuthField(
                     controller: phoneController,
-                    label: "Phone Number",
+                    label: AppString.phoneNumber,
                     icon: Icons.phone_outlined,
                     validator: Validation.validateNumber,
                     keyboardType: TextInputType.phone,
@@ -112,7 +112,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 30.hBox,
                 AppButton(
-                  title: "Continue",
+                  title: AppString.continueButton,
                   onPressed: () {
                     if (signupFormKey.currentState!.validate()) {
                       context.pushNamed(Routes.professionalLicenseScreen,
@@ -129,8 +129,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 40.hBox,
                 DoHaveAccount(
-                  title: "Already have an account?",
-                  subtitle: "Sign In",
+                  title: AppString.alreadyHaveAccount,
+                  subtitle: AppString.signIn,
                   onTap: () {
                     context.pop();
                     context.pushNamed(Routes.signinScreen);

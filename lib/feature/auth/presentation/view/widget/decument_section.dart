@@ -25,19 +25,19 @@ class DecumentSection extends StatelessWidget {
         AuthSubtitleText(title: AppString.documentsVerification),
         10.hBox,
         DocumentUploadField(
-          title: "National ID Card",
+          title: AppString.nationalId,
           onFileSelected: onNaionalIdSelected,
           isRegistered: isRegistered,
         ),
         10.hBox,
         DocumentUploadField(
-          title: "Medical License",
+          title: AppString.medicalLicense,
           onFileSelected: onMedicalLicenseSelected,
           isRegistered: isRegistered,
         ),
         10.hBox,
         DocumentUploadField(
-          title: "Profile Photo",
+          title: AppString.profilePhoto,
           onFileSelected: onProfilePhotoSelected,
           isRegistered: isRegistered,
         ),

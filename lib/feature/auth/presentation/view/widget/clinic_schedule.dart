@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/shift_section.dart';
 
@@ -20,6 +21,27 @@ class _ClinicScheduleWidgetState extends State<ClinicScheduleWidget> {
     'Thursday',
     'Friday',
   ];
+
+  String _getLocalizedDay(String day) {
+    switch (day) {
+      case 'Saturday':
+        return AppString.saturday;
+      case 'Sunday':
+        return AppString.sunday;
+      case 'Monday':
+        return AppString.monday;
+      case 'Tuesday':
+        return AppString.tuesday;
+      case 'Wednesday':
+        return AppString.wednesday;
+      case 'Thursday':
+        return AppString.thursday;
+      case 'Friday':
+        return AppString.friday;
+      default:
+        return day;
+    }
+  }
 
   final Map<String, bool> _selectedDays = {};
   final Map<String, TimeOfDay?> _morningStart = {};
@@ -42,24 +64,6 @@ class _ClinicScheduleWidgetState extends State<ClinicScheduleWidget> {
     );
   }
 
-  // void _updateSchedule() {
-  //   final List<WorkDayShift> workDayShifts = [];
-  //   for (final day in _days) {
-  //     if (_selectedDays[day] == true) {
-  //       workDayShifts.add(
-  //         WorkDayShift(
-  //           day: _days.indexOf(day),
-  //           morningStart: _morningStart[day],
-  //           morningEnd: _morningEnd[day],
-  //           eveningStart: _eveningStart[day],
-  //           eveningEnd: _eveningEnd[day],
-  //         ),
-  //       );
-  //     }
-  //   }
-  //   widget.onScheduleChanged(workDayShifts);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -74,11 +78,10 @@ class _ClinicScheduleWidgetState extends State<ClinicScheduleWidget> {
       children: [
         CheckboxListTile(
           contentPadding: EdgeInsets.zero,
-          title: Text(day),
+          title: Text(_getLocalizedDay(day)),
           value: isSelected,
           onChanged: (value) {
             setState(() => _selectedDays[day] = value!);
-            //  _updateSchedule();
           },
         ),
         if (isSelected)
@@ -88,41 +91,37 @@ class _ClinicScheduleWidgetState extends State<ClinicScheduleWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ShiftSection(
-                  title: "Morning Shift",
+                  title: AppString.morningShift,
                   start: _morningStart[day],
                   end: _morningEnd[day],
                   onStartTap: () async {
                     final time = await _pickTime(_morningStart[day]);
                     if (time != null) {
                       setState(() => _morningStart[day] = time);
-                      //   _updateSchedule();
                     }
                   },
                   onEndTap: () async {
                     final time = await _pickTime(_morningEnd[day]);
                     if (time != null) {
                       setState(() => _morningEnd[day] = time);
-                      //   _updateSchedule();
                     }
                   },
                 ),
                 8.hBox,
                 ShiftSection(
-                  title: "Evening Shift",
+                  title: AppString.eveningShift,
                   start: _eveningStart[day],
                   end: _eveningEnd[day],
                   onStartTap: () async {
                     final time = await _pickTime(_eveningStart[day]);
                     if (time != null) {
                       setState(() => _eveningStart[day] = time);
-                      //   _updateSchedule();
                     }
                   },
                   onEndTap: () async {
                     final time = await _pickTime(_eveningEnd[day]);
                     if (time != null) {
                       setState(() => _eveningEnd[day] = time);
-                      //  _updateSchedule();
                     }
                   },
                 ),

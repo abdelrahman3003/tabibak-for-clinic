@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
 
@@ -60,7 +61,7 @@ class UploadImageWidget extends StatelessWidget {
             size: 60.sp, color: AppColors.primary),
         SizedBox(height: 10.h),
         Text(
-          "Tap to upload license",
+          AppString.tapToUploadLicense,
           style: TextStyle(fontSize: 16.sp, color: AppColors.primary),
         ),
       ],

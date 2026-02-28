@@ -4,7 +4,8 @@ class AppString {
   static String get signUp => "Sign up".tr();
   static String get personalInformation => "Personal Information".tr();
   static String get clinicInformation => "Clinic Information".tr();
-  static String get specializationInformation => "Specialization Information".tr();
+  static String get specializationInformation =>
+      "Specialization Information".tr();
   static String get documentsVerification => "Documents Verification".tr();
   static String get reviewAndSubmit => "Review & Submit".tr();
   static String get firstName => "First name".tr();
@@ -31,7 +32,8 @@ class AppString {
   static String get nationalId => "National ID".tr();
   static String get medicalLicense => "Medical license".tr();
   static String get profilePhoto => "Profile photo".tr();
-  static String get medicalSyndicateNumber => "Medical syndicate number (optional)".tr();
+  static String get medicalSyndicateNumber =>
+      "Medical syndicate number (optional)".tr();
   static String get submit => "Submit".tr();
   static String get reviewData => "Review your data before submitting".tr();
   static String get pendingApproval => "Pending approval".tr();
@@ -54,20 +56,25 @@ class AppString {
   static String get gallery => "Gallery".tr();
   static String get camera => "Camera".tr();
   static String get weeklyOverview => "Weekly Overview".tr();
-  static String weeklyDays(int daysCount) => "This week has $daysCount days scheduled".tr();
-  static String weeklyShiftHours(String startMorning, String endMorning, String startEvening, String endEvening) =>
-      "Note: Morning shifts are from $startMorning to $endMorning, Evening shifts are from $startEvening to $endEvening".tr();
+  static String weeklyDays(int daysCount) =>
+      "This week has $daysCount days scheduled".tr();
+  static String weeklyShiftHours(String startMorning, String endMorning,
+          String startEvening, String endEvening) =>
+      "Note: Morning shifts are from $startMorning to $endMorning, Evening shifts are from $startEvening to $endEvening"
+          .tr();
   static String get scheduleHours => "Schedule hours".tr();
   static String get day => "Day".tr();
   static String get morning => "Morning".tr();
   static String get evening => "Evening".tr();
   static String get checkEmail => "Check your email".tr();
   static String get verificationEmailSent =>
-      "We have sent a verification email to your email address. Please check your inbox and follow the instructions to verify your account.".tr();
+      "We have sent a verification email to your email address. Please check your inbox and follow the instructions to verify your account."
+          .tr();
   static String get backToLogin => "Back to Sign In".tr();
   static String get forgotPassword => "Forgot Password".tr();
   static String get forgotPasswordSubtitle =>
-      "Enter your email address and we will send you a code to reset your password.".tr();
+      "Enter your email address and we will send you a code to reset your password."
+          .tr();
   static String get sendCode => "Send Code".tr();
   static String get verifyCode => "Verify Code".tr();
   static String get resendCode => "Resend Code".tr();
@@ -79,7 +86,8 @@ class AppString {
   static String get resetPassword => "Reset Password".tr();
   static String get passwordResetSuccess => "Password Reset Successful".tr();
   static String get passwordResetSuccessSubtitle =>
-      "Your password has been successfully reset. You can now sign in with your new password.".tr();
+      "Your password has been successfully reset. You can now sign in with your new password."
+          .tr();
   static String get resendAfter => "Resend after".tr();
   static String get seconds => "seconds".tr();
   static String get hello => "Hello,".tr();
@@ -114,11 +122,13 @@ class AppString {
   static String get clinicWorkingDays => "Clinic Working Days".tr();
   static String get selectWorkingDays => "Select working days".tr();
   static String get selectWorkingDaysSubtitle =>
-      "Tap on the cards to select the days your clinic is open for patients.".tr();
+      "Tap on the cards to select the days your clinic is open for patients."
+          .tr();
   static String get continueButton => "Continue".tr();
   static String get clinicDirections => "Clinic Directions".tr();
   static String get enableOnlineBookingSubtitle =>
-      "Enable this option if you want patients to book appointments online.".tr();
+      "Enable this option if you want patients to book appointments online."
+          .tr();
   static String get onlineBooking => "Online Booking".tr();
   static String get createClinic => "Create Clinic".tr();
   static String get setupYourClinic => "Setup Your Clinic".tr();
@@ -148,4 +158,54 @@ class AppString {
   static String get notice => "Notice".tr();
   static String get unknownError => "UnKnown error".tr();
   static String get logOutSubtitle => "Are you sure you want to log out?".tr();
+
+  // Auth Localization
+  static String get login => "Log in".tr();
+  static String get loggingIn => "Logging in...".tr();
+  static String get signIn => "Sign In".tr();
+  static String get welcomeBack => "Welcome Back".tr();
+  static String get signinSubtitle =>
+      "Sign in to continue to Tabibak Clinic".tr();
+  static String get forgotPasswordQuestion => "Forgot Password?".tr();
+  static String get or => "OR".tr();
+  static String get dontHaveAccount => "Don't have an account?".tr();
+  static String get createAccount => "Create Account".tr();
+  static String get signupSubtitle =>
+      "Sign up to continue to Tabibak Clinic".tr();
+  static String get alreadyHaveAccount => "Already have an account?".tr();
+  static String get signinWithGoogle => "Sign in with Google".tr();
+  static String get fullName => "Full Name".tr();
+  static String get required => "Required".tr();
+  static String get professionalPracticeLicense =>
+      "Professional Practice License".tr();
+  static String get uploadLicense =>
+      "Upload your professional practice license".tr();
+  static String get uploadLicenseDescription =>
+      "Please provide a clear image of your valid license to verify your professional status."
+          .tr();
+  static String get enterCodeSentTo => "Enter the code sent to ".tr();
+  static String get confirm => "Confirm".tr();
+  static String get tapToUploadLicense => "Tap to upload license".tr();
+  static String get selectSpecialty => "Select Specialty".tr();
+  static String get selectSpecialtyValidator =>
+      "Please select a specialty".tr();
+  static String get universityInformation => "University Information".tr();
+  static String get universityName => "University Name".tr();
+  static String get graduationYear => "Graduation Year".tr();
+  static String get clinicNumber => "Clinic number".tr();
+  static String get uploadImageFile => "Upload Image / File".tr();
+  static String get saturday => "Saturday".tr();
+  static String get sunday => "Sunday".tr();
+  static String get monday => "Monday".tr();
+  static String get tuesday => "Tuesday".tr();
+  static String get wednesday => "Wednesday".tr();
+  static String get thursday => "Thursday".tr();
+  static String get friday => "Friday".tr();
+  static String get morningShift => "Morning Shift".tr();
+  static String get eveningShift => "Evening Shift".tr();
+  static String get passwordChangedSuccess =>
+      "Password has been changed successfully".tr();
+  static String get passwordsNotMatching => "Not Matching Password".tr();
+  static String get clinicWorkingDaysAndTime =>
+      "Clinic Working Days & Time".tr();
 }

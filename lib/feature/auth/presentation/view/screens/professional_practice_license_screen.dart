@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
@@ -18,7 +19,7 @@ class ProfessionalLicenseScreen extends StatelessWidget {
     String? medicalLicense;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Professional Practice License",
+        title: Text(AppString.professionalPracticeLicense,
             style: Theme.of(context).textTheme.titleLarge),
         centerTitle: true,
       ),
@@ -29,16 +30,16 @@ class ProfessionalLicenseScreen extends StatelessWidget {
           children: [
             SizedBox(height: 30.h),
             Text(
-              "Upload your professional practice license",
+              AppString.uploadLicense,
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge
-                  ?.copyWith(fontWeight: FontWeight.w600),
+                  ?.copyWith(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 10.h),
             Text(
-              "Please provide a clear image of your valid license to verify your professional status.",
+              AppString.uploadLicenseDescription,
               style: Theme.of(context)
                   .textTheme
                   .labelLarge

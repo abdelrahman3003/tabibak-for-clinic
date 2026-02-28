@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
@@ -28,7 +29,7 @@ class SigninButton extends StatelessWidget {
       builder: (context, state) {
         final isLoading = state is SigninLoading;
         return AppButton(
-          title: isLoading ? "Loging in..." : "Log in",
+          title: isLoading ? AppString.loggingIn : AppString.login,
           isLoading: isLoading,
           onPressed: isLoading ? null : onPressed,
         );
