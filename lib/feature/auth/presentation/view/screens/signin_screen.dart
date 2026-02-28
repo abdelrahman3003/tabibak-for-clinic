@@ -26,6 +26,13 @@ class _SigninScreenState extends State<SigninScreen> {
       TextEditingController(text: "abdelrahmatemsah29@gmail.com");
   final passwordController = TextEditingController(text: "Abdo123#");
   @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return Scaffold(

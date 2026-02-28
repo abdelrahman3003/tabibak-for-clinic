@@ -24,6 +24,9 @@ class ResetButtonStates extends StatelessWidget {
           AppSnackBar.show(context: context, message: state.errorMessage);
         }
         if (state is ResetPasswordSuccess) {
+          AppSnackBar.show(
+              context: context,
+              message: "Password has been changed successfully");
           context.pushNamed(Routes.signinScreen);
         }
       },
