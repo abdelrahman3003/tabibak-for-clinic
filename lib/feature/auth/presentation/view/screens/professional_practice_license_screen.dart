@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/signup_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/confirm_button.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/upload_image_widget.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
@@ -54,7 +53,7 @@ class ProfessionalLicenseScreen extends StatelessWidget {
             ),
             const Spacer(),
             ConfirmButton(
-              email: emailController?.text ?? "",
+              email: doctor.email ?? "",
               onPressed: () {
                 context.read<SignupBloc>().add(SignupRequestedEvent(
                     doctorEntity:

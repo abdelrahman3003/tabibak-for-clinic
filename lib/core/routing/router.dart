@@ -61,7 +61,7 @@ class AppRouter {
       case Routes.signupScreen:
         page = BlocProvider(
           create: (context) => getit<SignupBloc>(),
-          child: const SignupScreen(),
+          child: const RootScreenWrapper(child: SignupScreen()),
         );
         break;
       case Routes.checkEmailScreen:

@@ -75,7 +75,8 @@ class ErrorHandler {
     switch (error.code) {
       case '23505': // Unique violation
         if (error.message.contains('doctors')) {
-          return ApiErrorModel(message: "This email is already registered as a doctor");
+          return ApiErrorModel(
+              message: "This email is already registered as a doctor");
         }
         return ApiErrorModel(message: "Record already exists");
       default:

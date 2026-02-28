@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
@@ -8,7 +7,6 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/helper/validation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_field.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/do_you_have_account.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/password_text_field.dart';
@@ -22,11 +20,6 @@ class SignupScreen extends StatefulWidget {
   State<SignupScreen> createState() => _SignupScreenState();
 }
 
-TextEditingController? nameController;
-TextEditingController? emailController;
-TextEditingController? passwordController;
-TextEditingController? phoneController;
-
 int? selectedSpecialization;
 final GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 User user = getit<Supabase>().client.auth.currentUser!;
@@ -34,7 +27,10 @@ User user = getit<Supabase>().client.auth.currentUser!;
 class _SignupScreenState extends State<SignupScreen> {
   User? user;
   int? selectedSpecialization;
-
+  TextEditingController? nameController;
+  TextEditingController? emailController;
+  TextEditingController? passwordController;
+  TextEditingController? phoneController;
   @override
   void initState() {
     super.initState();
@@ -43,7 +39,6 @@ class _SignupScreenState extends State<SignupScreen> {
         TextEditingController(text: "abdelrahmatemsah29@gmail.com");
     passwordController = TextEditingController(text: "Abdo123#");
     phoneController = TextEditingController(text: "01032970712");
-    context.read<SignupBloc>().add(const GetSpecialtiesRequested());
   }
 
   @override
