@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
@@ -39,7 +40,7 @@ class Dialogs {
               ),
               const SizedBox(height: 16),
               AppButton(
-                title: "Close",
+                title: AppString.close,
                 color: AppColors.green,
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 onPressed: () => Navigator.of(context).pop(),
@@ -91,13 +92,13 @@ class Dialogs {
               ),
               const SizedBox(height: 16),
               Text(
-                "لا يوجد عروض حاليا",
+                AppString.knownOffer,
                 style: Theme.of(context).textTheme.titleLarge,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
               AppButton(
-                title: "حسناً",
+                title: AppString.ok,
                 color: AppColors.primary,
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 onPressed: () => Navigator.of(context).pop(),
@@ -131,7 +132,7 @@ class Dialogs {
                 ),
                 32.hBox,
                 Text(
-                  "Notice",
+                  AppString.notice,
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge
@@ -145,7 +146,7 @@ class Dialogs {
                 ),
                 32.hBox,
                 AppButton(
-                  title: "OK",
+                  title: AppString.ok,
                   onPressed: () {
                     context.pop();
                   },
@@ -186,7 +187,7 @@ class Dialogs {
               ),
               const SizedBox(height: 16),
               Text(
-                "UnKnown error",
+                AppString.unknownError,
                 style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
@@ -198,7 +199,7 @@ class Dialogs {
               ),
               const SizedBox(height: 16),
               AppButton(
-                title: "Close",
+                title: AppString.close,
                 color: Colors.red,
                 onPressed: () => context.pop(),
                 padding: const EdgeInsets.symmetric(vertical: 10),
@@ -230,7 +231,7 @@ class Dialogs {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text("Cancel"),
+          child: Text(AppString.cancel),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(

@@ -129,4 +129,23 @@ class AppString {
   static String get endTime => "End Time".tr();
   static String get selectTime => "Select Time".tr();
   static String get save => "Save".tr();
+  static String get clinic => "Clinic".tr();
+  static String get profile => "Profile".tr();
+
+  // Profile Localization
+  static String get doctorInformation => "Doctor Information".tr();
+  static String get specialty => "Specialty".tr();
+  static String get notSpecified => "Not Specified".tr();
+  static String get education => "Education".tr();
+  static String get educationIsEmpty => "Education is empty".tr();
+  static String get setting => "Setting".tr();
+  static String get aboutUs => "About Us".tr();
+  static String get privacy => "Privacy".tr();
+  static String get logOut => "LogOut".tr();
+  static String get cancel => "Cancel".tr();
+  static String get close => "Close".tr();
+  static String get ok => "OK".tr();
+  static String get notice => "Notice".tr();
+  static String get unknownError => "UnKnown error".tr();
+  static String get logOutSubtitle => "Are you sure you want to log out?".tr();
 }

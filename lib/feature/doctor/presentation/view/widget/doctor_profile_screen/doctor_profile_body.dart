@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
@@ -46,13 +47,13 @@ class DoctorProfileBody extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ProfileTitle(
-                title: "Doctor Information",
+              ProfileTitle(
+                title: AppString.doctorInformation,
                 icon: Icons.medical_services,
               ),
               10.hBox,
               EditItem(
-                title: "Personal Information",
+                title: AppString.personalInformation,
                 subtitle: doctor.phone ?? "",
                 onTap: () {
                   context.pushNamed(Routes.doctorPersonalInfo,
@@ -61,8 +62,8 @@ class DoctorProfileBody extends StatelessWidget {
               ),
               15.hBox,
               EditItem(
-                title: "Specialty",
-                subtitle: doctor.specialtyData?.nameEn ?? "Not Specified",
+                title: AppString.specialty,
+                subtitle: doctor.specialtyData?.nameEn ?? AppString.notSpecified,
                 onTap: () {
                   context.pushNamed(Routes.doctorSpecialtyScreen,
                       arguments: doctor.specialty);
@@ -70,8 +71,8 @@ class DoctorProfileBody extends StatelessWidget {
               ),
               15.hBox,
               EditItem(
-                title: "Education",
-                subtitle: doctor.education?.university ?? "Education is empty",
+                title: AppString.education,
+                subtitle: doctor.education?.university ?? AppString.educationIsEmpty,
                 onTap: () {
                   context.pushNamed(
                     Routes.doctorEducationScreen,
@@ -80,14 +81,14 @@ class DoctorProfileBody extends StatelessWidget {
                 },
               ),
               20.hBox,
-              const ProfileTitle(title: "Setting", icon: Icons.settings),
+              ProfileTitle(title: AppString.setting, icon: Icons.settings),
               10.hBox,
-              const SettingItem(title: "About Us", icon: Icons.info_outline),
+              SettingItem(title: AppString.aboutUs, icon: Icons.info_outline),
               15.hBox,
-              const SettingItem(title: "Privacy", icon: Icons.privacy_tip),
+              SettingItem(title: AppString.privacy, icon: Icons.privacy_tip),
               15.hBox,
               SettingItem(
-                title: "LogOut",
+                title: AppString.logOut,
                 icon: Icons.logout,
                 onTap: () {
                   showDialog(

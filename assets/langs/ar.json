@@ -117,5 +117,22 @@
     "Thursday": "الخميس",
     "Friday": "الجمعة",
     "Select Time": "اختر الوقت",
-    "Save": "حفظ"
+    "Save": "حفظ",
+    "Clinic": "العيادة",
+    "Profile": "الملف الشخصي",
+    "Doctor Information": "معلومات الطبيب",
+    "Specialty": "التخصص",
+    "Not Specified": "غير محدد",
+    "Education": "التعليم",
+    "Education is empty": "التعليم فارغ",
+    "Setting": "الإعدادات",
+    "About Us": "حول التطبيق",
+    "Privacy": "الخصوصية",
+    "LogOut": "تسجيل الخروج",
+    "Cancel": "إلغاء",
+    "Close": "إغلاق",
+    "OK": "حسناً",
+    "Notice": "تنبيه",
+    "UnKnown error": "خطأ غير معروف",
+    "Are you sure you want to log out?": "هل أنت متأكد أنك تريد تسجيل الخروج؟"
 }

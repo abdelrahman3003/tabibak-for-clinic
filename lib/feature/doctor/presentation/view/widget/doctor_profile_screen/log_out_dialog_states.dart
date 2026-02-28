@@ -1,3 +1,4 @@
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
@@ -32,9 +33,9 @@ class LogOutDialogStates extends StatelessWidget {
           builder: (context, state) {
             return Dialogs.alertDialog(
               context: context,
-              title: "Log Out",
-              subtitle: "Are you sure you want to log out?",
-              confirmString: "Log Out",
+              title: AppString.logOut,
+              subtitle: AppString.logOutSubtitle,
+              confirmString: AppString.logOut,
               color: AppColors.red,
               isLoading: state is LogOutDoctorLoading,
               onPressed: () {

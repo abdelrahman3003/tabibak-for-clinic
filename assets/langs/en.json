@@ -117,5 +117,22 @@
     "Thursday": "Thursday",
     "Friday": "Friday",
     "Select Time": "Select Time",
-    "Save": "Save"
+    "Save": "Save",
+    "Clinic": "Clinic",
+    "Profile": "Profile",
+    "Doctor Information": "Doctor Information",
+    "Specialty": "Specialty",
+    "Not Specified": "Not Specified",
+    "Education": "Education",
+    "Education is empty": "Education is empty",
+    "Setting": "Setting",
+    "About Us": "About Us",
+    "Privacy": "Privacy",
+    "LogOut": "LogOut",
+    "Cancel": "Cancel",
+    "Close": "Close",
+    "OK": "OK",
+    "Notice": "Notice",
+    "UnKnown error": "UnKnown error",
+    "Are you sure you want to log out?": "Are you sure you want to log out?"
 }

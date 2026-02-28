@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens/appointment_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic_layout.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_profile_screen.dart';
@@ -30,23 +31,23 @@ class _LayoutScreenState extends State<LayoutScreen> {
     ];
 
     _tabs = [
-      const GButton(
+      GButton(
         icon: Icons.home,
         iconActiveColor: AppColors.primary,
         iconColor: Colors.grey,
-        text: "Clinic",
+        text: AppString.clinic,
       ),
-      const GButton(
+      GButton(
         icon: Icons.event,
         iconActiveColor: AppColors.primary,
         iconColor: Colors.grey,
-        text: "Appointments",
+        text: AppString.appointments,
       ),
-      const GButton(
+      GButton(
         icon: Icons.person,
         iconActiveColor: AppColors.primary,
         iconColor: Colors.grey,
-        text: "Profile",
+        text: AppString.profile,
       ),
     ];
   }
