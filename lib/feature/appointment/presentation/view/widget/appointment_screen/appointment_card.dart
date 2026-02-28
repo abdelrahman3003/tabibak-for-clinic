@@ -40,7 +40,7 @@ class AppointmentCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
-              color: _badgeColor(appointmentEntity.statusEn!),
+              color: _badgeColor(appointmentEntity.statusEn ?? ""),
               borderRadius: BorderRadius.circular(12),
             ),
             child: _buildStatusMenu(context),
@@ -84,11 +84,11 @@ class AppointmentCard extends StatelessWidget {
       itemBuilder: (context) => appointmentStatusLis
           .map(
             (e) => PopupMenuItem<int>(
-              value: e.id!,
-              child: Text(e.status ?? '',
+              value: e.id ?? 0,
+              child: Text(e.statusEn ?? '',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: _badgeColor(e.status!),
+                        color: _badgeColor(e.statusAr ?? ""),
                       )),
             ),
           )
@@ -106,11 +106,11 @@ class AppointmentCard extends StatelessWidget {
 
   Color _badgeColor(String status) {
     switch (status) {
-      case "Upcoming":
+      case "Upcoming" || "قادم":
         return Colors.orange;
-      case "Finished":
+      case "Finished" || "منتهي":
         return Colors.green;
-      case "Cancelled":
+      case "Cancelled" || "ملغي":
         return Colors.red;
       default:
         return Colors.grey;

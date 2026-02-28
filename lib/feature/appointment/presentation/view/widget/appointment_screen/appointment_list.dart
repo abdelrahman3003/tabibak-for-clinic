@@ -28,7 +28,7 @@ class AppointmentList extends StatelessWidget {
         onStatusChanged: (value) {
           context.read<AppointmentBloc>().add(UpdateAppointmentStatusEvent(
               statusIndex: value,
-              appointmentId: appointmentList[index].appointmentId!,
+              appointmentId: appointmentList[index].appointmentId ?? 0,
               type: type,
               isToday: isToday));
         },

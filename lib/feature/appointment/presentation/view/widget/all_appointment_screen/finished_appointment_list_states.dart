@@ -23,7 +23,7 @@ class FinishedAppointmentListStates extends StatelessWidget {
           Dialogs.showLoading(context);
         }
         if (state is UpdateAppointmentStatusSuccess) {
-          appointmentList = state.updatedAppointmentList!;
+          appointmentList = state.updatedAppointmentList ?? [];
           context.pop();
         }
         if (state is FinishedAppointmentsSuccess) {
