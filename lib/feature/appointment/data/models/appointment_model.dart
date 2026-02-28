@@ -4,7 +4,8 @@ class AppointmentModel extends AppointmentEntity {
   const AppointmentModel({
     super.appointmentId,
     super.appointmentDate,
-    super.status,
+    super.statusEn,
+    super.statusAr,
     super.statusId,
     super.doctorId,
     super.userId,
@@ -20,7 +21,8 @@ class AppointmentModel extends AppointmentEntity {
       appointmentId: json['id'],
       appointmentDate: DateTime.parse(json['appointment_date']),
       userImage: json['users']?['image'],
-      status: json['appointments_status']['status'],
+      statusAr: json['appointments_status']['status_ar'],
+      statusEn: json['appointments_status']['status_en'],
       phone: json['phone'],
       name: json['name'],
     );

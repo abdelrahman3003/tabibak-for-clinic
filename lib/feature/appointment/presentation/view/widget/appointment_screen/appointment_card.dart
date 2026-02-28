@@ -40,7 +40,7 @@ class AppointmentCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
-              color: _badgeColor(appointmentEntity.status!),
+              color: _badgeColor(appointmentEntity.statusEn!),
               borderRadius: BorderRadius.circular(12),
             ),
             child: _buildStatusMenu(context),
@@ -94,7 +94,7 @@ class AppointmentCard extends StatelessWidget {
           )
           .toList(),
       child: Text(
-        appointmentEntity.status ?? "",
+        appointmentEntity.statusEn ?? "",
         textAlign: TextAlign.center,
         style: Theme.of(context)
             .textTheme

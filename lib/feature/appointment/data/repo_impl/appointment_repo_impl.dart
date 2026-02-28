@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
@@ -87,8 +85,6 @@ class AppointmentRepoImpl extends AppointmentRepo {
           .addAppointment(AppointmentModel.fromEntity(appointment));
       return right(response);
     } catch (e) {
-      log("---------error $e");
-
       return left(ErrorHandler.handle(e));
     }
   }
