@@ -30,10 +30,10 @@ class ResetButtonStates extends StatelessWidget {
       builder: (context, state) {
         return AppButton(
           title: AppString.resetPassword,
-          isLoading: state is ResetPasswordInitial,
+          isLoading: state is ResetPasswordLoading,
           onPressed: () {
             if (formKey.currentState!.validate()) {
-              if (passwordController != confirmPasswordController) {
+              if (passwordController.text != confirmPasswordController.text) {
                 AppSnackBar.show(
                   context: context,
                   message: "Not Matching Password",

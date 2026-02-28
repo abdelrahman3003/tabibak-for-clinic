@@ -68,12 +68,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 PasswordTextField(
                   controller: passwordController,
                   hint: AppString.newPassword,
+                  validator: (value) => Validation.validateName(value),
                 ),
                 20.hBox,
                 PasswordTextField(
                   controller: confirmPasswordController,
                   hint: AppString.confirmNewPassword,
-                  validator: (value) => Validation.validateEmail(value),
+                  validator: (value) => Validation.validateName(value),
                 ),
                 60.hBox,
                 ResetButtonStates(
