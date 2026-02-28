@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
@@ -16,7 +17,7 @@ class ClinicInit extends StatelessWidget {
         _buildPanner(context),
         const Spacer(),
         AppButton(
-          title: "Create Clinic",
+          title: AppString.createClinic,
           onPressed: () {
             context.pushNamed(Routes.clinicStructureScreen);
           },
@@ -45,14 +46,14 @@ class ClinicInit extends StatelessWidget {
           Icon(Icons.local_hospital_rounded,
               size: 60, color: Theme.of(context).colorScheme.primary),
           16.hBox,
-          Text("Setup Your Clinic",
+          Text(AppString.setupYourClinic,
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
                   ?.copyWith(fontWeight: FontWeight.bold)),
           10.hBox,
           Text(
-              "Add your clinic details, working days and schedule to get started.",
+              AppString.setupClinicSubtitle,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium),
           10.hBox,

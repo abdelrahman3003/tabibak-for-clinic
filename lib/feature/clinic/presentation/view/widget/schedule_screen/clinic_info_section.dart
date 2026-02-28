@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
@@ -14,12 +15,12 @@ class ClinicInfoSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const ProfileTitle(
-            title: "Clinic Information", icon: Icons.medical_services),
+        ProfileTitle(
+            title: AppString.clinicInformation, icon: Icons.medical_services),
         15.hBox,
         EditItem(
-          title: "Clinic Info",
-          subtitle: clinicInfoEntity.clinicName ?? "Known Name",
+          title: AppString.clinicInformation,
+          subtitle: clinicInfoEntity.clinicName ?? AppString.knownName,
           onTap: () {
             context.pushNamed(Routes.clinicInfoScreen,
                 arguments: clinicInfoEntity);
@@ -27,9 +28,9 @@ class ClinicInfoSection extends StatelessWidget {
         ),
         15.hBox,
         EditItem(
-          title: "Clinic Address",
+          title: AppString.clinicAddress,
           subtitle: clinicInfoEntity.address?.clinicAddress ??
-              "Address Not Available",
+              AppString.addressNotAvailable,
           onTap: () {
             context.pushNamed(Routes.clinicAddressScreen,
                 arguments: clinicInfoEntity);
@@ -37,12 +38,11 @@ class ClinicInfoSection extends StatelessWidget {
         ),
         15.hBox,
         EditItem(
-          title: "Clinic Offer",
-          subtitle: "Known Offer",
+          title: AppString.clinicOffer,
+          subtitle: AppString.knownOffer,
           onTap: () {
             Dialogs.noticeDialog(context,
-                title:
-                    "This section is currently unavailable. We are working on enhancing this feature to provide you with a better experience.");
+                title: AppString.featureUnavailableMessage);
             // context.pushNamed(Routes.clinicOfferScreen);
           },
         )

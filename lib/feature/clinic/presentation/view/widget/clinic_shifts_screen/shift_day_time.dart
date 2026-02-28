@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
@@ -48,13 +50,13 @@ class ShiftDayTime extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              day.dayEn!,
+              day.dayEn!.tr(),
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.bold, color: AppColors.primary),
             ),
             15.hBox,
             ShiftHours(
-              shift: "Morning",
+              shift: AppString.morning,
               onStartTimeSelected: onStarMorningSelected,
               onEndTimeSelected: onEndMorningSelected,
               initialEnd: initialMorningStart,
@@ -62,7 +64,7 @@ class ShiftDayTime extends StatelessWidget {
             ),
             32.hBox,
             ShiftHours(
-              shift: "Evening",
+              shift: AppString.evening,
               onStartTimeSelected: onStartEveningSelected,
               onEndTimeSelected: onEndEveningSelected,
               initialStart: initialEveningStart,

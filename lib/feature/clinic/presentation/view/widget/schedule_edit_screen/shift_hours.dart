@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_edit_screen/custom_switch.dart';
@@ -54,7 +55,7 @@ class _ShiftHoursState extends State<ShiftHours> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TimeField(
-                    title: "Start Time",
+                    title: AppString.startTime,
                     onTimeSelected: widget.onStartTimeSelected,
                     enable: isActive,
                     value: widget.initialStart,
@@ -67,7 +68,7 @@ class _ShiftHoursState extends State<ShiftHours> {
                 child: Column(
               children: [
                 TimeField(
-                  title: "End Time",
+                  title: AppString.endTime,
                   onTimeSelected: widget.onEndTimeSelected,
                   enable: isActive,
                   value: widget.initialEnd,

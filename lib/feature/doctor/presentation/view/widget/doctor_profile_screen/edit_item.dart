@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/text_button_widget.dart';
 
 class EditItem extends StatelessWidget {
@@ -33,7 +34,7 @@ class EditItem extends StatelessWidget {
                         color: const Color(0xff94A3B8),
                         fontWeight: FontWeight.w500)),
               ),
-              TextButtonWidget(text: 'Edit', onTap: onTap)
+              TextButtonWidget(text: AppString.edit, onTap: onTap)
             ],
           ),
           Text(

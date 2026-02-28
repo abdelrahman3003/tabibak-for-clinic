@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
@@ -27,7 +29,7 @@ class _ClinicDayBodyState extends State<ClinicDayBody> {
           children: List.generate(
             widget.days.length,
             (index) => ClinicWorkingDayItem(
-              text: widget.days[index].clinicDayEntity!.dayEn!,
+              text: widget.days[index].clinicDayEntity!.dayEn!.tr(),
               onChanged: (value) {
                 if (value) {
                   selectedDays.add(widget.days[index]);
@@ -40,7 +42,7 @@ class _ClinicDayBodyState extends State<ClinicDayBody> {
         ),
         const Spacer(),
         AppButton(
-          title: "Continue",
+          title: AppString.continueButton,
           onPressed: () {
             context.pushNamed(
               Routes.clinicShiftsTimeScreen,

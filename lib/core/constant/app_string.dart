@@ -99,4 +99,34 @@ class AppString {
   static String get finished => "Finished".tr();
   static String get appointmentEmptySubtitle =>
       "You have a clear schedule for now. \nEnjoy your free time!".tr();
+
+  // Clinic Localization
+  static String get addressNotAvailable => "Address Not Available".tr();
+  static String get knownName => "Known Name".tr();
+  static String get clinicOffer => "Clinic Offer".tr();
+  static String get knownOffer => "Known Offer".tr();
+  static String get featureUnavailableMessage =>
+      "This section is currently unavailable. We are working on enhancing this feature to provide you with a better experience."
+          .tr();
+  static String get schedule => "Schedule".tr();
+  static String get edit => "Edit".tr();
+  static String get shiftTimes => "Shift Times".tr();
+  static String get clinicWorkingDays => "Clinic Working Days".tr();
+  static String get selectWorkingDays => "Select working days".tr();
+  static String get selectWorkingDaysSubtitle =>
+      "Tap on the cards to select the days your clinic is open for patients.".tr();
+  static String get continueButton => "Continue".tr();
+  static String get clinicDirections => "Clinic Directions".tr();
+  static String get enableOnlineBookingSubtitle =>
+      "Enable this option if you want patients to book appointments online.".tr();
+  static String get onlineBooking => "Online Booking".tr();
+  static String get createClinic => "Create Clinic".tr();
+  static String get setupYourClinic => "Setup Your Clinic".tr();
+  static String get setupClinicSubtitle =>
+      "Add your clinic details, working days and schedule to get started.".tr();
+  static String get egyptianPound => "EGP".tr();
+  static String get startTime => "Start Time".tr();
+  static String get endTime => "End Time".tr();
+  static String get selectTime => "Select Time".tr();
+  static String get save => "Save".tr();
 }

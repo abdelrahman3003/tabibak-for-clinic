@@ -1,3 +1,4 @@
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:flutter/material.dart';
 
 class TimeField extends StatefulWidget {
@@ -70,7 +71,7 @@ class _TimeFieldState extends State<TimeField> {
               ),
               controller: TextEditingController(
                 text: selectedTime == null
-                    ? widget.value?.format(context) ?? "Select Time"
+                    ? widget.value?.format(context) ?? AppString.selectTime
                     : selectedTime!.format(context),
               ),
               readOnly: true,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
@@ -34,25 +35,25 @@ class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Create Clinic"),
+      appBar: AppBarWidget(title: AppString.createClinic),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
         child: Column(
           children: [
             TextFormFiledWidget(
-              label: "Clinic Name",
+              label: AppString.clinicName,
               controller: clinicNameController,
             ),
             TextFormFiledWidget(
-              label: "Phone Number",
+              label: AppString.phoneNumber,
               keyboardType: TextInputType.number,
               controller: clinicPhoneController,
             ),
             TextFormFiledWidget(
-              label: "Consultation Fee",
+              label: AppString.consultationFee,
               keyboardType: TextInputType.number,
               controller: clinicConsultationFeeController,
-              suffixText: "EGY",
+              suffixText: AppString.egyptianPound,
             ),
             20.hBox,
             ClinicIsOnline(

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 
@@ -42,7 +43,7 @@ class _WorkingDayItemCardState extends State<WorkingDayItemCard> {
         padding: const EdgeInsets.all(30),
         child: Center(
           child: Text(
-            widget.day,
+            widget.day.tr(),
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: isInternalActive ? AppColors.white : AppColors.black),
           ),

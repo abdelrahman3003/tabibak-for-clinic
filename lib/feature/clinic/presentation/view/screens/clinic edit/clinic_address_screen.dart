@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
@@ -42,7 +43,7 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBarSave(
-          text: "Clinic Address",
+          text: AppString.clinicAddress,
           onTap: () {
             context.read<ClinicAddressBloc>().add(SaveClinicAddressEvent(
                 clinicAddressEntity: ClinicAddressEntity(
@@ -69,10 +70,10 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
             child: Column(
               children: [
                 TextFormFiledWidget(
-                  label: "Clinic Address",
+                  label: AppString.clinicAddress,
                   controller: _clinicAddressController,
                 ),
-                const TextFormFiledWidget(label: "Clinic Directions")
+                TextFormFiledWidget(label: AppString.clinicDirections)
               ],
             ),
           ),

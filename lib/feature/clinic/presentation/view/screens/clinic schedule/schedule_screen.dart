@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working_day_entity.dart';
@@ -21,7 +22,7 @@ class ScheduleScreen extends StatelessWidget {
           ClinicHeader(
               clinicName: clinicInfoEntity.clinicName ?? "",
               clinicAddress: clinicInfoEntity.address?.clinicAddress ??
-                  "Address is't available"),
+                  AppString.addressNotAvailable),
           5.hBox,
           Expanded(
             child: SingleChildScrollView(

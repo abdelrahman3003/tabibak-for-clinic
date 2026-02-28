@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 
 class ClinicIsOnline extends StatefulWidget {
   const ClinicIsOnline({super.key, this.onChanged, this.value = false});
@@ -22,7 +23,7 @@ class _ClinicIsOnlineState extends State<ClinicIsOnline> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Enable this option if you want patients to book appointments online.",
+          AppString.enableOnlineBookingSubtitle,
           style: Theme.of(context)
               .textTheme
               .bodyMedium
@@ -31,7 +32,7 @@ class _ClinicIsOnlineState extends State<ClinicIsOnline> {
         Row(
           children: [
             Text(
-              "Online Booking",
+              AppString.onlineBooking,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const Spacer(),

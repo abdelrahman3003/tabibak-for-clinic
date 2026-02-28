@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
@@ -18,7 +19,7 @@ class ScheduleHoursItem extends StatelessWidget {
       children: [
         SizedBox(
             width: 75.w,
-            child: Text(workingShiftDay.clinicDayEntity!.dayEn!,
+            child: Text(workingShiftDay.clinicDayEntity!.dayEn!.tr(),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: const Color(0xff334155)))),

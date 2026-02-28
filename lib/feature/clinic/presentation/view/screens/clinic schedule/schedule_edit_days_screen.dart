@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
@@ -29,7 +30,7 @@ class _ScheduleEditDaysScreenState extends State<ScheduleEditDaysScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Clinic Working Days"),
+      appBar: AppBarWidget(title: AppString.clinicWorkingDays),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
@@ -37,12 +38,12 @@ class _ScheduleEditDaysScreenState extends State<ScheduleEditDaysScreen> {
           children: [
             20.hBox,
             Text(
-              "Select working days",
+              AppString.selectWorkingDays,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             10.hBox,
             Text(
-              "Tap on the cards to select the days your clinic is open for patients.",
+              AppString.selectWorkingDaysSubtitle,
               style: Theme.of(context)
                   .textTheme
                   .labelLarge
@@ -68,7 +69,7 @@ class _ScheduleEditDaysScreenState extends State<ScheduleEditDaysScreen> {
               ),
             ),
             AppButton(
-              title: "Continue",
+              title: AppString.continueButton,
               onPressed: () {
                 final selectedDays =
                     days.where((e) => e.isSelected == true).toList();

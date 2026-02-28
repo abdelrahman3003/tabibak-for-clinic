@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
@@ -51,7 +52,7 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
         ModalRoute.of(context)!.settings.arguments as ClinicWorkingDayArgs;
 
     return Scaffold(
-      appBar: const AppBarWidget(title: "Shift Times"),
+      appBar: AppBarWidget(title: AppString.shiftTimes),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
         child: CustomScrollView(

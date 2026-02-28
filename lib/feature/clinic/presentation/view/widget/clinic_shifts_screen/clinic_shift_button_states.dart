@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
@@ -25,7 +26,7 @@ class ClinicShiftButtonStates extends StatelessWidget {
       },
       builder: (context, state) {
         return AppButton(
-          title: "Save",
+          title: AppString.save,
           isLoading: state is ClinicShiftLoading,
           onPressed: onPressed,
         );

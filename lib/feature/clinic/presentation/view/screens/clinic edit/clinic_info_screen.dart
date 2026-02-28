@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
@@ -48,7 +49,7 @@ class _ClinicInfoScreenState extends State<ClinicInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBarSave(
-          text: "Clinic Info",
+          text: AppString.clinicInformation,
           onTap: () {
             context.read<ClinicInfoSaveBloc>().add(SaveClinicInfoEvent(
                   clinicInfoEntity: ClinicInfoEntity(
@@ -77,19 +78,19 @@ class _ClinicInfoScreenState extends State<ClinicInfoScreen> {
             child: Column(
               children: [
                 TextFormFiledWidget(
-                  label: "Clinic Name",
+                  label: AppString.clinicName,
                   controller: _clinicNameController,
                 ),
                 TextFormFiledWidget(
-                  label: "Phone Number",
+                  label: AppString.phoneNumber,
                   keyboardType: TextInputType.number,
                   controller: _phoneController,
                 ),
                 TextFormFiledWidget(
-                  label: "Consultation Fee",
+                  label: AppString.consultationFee,
                   keyboardType: TextInputType.number,
                   controller: _feeController,
-                  suffixText: "EGY",
+                  suffixText: AppString.egyptianPound,
                 ),
                 ClinicIsOnline(
                   value: isOnline,

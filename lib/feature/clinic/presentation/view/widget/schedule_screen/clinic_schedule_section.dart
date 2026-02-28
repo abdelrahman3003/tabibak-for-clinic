@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
@@ -20,19 +21,23 @@ class ClinicScheduleSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Expanded(
-              child: ProfileTitle(title: "Schedule", icon: Icons.date_range),
+            Expanded(
+              child: ProfileTitle(title: AppString.schedule, icon: Icons.date_range),
             ),
-            TextButtonWidget(
-              text: "Edit",
-              onTap: () {
-                context.pushNamed(
-                  Routes.scheduleEditDaysScreen,
-                  arguments: ClinicWorkingDayArgs(
-                      selectedDays: workingShiftsDays, clinicId: clinicId),
-                );
-              },
-            )
+            ValueListenableBuilder(
+                valueListenable: ValueNotifier(workingShiftsDays),
+                builder: (context, value, child) {
+                  return TextButtonWidget(
+                    text: AppString.edit,
+                    onTap: () {
+                      context.pushNamed(
+                        Routes.scheduleEditDaysScreen,
+                        arguments: ClinicWorkingDayArgs(
+                            selectedDays: workingShiftsDays, clinicId: clinicId),
+                      );
+                    },
+                  );
+                })
           ],
         ),
         15.hBox,
