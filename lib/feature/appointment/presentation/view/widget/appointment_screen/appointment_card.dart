@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
@@ -21,6 +22,7 @@ class AppointmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isArabic = context.locale.languageCode == 'ar';
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -43,7 +45,7 @@ class AppointmentCard extends StatelessWidget {
               color: _badgeColor(appointmentEntity.statusEn ?? ""),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: _buildStatusMenu(context),
+            child: _buildStatusMenu(context, isArabic),
           ),
         ],
       ),
@@ -75,7 +77,7 @@ class AppointmentCard extends StatelessWidget {
     );
   }
 
-  PopupMenuButton<int> _buildStatusMenu(BuildContext context) {
+  PopupMenuButton<int> _buildStatusMenu(BuildContext context, bool isArabic) {
     return PopupMenuButton<int>(
       color: Colors.white,
       onSelected: (id) {
@@ -85,16 +87,18 @@ class AppointmentCard extends StatelessWidget {
           .map(
             (e) => PopupMenuItem<int>(
               value: e.id ?? 0,
-              child: Text(e.statusEn ?? '',
+              child: Text(isArabic ? (e.statusAr ?? "") : (e.statusEn ?? ""),
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: _badgeColor(e.statusAr ?? ""),
+                        color: _badgeColor(e.statusEn ?? ""),
                       )),
             ),
           )
           .toList(),
       child: Text(
-        appointmentEntity.statusEn ?? "",
+        isArabic
+            ? (appointmentEntity.statusAr ?? "")
+            : (appointmentEntity.statusEn ?? ""),
         textAlign: TextAlign.center,
         style: Theme.of(context)
             .textTheme
@@ -106,11 +110,11 @@ class AppointmentCard extends StatelessWidget {
 
   Color _badgeColor(String status) {
     switch (status) {
-      case "Upcoming" || "قادم":
+      case "Upcoming":
         return Colors.orange;
-      case "Finished" || "منتهي":
+      case "Finished" || "Completed":
         return Colors.green;
-      case "Cancelled" || "ملغي":
+      case "Cancelled":
         return Colors.red;
       default:
         return Colors.grey;

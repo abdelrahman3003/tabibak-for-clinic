@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/widgets/circle_indicator_widget.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
@@ -39,8 +40,8 @@ class FinishedAppointmentListStates extends StatelessWidget {
         }
 
         return appointmentList!.isEmpty
-            ? const AppointmentEmpty(
-                title: "NO Finished Appointments",
+            ? AppointmentEmpty(
+                title: AppString.noFinishedAppointments,
               )
             : AppointmentList(
                 type: 2,

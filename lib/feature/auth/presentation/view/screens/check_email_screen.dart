@@ -59,7 +59,7 @@ class CheckEmailScreen extends StatelessWidget {
                       height: 1.5,
                     ),
                 children: [
-                  const TextSpan(text: AppString.verificationEmailSent),
+                  TextSpan(text: AppString.verificationEmailSent),
                   const TextSpan(text: "\n\n"),
                   TextSpan(
                     text: email,

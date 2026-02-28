@@ -22,7 +22,7 @@ class DecumentSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const AuthSubtitleText(title: AppString.documentsVerification),
+        AuthSubtitleText(title: AppString.documentsVerification),
         10.hBox,
         DocumentUploadField(
           title: "National ID Card",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 
 class AppointmentEmpty extends StatelessWidget {
@@ -24,7 +25,7 @@ class AppointmentEmpty extends StatelessWidget {
         ),
         20.hBox,
         Text(
-          "You have a clear schedule for now. \nEnjoy your free time!",
+          AppString.appointmentEmptySubtitle,
           style: Theme.of(context)
               .textTheme
               .titleMedium

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
@@ -32,8 +33,8 @@ class AppointmentBody extends StatelessWidget {
           ),
           32.hBox,
           TitleTextRow(
-            title: "Appointments's Today",
-            subtitle: "See All",
+            title: AppString.appointmentsToday,
+            subtitle: AppString.seeAll,
             onTap: () {
               Navigator.pushNamed(context, Routes.allAppointmentScreen,
                   arguments: appointmentStatusList);
@@ -41,8 +42,8 @@ class AppointmentBody extends StatelessWidget {
           ),
           10.hBox,
           appointmentList.isEmpty
-              ? const Expanded(
-                  child: AppointmentEmpty(title: "No Appointments Today"))
+              ? Expanded(
+                  child: AppointmentEmpty(title: AppString.noAppointmentsToday))
               : AppointmentList(
                   type: 1,
                   isToday: true,

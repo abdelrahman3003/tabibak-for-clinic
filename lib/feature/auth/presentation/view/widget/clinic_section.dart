@@ -21,7 +21,7 @@ class ClinicSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const AuthSubtitleText(title: AppString.clinicInformation),
+        AuthSubtitleText(title: AppString.clinicInformation),
         10.hBox,
         AuthField(
           label: AppString.clinicName,

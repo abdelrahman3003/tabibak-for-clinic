@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
@@ -34,7 +36,7 @@ class TodayBanner extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Hello,",
+                      AppString.hello,
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium
@@ -75,7 +77,7 @@ class TodayBanner extends StatelessWidget {
                     .displaySmall
                     ?.copyWith(fontWeight: FontWeight.bold)),
             TextSpan(
-                text: "Appointments",
+                text: "${AppString.appointments} ",
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall

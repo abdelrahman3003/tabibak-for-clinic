@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status_entity.dart';
@@ -46,7 +47,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Appointments",
+          AppString.appointments,
           style: Theme.of(context)
               .textTheme
               .headlineSmall
@@ -69,17 +70,17 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
                 children: [
                   ItemBar(
                     isActive: selectedIndex == 0,
-                    text: "Upcoming",
+                    text: AppString.upcoming,
                     onTa: () => _getAppointmentList(context, 0),
                   ),
                   ItemBar(
                     isActive: selectedIndex == 1,
-                    text: "Completed",
+                    text: AppString.completed,
                     onTa: () => _getAppointmentList(context, 1),
                   ),
                   ItemBar(
                     isActive: selectedIndex == 2,
-                    text: "Cancelled",
+                    text: AppString.cancelled,
                     onTa: () => _getAppointmentList(context, 2),
                   ),
                 ],

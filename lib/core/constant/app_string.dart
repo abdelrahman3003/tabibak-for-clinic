@@ -1,110 +1,102 @@
+import 'package:easy_localization/easy_localization.dart';
+
 class AppString {
-  static const String signUp = "Sign up";
+  static String get signUp => "Sign up".tr();
+  static String get personalInformation => "Personal Information".tr();
+  static String get clinicInformation => "Clinic Information".tr();
+  static String get specializationInformation => "Specialization Information".tr();
+  static String get documentsVerification => "Documents Verification".tr();
+  static String get reviewAndSubmit => "Review & Submit".tr();
+  static String get firstName => "First name".tr();
+  static String get lastName => "Last name".tr();
+  static String get email => "Email".tr();
+  static String get phoneNumber => "Phone number".tr();
+  static String get verifyOtp => "Verify OTP".tr();
+  static String get password => "Password".tr();
+  static String get confirmPassword => "Confirm password".tr();
+  static String get clinicName => "Clinic name".tr();
+  static String get clinicAddress => "Clinic address".tr();
+  static String get governorate => "Governorate".tr();
+  static String get area => "Area".tr();
+  static String get clinicLocation => "Clinic location".tr();
+  static String get pickOnMap => "Pick on map".tr();
+  static String get workingHours => "Working hours".tr();
+  static String get daysAndTimeSlots => "Days & Time Slots".tr();
+  static String get landlineNumber => "Landline number (optional)".tr();
+  static String get mainSpecialization => "Main specialization".tr();
+  static String get subSpecializations => "Sub specializations (optional)".tr();
+  static String get consultationFee => "Consultation fee".tr();
+  static String get consultationDuration => "Consultation duration".tr();
+  static String get uploadDocuments => "Upload documents".tr();
+  static String get nationalId => "National ID".tr();
+  static String get medicalLicense => "Medical license".tr();
+  static String get profilePhoto => "Profile photo".tr();
+  static String get medicalSyndicateNumber => "Medical syndicate number (optional)".tr();
+  static String get submit => "Submit".tr();
+  static String get reviewData => "Review your data before submitting".tr();
+  static String get pendingApproval => "Pending approval".tr();
+  static String get approvalNotification => "Approval notification".tr();
+  static String get welcomeDoctor => "Welcome, Doctor!".tr();
+  static String get manageAppointments => "Manage your appointments".tr();
+  static String get managePatients => "Track your patients".tr();
+  static String get manageRevenue => "Monitor your revenue".tr();
+  static String get getStarted => "Get started".tr();
+  static String get next => "Next".tr();
+  static String get back => "Back".tr();
+  static String get finish => "Finish".tr();
+  static String get otpSent => "OTP has been sent to your phone number".tr();
+  static String get resendOtp => "Resend OTP".tr();
+  static String get enterOtp => "Enter OTP".tr();
+  static String get pleaseWait => "Please wait...".tr();
+  static String get upload => "Upload".tr();
+  static String get chooseFile => "Choose file".tr();
+  static String get takePhoto => "Take photo".tr();
+  static String get gallery => "Gallery".tr();
+  static String get camera => "Camera".tr();
+  static String get weeklyOverview => "Weekly Overview".tr();
+  static String weeklyDays(int daysCount) => "This week has $daysCount days scheduled".tr();
+  static String weeklyShiftHours(String startMorning, String endMorning, String startEvening, String endEvening) =>
+      "Note: Morning shifts are from $startMorning to $endMorning, Evening shifts are from $startEvening to $endEvening".tr();
+  static String get scheduleHours => "Schedule hours".tr();
+  static String get day => "Day".tr();
+  static String get morning => "Morning".tr();
+  static String get evening => "Evening".tr();
+  static String get checkEmail => "Check your email".tr();
+  static String get verificationEmailSent =>
+      "We have sent a verification email to your email address. Please check your inbox and follow the instructions to verify your account.".tr();
+  static String get backToLogin => "Back to Sign In".tr();
+  static String get forgotPassword => "Forgot Password".tr();
+  static String get forgotPasswordSubtitle =>
+      "Enter your email address and we will send you a code to reset your password.".tr();
+  static String get sendCode => "Send Code".tr();
+  static String get verifyCode => "Verify Code".tr();
+  static String get resendCode => "Resend Code".tr();
+  static String get createNewPassword => "Create New Password".tr();
+  static String get resetPasswordSubtitle =>
+      "Your new password must be different from previous used passwords.".tr();
+  static String get newPassword => "New Password".tr();
+  static String get confirmNewPassword => "Confirm New Password".tr();
+  static String get resetPassword => "Reset Password".tr();
+  static String get passwordResetSuccess => "Password Reset Successful".tr();
+  static String get passwordResetSuccessSubtitle =>
+      "Your password has been successfully reset. You can now sign in with your new password.".tr();
+  static String get resendAfter => "Resend after".tr();
+  static String get seconds => "seconds".tr();
+  static String get hello => "Hello,".tr();
+  static String get sendingCode => "Sending code...".tr();
 
-  // Section titles
-  static const String personalInformation = "Personal Information";
-  static const String clinicInformation = "Clinic Information";
-  static const String specializationInformation = "Specialization Information";
-  static const String documentsVerification = "Documents Verification";
-  static const String reviewAndSubmit = "Review & Submit";
-
-  // Personal info
-  static const String firstName = "First name";
-  static const String lastName = "Last name";
-  static const String email = "Email";
-  static const String phoneNumber = "Phone number";
-  static const String verifyOtp = "Verify OTP";
-  static const String password = "Password";
-  static const String confirmPassword = "Confirm password";
-
-  // Clinic info
-  static const String clinicName = "Clinic name";
-  static const String clinicAddress = "Clinic address";
-  static const String governorate = "Governorate";
-  static const String area = "Area";
-  static const String clinicLocation = "Clinic location";
-  static const String pickOnMap = "Pick on map";
-  static const String workingHours = "Working hours";
-  static const String daysAndTimeSlots = "Days & Time Slots";
-  static const String landlineNumber = "Landline number (optional)";
-
-  // Specialization info
-  static const String mainSpecialization = "Main specialization";
-  static const String subSpecializations = "Sub specializations (optional)";
-  static const String consultationFee = "Consultation fee";
-  static const String consultationDuration = "Consultation duration";
-
-  // Documents
-  static const String uploadDocuments = "Upload documents";
-  static const String nationalId = "National ID";
-  static const String medicalLicense = "Medical license";
-  static const String profilePhoto = "Profile photo";
-  static const String medicalSyndicateNumber =
-      "Medical syndicate number (optional)";
-
-  // Review and submission
-  static const String submit = "Submit";
-  static const String reviewData = "Review your data before submitting";
-  static const String pendingApproval = "Pending approval";
-  static const String approvalNotification = "Approval notification";
-
-  // Onboarding
-  static const String welcomeDoctor = "Welcome, Doctor!";
-  static const String manageAppointments = "Manage your appointments";
-  static const String managePatients = "Track your patients";
-  static const String manageRevenue = "Monitor your revenue";
-  static const String getStarted = "Get started";
-  static const String next = "Next";
-  static const String back = "Back";
-  static const String finish = "Finish";
-
-  // OTP
-  static const String otpSent = "OTP has been sent to your phone number";
-  static const String resendOtp = "Resend OTP";
-  static const String enterOtp = "Enter OTP";
-  static const String pleaseWait = "Please wait...";
-
-  // Upload
-  static const String upload = "Upload";
-  static const String chooseFile = "Choose file";
-  static const String takePhoto = "Take photo";
-  static const String gallery = "Gallery";
-  static const String camera = "Camera";
-
-  // schedule
-  static const String weeklyOverview = "Weekly Overview";
-  static String weeklyDays(int daysCount) =>
-      "This week has $daysCount days scheduled";
-  static String weeklyShiftHours(String startMorning, String endMorning,
-          String startEvening, String endEvening) =>
-      "Note: Morning shifts are from $startMorning to $endMorning, Evening shifts are from $startEvening to $endEvening";
-  static const scheduleHours = "Schedule hours";
-  static const day = "Day";
-  static const morning = "Morning";
-  static const evening = "Evening";
-
-  // Check Email
-  static const String checkEmail = "Check your email";
-  static const String verificationEmailSent =
-      "We have sent a verification email to your email address. Please check your inbox and follow the instructions to verify your account.";
-  static const String backToLogin = "Back to Sign In";
-
-  // Forgot Password
-  static const String forgotPassword = "Forgot Password";
-  static const String forgotPasswordSubtitle =
-      "Enter your email address and we will send you a code to reset your password.";
-  static const String sendCode = "Send Code";
-  static const String verifyCode = "Verify Code";
-  static const String resendCode = "Resend Code";
-  static const String createNewPassword = "Create New Password";
-  static const String resetPasswordSubtitle =
-      "Your new password must be different from previous used passwords.";
-  static const String newPassword = "New Password";
-  static const String confirmNewPassword = "Confirm New Password";
-  static const String resetPassword = "Reset Password";
-  static const String passwordResetSuccess = "Password Reset Successful";
-  static const String passwordResetSuccessSubtitle =
-      "Your password has been successfully reset. You can now sign in with your new password.";
-  static const String resendAfter = "Resend after";
-  static const String seconds = "seconds";
+  // Appointments Localization
+  static String get appointments => "Appointments".tr();
+  static String get appointmentsToday => "Appointments Today".tr();
+  static String get seeAll => "See All".tr();
+  static String get noUpcomingAppointments => "No Upcoming Appointments".tr();
+  static String get noCanceledAppointments => "No Canceled Appointments".tr();
+  static String get noFinishedAppointments => "No Finished Appointments".tr();
+  static String get noAppointmentsToday => "No Appointments Today".tr();
+  static String get upcoming => "Upcoming".tr();
+  static String get completed => "Completed".tr();
+  static String get cancelled => "Cancelled".tr();
+  static String get finished => "Finished".tr();
+  static String get appointmentEmptySubtitle =>
+      "You have a clear schedule for now. \nEnjoy your free time!".tr();
 }
