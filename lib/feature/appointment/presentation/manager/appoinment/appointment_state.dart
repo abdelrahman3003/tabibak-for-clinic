@@ -18,11 +18,7 @@ final class AppointmentFailed extends AppointmentState {
 }
 
 final class AppointmentSuccess extends AppointmentState {
-  final List<AppointmentEntity> appointmentTodayEntity;
-
-  const AppointmentSuccess({
-    required this.appointmentTodayEntity,
-  });
+  const AppointmentSuccess();
 }
 
 final class FinishedAppointmentsLoading extends AppointmentState {}

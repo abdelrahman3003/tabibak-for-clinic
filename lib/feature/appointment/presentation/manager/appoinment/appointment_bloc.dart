@@ -18,6 +18,7 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
   final GetFinishedAppointmentsUseCase getFinishedAppointmentsUseCase;
   final GetCanceledAppointmentsUseCase getCanceledAppointmentsUseCase;
   List<AppointmentStatusEntity>? appointmentStatusList;
+  List<AppointmentEntity>? appointmentEntityList;
   AppointmentBloc(
     this.getAppointmentsUseCase,
     this.updateAppointmentStatusUseCase,
@@ -36,9 +37,8 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
         },
         (appointmentHomeEntity) {
           appointmentStatusList = appointmentHomeEntity.appointmentStatusList;
-          emit(AppointmentSuccess(
-              appointmentTodayEntity:
-                  appointmentHomeEntity.appointmentTodayList!));
+          appointmentEntityList = appointmentHomeEntity.appointmentTodayList;
+          emit(const AppointmentSuccess());
         },
       );
     });

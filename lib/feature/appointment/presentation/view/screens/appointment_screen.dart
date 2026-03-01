@@ -37,13 +37,17 @@ class AppointmentScreen extends StatelessWidget {
               if (state is AppointmentFailed) {
                 return Center(child: AppTextError(error: state.errorMessage));
               }
-              if (state is AppointmentSuccess) {
+              if (state is AppointmentSuccess ||
+                  context.read<AppointmentBloc>().appointmentStatusList !=
+                      null) {
                 return AppointmentBody(
                     appointmentHomeEntity: AppointmentHomeEntity(
                         appointmentStatusList: context
                             .read<AppointmentBloc>()
                             .appointmentStatusList,
-                        appointmentTodayList: state.appointmentTodayEntity));
+                        appointmentTodayList: context
+                            .read<AppointmentBloc>()
+                            .appointmentEntityList));
               }
               return const SizedBox.shrink();
             }));
