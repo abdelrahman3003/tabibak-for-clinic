@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
-import 'package:tabibak_for_clinic/core/constant/app_values.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
@@ -26,20 +26,20 @@ class DoctorProfileBody extends StatelessWidget {
             imageUrl: doctor.image,
           ),
           16.hBox,
-          Text(doctor.name ?? "No Name",
+          Text(doctor.name ?? AppString.unknown,
               style: Theme.of(context)
                   .textTheme
                   .headlineSmall
                   ?.copyWith(fontWeight: FontWeight.bold)),
           4.hBox,
-          Text(doctor.email ?? "No Email",
+          Text(doctor.email ?? AppString.unknown,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
                   ?.copyWith(color: AppColors.grey)),
           12.hBox,
           Text(
-            doctor.bioAr ?? "",
+            doctor.bioAr ?? AppString.unknown,
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
@@ -63,7 +63,8 @@ class DoctorProfileBody extends StatelessWidget {
               15.hBox,
               EditItem(
                 title: AppString.specialty,
-                subtitle: doctor.specialtyData?.nameEn ?? AppString.notSpecified,
+                subtitle:
+                    doctor.specialtyData?.nameEn ?? AppString.notSpecified,
                 onTap: () {
                   context.pushNamed(Routes.doctorSpecialtyScreen,
                       arguments: doctor.specialty);
@@ -72,7 +73,8 @@ class DoctorProfileBody extends StatelessWidget {
               15.hBox,
               EditItem(
                 title: AppString.education,
-                subtitle: doctor.education?.university ?? AppString.educationIsEmpty,
+                subtitle:
+                    doctor.education?.university ?? AppString.educationIsEmpty,
                 onTap: () {
                   context.pushNamed(
                     Routes.doctorEducationScreen,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak_for_clinic/core/constant/app_values.dart';
+import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';

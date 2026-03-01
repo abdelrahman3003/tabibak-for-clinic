@@ -157,6 +157,7 @@ class AppString {
   static String get ok => "OK".tr();
   static String get notice => "Notice".tr();
   static String get unknownError => "UnKnown error".tr();
+  static String get unknown => "UnKnown".tr();
   static String get logOutSubtitle => "Are you sure you want to log out?".tr();
 
   // Auth Localization
