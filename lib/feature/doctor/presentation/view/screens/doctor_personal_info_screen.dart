@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
@@ -33,7 +34,7 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarSave(
-        text: "Doctor Personal Info",
+        text: AppString.doctorPersonalInfo,
         onTap: () {
           context.read<DoctorInfoBloc>().add(
                 UpdateDoctorInfo(
@@ -62,15 +63,15 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
           child: Column(
             children: [
               TextFormFiledWidget(
-                label: "Doctor Name",
+                label: AppString.doctorName,
                 controller: nameController,
               ),
               TextFormFiledWidget(
-                label: "Phone",
+                label: AppString.phoneNumber,
                 controller: phoneController,
               ),
               TextFormFiledWidget(
-                label: "Bio",
+                label: AppString.bio,
                 controller: bioController,
               ),
             ],

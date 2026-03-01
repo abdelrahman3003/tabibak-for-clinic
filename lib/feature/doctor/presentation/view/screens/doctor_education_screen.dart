@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
@@ -45,7 +46,7 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBarSave(
-          text: "Doctor Education",
+          text: AppString.doctorEducation,
           onTap: () {
             context.read<DoctorEducationBloc>().add(
                   UpdateDoctorEducationEvent(
@@ -88,24 +89,24 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
               children: [
                 10.hBox,
                 TextFormFiledWidget(
-                  label: "Country",
+                  label: AppString.country,
                   controller: countryController,
                 ),
                 TextFormFiledWidget(
-                  label: "University",
+                  label: AppString.universityName,
                   controller: universityController,
                 ),
                 TextFormFiledWidget(
-                  label: "Degree",
+                  label: AppString.degree,
                   controller: degreeController,
                 ),
                 TextFormFiledWidget(
-                  label: "Year",
+                  label: AppString.graduationYear,
                   controller: yearController,
                   keyboardType: TextInputType.number,
                 ),
                 Text(
-                  "Certificate Photo",
+                  AppString.certificatePhoto,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 10.hBox,

@@ -159,6 +159,14 @@ class AppString {
   static String get unknownError => "UnKnown error".tr();
   static String get unknown => "UnKnown".tr();
   static String get logOutSubtitle => "Are you sure you want to log out?".tr();
+  static String get doctorPersonalInfo => "Doctor Personal Info".tr();
+  static String get doctorName => "Doctor Name".tr();
+  static String get bio => "Bio".tr();
+  static String get doctorEducation => "Doctor Education".tr();
+  static String get country => "Country".tr();
+  static String get degree => "Degree".tr();
+  static String get certificatePhoto => "Certificate Photo".tr();
+  static String get doctorSpecialty => "Doctor Specialty".tr();
 
   // Auth Localization
   static String get login => "Log in".tr();

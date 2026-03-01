@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
@@ -31,7 +32,7 @@ class _DoctorSpecialtyScreenState extends State<DoctorSpecialtyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBarSave(
-          text: "Doctor Specialty",
+          text: AppString.doctorSpecialty,
           onTap: () {
             if (_selectedSpecialtyId != null) {
               context.read<DoctorSpecialtyBloc>().add(
@@ -69,10 +70,10 @@ class _DoctorSpecialtyScreenState extends State<DoctorSpecialtyScreen> {
                   specialties = state.specialties;
                   return AppDropdown<SpecialtyEntity>(
                     items: specialties,
-                    hint: 'Select Specialty',
+                    hint: AppString.selectSpecialty,
                     labelBuilder: (item) => item.nameEn,
                     validator: (value) =>
-                        value == null ? 'Please select a specialty' : null,
+                        value == null ? AppString.selectSpecialtyValidator : null,
                     onChanged: (value) {
                       _selectedSpecialtyId = value?.id;
                     },
