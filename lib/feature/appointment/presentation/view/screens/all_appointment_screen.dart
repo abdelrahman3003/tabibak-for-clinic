@@ -62,6 +62,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
           children: [
             12.hBox,
             Container(
+              padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 color: const Color(0xffF3F4F6),
                 borderRadius: BorderRadius.circular(24),

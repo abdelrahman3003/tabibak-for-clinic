@@ -14,8 +14,8 @@ class AppointmentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => getit<AppointmentBloc>(),
+    return BlocProvider.value(
+        value: getit<AppointmentBloc>(),
         child: BlocConsumer<AppointmentBloc, AppointmentState>(
             buildWhen: (previous, current) =>
                 current is AppointmentSuccess ||
