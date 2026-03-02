@@ -6,9 +6,14 @@ class UpdateDoctorInfoUseCase {
   final DoctorProfileRepo doctorProfileRepo;
 
   UpdateDoctorInfoUseCase({required this.doctorProfileRepo});
-  Future<Either<ApiErrorModel, void>> call(
-      {String? name, String? phone, String? address, String? bio}) async {
+  Future<Either<ApiErrorModel, void>> call({
+    String? name,
+    String? phone,
+    String? address,
+    String? bioAr,
+    String? bioEn,
+  }) async {
     return doctorProfileRepo.updateDoctorInfo(
-        name: name, address: address, bio: bio, phone: phone);
+        name: name, address: address, bioAr: bioAr, bioEn: bioEn, phone: phone);
   }
 }

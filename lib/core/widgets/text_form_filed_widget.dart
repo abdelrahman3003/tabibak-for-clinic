@@ -10,13 +10,15 @@ class TextFormFiledWidget extends StatelessWidget {
       this.keyboardType,
       this.suffixText,
       this.maxLines,
-      this.onTap});
+      this.onTap,
+      this.contentPadding});
   final TextEditingController? controller;
   final String label;
   final TextInputType? keyboardType;
   final String? suffixText;
   final int? maxLines;
   final Function()? onTap;
+  final EdgeInsetsGeometry? contentPadding;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,7 +35,7 @@ class TextFormFiledWidget extends StatelessWidget {
               .textTheme
               .labelLarge
               ?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w500),
-          contentPadding: EdgeInsets.zero,
+          contentPadding: contentPadding ?? EdgeInsets.zero,
           border: const UnderlineInputBorder(),
           fillColor: Colors.transparent,
           filled: true,

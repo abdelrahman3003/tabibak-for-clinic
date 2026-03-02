@@ -8,8 +8,13 @@ import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_enti
 abstract class DoctorProfileRepo {
   Future<Either<ApiErrorModel, DoctorEntity>> getDoctor();
   Future<Either<ApiErrorModel, void>> uploadImage(String imagePath);
-  Future<Either<ApiErrorModel, void>> updateDoctorInfo(
-      {String? name, String? phone, String? address, String? bio});
+  Future<Either<ApiErrorModel, void>> updateDoctorInfo({
+    String? name,
+    String? phone,
+    String? address,
+    String? bioAr,
+    String? bioEn,
+  });
   Future<Either<ApiErrorModel, void>> updateEducation(
       {EducationEntity? educationEntity, XFile? file});
   Future<Either<ApiErrorModel, void>> updateSpecialty(

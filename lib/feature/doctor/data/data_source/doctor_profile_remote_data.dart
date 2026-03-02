@@ -7,7 +7,11 @@ abstract class DoctorProfileRemoteData {
   Future<DoctorModel?> getDoctor();
   Future<void> uploadImage(String imageUrl);
   Future<void> updateDoctorInfo(
-      {String? name, String? phone, String? address, String? bio});
+      {String? name,
+      String? phone,
+      String? address,
+      String? bioAr,
+      String? bioEn});
   Future<void> updateEducation(
       {required EducationModel educationModel, XFile? file});
   Future<void> updateSpecialty({required int specialtyId});

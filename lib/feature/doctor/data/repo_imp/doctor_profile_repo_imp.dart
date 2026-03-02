@@ -40,14 +40,25 @@ class DoctorProfileRepoImp implements DoctorProfileRepo {
   }
 
   @override
-  Future<Either<ApiErrorModel, void>> updateDoctorInfo(
-      {String? name, String? phone, String? address, String? bio}) async {
+  Future<Either<ApiErrorModel, void>> updateDoctorInfo({
+    String? name,
+    String? phone,
+    String? address,
+    String? bioAr,
+    String? bioEn,
+  }) async {
     try {
       final result = await doctorProfileRemoteData.updateDoctorInfo(
-          name: name, phone: phone, address: address, bio: bio);
+          name: name,
+          phone: phone,
+          address: address,
+          bioAr: bioAr,
+          bioEn: bioEn);
 
       return right(result);
     } catch (e) {
+      log("----$e");
+
       return left(ErrorHandler.handle(e));
     }
   }

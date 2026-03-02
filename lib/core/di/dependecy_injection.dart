@@ -208,7 +208,8 @@ Future<void> initGetIt() async {
         getit<UploadImageProfileUseCase>(), getit<LogOutUseCase>()),
   );
   getit.registerFactory(
-    () => DoctorInfoBloc(getit<UpdateDoctorInfoUseCase>()),
+    () => DoctorInfoBloc(
+        getit<UpdateDoctorInfoUseCase>(), getit<GetDoctorUseCase>()),
   );
   getit.registerFactory(() => DoctorEducationBloc(
         getit<UpdateDoctorEducationUseCase>(),

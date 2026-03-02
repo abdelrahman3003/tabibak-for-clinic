@@ -36,14 +36,20 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
   }
 
   @override
-  Future<void> updateDoctorInfo(
-      {String? name, String? phone, String? address, String? bio}) async {
+  Future<void> updateDoctorInfo({
+    String? name,
+    String? phone,
+    String? address,
+    String? bioAr,
+    String? bioEn,
+  }) async {
     final Map<String, dynamic> updateData = {};
 
     if (name != null) updateData['name'] = name;
     if (phone != null) updateData['phone'] = phone;
     if (address != null) updateData['address'] = address;
-    if (bio != null) updateData['bio'] = bio;
+    if (bioAr != null) updateData['bio_ar'] = bioAr;
+    if (bioEn != null) updateData['bio_en'] = bioEn;
     if (updateData.isEmpty) return;
     await supabase.client
         .from('doctors')

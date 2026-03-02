@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
-import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
+import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/manager/doctor_info/doctor_info_bloc.dart';
+import 'package:tabibak_for_clinic/layout_screen.dart';
 
 class DoctorPersonalInfo extends StatefulWidget {
-  const DoctorPersonalInfo({super.key});
+  const DoctorPersonalInfo({super.key, required this.doctorEntity});
+
+  final DoctorEntity doctorEntity;
 
   @override
   State<DoctorPersonalInfo> createState() => _DoctorPersonalInfoState();
@@ -20,14 +24,17 @@ class DoctorPersonalInfo extends StatefulWidget {
 class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
-  final bioController = TextEditingController();
+  final bioArController = TextEditingController();
+  final bioEnController = TextEditingController();
+
   @override
-  void didChangeDependencies() {
-    final doctor = ModalRoute.of(context)!.settings.arguments as DoctorEntity;
-    nameController.text = doctor.name ?? "";
-    phoneController.text = doctor.phone ?? "";
-    bioController.text = doctor.bioAr ?? "";
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
+    nameController.text = widget.doctorEntity.name ?? "";
+    phoneController.text = widget.doctorEntity.phone ?? "";
+
+    bioArController.text = widget.doctorEntity.bioAr ?? "";
+    bioEnController.text = widget.doctorEntity.bioEn ?? "";
   }
 
   @override
@@ -38,10 +45,10 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
         onTap: () {
           context.read<DoctorInfoBloc>().add(
                 UpdateDoctorInfo(
-                  name: nameController.text,
-                  phone: phoneController.text,
-                  bio: bioController.text,
-                ),
+                    name: nameController.text,
+                    phone: phoneController.text,
+                    bioAr: bioArController.text,
+                    bioEn: bioEnController.text),
               );
         },
       ),
@@ -54,10 +61,17 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
             }
             if (state is DoctorInfoSuccess) {
               context.pop();
-              context.pushNamed(Routes.layOutScreen);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LayoutScreen(initialIndex: 2),
+                  ));
+              AppSnackBar.show(
+                  context: context, message: "Doctor info was Updated");
             }
             if (state is DoctorInfoFailed) {
-              Dialogs.errorDialog(context, state.errorMessage);
+              context.pop();
+              AppSnackBar.show(context: context, message: state.errorMessage);
             }
           },
           child: Column(
@@ -71,8 +85,14 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
                 controller: phoneController,
               ),
               TextFormFiledWidget(
+                contentPadding: EdgeInsets.symmetric(vertical: 16.h),
                 label: AppString.bio,
-                controller: bioController,
+                controller: bioArController,
+              ),
+              TextFormFiledWidget(
+                contentPadding: EdgeInsets.symmetric(vertical: 16.h),
+                label: AppString.bio,
+                controller: bioEnController,
               ),
             ],
           ),
@@ -85,7 +105,8 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
   void dispose() {
     nameController.dispose();
     phoneController.dispose();
-    bioController.dispose();
+    bioArController.dispose();
+    bioEnController.dispose();
     super.dispose();
   }
 }
