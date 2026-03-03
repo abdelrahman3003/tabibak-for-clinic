@@ -168,5 +168,6 @@
     "Evening Shift": "وردية مسائية",
     "Password has been changed successfully": "تم تغيير كلمة المرور بنجاح",
     "Not Matching Password": "كلمات المرور غير متطابقة",
-    "Clinic Working Days & Time": "أيام وأوقات عمل العيادة"
+    "Clinic Working Days & Time": "أيام وأوقات عمل العيادة",
+    "clinic Available": "العيادة متاحة"
 }

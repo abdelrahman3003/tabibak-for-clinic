@@ -117,6 +117,7 @@ class AppString {
       "This section is currently unavailable. We are working on enhancing this feature to provide you with a better experience."
           .tr();
   static String get schedule => "Schedule".tr();
+  static String get clinicAvailable => "clinic Available".tr();
   static String get edit => "Edit".tr();
   static String get shiftTimes => "Shift Times".tr();
   static String get clinicWorkingDays => "Clinic Working Days".tr();
@@ -141,6 +142,9 @@ class AppString {
   static String get save => "Save".tr();
   static String get clinic => "Clinic".tr();
   static String get profile => "Profile".tr();
+  static String get changeAvailability => "Change Availability".tr();
+  static String get changeAvailabilitySubtitle =>
+      "Are you sure you want to change clinic availability status?".tr();
 
   // Profile Localization
   static String get doctorInformation => "Doctor Information".tr();

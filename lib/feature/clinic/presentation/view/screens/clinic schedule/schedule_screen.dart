@@ -20,9 +20,11 @@ class ScheduleScreen extends StatelessWidget {
       body: Column(
         children: [
           ClinicHeader(
-              clinicName: clinicInfoEntity.clinicName ?? "",
-              clinicAddress: clinicInfoEntity.address?.clinicAddress ??
-                  AppString.addressNotAvailable),
+            clinicName: clinicInfoEntity.clinicName ?? "",
+            clinicAddress: clinicInfoEntity.address?.clinicAddress ??
+                AppString.addressNotAvailable,
+            isAvailable: false,
+          ),
           5.hBox,
           Expanded(
             child: SingleChildScrollView(

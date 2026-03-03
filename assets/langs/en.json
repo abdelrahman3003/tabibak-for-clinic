@@ -168,5 +168,6 @@
     "Evening Shift": "Evening Shift",
     "Password has been changed successfully": "Password has been changed successfully",
     "Not Matching Password": "Not Matching Password",
-    "Clinic Working Days & Time": "Clinic Working Days & Time"
+    "Clinic Working Days & Time": "Clinic Working Days & Time",
+    "clinic Available: ": "Clinic Available: "
 }
