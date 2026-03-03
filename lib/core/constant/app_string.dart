@@ -171,6 +171,9 @@ class AppString {
   static String get degree => "Degree".tr();
   static String get certificatePhoto => "Certificate Photo".tr();
   static String get doctorSpecialty => "Doctor Specialty".tr();
+  static String get profilePending => "Pending Verification".tr();
+  static String get profilePublished => "Profile Published".tr();
+  static String get profileRejected => "Profile Rejected".tr();
 
   // Auth Localization
   static String get login => "Log in".tr();

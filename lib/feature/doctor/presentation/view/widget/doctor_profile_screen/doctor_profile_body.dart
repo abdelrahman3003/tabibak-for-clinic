@@ -38,6 +38,33 @@ class DoctorProfileBody extends StatelessWidget {
                   .titleMedium
                   ?.copyWith(color: AppColors.grey)),
           12.hBox,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withValues(alpha: .1),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: AppColors.primary.withOpacity(0.5)),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.pending_actions,
+                  size: 16,
+                  color: AppColors.primary,
+                ),
+                8.wBox,
+                Text(
+                  AppString.profilePending,
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ],
+            ),
+          ),
+          12.hBox,
           Text(
             doctor.bioAr ?? AppString.unknown,
             style: Theme.of(context).textTheme.bodyMedium,
