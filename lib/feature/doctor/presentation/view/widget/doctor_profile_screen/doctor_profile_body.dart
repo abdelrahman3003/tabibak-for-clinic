@@ -93,6 +93,14 @@ class DoctorProfileBody extends StatelessWidget {
               SettingItem(title: AppString.privacy, icon: Icons.privacy_tip),
               15.hBox,
               SettingItem(
+                title: AppString.switchLanguage,
+                icon: Icons.language,
+                onTap: () {
+                  context.pushNamed(Routes.languageScreen);
+                },
+              ),
+              15.hBox,
+              SettingItem(
                 title: AppString.logOut,
                 icon: Icons.logout,
                 onTap: () {

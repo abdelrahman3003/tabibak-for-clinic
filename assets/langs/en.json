@@ -169,5 +169,13 @@
     "Password has been changed successfully": "Password has been changed successfully",
     "Not Matching Password": "Not Matching Password",
     "Clinic Working Days & Time": "Clinic Working Days & Time",
-    "clinic Available: ": "Clinic Available: "
+    "clinic Available": "clinic Available",
+    "Change Availability": "Change Availability",
+    "Are you sure you want to change clinic availability status?": "Are you sure you want to change clinic availability status?",
+    "Pending Verification": "Pending Verification",
+    "Profile Published": "Profile Published",
+    "Profile Rejected": "Profile Rejected",
+    "Switch Language": "Switch Language",
+    "Arabic": "Arabic",
+    "English": "English"
 }

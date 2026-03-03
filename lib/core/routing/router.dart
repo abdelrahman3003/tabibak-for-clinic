@@ -41,6 +41,7 @@ import 'package:tabibak_for_clinic/feature/doctor/presentation/manager/doctor_sp
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_education_screen.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_personal_info_screen.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_specialty_screen.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/language_screen.dart';
 import 'package:tabibak_for_clinic/feature/splash_screen/splash_screen.dart';
 
 import '../../layout_screen.dart';
@@ -140,6 +141,9 @@ class AppRouter {
           create: (context) => getit<DoctorEducationBloc>(),
           child: const DoctorEducationScreen(),
         ));
+        break;
+      case Routes.languageScreen:
+        page = const RootScreenWrapper(child: LanguageScreen());
         break;
 
       //clinic

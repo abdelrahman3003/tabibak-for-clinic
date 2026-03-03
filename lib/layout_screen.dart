@@ -17,20 +17,21 @@ class LayoutScreen extends StatefulWidget {
 class _LayoutScreenState extends State<LayoutScreen> {
   late int _selectedIndex;
 
-  late final List<Widget> _screens;
-  late final List<GButton> _tabs;
-
   @override
   void initState() {
     super.initState();
     _selectedIndex = widget.initialIndex;
-    _screens = [
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Widget> screens = [
       const ClinicLayout(),
       const AppointmentScreen(),
       const DoctorProfileScreen(),
     ];
 
-    _tabs = [
+    final List<GButton> tabs = [
       GButton(
         icon: Icons.home,
         iconActiveColor: AppColors.primary,
@@ -50,15 +51,12 @@ class _LayoutScreenState extends State<LayoutScreen> {
         text: AppString.profile,
       ),
     ];
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-            Expanded(child: _screens[_selectedIndex]),
+            Expanded(child: screens[_selectedIndex]),
             GNav(
               gap: 12,
               activeColor: AppColors.primary,
@@ -75,7 +73,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
               },
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               tabMargin: const EdgeInsets.only(top: 4),
-              tabs: _tabs,
+              tabs: tabs,
             ),
           ],
         ),

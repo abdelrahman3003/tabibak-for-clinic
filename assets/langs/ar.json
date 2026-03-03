@@ -169,5 +169,13 @@
     "Password has been changed successfully": "تم تغيير كلمة المرور بنجاح",
     "Not Matching Password": "كلمات المرور غير متطابقة",
     "Clinic Working Days & Time": "أيام وأوقات عمل العيادة",
-    "clinic Available": "العيادة متاحة"
+    "clinic Available": "العيادة متاحة",
+    "Change Availability": "تغيير حالة التوفر",
+    "Are you sure you want to change clinic availability status?": "هل أنت متأكد أنك تريد تغيير حالة توفر العيادة؟",
+    "Pending Verification": "قيد التحقق",
+    "Profile Published": "تم نشر الملف الشخصي",
+    "Profile Rejected": "تم رفض الملف الشخصي",
+    "Switch Language": "تغيير اللغة",
+    "Arabic": "العربية",
+    "English": "الإنجليزية"
 }
