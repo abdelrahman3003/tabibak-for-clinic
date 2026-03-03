@@ -4,6 +4,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_en
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_info_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_working_day_shift_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/toggle_clinic_available_use_case.dart';
 
 part 'clinic_layout_event.dart';
 part 'clinic_layout_state.dart';
@@ -11,9 +12,10 @@ part 'clinic_layout_state.dart';
 class ClinicLayoutBloc extends Bloc<ClinicLayoutEvent, ClinicLayoutState> {
   final GetClinicInfoUseCase getClinicInfoUseCase;
   final GetClinicWorkingDayShiftUseCase getClinicWorkingDayShiftUseCase;
+  final ToggleClinicAvailableUseCase toggleClinicAvailableUseCase;
 
-  ClinicLayoutBloc(
-      this.getClinicInfoUseCase, this.getClinicWorkingDayShiftUseCase)
+  ClinicLayoutBloc(this.getClinicInfoUseCase,
+      this.getClinicWorkingDayShiftUseCase, this.toggleClinicAvailableUseCase)
       : super(ClinicLayoutInitial()) {
     on<GetClinicInfoEvent>((event, emit) async {
       emit(ClinicLayoutLoading());
@@ -38,6 +40,19 @@ class ClinicLayoutBloc extends Bloc<ClinicLayoutEvent, ClinicLayoutState> {
               );
             });
           }
+        },
+      );
+    });
+    on<ToggleClinicAvailableEvent>((event, emit) async {
+      emit(ClinicAvailableLoading());
+      final result = await toggleClinicAvailableUseCase.call(
+          clinicId: event.clinicId, isAvailable: event.isAvailable);
+      result.fold(
+        (error) {
+          emit(ClinicAvailableFailed(errorMessage: error.message!));
+        },
+        (id) {
+          emit(ClinicAvailableSuccess());
         },
       );
     });

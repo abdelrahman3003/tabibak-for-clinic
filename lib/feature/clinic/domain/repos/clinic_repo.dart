@@ -24,4 +24,8 @@ abstract class ClinicRepo {
   Future<Either<ApiErrorModel, void>> saveClinicAddress({
     required ClinicAddressEntity clinicAddressEntity,
   });
+  Future<Either<ApiErrorModel, void>> toggleClinicAvailable({
+    required int clinicId,
+    required bool isAvailable,
+  });
 }

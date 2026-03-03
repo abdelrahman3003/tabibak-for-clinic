@@ -7,6 +7,7 @@ class ClinicInfoEntity {
   final ClinicAddressEntity? address;
   final int? consultationFee;
   final bool? isBooking;
+  final bool? isAvailable;
 
   const ClinicInfoEntity({
     this.id,
@@ -15,5 +16,6 @@ class ClinicInfoEntity {
     this.address,
     required this.consultationFee,
     required this.isBooking,
+    this.isAvailable,
   });
 }

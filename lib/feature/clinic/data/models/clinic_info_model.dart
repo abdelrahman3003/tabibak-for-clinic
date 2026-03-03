@@ -2,14 +2,14 @@ import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_address_mod
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
 
 class ClinicInfoModel extends ClinicInfoEntity {
-  ClinicInfoModel({
-    super.id,
-    required super.clinicName,
-    required super.phoneNumber,
-    required super.consultationFee,
-    required super.address,
-    required super.isBooking,
-  });
+  ClinicInfoModel(
+      {super.id,
+      required super.clinicName,
+      required super.phoneNumber,
+      required super.consultationFee,
+      required super.address,
+      required super.isBooking,
+      required super.isAvailable});
 
   factory ClinicInfoModel.fromJson(Map<String, dynamic> json) {
     return ClinicInfoModel(
@@ -23,6 +23,7 @@ class ClinicInfoModel extends ClinicInfoEntity {
           : null,
       consultationFee: json["consultation_fee"],
       isBooking: json["is_booking"],
+      isAvailable: json["is_available"],
     );
   }
 
@@ -32,6 +33,7 @@ class ClinicInfoModel extends ClinicInfoEntity {
       "phone_number": phoneNumber,
       "consultation_fee": consultationFee,
       "is_booking": isBooking,
+      "is_available": isBooking,
     };
   }
 }
@@ -39,12 +41,12 @@ class ClinicInfoModel extends ClinicInfoEntity {
 extension ClinicInfoEntityMapper on ClinicInfoEntity {
   ClinicInfoModel toModel() {
     return ClinicInfoModel(
-      id: id,
-      clinicName: clinicName,
-      phoneNumber: phoneNumber,
-      address: address,
-      consultationFee: consultationFee,
-      isBooking: isBooking,
-    );
+        id: id,
+        clinicName: clinicName,
+        phoneNumber: phoneNumber,
+        address: address,
+        consultationFee: consultationFee,
+        isBooking: isBooking,
+        isAvailable: isAvailable);
   }
 }

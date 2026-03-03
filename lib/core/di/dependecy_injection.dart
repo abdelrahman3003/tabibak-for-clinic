@@ -44,6 +44,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_days_use_c
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_address_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_info_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_working_day_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/toggle_clinic_available_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_address/clinic_address_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info_save/clinic_info_save_bloc.dart';
@@ -136,7 +137,7 @@ Future<void> initGetIt() async {
   //! Clinic Feature
 // remote data source
   getit.registerLazySingleton<ClinicRemoteData>(
-      () => ClinicRemoteDataImpl(dio: dio));
+      () => ClinicRemoteDataImpl(supabase: getit<Supabase>().client));
 
   //repos
   getit.registerLazySingleton<ClinicRepo>(
@@ -159,6 +160,8 @@ Future<void> initGetIt() async {
       () => SaveClinicWorkingDayUseCase(clinicRepo: getit<ClinicRepo>()));
   getit.registerLazySingleton<SaveClinicAddressUseCase>(
       () => SaveClinicAddressUseCase(clinicRepo: getit<ClinicRepo>()));
+  getit.registerLazySingleton<ToggleClinicAvailableUseCase>(
+      () => ToggleClinicAvailableUseCase(clinicRepo: getit<ClinicRepo>()));
   // blocs
   getit.registerFactory(() => ClinicInfoBloc(getit<CreateClinicInfoUseCase>()));
   getit.registerFactory(
@@ -168,6 +171,7 @@ Future<void> initGetIt() async {
   getit.registerFactory(() => ClinicLayoutBloc(
         getit<GetClinicInfoUseCase>(),
         getit<GetClinicWorkingDayShiftUseCase>(),
+        getit<ToggleClinicAvailableUseCase>(),
       ));
   getit.registerFactory(
       () => ClinicInfoSaveBloc(getit<SaveClinicInfoUseCase>()));

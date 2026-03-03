@@ -16,3 +16,10 @@ class GetClinicScheduleEvent extends ClinicLayoutEvent {
 
   const GetClinicScheduleEvent({required this.clinicId});
 }
+
+class ToggleClinicAvailableEvent extends ClinicLayoutEvent {
+  final bool isAvailable;
+  final int clinicId;
+  const ToggleClinicAvailableEvent(
+      {required this.clinicId, required this.isAvailable});
+}

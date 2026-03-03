@@ -104,4 +104,16 @@ class ClinicRepoImpl implements ClinicRepo {
       return left(ErrorHandler.handle(e));
     }
   }
+
+  @override
+  Future<Either<ApiErrorModel, void>> toggleClinicAvailable(
+      {required int clinicId, required bool isAvailable}) async {
+    try {
+      final response = await clinicRemoteData.toggleClinicAvailable(
+          clinicId: clinicId, isAvailable: isAvailable);
+      return right(response);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
 }
