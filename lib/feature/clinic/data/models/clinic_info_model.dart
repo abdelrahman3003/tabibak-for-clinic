@@ -22,7 +22,7 @@ class ClinicInfoModel extends ClinicInfoEntity {
             )
           : null,
       consultationFee: json["consultation_fee"],
-      isBooking: json["isBooking"],
+      isBooking: json["is_booking"],
     );
   }
 

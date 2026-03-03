@@ -66,8 +66,9 @@ class ClinicRepoImpl implements ClinicRepo {
   Future<Either<ApiErrorModel, void>> saveClinicInfo(
       {required ClinicInfoEntity clinicInfoEntity}) async {
     try {
-      final response = await clinicRemoteData.saveClinicInfo(
-          clinicInfoModel: clinicInfoEntity.toModel());
+      final model = clinicInfoEntity.toModel();
+      final response =
+          await clinicRemoteData.saveClinicInfo(clinicInfoModel: model);
       return right(response);
     } catch (e) {
       return left(ErrorHandler.handle(e));

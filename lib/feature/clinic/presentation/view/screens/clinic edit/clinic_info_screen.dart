@@ -99,9 +99,7 @@ class _ClinicInfoScreenState extends State<ClinicInfoScreen> {
                 ClinicIsOnline(
                   value: isOnline,
                   onChanged: (value) {
-                    setState(() {
-                      isOnline = value!;
-                    });
+                    isOnline = value!;
                   },
                 ),
               ],
