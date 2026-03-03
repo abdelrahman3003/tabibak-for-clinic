@@ -77,7 +77,7 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
               }
               if (state is DoctorEducationSuccess) {
                 context.pop();
-                context.pushNamed(Routes.layOutScreen, arguments: 2);
+                context.pushReplacementNamed(Routes.layOutScreen, arguments: 2);
               }
               if (state is DoctorEducationFailed) {
                 context.pop();

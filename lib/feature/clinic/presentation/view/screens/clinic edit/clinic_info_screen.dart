@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
+import 'package:tabibak_for_clinic/core/helper/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
@@ -68,8 +69,11 @@ class _ClinicInfoScreenState extends State<ClinicInfoScreen> {
               Dialogs.showLoading(context);
             }
             if (state is ClinicInfoSaveSuccess) {
-              context.pushNamedAndRemoveUntil(
-                  Routes.layOutScreen, (_) => false);
+              context.pushReplacementNamed(Routes.layOutScreen, arguments: 0);
+            }
+            if (state is ClinicInfoSaveFailure) {
+              context.pop();
+              AppSnackBar.show(context, message: state.errorMessage);
             }
           },
           child: Padding(

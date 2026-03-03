@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
+import 'package:tabibak_for_clinic/core/helper/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
@@ -60,11 +61,11 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
               }
               if (state is ClinicAddressFailed) {
                 context.pop();
-                Dialogs.errorDialog(context, state.errorMessage);
+                AppSnackBar.show(context, message: state.errorMessage);
               }
               if (state is ClinicAddressSuccess) {
-                context.pushNamedAndRemoveUntil(
-                    Routes.layOutScreen, (_) => false);
+                context.pop();
+                context.pushReplacementNamed(Routes.layOutScreen, arguments: 0);
               }
             },
             child: Column(

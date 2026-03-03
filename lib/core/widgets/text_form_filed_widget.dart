@@ -35,7 +35,8 @@ class TextFormFiledWidget extends StatelessWidget {
               .textTheme
               .labelLarge
               ?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w500),
-          contentPadding: contentPadding ?? EdgeInsets.zero,
+          contentPadding:
+              contentPadding ?? const EdgeInsets.symmetric(horizontal: 10),
           border: const UnderlineInputBorder(),
           fillColor: Colors.transparent,
           filled: true,
