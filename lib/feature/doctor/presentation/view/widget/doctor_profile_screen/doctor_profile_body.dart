@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
@@ -42,7 +43,8 @@ class DoctorProfileBody extends StatelessWidget {
           DoctorProfileStatus(statusEntity: doctor.status!),
           12.hBox,
           Text(
-            doctor.bioAr ?? AppString.unknown,
+            (context.locale.languageCode == 'ar' ? doctor.bioAr : doctor.bioEn) ??
+                AppString.unknown,
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
@@ -66,8 +68,10 @@ class DoctorProfileBody extends StatelessWidget {
               15.hBox,
               EditItem(
                 title: AppString.specialty,
-                subtitle:
-                    doctor.specialtyData?.nameEn ?? AppString.notSpecified,
+                subtitle: (context.locale.languageCode == 'ar'
+                        ? doctor.specialtyData?.nameAr
+                        : doctor.specialtyData?.nameEn) ??
+                    AppString.notSpecified,
                 onTap: () {
                   context.pushNamed(Routes.doctorSpecialtyScreen,
                       arguments: doctor.specialty);

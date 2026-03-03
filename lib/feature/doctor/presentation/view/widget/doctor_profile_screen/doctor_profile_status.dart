@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
@@ -50,7 +51,9 @@ class DoctorProfileStatus extends StatelessWidget {
           ),
           8.wBox,
           Text(
-            statusEntity.statusEn,
+            context.locale.languageCode == 'ar'
+                ? statusEntity.statusAr
+                : statusEntity.statusEn,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   color: style.color,
                   fontWeight: FontWeight.bold,
