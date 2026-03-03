@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:tabibak_for_clinic/feature/doctor/data/model/doctor_profile_status_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/education_entity.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_entity.dart';
 
@@ -12,6 +13,7 @@ class DoctorEntity extends Equatable {
   final String? password;
   final String? bioAr;
   final String? bioEn;
+  final DoctorProfileStatusModel? status;
   final bool? isVerified;
   final bool? isRegistered;
   final EducationEntity? education;
@@ -28,6 +30,7 @@ class DoctorEntity extends Equatable {
     this.password,
     this.bioAr,
     this.bioEn,
+    this.status,
     this.isVerified,
     this.isRegistered,
     this.education,
@@ -73,6 +76,7 @@ class DoctorEntity extends Equatable {
         password,
         bioAr,
         bioEn,
+        status,
         isVerified,
         isRegistered,
         specialtyData,

@@ -1,23 +1,26 @@
+import 'package:tabibak_for_clinic/feature/doctor/data/model/doctor_profile_status_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/education_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/specialty_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
 
 class DoctorModel extends DoctorEntity {
-  const DoctorModel(
-      {super.name,
-      super.phone,
-      super.image,
-      super.specialty,
-      super.medicalLicense,
-      super.email,
-      super.password,
-      super.bioAr,
-      super.bioEn,
-      super.isVerified,
-      super.isRegistered,
-      super.education,
-      super.specialtyData,
-      super.files});
+  const DoctorModel({
+    super.name,
+    super.phone,
+    super.image,
+    super.specialty,
+    super.medicalLicense,
+    super.email,
+    super.password,
+    super.bioAr,
+    super.bioEn,
+    super.isVerified,
+    super.isRegistered,
+    super.education,
+    super.specialtyData,
+    super.files,
+    super.status,
+  });
   Map<String, dynamic> toJson() {
     return {
       "name": name,
@@ -43,6 +46,9 @@ class DoctorModel extends DoctorEntity {
       medicalLicense: json['medical_liecense'] as String,
       bioAr: json['bio_ar'] as String?,
       bioEn: json['bio_en'] as String?,
+      status: json['profile_doctor_status'] != null
+          ? DoctorProfileStatusModel.fromJson(json['profile_doctor_status'])
+          : null,
       isVerified: json['is_verified'] as bool?,
       isRegistered: json['is_registered'] as bool?,
       education: json['education'] != null

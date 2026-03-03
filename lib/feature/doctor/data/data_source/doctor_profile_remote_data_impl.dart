@@ -15,7 +15,7 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
   Future<DoctorModel?> getDoctor() async {
     final data = await supabase.client
         .from('doctors')
-        .select('*, specialties(*),education(*)')
+        .select('*, specialties(*),education(*),profile_doctor_status(*)')
         .eq('doctor_id', currentDoctorId!)
         .maybeSingle();
     if (data == null) return null;
