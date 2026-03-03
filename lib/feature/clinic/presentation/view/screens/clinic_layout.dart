@@ -16,6 +16,11 @@ class ClinicLayout extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
         child: BlocBuilder<ClinicLayoutBloc, ClinicLayoutState>(
+          buildWhen: (previous, current) =>
+              current is ClinicLayoutLoading ||
+              current is ClinicLayoutSuccess ||
+              current is ClinicLayoutEmpty ||
+              current is ClinicLayoutFailed,
           builder: (context, state) {
             if (state is ClinicLayoutLoading) {
               return const Center(child: CircularProgressIndicator());

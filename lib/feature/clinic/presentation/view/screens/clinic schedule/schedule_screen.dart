@@ -24,6 +24,7 @@ class ScheduleScreen extends StatelessWidget {
             clinicAddress: clinicInfoEntity.address?.clinicAddress ??
                 AppString.addressNotAvailable,
             isAvailable: clinicInfoEntity.isAvailable!,
+            clinicId: clinicInfoEntity.id!,
           ),
           5.hBox,
           Expanded(

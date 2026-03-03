@@ -1,31 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
-import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/available_clinic_switch.dart';
 
-class ClinicHeader extends StatefulWidget {
+class ClinicHeader extends StatelessWidget {
   const ClinicHeader(
       {super.key,
       required this.clinicName,
       required this.clinicAddress,
-      required this.isAvailable});
+      required this.isAvailable,
+      required this.clinicId});
   final String clinicName;
   final String clinicAddress;
   final bool isAvailable;
-  @override
-  State<ClinicHeader> createState() => _ClinicHeaderState();
-}
-
-class _ClinicHeaderState extends State<ClinicHeader> {
-  late bool isActive;
-
-  @override
-  void initState() {
-    super.initState();
-    isActive = widget.isAvailable; // ياخد القيمة من بره أول مرة
-  }
-
+  final int clinicId;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -37,7 +25,7 @@ class _ClinicHeaderState extends State<ClinicHeader> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.clinicName,
+                clinicName,
                 style: Theme.of(context)
                     .textTheme
                     .headlineMedium
@@ -54,7 +42,7 @@ class _ClinicHeaderState extends State<ClinicHeader> {
                   5.hBox,
                   Expanded(
                     child: Text(
-                      widget.clinicAddress,
+                      clinicAddress,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
@@ -68,29 +56,7 @@ class _ClinicHeaderState extends State<ClinicHeader> {
             ],
           ),
         ),
-        Switch.adaptive(
-          value: isActive,
-          onChanged: (val) {
-            showDialog(
-              context: context,
-              builder: (context) => Dialogs.alertDialog(
-                context: context,
-                title: AppString.changeAvailability,
-                subtitle: AppString.changeAvailabilitySubtitle,
-                confirmString: AppString.confirm,
-                color: AppColors.primary,
-                isLoading: false,
-                onPressed: () {
-                  setState(() {
-                    isActive = val;
-                  });
-                  Navigator.pop(context);
-                },
-              ),
-            );
-          },
-          activeThumbColor: AppColors.primary,
-        )
+        AvailableClinicSwitch(clinicId: clinicId, initialValue: isAvailable)
       ],
     );
   }
