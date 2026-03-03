@@ -6,6 +6,7 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/doctor_profile_status.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/edit_item.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/log_out_dialog_states.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/personal_image.dart';
@@ -38,32 +39,7 @@ class DoctorProfileBody extends StatelessWidget {
                   .titleMedium
                   ?.copyWith(color: AppColors.grey)),
           12.hBox,
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: .1),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.primary.withOpacity(0.5)),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.pending_actions,
-                  size: 16,
-                  color: AppColors.primary,
-                ),
-                8.wBox,
-                Text(
-                  AppString.profilePending,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ],
-            ),
-          ),
+          DoctorProfileStatus(statusEntity: doctor.status!),
           12.hBox,
           Text(
             doctor.bioAr ?? AppString.unknown,
