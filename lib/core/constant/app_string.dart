@@ -19,6 +19,10 @@ class AppString {
   static String get clinicAddress => "Clinic address".tr();
   static String get governorate => "Governorate".tr();
   static String get area => "Area".tr();
+  static String get street => "Street".tr();
+  static String get city => "City".tr();
+  static String get floor => "Floor".tr();
+  static String get department => "Department".tr();
   static String get clinicLocation => "Clinic location".tr();
   static String get pickOnMap => "Pick on map".tr();
   static String get workingHours => "Working hours".tr();

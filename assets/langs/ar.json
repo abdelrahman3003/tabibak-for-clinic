@@ -177,5 +177,9 @@
     "Profile Rejected": "تم رفض الملف الشخصي",
     "Switch Language": "تغيير اللغة",
     "Arabic": "العربية",
-    "English": "الإنجليزية"
+    "English": "الإنجليزية",
+    "City": "المدينة",
+    "Street": "الشارع",
+    "Floor": "الدور",
+    "Department": "القسم"
 }

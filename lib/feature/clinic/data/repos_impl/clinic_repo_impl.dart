@@ -98,10 +98,9 @@ class ClinicRepoImpl implements ClinicRepo {
       {required ClinicAddressEntity clinicAddressEntity}) async {
     try {
       await clinicRemoteData.saveClinicAddress(
-        clinicAddressModel: ClinicAddressModel(
-            clinicAddress: clinicAddressEntity.clinicAddress,
-            clinicId: clinicAddressEntity.clinicId),
-      );
+          clinicAddressModel:
+              ClinicAddressModel.fromEntity(clinicAddressEntity));
+
       return right(null);
     } catch (e) {
       return left(ErrorHandler.handle(e));

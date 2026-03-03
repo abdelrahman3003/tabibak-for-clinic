@@ -177,5 +177,9 @@
     "Profile Rejected": "Profile Rejected",
     "Switch Language": "Switch Language",
     "Arabic": "Arabic",
-    "English": "English"
+    "English": "English",
+    "City": "City",
+    "Street": "Street",
+    "Floor": "Floor",
+    "Department": "Department"
 }
