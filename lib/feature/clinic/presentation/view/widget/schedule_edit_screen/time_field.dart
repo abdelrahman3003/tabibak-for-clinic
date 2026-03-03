@@ -1,5 +1,6 @@
-import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
+import 'package:tabibak_for_clinic/core/helper/validation.dart';
 
 class TimeField extends StatefulWidget {
   final void Function(TimeOfDay time)? onTimeSelected;
@@ -54,6 +55,10 @@ class _TimeFieldState extends State<TimeField> {
           child: AbsorbPointer(
             child: TextFormField(
               enabled: widget.enable,
+              validator: (value) {
+                Validation.validateRequired(value);
+                return null;
+              },
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.zero,
                 filled: true,

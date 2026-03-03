@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
@@ -85,7 +87,8 @@ class ClinicRepoImpl implements ClinicRepo {
         selectedDays: days,
       );
       return right(null);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      log("-----$stackTrace");
       return left(ErrorHandler.handle(e));
     }
   }

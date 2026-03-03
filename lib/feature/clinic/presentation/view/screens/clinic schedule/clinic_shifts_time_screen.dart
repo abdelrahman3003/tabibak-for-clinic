@@ -13,26 +13,17 @@ import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clini
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_args.dart';
 
 class ClinicShiftsTimeScreen extends StatefulWidget {
-  const ClinicShiftsTimeScreen({super.key});
-
+  const ClinicShiftsTimeScreen({super.key, required this.clinicWorkingDayArgs});
+  final ClinicWorkingDayArgs clinicWorkingDayArgs;
   @override
   State<ClinicShiftsTimeScreen> createState() => _ClinicShiftsTimeScreenState();
 }
 
 class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
   late List<ClinicWorkingDayModel> selectedDays;
-  bool _initialized = false;
-
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (_initialized) return;
-
-    final args =
-        ModalRoute.of(context)!.settings.arguments as ClinicWorkingDayArgs;
-
-    selectedDays = args.selectedDays
+  void initState() {
+    selectedDays = widget.clinicWorkingDayArgs.selectedDays
         .map(
           (e) => ClinicWorkingDayModel(
               id: e.id,
@@ -42,15 +33,11 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
               clinicShiftEveningEntity: e.clinicShiftEveningEntity),
         )
         .toList();
-
-    _initialized = true;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final clinicWorkingDayArgs =
-        ModalRoute.of(context)!.settings.arguments as ClinicWorkingDayArgs;
-
     return Scaffold(
       appBar: AppBarWidget(title: AppString.shiftTimes),
       body: Padding(
@@ -60,9 +47,10 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
             SliverToBoxAdapter(
               child: Column(
                 children: List.generate(
-                  clinicWorkingDayArgs.selectedDays.length,
+                  widget.clinicWorkingDayArgs.selectedDays.length,
                   (index) {
-                    final workingDay = clinicWorkingDayArgs.selectedDays[index];
+                    final workingDay =
+                        widget.clinicWorkingDayArgs.selectedDays[index];
 
                     return ShiftDayTime(
                       day: workingDay.clinicDayEntity!,
@@ -113,9 +101,8 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
                     onPressed: () {
                       context.read<ClinicShiftBloc>().add(
                             CreateClinicShiftEvent(
-                              clinicWorkingDayArgs.clinicId,
-                              selectedDays,
-                            ),
+                                widget.clinicWorkingDayArgs.clinicId,
+                                selectedDays),
                           );
                     },
                   ),

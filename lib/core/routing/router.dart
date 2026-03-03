@@ -33,6 +33,7 @@ import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clin
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20edit/clinic_offer_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20schedule/clinic_shifts_time_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20schedule/schedule_edit_days_screen.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_args.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/manager/doctor_education/doctor_education_bloc.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/manager/doctor_info/doctor_info_bloc.dart';
@@ -181,10 +182,11 @@ class AppRouter {
         break;
 
       case Routes.clinicShiftsTimeScreen:
+        final args = settings.arguments as ClinicWorkingDayArgs;
         page = RootScreenWrapper(
           child: BlocProvider(
             create: (context) => getit<ClinicShiftBloc>(),
-            child: const ClinicShiftsTimeScreen(),
+            child: ClinicShiftsTimeScreen(clinicWorkingDayArgs: args),
           ),
         );
         break;

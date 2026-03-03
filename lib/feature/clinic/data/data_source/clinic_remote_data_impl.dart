@@ -93,8 +93,8 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
         final shiftMorningResponse = await supabase
             .from('shifts_morning')
             .upsert({
-              'start': formatTime(selectedDay!.clinicShiftMorningEntity!.start),
-              'end': formatTime(selectedDay.clinicShiftMorningEntity!.end),
+              'start': formatTime(selectedDay?.clinicShiftMorningEntity!.start),
+              'end': formatTime(selectedDay?.clinicShiftMorningEntity!.end),
             })
             .select()
             .single();
@@ -104,8 +104,8 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
         final shiftEveningResponse = await supabase
             .from('shift_evening')
             .upsert({
-              'start': formatTime(selectedDay.clinicShiftEveningEntity!.start),
-              'end': formatTime(selectedDay.clinicShiftEveningEntity!.end),
+              'start': formatTime(selectedDay?.clinicShiftEveningEntity!.start),
+              'end': formatTime(selectedDay?.clinicShiftEveningEntity!.end),
             })
             .select()
             .single();

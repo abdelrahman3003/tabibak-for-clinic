@@ -34,7 +34,7 @@ class AppButton extends StatelessWidget {
             : (color ?? AppColors.primary),
         foregroundColor: AppColors.white,
       ),
-      onPressed: onPressed,
+      onPressed: isLoading ? null : onPressed,
       child: Stack(
         children: [
           Center(
