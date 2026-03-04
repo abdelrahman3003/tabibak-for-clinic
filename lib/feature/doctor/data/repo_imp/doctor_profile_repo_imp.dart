@@ -57,8 +57,6 @@ class DoctorProfileRepoImp implements DoctorProfileRepo {
 
       return right(result);
     } catch (e) {
-      log("----$e");
-
       return left(ErrorHandler.handle(e));
     }
   }
@@ -83,8 +81,6 @@ class DoctorProfileRepoImp implements DoctorProfileRepo {
 
       return right(specialties);
     } catch (e) {
-      log("===== upd sp$e");
-
       return left(ErrorHandler.handle(e));
     }
   }

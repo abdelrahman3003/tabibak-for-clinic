@@ -257,6 +257,7 @@ Future<void> initGetIt() async {
         getit<GetUpcomingAppointmentsUseCase>(),
         getit<GetFinishedAppointmentsUseCase>(),
         getit<GetCanceledAppointmentsUseCase>(),
+        getit<GetDoctorUseCase>(),
       ));
   getit.registerFactory(
     () => CreateAppointmentBloc(

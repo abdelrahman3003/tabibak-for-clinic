@@ -32,3 +32,7 @@ class UpdateAppointmentStatusEvent extends AppointmentEvent {
     required this.isToday,
   });
 }
+
+class GetDoctorEvent extends AppointmentEvent {
+  const GetDoctorEvent();
+}

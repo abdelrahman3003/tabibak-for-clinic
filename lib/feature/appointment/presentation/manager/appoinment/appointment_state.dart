@@ -77,3 +77,17 @@ final class UpdateAppointmentStatusSuccess extends AppointmentState {
     required this.updatedAppointmentList,
   });
 }
+
+final class GetDoctorLoading extends AppointmentState {}
+
+final class GetDoctorFailed extends AppointmentState {
+  final String errorMessage;
+
+  const GetDoctorFailed({required this.errorMessage});
+}
+
+final class GetDoctorSuccess extends AppointmentState {
+  final DoctorEntity doctor;
+
+  const GetDoctorSuccess({required this.doctor});
+}

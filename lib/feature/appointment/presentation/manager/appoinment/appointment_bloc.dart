@@ -7,6 +7,9 @@ import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_cancel
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_finished_appointments_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_upcoming_appointments_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/update_appointment_status_use_case.dart';
+import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart'
+    show DoctorEntity;
+import 'package:tabibak_for_clinic/feature/doctor/domain/usecase/get_doctor_use_case.dart';
 
 part 'appointment_event.dart';
 part 'appointment_state.dart';
@@ -17,6 +20,7 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
   final GetUpcomingAppointmentsUseCase getUpcomingAppointmentsUseCase;
   final GetFinishedAppointmentsUseCase getFinishedAppointmentsUseCase;
   final GetCanceledAppointmentsUseCase getCanceledAppointmentsUseCase;
+  final GetDoctorUseCase getDoctorUseCase;
   List<AppointmentStatusEntity>? appointmentStatusList;
   List<AppointmentEntity>? appointmentEntityList;
   AppointmentBloc(
@@ -25,6 +29,7 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
     this.getUpcomingAppointmentsUseCase,
     this.getFinishedAppointmentsUseCase,
     this.getCanceledAppointmentsUseCase,
+    this.getDoctorUseCase,
   ) : super(AppointmentInitial()) {
     on<GetAppointmentEvent>((event, emit) async {
       if (event.isUpdate) {
@@ -100,6 +105,19 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
         },
       );
     });
+    on<GetDoctorEvent>((event, emit) async {
+      emit(AppointmentLoading());
+      final result = await getDoctorUseCase.call();
+      result.fold(
+        (error) {
+          emit(AppointmentFailed(errorMessage: error.message!));
+        },
+        (doctor) {
+          emit(GetDoctorSuccess(doctor: doctor));
+        },
+      );
+    });
     add(const GetAppointmentEvent());
+    add(const GetDoctorEvent());
   }
 }
