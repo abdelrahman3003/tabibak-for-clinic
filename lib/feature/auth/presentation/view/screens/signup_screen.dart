@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
@@ -8,11 +9,22 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/helper/validation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_field.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/do_you_have_account.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/password_text_field.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/specialties_drop_down.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
+
+class ProfessionalLicenseArgs {
+  final DoctorEntity doctorEntity;
+  final SignupBloc signupBloc;
+
+  ProfessionalLicenseArgs({
+    required this.doctorEntity,
+    required this.signupBloc,
+  });
+}
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -32,6 +44,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<SignupBloc>().add(const GetSpecialtiesRequested());
     user = getit<Supabase>().client.auth.currentUser;
     nameController = TextEditingController(text: "abdelrahman temsah");
     emailController =
@@ -115,13 +128,16 @@ class _SignupScreenState extends State<SignupScreen> {
                   onPressed: () {
                     if (signupFormKey.currentState!.validate()) {
                       context.pushNamed(Routes.professionalLicenseScreen,
-                          arguments: DoctorEntity(
-                            name: nameController?.text,
-                            email: emailController?.text,
-                            phone: phoneController?.text,
-                            password: passwordController?.text,
-                            specialty: selectedSpecialization,
-                            isRegistered: true,
+                          arguments: ProfessionalLicenseArgs(
+                            doctorEntity: DoctorEntity(
+                              name: nameController?.text,
+                              email: emailController?.text,
+                              phone: phoneController?.text,
+                              password: passwordController?.text,
+                              specialty: selectedSpecialization,
+                              isRegistered: true,
+                            ),
+                            signupBloc: context.read<SignupBloc>(),
                           ));
                     }
                   },

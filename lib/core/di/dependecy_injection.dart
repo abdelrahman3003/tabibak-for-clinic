@@ -117,7 +117,7 @@ Future<void> initGetIt() async {
       ));
 
   // blocs
-  getit.registerLazySingleton(() => SignupBloc(
+  getit.registerFactory(() => SignupBloc(
         signUpUsecase: getit<SignUpUsecase>(),
         getSpecialtiesUsecase: getit<GetSpecialtiesUsecase>(),
       ));

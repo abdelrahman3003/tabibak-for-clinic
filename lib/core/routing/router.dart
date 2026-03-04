@@ -95,8 +95,9 @@ class AppRouter {
         break;
 
       case Routes.professionalLicenseScreen:
+        final args = settings.arguments as ProfessionalLicenseArgs;
         page = BlocProvider.value(
-          value: getit<SignupBloc>(),
+          value: args.signupBloc,
           child: const ProfessionalLicenseScreen(),
         );
         break;

@@ -5,16 +5,18 @@ import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/signup_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/confirm_button.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/upload_image_widget.dart';
-import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
 
 class ProfessionalLicenseScreen extends StatelessWidget {
   const ProfessionalLicenseScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final doctor = ModalRoute.of(context)!.settings.arguments as DoctorEntity;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as ProfessionalLicenseArgs;
+    final doctor = args.doctorEntity;
 
     String? medicalLicense;
     return Scaffold(
