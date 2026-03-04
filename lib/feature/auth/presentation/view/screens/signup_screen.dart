@@ -21,13 +21,10 @@ class SignupScreen extends StatefulWidget {
   State<SignupScreen> createState() => _SignupScreenState();
 }
 
-int? selectedSpecialization;
-final GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
-User user = getit<Supabase>().client.auth.currentUser!;
-
 class _SignupScreenState extends State<SignupScreen> {
   User? user;
   int? selectedSpecialization;
+  final GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
   TextEditingController? nameController;
   TextEditingController? emailController;
   TextEditingController? passwordController;
@@ -35,10 +32,12 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   void initState() {
     super.initState();
-    nameController = TextEditingController();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    phoneController = TextEditingController();
+    user = getit<Supabase>().client.auth.currentUser;
+    nameController = TextEditingController(text: "abdelrahman temsah");
+    emailController =
+        TextEditingController(text: "abdelrahmatemsah29@gmail.com");
+    passwordController = TextEditingController(text: "Abdo123456");
+    phoneController = TextEditingController(text: "01096666666");
   }
 
   @override

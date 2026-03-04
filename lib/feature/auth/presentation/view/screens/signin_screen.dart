@@ -16,15 +16,16 @@ import '../widget/password_text_field.dart';
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
+
   @override
   State<SigninScreen> createState() => _SigninScreenState();
 }
 
-final signinKey = GlobalKey<FormState>();
-
 class _SigninScreenState extends State<SigninScreen> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final signinKey = GlobalKey<FormState>();
+  final emailController =
+      TextEditingController(text: "abdelrahmatemsah29@gmail.com");
+  final passwordController = TextEditingController(text: "Abdo123456");
   @override
   void dispose() {
     super.dispose();
