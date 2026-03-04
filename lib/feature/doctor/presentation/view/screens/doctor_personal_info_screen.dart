@@ -86,12 +86,12 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
               ),
               TextFormFiledWidget(
                 contentPadding: EdgeInsets.symmetric(vertical: 16.h),
-                label: AppString.bio,
+                label: AppString.bioAr,
                 controller: bioArController,
               ),
               TextFormFiledWidget(
                 contentPadding: EdgeInsets.symmetric(vertical: 16.h),
-                label: AppString.bio,
+                label: AppString.bioEn,
                 controller: bioEnController,
               ),
             ],

@@ -73,7 +73,7 @@ Future<void> initGetIt() async {
   final dio = DioFactory.getDio();
   final sharedPreferences = await SharedPreferences.getInstance();
   final supabase = Supabase.instance;
-  sharedPreferences.clear();
+  // sharedPreferences.clear();
   //! External
   getit.registerLazySingleton<SharedPrefHelper>(
       () => SharedPrefHelper(sharedPreferences));
@@ -83,10 +83,8 @@ Future<void> initGetIt() async {
   //! Auth Features
 
 // remote data source
-  getit.registerLazySingleton<AuthRemoteData>(() => AuthRemoteDataImp(
-        supabase: getit<Supabase>(),
-        dio: getit<Dio>(),
-      ));
+  getit.registerLazySingleton<AuthRemoteData>(
+      () => AuthRemoteDataImp(supabase: getit<Supabase>(), dio: getit<Dio>()));
 // repos
   getit.registerLazySingleton<AuthRepo>(() => AuthRepoImp(
         authRemoteData: getit<AuthRemoteData>(),

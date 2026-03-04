@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
+import 'package:tabibak_for_clinic/core/helper/shared_pref_helper.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_home_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_empty.dart';
@@ -24,11 +24,9 @@ class AppointmentBody extends StatelessWidget {
       child: Column(
         children: [
           TodayBanner(
-            doctorName: getit<Supabase>()
-                .client
-                .auth
-                .currentUser
-                ?.userMetadata?['name'],
+            doctorName:
+                getit<SharedPrefHelper>().getString(SharedPrefKeys.userName) ??
+                    "",
             appointmentLength: appointmentList.length,
           ),
           32.hBox,

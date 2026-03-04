@@ -43,8 +43,10 @@ class DoctorProfileBody extends StatelessWidget {
           DoctorProfileStatus(statusEntity: doctor.status!),
           12.hBox,
           Text(
-            (context.locale.languageCode == 'ar' ? doctor.bioAr : doctor.bioEn) ??
-                AppString.unknown,
+            (context.locale.languageCode == 'ar'
+                    ? doctor.bioAr
+                    : doctor.bioEn) ??
+                "",
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),

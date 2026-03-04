@@ -21,10 +21,10 @@ class AuthRemoteDataImp implements AuthRemoteData {
   Future<void> signUp({required DoctorModel doctorModel}) async {
     final response = await supabase.client.auth
         .signUp(email: doctorModel.email, password: doctorModel.password!);
-
     if (response.user != null) {
       await addDoctor(user: response.user!, doctorModel: doctorModel);
     }
+    await supabase.client.auth.signOut();
   }
 
   @override
