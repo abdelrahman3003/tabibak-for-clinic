@@ -46,11 +46,10 @@ class _SignupScreenState extends State<SignupScreen> {
     super.initState();
     context.read<SignupBloc>().add(const GetSpecialtiesRequested());
     user = getit<Supabase>().client.auth.currentUser;
-    nameController = TextEditingController(text: "abdelrahman temsah");
-    emailController =
-        TextEditingController(text: "abdelrahmatemsah29@gmail.com");
-    passwordController = TextEditingController(text: "Abdo123456");
-    phoneController = TextEditingController(text: "01096666666");
+    nameController = TextEditingController();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    phoneController = TextEditingController();
   }
 
   @override
