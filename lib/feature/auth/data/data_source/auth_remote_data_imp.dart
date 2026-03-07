@@ -33,7 +33,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
       deleteDoctor(user.id);
       throw const AuthException('email_not_confirmed');
     }
-    return getDoctor(user);
+    return getDoctor(user: user);
   }
 
   @override
@@ -86,7 +86,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
       provider: OAuthProvider.google,
       idToken: idToken,
     );
-    return await getDoctor(response.user);
+    return await getDoctor(user: response.user!);
   }
 
   @override
@@ -109,11 +109,12 @@ class AuthRemoteDataImp implements AuthRemoteData {
         .updateUser(UserAttributes(password: newPassword));
   }
 
-  Future<DoctorModel?> getDoctor(User? user) async {
+  @override
+  Future<DoctorModel?> getDoctor({required User user}) async {
     final result = await supabase.client
         .from('doctors')
         .select()
-        .eq('doctor_id', user!.id)
+        .eq('doctor_id', user.id)
         .maybeSingle();
     if (result == null) return null;
     final doctor = DoctorModel.fromJson(result);

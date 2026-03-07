@@ -1,3 +1,4 @@
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/dotcor_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/specialty_model.dart';
 
@@ -12,4 +13,5 @@ abstract class AuthRemoteData {
   Future<String?> uploadFile(String filePath);
   Future<List<SpecialtyModel>> getSpecialties();
   Future<void> addDoctor({required DoctorModel doctorModel});
+  Future<DoctorModel?> getDoctor({required User user});
 }

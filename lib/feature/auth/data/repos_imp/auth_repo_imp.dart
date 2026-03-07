@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:gotrue/src/types/user.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
@@ -103,6 +104,17 @@ class AuthRepoImp extends AuthRepo {
     try {
       final result = await authRemoteData.addDoctor(
           doctorModel: DoctorModel.fromEntity(doctorEntity));
+      return right(result);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, DoctorEntity?>> getDoctor(
+      {required User user}) async {
+    try {
+      final result = await authRemoteData.getDoctor(user: user);
       return right(result);
     } catch (e) {
       return left(ErrorHandler.handle(e));

@@ -22,6 +22,7 @@ import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_dat
 import 'package:tabibak_for_clinic/feature/auth/data/repos_imp/auth_repo_imp.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/repos/auth_repo.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/add_doctor_use_case.dart';
+import 'package:tabibak_for_clinic/feature/auth/domain/usecases/get_doctor_auth_use_case.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/get_specialties_usecase.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/reset_password_use_case.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/send_otp_use_case.dart';
@@ -93,6 +94,8 @@ Future<void> initGetIt() async {
       ));
 
   //useCases
+  getit.registerLazySingleton<GetDoctorAuthUseCase>(
+      () => GetDoctorAuthUseCase(authRepo: getit<AuthRepo>()));
   getit.registerLazySingleton<SignUpUsecase>(
       () => SignUpUsecase(authRepo: getit<AuthRepo>()));
   getit

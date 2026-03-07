@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_entity.dart';
@@ -17,4 +18,5 @@ abstract class AuthRepo {
   Future<Either<ApiErrorModel, List<SpecialtyEntity>>> getSpecialties();
   Future<Either<ApiErrorModel, void>> addDoctor(
       {required DoctorEntity doctorEntity});
+  Future<Either<ApiErrorModel, DoctorEntity?>> getDoctor({required User user});
 }
