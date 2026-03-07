@@ -3,7 +3,7 @@ import 'package:tabibak_for_clinic/feature/doctor/data/model/specialty_model.dar
 
 abstract class AuthRemoteData {
   Future<void> signUp({required DoctorModel doctorModel});
-  Future<void> signIn(String email, String password);
+  Future<DoctorModel?> signIn(String email, String password);
   Future<DoctorModel?> signInWithGoogle();
 
   Future<void> sendOtp(String email);

@@ -20,7 +20,7 @@ class ConfirmButton extends StatelessWidget {
           current is LicenseError,
       listener: (context, state) {
         if (state is LicenseSuccess) {
-          context.pushNamed(Routes.checkEmailScreen, arguments: email);
+          context.pushNamed(Routes.layOutScreen);
         }
         if (state is LicenseError) {
           AppSnackBar.show(context: context, message: state.errorMessage);

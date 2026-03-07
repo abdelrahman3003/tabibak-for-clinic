@@ -23,7 +23,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
   }
 
   @override
-  Future<void> signIn(String email, String password) async {
+  Future<DoctorModel?> signIn(String email, String password) async {
     final response = await supabase.client.auth
         .signInWithPassword(email: email, password: password);
     final user = response.user;
@@ -33,6 +33,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
       deleteDoctor(user.id);
       throw const AuthException('email_not_confirmed');
     }
+    return getDoctor(user);
   }
 
   @override

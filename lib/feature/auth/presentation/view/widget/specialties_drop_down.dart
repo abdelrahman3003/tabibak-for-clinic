@@ -16,6 +16,8 @@ class SpecialtiesDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignupBloc, SignupState>(
+      buildWhen: (previous, current) =>
+          current is GetSpecialtiesRequestedSuccess || current is SignupInitial,
       builder: (context, state) {
         final List<SpecialtyEntity> items =
             state is GetSpecialtiesRequestedSuccess ? state.specialties : [];

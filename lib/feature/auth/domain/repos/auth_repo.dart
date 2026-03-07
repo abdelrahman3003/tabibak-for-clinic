@@ -7,7 +7,7 @@ abstract class AuthRepo {
   Future<Either<ApiErrorModel, void>> signUp(
       {required DoctorEntity doctorEntity});
   Future<Either<ApiErrorModel, void>> uploadFile({required String filePath});
-  Future<Either<ApiErrorModel, void>> signIn(
+  Future<Either<ApiErrorModel, DoctorEntity?>> signIn(
       {required String email, required String password});
   Future<Either<ApiErrorModel, void>> sendOtp(String email);
   Future<Either<ApiErrorModel, void>> resetPassword(String newPassword);

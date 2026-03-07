@@ -18,8 +18,8 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
       final result = await signInUsecase.call(event.email, event.password);
       result.fold((error) {
         emit(SigninError(errorMessage: error.message!));
-      }, (right) {
-        emit(SigninSuccess());
+      }, (doctorEntity) {
+        emit(SigninSuccess(doctorEntity: doctorEntity));
       });
     });
     on<SignInWithGoogleEvent>((event, emit) async {

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -28,8 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
       });
       Future.delayed(const Duration(milliseconds: 1200), () {
         final user = getit<Supabase>().client.auth.currentUser;
-        if (user != null) {
-          log("User is logged in: ${user.email}");
+        if (user != null && user.emailConfirmedAt != null) {
           return context.pushNamedAndRemoveUntil(
             Routes.layOutScreen,
             (route) => true,

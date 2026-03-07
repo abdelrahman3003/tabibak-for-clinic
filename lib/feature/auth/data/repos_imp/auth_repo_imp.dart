@@ -13,7 +13,7 @@ class AuthRepoImp extends AuthRepo {
     required this.authRemoteData,
   });
   @override
-  Future<Either<ApiErrorModel, void>> signIn(
+  Future<Either<ApiErrorModel, DoctorEntity?>> signIn(
       {required String email, required String password}) async {
     try {
       final result = await authRemoteData.signIn(email, password);

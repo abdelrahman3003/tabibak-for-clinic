@@ -11,7 +11,10 @@ final class SigninInitial extends SigninState {}
 
 final class SigninLoading extends SigninState {}
 
-final class SigninSuccess extends SigninState {}
+final class SigninSuccess extends SigninState {
+  final DoctorEntity? doctorEntity;
+  const SigninSuccess({required this.doctorEntity});
+}
 
 final class SigninError extends SigninState {
   final String errorMessage;

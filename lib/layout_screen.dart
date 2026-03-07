@@ -19,7 +19,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
   @override
   void initState() {
-    //   getit<Supabase>().client.auth.signOut();
+    //  getit<Supabase>().client.auth.signOut();
 
     super.initState();
     _selectedIndex = widget.initialIndex;

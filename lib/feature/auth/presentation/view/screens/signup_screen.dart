@@ -7,12 +7,11 @@ import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/helper/validation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
-import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_field.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/do_you_have_account.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/password_text_field.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/sign_up_button.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/specialties_drop_down.dart';
-import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -33,10 +32,11 @@ class _SignupScreenState extends State<SignupScreen> {
   void initState() {
     super.initState();
     user = getit<Supabase>().client.auth.currentUser;
-    nameController = TextEditingController();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    phoneController = TextEditingController();
+    nameController = TextEditingController(text: "abderahman");
+    emailController =
+        TextEditingController(text: "abdelrahmatemsah29@gmail.com");
+    passwordController = TextEditingController(text: "Abc@123456");
+    phoneController = TextEditingController(text: "01023456789");
   }
 
   @override
@@ -109,31 +109,13 @@ class _SignupScreenState extends State<SignupScreen> {
                   },
                 ),
                 30.hBox,
-                AppButton(
-                  title: AppString.continueButton,
-                  onPressed: () {
-                    if (signupFormKey.currentState!.validate()) {
-                      user != null
-                          ? context.pushNamed(
-                              Routes.professionalLicenseScreen,
-                              arguments: DoctorEntity(
-                                name: user!.userMetadata?['full_name'] ?? '',
-                                email: user!.email ?? '',
-                                phone: user!.phone ?? '',
-                                specialty: selectedSpecialization,
-                              ),
-                            )
-                          : context.pushNamed(
-                              Routes.professionalLicenseScreen,
-                              arguments: DoctorEntity(
-                                name: nameController?.text,
-                                email: emailController?.text,
-                                phone: phoneController?.text,
-                                specialty: selectedSpecialization,
-                              ),
-                            );
-                    }
-                  },
+                SignUpButton(
+                  nameController: nameController!,
+                  emailController: emailController!,
+                  passwordController: passwordController!,
+                  phoneController: phoneController!,
+                  signupFormKey: signupFormKey,
+                  getSpecialization: () => selectedSpecialization,
                 ),
                 40.hBox,
                 DoHaveAccount(
