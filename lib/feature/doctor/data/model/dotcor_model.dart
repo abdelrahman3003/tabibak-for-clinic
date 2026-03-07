@@ -31,7 +31,6 @@ class DoctorModel extends DoctorEntity {
       "medical_liecense": medicalLicense,
       "bio_ar": bioAr,
       "bio_en": bioEn,
-      "is_verified": isVerified,
       "is_registered": isRegistered,
     };
   }
