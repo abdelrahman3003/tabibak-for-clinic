@@ -1,14 +1,14 @@
 name: tabibak_for_clinic
 description: "A new Flutter project."
-
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 version: 1.0.1+1
+
 environment:
   sdk: ^3.6.1
+
 dependencies:
   flutter:
     sdk: flutter
-  
   dio: ^5.4.3+1
   shared_preferences: ^2.3.2
   get_it: ^7.7.0
@@ -34,13 +34,7 @@ dependencies:
   skeletonizer: ^2.1.1
   flutter_native_splash: ^2.4.7
   flutter_launcher_icons: ^0.14.4
-  
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-
 
 dev_dependencies:
   flutter_test:
@@ -48,10 +42,15 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   build_runner: ^2.4.10
 
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/app_logo.png"
+  adaptive_icon_background: "#7C3AED"
+  adaptive_icon_foreground: "assets/images/app_logo.png"
 
 flutter:
-  uses-material-design: true 
-
+  uses-material-design: true
   assets:
     - .env
     - assets/fonts/
@@ -72,4 +71,4 @@ flutter:
         - asset: assets/fonts/Inter_24pt-Medium.ttf
           weight: 500
         - asset: assets/fonts/Inter_24pt-Bold.ttf
-          weight: 700 
+          weight: 700
