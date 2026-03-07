@@ -29,7 +29,7 @@ class AppButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(5.r),
         ),
         padding: padding ?? const EdgeInsets.symmetric(vertical: 12),
-        backgroundColor: onPressed == null
+        backgroundColor: onPressed == null || isLoading
             ? Theme.of(context).colorScheme.secondary
             : (color ?? AppColors.primary),
         foregroundColor: AppColors.white,

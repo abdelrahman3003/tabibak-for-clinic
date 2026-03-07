@@ -4,7 +4,6 @@ import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
-import 'package:tabibak_for_clinic/feature/auth/domain/entities/signin_result_entity.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/repos/auth_repo.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/dotcor_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
@@ -49,9 +48,10 @@ class AuthRepoImp extends AuthRepo {
   }
 
   @override
-  Future<Either<ApiErrorModel, SigninResultEntity>> signInWithGoogle() async {
+  Future<Either<ApiErrorModel, DoctorEntity?>> signInWithGoogle() async {
     try {
       final result = await authRemoteData.signInWithGoogle();
+      log("Doctor Entity from signInWithGoogle: ${result?.email}");
       return right(result);
     } catch (e) {
       log("Error in signInWithGoogle: $e");
@@ -95,6 +95,18 @@ class AuthRepoImp extends AuthRepo {
       {required String email, required String otp}) async {
     try {
       final result = await authRemoteData.verifyOtp(email: email, otp: otp);
+      return right(result);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, void>> addDoctor(
+      {required DoctorEntity doctorEntity}) async {
+    try {
+      final result = await authRemoteData.addDoctor(
+          doctorModel: DoctorModel.fromEntity(doctorEntity));
       return right(result);
     } catch (e) {
       return left(ErrorHandler.handle(e));

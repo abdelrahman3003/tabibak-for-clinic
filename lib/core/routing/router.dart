@@ -9,6 +9,7 @@ import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens/all_appointment_screen.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens/appointment_details_screen.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/forgot_password_bloc/forgot_password_bloc.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/managers/license_bloc/license_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/reset_password_bloc/reset_password_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_in_bloc/signin_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
@@ -95,9 +96,8 @@ class AppRouter {
         break;
 
       case Routes.professionalLicenseScreen:
-        final args = settings.arguments as ProfessionalLicenseArgs;
-        page = BlocProvider.value(
-          value: args.signupBloc,
+        page = BlocProvider(
+          create: (context) => getit<LicenseBloc>(),
           child: const ProfessionalLicenseScreen(),
         );
         break;

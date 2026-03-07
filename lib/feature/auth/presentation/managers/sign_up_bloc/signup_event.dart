@@ -13,10 +13,8 @@ class SignupRequestedEvent extends SignupEvent {
   const SignupRequestedEvent({required this.doctorEntity});
 }
 
-class GetSpecialtiesRequested extends SignupEvent {
-  const GetSpecialtiesRequested();
-}
-
-class UploadFileEvent extends SignupEvent {
-  const UploadFileEvent();
+class GetSpecialtiesEvent extends SignupEvent {
+  const GetSpecialtiesEvent();
+  @override
+  List<Object> get props => [];
 }

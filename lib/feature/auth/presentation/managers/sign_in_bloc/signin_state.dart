@@ -22,9 +22,9 @@ final class SigninError extends SigninState {
 final class SigninWithGoogleLoading extends SigninState {}
 
 final class SigninWithGoogleSuccess extends SigninState {
-  final SigninResultEntity signinResultEntity;
+  final DoctorEntity? doctorEntity;
 
-  const SigninWithGoogleSuccess({required this.signinResultEntity});
+  const SigninWithGoogleSuccess({required this.doctorEntity});
 }
 
 final class SigninWithGoogleError extends SigninState {

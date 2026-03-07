@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/managers/license_bloc/license_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
 
 class UploadImageWidget extends StatelessWidget {
@@ -13,7 +14,7 @@ class UploadImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SignupBloc, SignupState>(
+    return BlocConsumer<LicenseBloc, LicenseState>(
       buildWhen: (previous, current) =>
           current is UploadFileSuccess || current is SignupError,
       listener: (context, state) {
@@ -24,7 +25,7 @@ class UploadImageWidget extends StatelessWidget {
       builder: (context, state) {
         return GestureDetector(
           onTap: () async {
-            context.read<SignupBloc>().add(const UploadFileEvent());
+            context.read<LicenseBloc>().add(const UploadFileEvent());
           },
           child: Container(
             width: double.infinity,

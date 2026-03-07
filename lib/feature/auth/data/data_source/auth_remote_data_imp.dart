@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -5,7 +7,6 @@ import 'package:tabibak_for_clinic/core/functions/upload_file.dart';
 import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 import 'package:tabibak_for_clinic/core/services/env_service.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
-import 'package:tabibak_for_clinic/feature/auth/data/models/signin_result_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/dotcor_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/specialty_model.dart';
 
@@ -19,12 +20,8 @@ class AuthRemoteDataImp implements AuthRemoteData {
   });
   @override
   Future<void> signUp({required DoctorModel doctorModel}) async {
-    final response = await supabase.client.auth
+    await supabase.client.auth
         .signUp(email: doctorModel.email, password: doctorModel.password!);
-    if (response.user != null) {
-      await addDoctor(user: response.user!, doctorModel: doctorModel);
-    }
-    await supabase.client.auth.signOut();
   }
 
   @override
@@ -40,15 +37,17 @@ class AuthRemoteDataImp implements AuthRemoteData {
     }
   }
 
-  Future<void> addDoctor(
-      {required User user, required DoctorModel doctorModel}) async {
-    final id = user.id;
+  @override
+  Future<void> addDoctor({required DoctorModel doctorModel}) async {
+    log("Adding doctor with email: ${doctorModel.email}");
+    log("Adding doctor with email: ${doctorModel.name}");
+    final user = supabase.client.auth.currentUser!;
     final data = doctorModel.toJson();
-    data['doctor_id'] = id;
+    data['doctor_id'] = user.id;
     data['image'] = user.userMetadata?['avatar_url'] ?? '';
     await supabase.client.from('doctors').insert(data);
     await supabase.client.from('doctor_file').insert({
-      'doctor_id': id,
+      'doctor_id': user.id,
       'file': doctorModel.medicalLicense,
     });
   }
@@ -76,7 +75,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
   }
 
   @override
-  Future<SigninResultModel> signInWithGoogle() async {
+  Future<DoctorModel?> signInWithGoogle() async {
     final GoogleSignIn signIn = GoogleSignIn.instance;
     signIn.initialize(
         clientId: EnvService.googleClientIdIos,
@@ -90,18 +89,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
       provider: OAuthProvider.google,
       idToken: idToken,
     );
-    final isRegistered = await checkDoctorRegister(response.user);
-
-    if (!isRegistered) {
-      await addDoctor(
-          user: response.user!,
-          doctorModel: DoctorModel(
-            name: response.user!.userMetadata?['full_name'] ?? '',
-            email: response.user!.email!,
-          ));
-    }
-
-    return SigninResultModel(isRegistered: isRegistered, user: response.user);
+    return await getDoctor(response.user);
   }
 
   @override
@@ -124,27 +112,17 @@ class AuthRemoteDataImp implements AuthRemoteData {
         .updateUser(UserAttributes(password: newPassword));
   }
 
-  @override
-  Future<bool> checkDoctorRegister(User? user) async {
-    final doctor = await supabase.client
+  Future<DoctorModel?> getDoctor(User? user) async {
+    final result = await supabase.client
         .from('doctors')
         .select()
-        .eq('email', user!.email!)
+        .eq('doctor_id', user!.id)
         .maybeSingle();
-    if (doctor == null) {
-      return false;
-    }
-    return true;
+    if (result == null) return null;
+    final doctor = DoctorModel.fromJson(result);
+    return doctor;
   }
 
-  Future<void> addUserData(String userId) async {
-    await supabase.client.from('users').upsert({
-      'user_id': userId,
-      'is_doctor': true,
-    }, onConflict: 'user_id');
-  }
-
-  @override
   Future<void> deleteDoctor(String doctorId) async {
     await supabase.client
         .from('doctor_file')

@@ -9,12 +9,6 @@ sealed class SignupState extends Equatable {
 
 final class SignupInitial extends SignupState {}
 
-final class GetSpecialtiesRequestedSuccess extends SignupState {
-  final List<SpecialtyEntity> specialties;
-
-  const GetSpecialtiesRequestedSuccess({required this.specialties});
-}
-
 final class SignupLoading extends SignupState {}
 
 final class SignupSuccess extends SignupState {}
@@ -25,8 +19,8 @@ final class SignupError extends SignupState {
   const SignupError({required this.errorMessage});
 }
 
-final class UploadFileSuccess extends SignupState {
-  final XFile? file;
+final class GetSpecialtiesRequestedSuccess extends SignupState {
+  final List<SpecialtyEntity> specialties;
 
-  const UploadFileSuccess({required this.file});
+  const GetSpecialtiesRequestedSuccess({required this.specialties});
 }

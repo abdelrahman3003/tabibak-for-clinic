@@ -37,19 +37,17 @@ class DoctorModel extends DoctorEntity {
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) {
     return DoctorModel(
-      name: json['name'] as String,
-      phone: json['phone'] as String,
-      email: json['email'] as String,
-      image: json['image'] as String?,
-      specialty: json['specialty'] as int,
-      medicalLicense: json['medical_liecense'] as String,
-      bioAr: json['bio_ar'] as String?,
-      bioEn: json['bio_en'] as String?,
+      name: json['name'],
+      phone: json['phone'],
+      email: json['email'],
+      image: json['image'],
+      specialty: json['specialty'],
+      medicalLicense: json['medical_liecense'],
+      bioAr: json['bio_ar'],
+      bioEn: json['bio_en'],
       status: json['profile_doctor_status'] != null
           ? DoctorProfileStatusModel.fromJson(json['profile_doctor_status'])
           : null,
-      isVerified: json['is_verified'] as bool?,
-      isRegistered: json['is_registered'] as bool?,
       education: json['education'] != null
           ? EducationModel.fromJson(json['education'])
           : null,

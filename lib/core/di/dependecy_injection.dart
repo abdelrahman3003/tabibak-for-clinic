@@ -21,6 +21,7 @@ import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_dat
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data_imp.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/repos_imp/auth_repo_imp.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/repos/auth_repo.dart';
+import 'package:tabibak_for_clinic/feature/auth/domain/usecases/add_doctor_use_case.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/get_specialties_usecase.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/reset_password_use_case.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/send_otp_use_case.dart';
@@ -29,6 +30,7 @@ import 'package:tabibak_for_clinic/feature/auth/domain/usecases/sign_in_with_goo
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/verified_code_use_case.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/forgot_password_bloc/forgot_password_bloc.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/managers/license_bloc/license_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/reset_password_bloc/reset_password_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_in_bloc/signin_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
@@ -73,7 +75,7 @@ Future<void> initGetIt() async {
   final dio = DioFactory.getDio();
   final sharedPreferences = await SharedPreferences.getInstance();
   final supabase = Supabase.instance;
-  // sharedPreferences.clear();
+
   //! External
   getit.registerLazySingleton<SharedPrefHelper>(
       () => SharedPrefHelper(sharedPreferences));
@@ -104,6 +106,9 @@ Future<void> initGetIt() async {
       () => SignInWithGooglUsecase(
             authRepo: getit<AuthRepo>(),
           ));
+  getit.registerLazySingleton<AddDoctorUseCase>(() => AddDoctorUseCase(
+        authRepo: getit<AuthRepo>(),
+      ));
   getit.registerLazySingleton<SendOtpUseCase>(() => SendOtpUseCase(
         authRepo: getit<AuthRepo>(),
       ));
@@ -116,21 +121,17 @@ Future<void> initGetIt() async {
 
   // blocs
   getit.registerFactory(() => SignupBloc(
-        signUpUsecase: getit<SignUpUsecase>(),
-        getSpecialtiesUsecase: getit<GetSpecialtiesUsecase>(),
-      ));
+      signUpUsecase: getit<SignUpUsecase>(),
+      getSpecialtiesUsecase: getit<GetSpecialtiesUsecase>()));
   getit.registerFactory(() => SigninBloc(
-        signInUsecase: getit<SignInUsecase>(),
-        signInWithGooglUsecase: getit<SignInWithGooglUsecase>(),
-      ));
-  getit.registerFactory(() => ForgotPasswordBloc(
-        getit<SendOtpUseCase>(),
-      ));
+      signInUsecase: getit<SignInUsecase>(),
+      signInWithGooglUsecase: getit<SignInWithGooglUsecase>()));
+  getit.registerFactory(
+      () => LicenseBloc(addDoctorUseCase: getit<AddDoctorUseCase>()));
+  getit.registerFactory(() => ForgotPasswordBloc(getit<SendOtpUseCase>()));
   getit.registerFactory(() =>
       VerifyCodeBloc(getit<VerifiedCodeUseCase>(), getit<SendOtpUseCase>()));
-  getit.registerFactory(() => ResetPasswordBloc(
-        getit<ResetPasswordUseCase>(),
-      ));
+  getit.registerFactory(() => ResetPasswordBloc(getit<ResetPasswordUseCase>()));
 
   //! Clinic Feature
 // remote data source

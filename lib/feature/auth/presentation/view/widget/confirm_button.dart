@@ -5,7 +5,7 @@ import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
-import 'package:tabibak_for_clinic/feature/auth/presentation/managers/sign_up_bloc/signup_bloc.dart';
+import 'package:tabibak_for_clinic/feature/auth/presentation/managers/license_bloc/license_bloc.dart';
 
 class ConfirmButton extends StatelessWidget {
   const ConfirmButton({super.key, this.onPressed, required this.email});
@@ -13,25 +13,24 @@ class ConfirmButton extends StatelessWidget {
   final Function()? onPressed;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SignupBloc, SignupState>(
+    return BlocConsumer<LicenseBloc, LicenseState>(
       buildWhen: (previous, current) =>
-          current is SignupSuccess ||
-          current is SignupError ||
-          current is SignupLoading ||
-          current is UploadFileSuccess,
+          current is UploadFileSuccess ||
+          current is LicenseLoading ||
+          current is LicenseError,
       listener: (context, state) {
-        if (state is SignupSuccess) {
+        if (state is LicenseSuccess) {
           context.pushNamed(Routes.checkEmailScreen, arguments: email);
         }
-        if (state is SignupError) {
+        if (state is LicenseError) {
           AppSnackBar.show(context: context, message: state.errorMessage);
         }
       },
       builder: (context, state) {
         return AppButton(
           title: AppString.confirm,
-          isLoading: state is SignupLoading,
-          onPressed: state is UploadFileSuccess ? onPressed : null,
+          isLoading: state is LicenseLoading,
+          onPressed: onPressed,
         );
       },
     );

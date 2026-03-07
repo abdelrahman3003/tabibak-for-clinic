@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
-import 'package:tabibak_for_clinic/core/helper/shared_pref_helper.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart' show AppColors;
 
@@ -25,7 +27,9 @@ class _SplashScreenState extends State<SplashScreen> {
         opacity = 1;
       });
       Future.delayed(const Duration(milliseconds: 1200), () {
-        if (getit<SharedPrefHelper>().getInt(SharedPrefKeys.step) == 2) {
+        final user = getit<Supabase>().client.auth.currentUser;
+        if (user != null) {
+          log("User is logged in: ${user.email}");
           return context.pushNamedAndRemoveUntil(
             Routes.layOutScreen,
             (route) => true,

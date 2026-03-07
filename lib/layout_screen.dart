@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
+import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens/appointment_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic_layout.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_profile_screen.dart';
@@ -19,6 +21,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
   @override
   void initState() {
+    getit<Supabase>().client.auth.signOut();
+
     super.initState();
     _selectedIndex = widget.initialIndex;
   }
