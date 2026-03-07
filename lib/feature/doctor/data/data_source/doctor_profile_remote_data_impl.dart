@@ -18,6 +18,7 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
         .select('*, specialties(*),education(*),profile_doctor_status(*)')
         .eq('doctor_id', currentDoctorId!)
         .maybeSingle();
+
     if (data == null) return null;
     return DoctorModel.fromJson(data);
   }

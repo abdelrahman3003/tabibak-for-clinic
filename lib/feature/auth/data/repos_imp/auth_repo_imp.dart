@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_handler.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
@@ -51,10 +49,8 @@ class AuthRepoImp extends AuthRepo {
   Future<Either<ApiErrorModel, DoctorEntity?>> signInWithGoogle() async {
     try {
       final result = await authRemoteData.signInWithGoogle();
-      log("Doctor Entity from signInWithGoogle: ${result?.email}");
       return right(result);
     } catch (e) {
-      log("Error in signInWithGoogle: $e");
       return left(ErrorHandler.handle(e));
     }
   }

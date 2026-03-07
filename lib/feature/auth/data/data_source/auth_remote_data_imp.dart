@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -39,8 +37,6 @@ class AuthRemoteDataImp implements AuthRemoteData {
 
   @override
   Future<void> addDoctor({required DoctorModel doctorModel}) async {
-    log("Adding doctor with email: ${doctorModel.email}");
-    log("Adding doctor with email: ${doctorModel.name}");
     final user = supabase.client.auth.currentUser!;
     final data = doctorModel.toJson();
     data['doctor_id'] = user.id;

@@ -24,6 +24,7 @@ class DoctorProfileRepoImp implements DoctorProfileRepo {
       }
       return right(doctorModel);
     } catch (e) {
+      log("----- get doctor repo imp error: $e");
       return left(ErrorHandler.handle(e));
     }
   }
