@@ -32,11 +32,10 @@ class _SignupScreenState extends State<SignupScreen> {
   void initState() {
     super.initState();
     user = getit<Supabase>().client.auth.currentUser;
-    nameController = TextEditingController(text: "abderahman");
-    emailController =
-        TextEditingController(text: "abdelrahmatemsah29@gmail.com");
-    passwordController = TextEditingController(text: "Abc@123456");
-    phoneController = TextEditingController(text: "01023456789");
+    nameController = TextEditingController();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    phoneController = TextEditingController();
   }
 
   @override
