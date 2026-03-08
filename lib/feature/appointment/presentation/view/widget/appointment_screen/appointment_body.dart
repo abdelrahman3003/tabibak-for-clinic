@@ -29,10 +29,14 @@ class AppointmentBody extends StatelessWidget {
                 current is GetDoctorSuccess ||
                 current is GetDoctorFailed,
             builder: (context, state) {
+              String doctorName = AppString.unknown;
+
+              if (state is GetDoctorSuccess) {
+                doctorName = state.doctor.name ?? "";
+              }
+
               return TodayBanner(
-                doctorName: state is GetDoctorSuccess
-                    ? state.doctor.name ?? AppString.unknown
-                    : AppString.unknown,
+                doctorName: doctorName,
                 appointmentLength: appointmentList.length,
               );
             },

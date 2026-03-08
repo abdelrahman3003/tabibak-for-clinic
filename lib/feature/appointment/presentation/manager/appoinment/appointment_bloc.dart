@@ -106,7 +106,7 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
       );
     });
     on<GetDoctorEvent>((event, emit) async {
-      emit(AppointmentLoading());
+      emit(GetDoctorLoading());
       final result = await getDoctorUseCase.call();
       result.fold(
         (error) {
