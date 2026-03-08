@@ -29,8 +29,6 @@ class SignUpButton extends StatelessWidget {
   final GlobalKey<FormState> signupFormKey;
   @override
   Widget build(BuildContext context) {
-    log("email: ${emailController.text}, password: ${passwordController.text}, name: ${nameController.text}, phone: ${phoneController.text}, specialization: ${getSpecialization()}");
-
     final user = Supabase.instance.client.auth.currentUser;
     return BlocConsumer<SignupBloc, SignupState>(
       buildWhen: (previous, current) =>
@@ -46,6 +44,7 @@ class SignUpButton extends StatelessWidget {
             context.pushNamed(Routes.checkEmailScreen,
                 arguments: emailController.text);
           } else {
+            log("------${nameController.text}");
             context.pushNamedAndRemoveUntil(
                 Routes.professionalLicenseScreen, (route) => true,
                 arguments: DoctorEntity(
@@ -68,9 +67,13 @@ class SignUpButton extends StatelessWidget {
                   ? context.pushNamed(
                       Routes.professionalLicenseScreen,
                       arguments: DoctorEntity(
-                        name: user.userMetadata?['full_name'] ?? '',
+                        name: nameController.text.isNotEmpty
+                            ? nameController.text
+                            : user.userMetadata?['full_name'] ?? '',
                         email: user.email ?? '',
-                        phone: user.phone ?? '',
+                        phone: phoneController.text.isNotEmpty
+                            ? phoneController.text
+                            : user.phone ?? '',
                         specialty: specialization,
                       ),
                     )

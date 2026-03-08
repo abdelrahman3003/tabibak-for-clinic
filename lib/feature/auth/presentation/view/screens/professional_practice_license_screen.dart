@@ -57,13 +57,8 @@ class ProfessionalLicenseScreen extends StatelessWidget {
               email: doctor.email ?? "",
               onPressed: () {
                 context.read<LicenseBloc>().add(AddDoctorEvent(
-                        doctorEntity: DoctorEntity(
-                      name: doctor.name,
-                      email: doctor.email,
-                      phone: doctor.phone,
-                      specialty: doctor.specialty,
-                      medicalLicense: medicalLicense,
-                    )));
+                    doctorEntity:
+                        doctor.copyWith(medicalLicense: medicalLicense)));
               },
             )
           ],

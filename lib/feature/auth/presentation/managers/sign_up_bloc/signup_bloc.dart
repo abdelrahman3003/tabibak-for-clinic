@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/get_specialties_usecase.dart';
@@ -17,10 +19,12 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     required this.getSpecialtiesUsecase,
   }) : super(SignupInitial()) {
     on<SignupRequestedEvent>((event, emit) async {
+      log("========${event.doctorEntity.email}");
+      log("========${event.doctorEntity.name}");
+      log("========${event.doctorEntity.specialty}");
+      log("========${event.doctorEntity.image}");
       emit(SignupLoading());
-      final result = await signUpUsecase.call(
-        doctorEntity: event.doctorEntity,
-      );
+      final result = await signUpUsecase.call(doctorEntity: event.doctorEntity);
       result.fold(
         (error) =>
             emit(SignupError(errorMessage: error.message ?? 'Unknown Error')),
