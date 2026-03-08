@@ -73,19 +73,18 @@ class AuthRemoteDataImp implements AuthRemoteData {
 
   @override
   Future<DoctorModel?> signInWithGoogle() async {
-    final GoogleSignIn signIn = GoogleSignIn.instance;
-    signIn.initialize(
-        clientId: EnvService.googleClientIdIos,
-        serverClientId: EnvService.googleClientIdWeb);
-    final googleAcount = await signIn.authenticate();
-    final idToken = googleAcount.authentication.idToken;
-    if (idToken == null) {
-      throw 'No Access Token found.';
-    }
+    await GoogleSignIn.instance.initialize(
+      clientId: EnvService.googleClientIdIos,
+      serverClientId: EnvService.googleClientIdWeb,
+    );
+
+    final googleUser = await GoogleSignIn.instance.authenticate();
+
     final response = await supabase.client.auth.signInWithIdToken(
       provider: OAuthProvider.google,
-      idToken: idToken,
+      idToken: googleUser.authentication.idToken!,
     );
+
     return await getDoctor(user: response.user!);
   }
 
