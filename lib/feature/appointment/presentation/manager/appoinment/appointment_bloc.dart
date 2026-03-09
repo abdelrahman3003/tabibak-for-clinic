@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
@@ -40,12 +42,13 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
         (error) {
           emit(AppointmentFailed(errorMessage: error.message!));
         },
-        (appointmentHomeEntity) {
+        (appointmentHomeEntity) async {
           appointmentStatusList = appointmentHomeEntity.appointmentStatusList;
           appointmentEntityList = appointmentHomeEntity.appointmentTodayList;
-          emit(const AppointmentSuccess());
         },
       );
+      final doctorResult = await getDoctorUseCase.call();
+      doctorResult.fold((l) {}, (doctor) => emit(AppointmentSuccess(doctor)));
     });
     on<UpdateAppointmentStatusEvent>((event, emit) async {
       emit(UpdateAppointmentStatusLoading());
@@ -113,6 +116,7 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
           emit(AppointmentFailed(errorMessage: error.message!));
         },
         (doctor) {
+          log("-------success ${doctor.name}");
           emit(GetDoctorSuccess(doctor: doctor));
         },
       );
@@ -121,6 +125,5 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
       emit(ToggleIndexState(index: event.index));
     });
     add(const GetAppointmentEvent());
-    add(const GetDoctorEvent());
   }
 }

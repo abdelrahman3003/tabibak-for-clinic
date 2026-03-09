@@ -41,6 +41,9 @@ class AppointmentScreen extends StatelessWidget {
                   context.read<AppointmentBloc>().appointmentStatusList !=
                       null) {
                 return AppointmentBody(
+                    doctorName: state is AppointmentSuccess
+                        ? state.doctor.name ?? ""
+                        : "",
                     appointmentHomeEntity: AppointmentHomeEntity(
                         appointmentStatusList: context
                             .read<AppointmentBloc>()

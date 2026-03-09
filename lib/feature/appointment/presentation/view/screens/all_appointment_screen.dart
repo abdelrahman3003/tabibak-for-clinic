@@ -61,11 +61,11 @@ class AllAppointmentScreen extends StatelessWidget {
                   ),
                   12.hBox,
                   Expanded(
-                    child: IndexedStack(
-                      index: selectedIndex,
-                      children: tabs,
-                    ),
-                  ),
+                      child: IndexedStack(
+                    alignment: AlignmentDirectional.topCenter,
+                    index: selectedIndex,
+                    children: tabs,
+                  ))
                 ],
               );
             },

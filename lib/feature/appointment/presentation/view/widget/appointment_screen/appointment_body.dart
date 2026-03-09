@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_home_entity.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_empty.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_list.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/today_banner.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/title_text_row.dart';
 
 class AppointmentBody extends StatelessWidget {
-  const AppointmentBody({super.key, required this.appointmentHomeEntity});
+  const AppointmentBody(
+      {super.key,
+      required this.appointmentHomeEntity,
+      required this.doctorName});
   final AppointmentHomeEntity appointmentHomeEntity;
+  final String doctorName;
   @override
   Widget build(BuildContext context) {
     final appointmentList = appointmentHomeEntity.appointmentTodayList ?? [];
@@ -23,23 +25,9 @@ class AppointmentBody extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
       child: Column(
         children: [
-          BlocBuilder<AppointmentBloc, AppointmentState>(
-            buildWhen: (previous, current) =>
-                current is GetDoctorLoading ||
-                current is GetDoctorSuccess ||
-                current is GetDoctorFailed,
-            builder: (context, state) {
-              String doctorName = AppString.unknown;
-
-              if (state is GetDoctorSuccess) {
-                doctorName = state.doctor.name ?? "";
-              }
-
-              return TodayBanner(
-                doctorName: doctorName,
-                appointmentLength: appointmentList.length,
-              );
-            },
+          TodayBanner(
+            doctorName: doctorName,
+            appointmentLength: appointmentList.length,
           ),
           32.hBox,
           TitleTextRow(

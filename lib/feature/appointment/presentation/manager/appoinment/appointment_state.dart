@@ -18,7 +18,8 @@ final class AppointmentFailed extends AppointmentState {
 }
 
 final class AppointmentSuccess extends AppointmentState {
-  const AppointmentSuccess();
+  final DoctorEntity doctor;
+  const AppointmentSuccess(this.doctor);
 }
 
 final class FinishedAppointmentsLoading extends AppointmentState {}
