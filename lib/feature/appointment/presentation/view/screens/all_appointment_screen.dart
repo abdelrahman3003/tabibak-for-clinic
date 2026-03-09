@@ -11,116 +11,119 @@ import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/item_bar.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/upcoming_appointment_list_states.dart';
 
-class AllAppointmentScreen extends StatefulWidget {
-  const AllAppointmentScreen({super.key});
+class AllAppointmentScreen extends StatelessWidget {
+  const AllAppointmentScreen({
+    super.key,
+    required this.appointmentStatusList,
+  });
 
-  @override
-  State<AllAppointmentScreen> createState() => _AllAppointmentScreenState();
-}
-
-class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
-  List<AppointmentStatusEntity>? appointmentStatusList;
-  List<Widget>? tabs;
-  int selectedIndex = 0;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (appointmentStatusList == null) {
-      appointmentStatusList = ModalRoute.of(context)!.settings.arguments
-          as List<AppointmentStatusEntity>;
-      tabs = [
-        UpcomingAppointmentListStates(
-            appointmentStatusList: appointmentStatusList!),
-        FinishedAppointmentListStates(
-            appointmentStatusList: appointmentStatusList!),
-        CanceledAppointmentListStates(
-            appointmentStatusList: appointmentStatusList!),
-      ];
-      setState(() {});
-    }
-  }
+  final List<AppointmentStatusEntity> appointmentStatusList;
 
   @override
   Widget build(BuildContext context) {
+    final tabs = [
+      UpcomingAppointmentListStates(
+          appointmentStatusList: appointmentStatusList),
+      FinishedAppointmentListStates(
+          appointmentStatusList: appointmentStatusList),
+      CanceledAppointmentListStates(
+          appointmentStatusList: appointmentStatusList),
+    ];
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          AppString.appointments,
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall
-              ?.copyWith(fontWeight: FontWeight.bold, height: 24 / 32),
+        appBar: AppBar(
+          title: Text(
+            AppString.appointments,
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontWeight: FontWeight.bold, height: 24 / 32),
+          ),
+          leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: Icon(Icons.arrow_back_ios, size: 20.h),
+          ),
         ),
-        leading: _backIcon(context),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppPadding.horizontal, vertical: 5),
-        child: Column(
-          children: [
-            12.hBox,
-            Container(
-              padding: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                color: const Color(0xffF3F4F6),
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Row(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: AppPadding.horizontal, vertical: 5),
+          child: BlocBuilder<AppointmentBloc, AppointmentState>(
+            buildWhen: (prev, curr) => curr is ToggleIndexState,
+            builder: (context, state) {
+              final selectedIndex = state is ToggleIndexState ? state.index : 0;
+
+              return Column(
                 children: [
-                  ItemBar(
-                    isActive: selectedIndex == 0,
-                    text: AppString.upcoming,
-                    onTa: () => _getAppointmentList(context, 0),
+                  12.hBox,
+                  _TabBar(
+                    selectedIndex: selectedIndex,
+                    onTabChanged: (index) => _onTabChanged(context, index),
                   ),
-                  ItemBar(
-                    isActive: selectedIndex == 1,
-                    text: AppString.completed,
-                    onTa: () => _getAppointmentList(context, 1),
-                  ),
-                  ItemBar(
-                    isActive: selectedIndex == 2,
-                    text: AppString.cancelled,
-                    onTa: () => _getAppointmentList(context, 2),
+                  12.hBox,
+                  Expanded(
+                    child: IndexedStack(
+                      index: selectedIndex,
+                      children: tabs,
+                    ),
                   ),
                 ],
-              ),
-            ),
-            12.hBox,
-            Expanded(
-              child: tabs![selectedIndex],
-            ),
-          ],
-        ),
-      ),
-    );
+              );
+            },
+          ),
+        ));
   }
 
-  IconButton _backIcon(BuildContext context) {
-    return IconButton(
-      onPressed: () => Navigator.pop(context),
-      icon: Icon(Icons.arrow_back_ios, size: 20.h),
-    );
-  }
+  void _onTabChanged(BuildContext context, int index) {
+    final bloc = context.read<AppointmentBloc>();
+    bloc.add(ChangeTabEvent(index));
 
-  void _getAppointmentList(BuildContext context, int index) {
-    if (index < 0 || index > 2) return;
-    setState(() {
-      selectedIndex = index;
-    });
-
-    var bloc = context.read<AppointmentBloc>();
     switch (index) {
       case 0:
         bloc.add(GetUpcomingAppointmentsEvent());
-        break;
       case 1:
         bloc.add(GetFinishedAppointmentsEvent());
-        break;
       case 2:
         bloc.add(GetCanceledAppointmentsEvent());
-        break;
     }
+  }
+}
+
+class _TabBar extends StatelessWidget {
+  const _TabBar({
+    required this.selectedIndex,
+    required this.onTabChanged,
+  });
+
+  final int selectedIndex;
+  final ValueChanged<int> onTabChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: const Color(0xffF3F4F6),
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Row(
+        children: [
+          ItemBar(
+            isActive: selectedIndex == 0,
+            text: AppString.upcoming,
+            onTa: () => onTabChanged(0),
+          ),
+          ItemBar(
+            isActive: selectedIndex == 1,
+            text: AppString.completed,
+            onTa: () => onTabChanged(1),
+          ),
+          ItemBar(
+            isActive: selectedIndex == 2,
+            text: AppString.cancelled,
+            onTa: () => onTabChanged(2),
+          ),
+        ],
+      ),
+    );
   }
 }

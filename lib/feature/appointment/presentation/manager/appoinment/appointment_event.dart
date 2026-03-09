@@ -36,3 +36,7 @@ class UpdateAppointmentStatusEvent extends AppointmentEvent {
 class GetDoctorEvent extends AppointmentEvent {
   const GetDoctorEvent();
 }
+class ChangeTabEvent extends AppointmentEvent {
+  final int index;
+  const ChangeTabEvent(this.index);
+}

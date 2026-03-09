@@ -117,6 +117,9 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
         },
       );
     });
+    on<ChangeTabEvent>((event, emit) {
+      emit(ToggleIndexState(index: event.index));
+    });
     add(const GetAppointmentEvent());
     add(const GetDoctorEvent());
   }

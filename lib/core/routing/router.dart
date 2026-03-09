@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/route_screen_wapper.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/create_appointment/create_appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens/add_appointment_screen.dart';
@@ -198,11 +199,14 @@ class AppRouter {
 
       //appointment
       case Routes.allAppointmentScreen:
+        final appointmentStatusList =
+            settings.arguments as List<AppointmentStatusEntity>;
         page = RootScreenWrapper(
           child: BlocProvider.value(
             value: getit<AppointmentBloc>()
               ..add(GetUpcomingAppointmentsEvent()),
-            child: const AllAppointmentScreen(),
+            child: AllAppointmentScreen(
+                appointmentStatusList: appointmentStatusList),
           ),
         );
         break;

@@ -91,3 +91,9 @@ final class GetDoctorSuccess extends AppointmentState {
 
   const GetDoctorSuccess({required this.doctor});
 }
+
+class ToggleIndexState extends AppointmentState {
+  final int index;
+
+  const ToggleIndexState({required this.index});
+}
