@@ -54,36 +54,60 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
 
                     return ShiftDayTime(
                       day: workingDay.clinicDayEntity!,
-                      initialMorningStart:
-                          workingDay.clinicShiftMorningEntity?.start,
-                      initialMorningEnd:
-                          workingDay.clinicShiftMorningEntity?.end,
                       initialEveningStart:
                           workingDay.clinicShiftEveningEntity?.start,
                       initialEveningEnd:
                           workingDay.clinicShiftEveningEntity?.end,
+                      initialMorningStart:
+                          workingDay.clinicShiftMorningEntity?.start,
+                      initialMorningEnd:
+                          workingDay.clinicShiftMorningEntity?.end,
+                      isMorningActive: selectedDays[index]
+                              .clinicShiftMorningEntity
+                              ?.isActive ??
+                          false,
+                      isEveningActive: selectedDays[index]
+                              .clinicShiftEveningEntity
+                              ?.isActive ??
+                          false,
                       onStarMorningSelected: (value) {
                         _saveDayTime(
                           workingDay.clinicDayEntity!,
                           morningStart: value,
+                          morningActive: true,
                         );
                       },
                       onEndMorningSelected: (value) {
                         _saveDayTime(
                           workingDay.clinicDayEntity!,
                           morningEnd: value,
+                          morningActive: true,
                         );
                       },
                       onStartEveningSelected: (value) {
                         _saveDayTime(
                           workingDay.clinicDayEntity!,
                           eveningStart: value,
+                          eveningActive: true,
                         );
                       },
                       onEndEveningSelected: (value) {
                         _saveDayTime(
                           workingDay.clinicDayEntity!,
                           eveningEnd: value,
+                          eveningActive: true,
+                        );
+                      },
+                      onMorningActiveChanged: (value) {
+                        _saveDayTime(
+                          workingDay.clinicDayEntity!,
+                          morningActive: value,
+                        );
+                      },
+                      onEveningActiveChanged: (value) {
+                        _saveDayTime(
+                          workingDay.clinicDayEntity!,
+                          eveningActive: value,
                         );
                       },
                     );
@@ -122,6 +146,8 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
     TimeOfDay? morningEnd,
     TimeOfDay? eveningStart,
     TimeOfDay? eveningEnd,
+    bool? morningActive,
+    bool? eveningActive,
   }) {
     final index =
         selectedDays.indexWhere((e) => e.clinicDayEntity?.id == day.id);
@@ -134,10 +160,12 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
             clinicShiftMorningEntity: ClinicShiftEntity(
               start: morningStart,
               end: morningEnd,
+              isActive: morningActive ?? false,
             ),
             clinicShiftEveningEntity: ClinicShiftEntity(
               start: eveningStart,
               end: eveningEnd,
+              isActive: eveningActive ?? false,
             )),
       );
     } else {
@@ -149,12 +177,15 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
         clinicShiftMorningEntity: ClinicShiftEntity(
           start: morningStart ?? old.clinicShiftMorningEntity?.start,
           end: morningEnd ?? old.clinicShiftMorningEntity?.end,
+          isActive: morningActive ?? old.clinicShiftMorningEntity?.isActive,
         ),
         clinicShiftEveningEntity: ClinicShiftEntity(
-          start: morningStart ?? old.clinicShiftEveningEntity?.start,
-          end: morningEnd ?? old.clinicShiftEveningEntity?.end,
+          start: eveningStart ?? old.clinicShiftEveningEntity?.start,
+          end: eveningEnd ?? old.clinicShiftEveningEntity?.end,
+          isActive: eveningActive ?? old.clinicShiftEveningEntity?.isActive,
         ),
       );
     }
+    setState(() {});
   }
 }

@@ -6,6 +6,7 @@ class ClinicShiftModel extends ClinicShiftEntity {
     super.shiftId,
     super.start,
     super.end,
+    super.isActive,
   });
 
   factory ClinicShiftModel.fromJson(Map<String, dynamic> json) {
@@ -13,6 +14,7 @@ class ClinicShiftModel extends ClinicShiftEntity {
       shiftId: json['id'],
       start: parseTime(json['start']),
       end: parseTime(json['end']),
+      isActive: true,
     );
   }
 }

@@ -12,18 +12,36 @@ class ShiftHours extends StatefulWidget {
       this.onStartTimeSelected,
       this.onEndTimeSelected,
       this.initialStart,
-      this.initialEnd});
+      this.initialEnd,
+      this.isActive = false,
+      this.onChanged});
   final String shift;
   final Function(TimeOfDay)? onStartTimeSelected;
   final Function(TimeOfDay)? onEndTimeSelected;
   final TimeOfDay? initialStart;
   final TimeOfDay? initialEnd;
+  final bool isActive;
+  final Function(bool)? onChanged;
   @override
   State<ShiftHours> createState() => _ShiftHoursState();
 }
 
 class _ShiftHoursState extends State<ShiftHours> {
-  bool isActive = false;
+  late bool isActive;
+
+  @override
+  void initState() {
+    super.initState();
+    isActive = widget.isActive;
+  }
+
+  @override
+  void didUpdateWidget(covariant ShiftHours oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.isActive != widget.isActive) {
+      isActive = widget.isActive;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +60,7 @@ class _ShiftHoursState extends State<ShiftHours> {
               value: isActive,
               onChanged: (value) {
                 isActive = value;
+                widget.onChanged?.call(value);
                 setState(() {});
               },
             )

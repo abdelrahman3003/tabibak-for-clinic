@@ -89,28 +89,38 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
       int? shiftMorningId;
       int? shiftEveningId;
 
-      if (isSelected) {
-        final shiftMorningResponse = await supabase
-            .from('shifts_morning')
-            .upsert({
-              'start': formatTime(selectedDay?.clinicShiftMorningEntity!.start),
-              'end': formatTime(selectedDay?.clinicShiftMorningEntity!.end),
-            })
-            .select()
-            .single();
+      if (isSelected && selectedDay != null) {
+        final morningShift = selectedDay.clinicShiftMorningEntity;
+        if (morningShift != null &&
+            (morningShift.isActive ?? false) &&
+            morningShift.start != null &&
+            morningShift.end != null) {
+          final shiftMorningResponse = await supabase
+              .from('shifts_morning')
+              .upsert({
+                'start': formatTime(morningShift.start!),
+                'end': formatTime(morningShift.end!),
+              })
+              .select()
+              .single();
+          shiftMorningId = shiftMorningResponse['id'];
+        }
 
-        shiftMorningId = shiftMorningResponse['id'];
-
-        final shiftEveningResponse = await supabase
-            .from('shift_evening')
-            .upsert({
-              'start': formatTime(selectedDay?.clinicShiftEveningEntity!.start),
-              'end': formatTime(selectedDay?.clinicShiftEveningEntity!.end),
-            })
-            .select()
-            .single();
-
-        shiftEveningId = shiftEveningResponse['id'];
+        final eveningShift = selectedDay.clinicShiftEveningEntity;
+        if (eveningShift != null &&
+            (eveningShift.isActive ?? false) &&
+            eveningShift.start != null &&
+            eveningShift.end != null) {
+          final shiftEveningResponse = await supabase
+              .from('shift_evening')
+              .upsert({
+                'start': formatTime(eveningShift.start!),
+                'end': formatTime(eveningShift.end!),
+              })
+              .select()
+              .single();
+          shiftEveningId = shiftEveningResponse['id'];
+        }
       }
 
       await supabase.from('working_day').upsert(

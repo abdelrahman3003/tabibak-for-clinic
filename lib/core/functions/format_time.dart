@@ -1,12 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-String? formatTime(TimeOfDay? t) {
-  if (t == null) return null;
-  final hour = t.hourOfPeriod.toString().padLeft(2, '0');
+String formatTime(TimeOfDay t) {
+  final hour = t.hour.toString().padLeft(2, '0');
   final minute = t.minute.toString().padLeft(2, '0');
-  final period = t.period == DayPeriod.am ? "AM" : "PM";
-  return "$hour:$minute $period";
+  return "$hour:$minute:00";
 }
 
 TimeOfDay? parseTime(String? time) {

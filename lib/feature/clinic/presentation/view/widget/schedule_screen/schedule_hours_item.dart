@@ -34,9 +34,17 @@ class ScheduleHoursItem extends StatelessWidget {
                     : Column(
                         children: [
                           _buildHourText(
-                              "${formatTime(shiftMorning?.start)}", context),
+                            shiftMorning?.start != null
+                                ? formatTime(shiftMorning!.start!)
+                                : "--:--",
+                            context,
+                          ),
                           _buildHourText(
-                              "${formatTime(shiftMorning?.end)}", context),
+                            shiftMorning?.end != null
+                                ? formatTime(shiftMorning!.end!)
+                                : "--:--",
+                            context,
+                          ),
                         ],
                       ),
               ),
@@ -47,9 +55,17 @@ class ScheduleHoursItem extends StatelessWidget {
                     : Column(
                         children: [
                           _buildHourText(
-                              "${formatTime(shiftEvening?.start)}", context),
+                            shiftEvening?.start != null
+                                ? formatTime(shiftEvening!.start!)
+                                : "--:--",
+                            context,
+                          ),
                           _buildHourText(
-                              "${formatTime(shiftEvening?.end)}", context),
+                            shiftEvening?.end != null
+                                ? formatTime(shiftEvening!.end!)
+                                : "--:--",
+                            context,
+                          ),
                         ],
                       ),
               ),

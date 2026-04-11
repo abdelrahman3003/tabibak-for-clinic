@@ -15,10 +15,14 @@ class ShiftDayTime extends StatelessWidget {
     this.onEndMorningSelected,
     this.onStartEveningSelected,
     this.onEndEveningSelected,
-    this.initialMorningStart,
-    this.initialMorningEnd,
     this.initialEveningStart,
     this.initialEveningEnd,
+    this.isMorningActive = false,
+    this.isEveningActive = false,
+    this.onMorningActiveChanged,
+    this.onEveningActiveChanged,
+    this.initialMorningStart,
+    this.initialMorningEnd,
   });
   final ClinicDayEntity day;
   final Function(TimeOfDay)? onStarMorningSelected;
@@ -29,6 +33,10 @@ class ShiftDayTime extends StatelessWidget {
   final TimeOfDay? initialMorningEnd;
   final TimeOfDay? initialEveningStart;
   final TimeOfDay? initialEveningEnd;
+  final bool isMorningActive;
+  final bool isEveningActive;
+  final Function(bool)? onMorningActiveChanged;
+  final Function(bool)? onEveningActiveChanged;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -59,8 +67,10 @@ class ShiftDayTime extends StatelessWidget {
               shift: AppString.morning,
               onStartTimeSelected: onStarMorningSelected,
               onEndTimeSelected: onEndMorningSelected,
-              initialEnd: initialMorningStart,
-              initialStart: initialMorningEnd,
+              initialStart: initialMorningStart,
+              initialEnd: initialMorningEnd,
+              isActive: isMorningActive,
+              onChanged: onMorningActiveChanged,
             ),
             32.hBox,
             ShiftHours(
@@ -69,6 +79,8 @@ class ShiftDayTime extends StatelessWidget {
               onEndTimeSelected: onEndEveningSelected,
               initialStart: initialEveningStart,
               initialEnd: initialEveningEnd,
+              isActive: isEveningActive,
+              onChanged: onEveningActiveChanged,
             ),
           ],
         ),
