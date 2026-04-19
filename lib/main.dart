@@ -17,13 +17,14 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  await EasyLocalization.ensureInitialized();
+  await Future.wait([
+    EasyLocalization.ensureInitialized(),
+    EnvService.init(),
+    SupabaseService.init(),
+  ]);
 
-  await EnvService.init();
-  await SupabaseService.init();
-
-  await PushNotificationService.init();
   await LocalNotificationServices.init();
+  await PushNotificationService.init();
 
   await initGetIt();
 
