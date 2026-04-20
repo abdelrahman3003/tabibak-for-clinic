@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/functions/upload_file.dart';
 import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 import 'package:tabibak_for_clinic/core/services/env_service.dart';
+import 'package:tabibak_for_clinic/core/services/push_notification_service.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/dotcor_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/specialty_model.dart';
@@ -33,15 +34,18 @@ class AuthRemoteDataImp implements AuthRemoteData {
       deleteDoctor(user.id);
       throw const AuthException('email_not_confirmed');
     }
+    updateDoctorFcmToken(user.id);
     return getDoctor(user: user);
   }
 
   @override
   Future<void> addDoctor({required DoctorModel doctorModel}) async {
     final user = supabase.client.auth.currentUser!;
+    final fcmToken = await PushNotificationService.getToken();
     final data = doctorModel.toJson();
     data['doctor_id'] = user.id;
     data['image'] = user.userMetadata?['avatar_url'] ?? '';
+    data['fcm_token'] = fcmToken;
     await supabase.client.from('doctors').insert(data);
     await supabase.client.from('doctor_file').insert({
       'doctor_id': user.id,
@@ -126,5 +130,17 @@ class AuthRemoteDataImp implements AuthRemoteData {
         .delete()
         .eq('doctor_id', doctorId);
     await supabase.client.from('doctors').delete().eq('doctor_id', doctorId);
+  }
+
+  Future<void> updateDoctorFcmToken(String doctorId) async {
+    final token = await PushNotificationService.getToken();
+
+    if (token == null) {
+      throw Exception('FCM token is null');
+    }
+
+    await supabase.client
+        .from('doctors')
+        .update({'fcm_token': token}).eq('id', doctorId);
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 import 'package:tabibak_for_clinic/feature/auth/domain/repos/auth_repo.dart';
@@ -8,6 +10,7 @@ class AddDoctorUseCase {
 
   AddDoctorUseCase({required this.authRepo});
   Future<Either<ApiErrorModel, void>> call(DoctorEntity doctorEntity) async {
+    log("AddDoctorUseCase called with doctorEntity: ${doctorEntity.toString()}");
     final result = await authRepo.addDoctor(doctorEntity: doctorEntity);
     return result;
   }
