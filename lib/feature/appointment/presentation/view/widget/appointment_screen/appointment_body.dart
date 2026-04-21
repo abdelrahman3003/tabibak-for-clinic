@@ -43,7 +43,7 @@ class AppointmentBody extends StatelessWidget {
               ? Expanded(
                   child: AppointmentEmpty(title: AppString.noAppointmentsToday))
               : AppointmentList(
-                  type: 1,
+                  type: 3,
                   isToday: true,
                   appointmentList: appointmentList,
                   appointmentStatusList: appointmentStatusList)

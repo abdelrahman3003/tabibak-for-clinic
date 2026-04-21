@@ -87,6 +87,8 @@
     "Completed": "Completed",
     "Cancelled": "Cancelled",
     "Finished": "Finished",
+    "Today": "Today",
+    "All": "All",
     "You have a clear schedule for now. \nEnjoy your free time!": "You have a clear schedule for now. \nEnjoy your free time!",
     "Address Not Available": "Address Not Available",
     "Known Name": "Known Name",
@@ -181,5 +183,8 @@
     "City": "City",
     "Street": "Street",
     "Floor": "Floor",
-    "Department": "Department"
+    "Department": "Department",
+    "Approve": "Approve",
+    "Reject": "Reject",
+    "Confirmed": "Confirmed"
 }

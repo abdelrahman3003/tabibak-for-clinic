@@ -22,6 +22,20 @@ final class AppointmentSuccess extends AppointmentState {
   const AppointmentSuccess(this.doctor);
 }
 
+final class TodayAppointmentsLoading extends AppointmentState {}
+
+final class TodayAppointmentsFailed extends AppointmentState {
+  final String errorMessage;
+
+  const TodayAppointmentsFailed({required this.errorMessage});
+}
+
+final class TodayAppointmentsSuccess extends AppointmentState {
+  final List<AppointmentEntity> todayList;
+
+  const TodayAppointmentsSuccess({required this.todayList});
+}
+
 final class FinishedAppointmentsLoading extends AppointmentState {}
 
 final class FinishedAppointmentsFailed extends AppointmentState {

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
+import 'package:tabibak_for_clinic/core/widgets/app_loading_widget.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_text_error.dart';
-import 'package:tabibak_for_clinic/core/widgets/circle_indicator_widget.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_home_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
@@ -31,7 +31,7 @@ class AppointmentScreen extends StatelessWidget {
             },
             builder: (context, state) {
               if (state is AppointmentLoading) {
-                return const Center(child: CircleIndicatorWidget());
+                return const Center(child: AppLoadingWidget());
               }
 
               if (state is AppointmentFailed) {

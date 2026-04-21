@@ -13,6 +13,8 @@ class GetAppointmentEvent extends AppointmentEvent {
   const GetAppointmentEvent({this.isUpdate = true});
 }
 
+class GetTodayAppointmentsEvent extends AppointmentEvent {}
+
 class GetUpcomingAppointmentsEvent extends AppointmentEvent {}
 
 class GetFinishedAppointmentsEvent extends AppointmentEvent {}

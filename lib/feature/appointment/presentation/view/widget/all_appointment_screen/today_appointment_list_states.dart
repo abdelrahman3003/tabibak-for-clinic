@@ -1,42 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
-import 'package:tabibak_for_clinic/core/widgets/app_loading_widget.dart';
+import 'package:tabibak_for_clinic/core/extention/navigation.dart';
+import 'package:tabibak_for_clinic/core/widgets/circle_indicator_widget.dart';
+import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_empty.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_list.dart';
 
-class CanceledAppointmentListStates extends StatelessWidget {
-  const CanceledAppointmentListStates(
+class TodayAppointmentListStates extends StatelessWidget {
+  const TodayAppointmentListStates(
       {super.key, required this.appointmentStatusList});
   final List<AppointmentStatusEntity> appointmentStatusList;
-
   @override
   Widget build(BuildContext context) {
     List<AppointmentEntity>? appointmentList;
-
     return BlocConsumer<AppointmentBloc, AppointmentState>(
-      listenWhen: (_, curr) => curr is CanceledAppointmentsSuccess,
       listener: (context, state) {
-        if (state is CanceledAppointmentsSuccess) {
-          appointmentList = state.canceledList;
+        if (state is UpdateAppointmentStatusLoading) {
+          Dialogs.showLoading(context);
+        }
+        if (state is UpdateAppointmentStatusSuccess) {
+          appointmentList = state.updatedAppointmentList ?? [];
+          context.pop();
+        }
+        if (state is TodayAppointmentsSuccess) {
+          appointmentList = state.todayList;
         }
       },
       builder: (context, state) {
-        if (state is CanceledAppointmentsLoading || appointmentList == null) {
-          return const Center(child: AppLoadingWidget());
+        if (state is TodayAppointmentsLoading || appointmentList == null) {
+          return const CircleIndicatorWidget();
         }
-        if (state is CanceledAppointmentsFailed) {
+        if (state is TodayAppointmentsFailed) {
           return ErrorWidget(state.errorMessage);
         }
 
         return appointmentList!.isEmpty
-            ? AppointmentEmpty(title: AppString.noCanceledAppointments)
+            ? AppointmentEmpty(
+                title: AppString.noAppointmentsToday,
+              )
             : AppointmentList(
-                type: 1,
-                showActions: false,
+                type: 1, // Status is not fixed for "Today" but we use 1 for UI type
+                isToday: true,
                 appointmentList: appointmentList!,
                 appointmentStatusList: appointmentStatusList,
               );

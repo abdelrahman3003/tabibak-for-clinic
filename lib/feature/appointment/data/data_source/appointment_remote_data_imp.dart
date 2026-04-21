@@ -44,7 +44,19 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
 
   @override
   Future<List<AppointmentModel>> getUpcomingAppointments() async {
-    return await getAppointments(3);
+    // Fetch all appointments that are NOT cancelled (1) and NOT finished (2).
+    // This includes both "Upcoming" (pending) and "Confirmed" appointments
+    // so that approved appointments remain visible in the Upcoming tab.
+    final response = await supabase.client
+        .from('appointments')
+        .select(
+            'name,appointments_status(status_en,status_ar),id,appointment_date,users(image)')
+        .eq('doctor_id', currentDoctorId)
+        .neq('status', 1) // not cancelled
+        .neq('status', 2); // not finished
+
+    final data = response as List;
+    return data.map((json) => AppointmentModel.fromJson(json)).toList();
   }
 
   @override
@@ -77,9 +89,14 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
     await supabase.client.from('appointments').update({
       'status': statusIndex,
     }).eq('id', appointmentId);
-    final result = await getAppointments(type, isToday: isToday);
-
-    return result;
+    
+    // If we are in the Upcoming tab (3), return the comprehensive active list (Upcoming + Confirmed)
+    // instead of just filtering by a single status ID.
+    if (type == 3 && !isToday) {
+      return await getUpcomingAppointments();
+    }
+    
+    return await getAppointments(type, isToday: isToday);
   }
 
   @override

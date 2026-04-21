@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
+import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/canceled_appointment_list_states.dart';
@@ -111,16 +112,19 @@ class _TabBar extends StatelessWidget {
             isActive: selectedIndex == 0,
             text: AppString.upcoming,
             onTa: () => onTabChanged(0),
+            activeColor: AppColors.statusUpcoming,
           ),
           ItemBar(
             isActive: selectedIndex == 1,
             text: AppString.completed,
             onTa: () => onTabChanged(1),
+            activeColor: AppColors.statusCompleted,
           ),
           ItemBar(
             isActive: selectedIndex == 2,
             text: AppString.cancelled,
             onTa: () => onTabChanged(2),
+            activeColor: AppColors.statusCancelled,
           ),
         ],
       ),

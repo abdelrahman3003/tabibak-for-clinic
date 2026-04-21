@@ -87,6 +87,8 @@
     "Completed": "مكتملة",
     "Cancelled": "ملغاة",
     "Finished": "منتهية",
+    "Today": "اليوم",
+    "All": "الكل",
     "You have a clear schedule for now. \nEnjoy your free time!": "جدولك خالٍ تماماً الآن. \nاستمتع بوقت فراغك!",
     "Address Not Available": "العنوان غير متاح",
     "Known Name": "اسم معروف",
@@ -182,5 +184,8 @@
     "City": "المدينة",
     "Street": "الشارع",
     "Floor": "الدور",
-    "Department": "القسم"
+    "Department": "القسم",
+    "Approve": "موافقة",
+    "Reject": "رفض",
+    "Confirmed": "مؤكد"
 }

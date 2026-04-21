@@ -109,8 +109,13 @@ class AppString {
   static String get completed => "Completed".tr();
   static String get cancelled => "Cancelled".tr();
   static String get finished => "Finished".tr();
+  static String get today => "Today".tr();
+  static String get all => "All".tr();
   static String get appointmentEmptySubtitle =>
       "You have a clear schedule for now. \nEnjoy your free time!".tr();
+  static String get approve => "Approve".tr();
+  static String get reject => "Reject".tr();
+  static String get confirmed => "Confirmed".tr();
 
   // Clinic Localization
   static String get addressNotAvailable => "Address Not Available".tr();

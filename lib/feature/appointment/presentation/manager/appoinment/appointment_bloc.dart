@@ -50,6 +50,19 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
       final doctorResult = await getDoctorUseCase.call();
       doctorResult.fold((l) {}, (doctor) => emit(AppointmentSuccess(doctor)));
     });
+    on<GetTodayAppointmentsEvent>((event, emit) async {
+      emit(TodayAppointmentsLoading());
+      final result = await getAppointmentsUseCase.call();
+      result.fold(
+        (error) {
+          emit(TodayAppointmentsFailed(errorMessage: error.message!));
+        },
+        (appointmentHomeEntity) {
+          emit(TodayAppointmentsSuccess(
+              todayList: appointmentHomeEntity.appointmentTodayList ?? []));
+        },
+      );
+    });
     on<UpdateAppointmentStatusEvent>((event, emit) async {
       emit(UpdateAppointmentStatusLoading());
       final result = await updateAppointmentStatusUseCase.call(
