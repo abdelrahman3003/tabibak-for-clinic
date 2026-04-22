@@ -13,7 +13,7 @@ class AppointmentList extends StatelessWidget {
 
   final List<AppointmentEntity> appointmentList;
   final bool showActions;
-  final void Function(int appointmentId, int statusIndex)? onStatusChanged;
+  final void Function(int? appointmentId, int? statusIndex)? onStatusChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +27,12 @@ class AppointmentList extends StatelessWidget {
           showActions: showActions,
           appointmentEntity: appointment,
           onApprove: onStatusChanged != null
-              ? () => onStatusChanged!(appointment.appointmentId ?? 0, 4) // 4 for Confirmed?
+              ? () => onStatusChanged!(
+                  appointment.appointmentId, 5) // 4 for Confirmed?
               : null,
           onReject: onStatusChanged != null
-              ? () => onStatusChanged!(appointment.appointmentId ?? 0, 1) // 1 for Canceled
+              ? () => onStatusChanged!(
+                  appointment.appointmentId, 3) // 1 for Canceled
               : null,
         );
       },

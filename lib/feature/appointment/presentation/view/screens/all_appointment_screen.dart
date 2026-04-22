@@ -5,6 +5,7 @@ import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
+import 'package:tabibak_for_clinic/core/widgets/app_loading_widget.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/all_appointment_bloc/bloc/all_appointments_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/appointment_list_view.dart';
@@ -72,6 +73,8 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.message)),
               );
+            } else if (state is AllAppointmentsLoading) {
+              const AppLoadingWidget();
             }
           },
           child: BlocBuilder<AllAppointmentsBloc, AllAppointmentsState>(
@@ -196,7 +199,7 @@ class _TabBar extends StatelessWidget {
           ),
           ItemBar(
             isActive: selectedIndex == 1,
-            text: AppString.completed,
+            text: AppString.confirmed,
             onTa: () => onTabChanged(1),
             activeColor: AppColors.statusCompleted,
           ),

@@ -21,13 +21,6 @@ class AppointmentScreen extends StatelessWidget {
               return Center(child: ErrorWidget(state.errorMessage));
             }
             if (state is AppointmentSuccess) {
-              if (state.appointmentsList == null) {
-                return const Center(child: Text("No appointments found."));
-              }
-
-              if (state.appointmentsList!.isEmpty) {
-                return const Center(child: Text("No appointments found."));
-              }
               return AppointmentBody(
                 appointmentList: state.appointmentsList!,
                 doctorName: state.doctor?.name ?? "Unknown Doctor",

@@ -19,13 +19,19 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
         .eq('doctor_id', currentDoctorId)
         .eq('status', type ?? 1);
 
-    if (isToday ?? false) {
-      final today = DateTime.now().toIso8601String().split('T').first;
+    final today = DateTime.now().toIso8601String().split('T').first;
 
-      query = query.eq('appointment_date', today);
+    if (type == 5) {
+      if (isToday == true) {
+        query = query.eq('appointment_date', today);
+      } else {
+        query = query.gte('appointment_date', today);
+      }
     }
-    final response = await query;
+
+    final response = await query.order('appointment_date', ascending: true);
     final data = response as List;
+
     return data.map((json) => AppointmentModel.fromJson(json)).toList();
   }
 
