@@ -1,8 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/feature/appointment/data/data_source/appointment_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/appointment/data/models/appointment_model.dart';
-import 'package:tabibak_for_clinic/feature/appointment/data/models/appointment_status_model.dart';
-import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_home_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_shift_model.dart';
 
 class AppointmentRemoteDataImp implements AppointmentRemoteData {
@@ -11,92 +9,38 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
   AppointmentRemoteDataImp({required this.supabase});
   String get currentDoctorId => supabase.client.auth.currentUser!.id;
 
+  @override
   Future<List<AppointmentModel>> getAppointments(
-    int type, {
-    bool isToday = false,
-  }) async {
+      {int? type, bool? isToday}) async {
     var query = supabase.client
         .from('appointments')
         .select(
             'name,appointments_status(status_en,status_ar),id,appointment_date,users(image)')
         .eq('doctor_id', currentDoctorId)
-        .eq('status', type);
+        .eq('status', type ?? 1);
 
-    if (isToday) {
+    if (isToday ?? false) {
       final today = DateTime.now().toIso8601String().split('T').first;
 
       query = query.eq('appointment_date', today);
     }
-
     final response = await query;
     final data = response as List;
-
     return data.map((json) => AppointmentModel.fromJson(json)).toList();
   }
 
   @override
-  Future<List<AppointmentStatusModel>> getAppointmentStatus() async {
-    final response =
-        await supabase.client.from('appointments_status').select('*');
-    final data = response as List;
-    return data.map((json) => AppointmentStatusModel.fromJson(json)).toList();
-  }
-
-  @override
-  Future<List<AppointmentModel>> getUpcomingAppointments() async {
-    // Fetch all appointments that are NOT cancelled (1) and NOT finished (2).
-    // This includes both "Upcoming" (pending) and "Confirmed" appointments
-    // so that approved appointments remain visible in the Upcoming tab.
-    final response = await supabase.client
-        .from('appointments')
-        .select(
-            'name,appointments_status(status_en,status_ar),id,appointment_date,users(image)')
-        .eq('doctor_id', currentDoctorId)
-        .neq('status', 1) // not cancelled
-        .neq('status', 2); // not finished
-
-    final data = response as List;
-    return data.map((json) => AppointmentModel.fromJson(json)).toList();
-  }
-
-  @override
-  Future<List<AppointmentModel>> getCanceledAppointments() async {
-    return await getAppointments(1);
-  }
-
-  @override
-  Future<List<AppointmentModel>> getFinishedAppointments() async {
-    return await getAppointments(2);
-  }
-
-  @override
-  Future<AppointmentHomeEntity> getAppointmentHome() async {
-    final appointmentList = await getAppointments(1, isToday: true);
-
-    final appointmentStatusList = await getAppointmentStatus();
-
-    return AppointmentHomeEntity(
-        appointmentTodayList: appointmentList,
-        appointmentStatusList: appointmentStatusList);
-  }
-
-  @override
-  Future<List<AppointmentModel>> updateAppointmentStatus(
-      {required int statusIndex,
-      required int appointmentId,
-      bool isToday = false,
-      required int type}) async {
-    await supabase.client.from('appointments').update({
-      'status': statusIndex,
-    }).eq('id', appointmentId);
-    
-    // If we are in the Upcoming tab (3), return the comprehensive active list (Upcoming + Confirmed)
-    // instead of just filtering by a single status ID.
-    if (type == 3 && !isToday) {
-      return await getUpcomingAppointments();
-    }
-    
-    return await getAppointments(type, isToday: isToday);
+  Future<void> updateAppointmentStatus({
+    required int statusIndex,
+    required int appointmentId,
+  }) async {
+    await supabase.client.functions.invoke(
+      'update_appointment',
+      body: {
+        'appointment_id': appointmentId,
+        'status': statusIndex,
+      },
+    );
   }
 
   @override

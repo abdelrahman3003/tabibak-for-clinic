@@ -1,29 +1,19 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
-import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status_entity.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_card.dart';
 
 class AppointmentList extends StatelessWidget {
   const AppointmentList({
     super.key,
     required this.appointmentList,
-    required this.appointmentStatusList,
-    required this.type,
-    this.isToday = false,
     this.showActions = false,
+    this.onStatusChanged,
   });
 
   final List<AppointmentEntity> appointmentList;
-  final List<AppointmentStatusEntity> appointmentStatusList;
-  final int type;
-  final bool isToday;
-
-  /// When true, each card shows Approve / Reject buttons.
-  /// When false, cards are read-only (status badge only).
   final bool showActions;
+  final void Function(int appointmentId, int statusIndex)? onStatusChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -31,20 +21,19 @@ class AppointmentList extends StatelessWidget {
       shrinkWrap: true,
       separatorBuilder: (context, index) => 10.hBox,
       itemCount: appointmentList.length,
-      itemBuilder: (context, index) => AppointmentCard(
-        showActions: showActions,
-        onStatusChanged: showActions
-            ? (value) {
-                context.read<AppointmentBloc>().add(UpdateAppointmentStatusEvent(
-                    statusIndex: value,
-                    appointmentId: appointmentList[index].appointmentId ?? 0,
-                    type: type,
-                    isToday: isToday));
-              }
-            : null,
-        appointmentStatusLis: appointmentStatusList,
-        appointmentEntity: appointmentList[index],
-      ),
+      itemBuilder: (context, index) {
+        final appointment = appointmentList[index];
+        return AppointmentCard(
+          showActions: showActions,
+          appointmentEntity: appointment,
+          onApprove: onStatusChanged != null
+              ? () => onStatusChanged!(appointment.appointmentId ?? 0, 4) // 4 for Confirmed?
+              : null,
+          onReject: onStatusChanged != null
+              ? () => onStatusChanged!(appointment.appointmentId ?? 0, 1) // 1 for Canceled
+              : null,
+        );
+      },
     );
   }
 }

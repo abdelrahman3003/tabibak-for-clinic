@@ -18,8 +18,9 @@ final class AppointmentFailed extends AppointmentState {
 }
 
 final class AppointmentSuccess extends AppointmentState {
-  final DoctorEntity doctor;
-  const AppointmentSuccess(this.doctor);
+  final DoctorEntity? doctor;
+  final List<AppointmentEntity>? appointmentsList;
+  const AppointmentSuccess({required this.doctor, required this.appointmentsList});
 }
 
 final class TodayAppointmentsLoading extends AppointmentState {}
@@ -86,12 +87,7 @@ final class UpdateAppointmentStatusFailed extends AppointmentState {
   const UpdateAppointmentStatusFailed({required this.errorMessage});
 }
 
-final class UpdateAppointmentStatusSuccess extends AppointmentState {
-  final List<AppointmentEntity>? updatedAppointmentList;
-  const UpdateAppointmentStatusSuccess({
-    required this.updatedAppointmentList,
-  });
-}
+final class UpdateAppointmentStatusSuccess extends AppointmentState {}
 
 final class GetDoctorLoading extends AppointmentState {}
 

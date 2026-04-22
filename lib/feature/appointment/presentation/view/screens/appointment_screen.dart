@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
-import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_loading_widget.dart';
-import 'package:tabibak_for_clinic/core/widgets/app_text_error.dart';
-import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
-import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_home_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_body.dart';
 
@@ -16,43 +12,29 @@ class AppointmentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => getit<AppointmentBloc>(),
-        child: BlocConsumer<AppointmentBloc, AppointmentState>(
-            buildWhen: (previous, current) =>
-                current is AppointmentSuccess ||
-                current is AppointmentLoading ||
-                current is AppointmentFailed,
-            listener: (context, state) {
-              if (state is UpdateAppointmentStatusLoading) {
-                Dialogs.showLoading(context);
-              }
-              if (state is UpdateAppointmentStatusSuccess) {
-                context.pop();
-              }
-            },
-            builder: (context, state) {
-              if (state is AppointmentLoading) {
-                return const Center(child: AppLoadingWidget());
+        child: BlocBuilder<AppointmentBloc, AppointmentState>(
+          builder: (context, state) {
+            if (state is AppointmentLoading) {
+              return const Center(child: AppLoadingWidget());
+            }
+            if (state is AppointmentFailed) {
+              return Center(child: ErrorWidget(state.errorMessage));
+            }
+            if (state is AppointmentSuccess) {
+              if (state.appointmentsList == null) {
+                return const Center(child: Text("No appointments found."));
               }
 
-              if (state is AppointmentFailed) {
-                return Center(child: AppTextError(error: state.errorMessage));
+              if (state.appointmentsList!.isEmpty) {
+                return const Center(child: Text("No appointments found."));
               }
-              if (state is AppointmentSuccess ||
-                  context.read<AppointmentBloc>().appointmentStatusList !=
-                      null) {
-                return AppointmentBody(
-                    doctorName: state is AppointmentSuccess
-                        ? state.doctor.name ?? ""
-                        : "",
-                    appointmentHomeEntity: AppointmentHomeEntity(
-                        appointmentStatusList: context
-                            .read<AppointmentBloc>()
-                            .appointmentStatusList,
-                        appointmentTodayList: context
-                            .read<AppointmentBloc>()
-                            .appointmentEntityList));
-              }
-              return const SizedBox.shrink();
-            }));
+              return AppointmentBody(
+                appointmentList: state.appointmentsList!,
+                doctorName: state.doctor?.name ?? "Unknown Doctor",
+              );
+            }
+            return const SizedBox();
+          },
+        ));
   }
 }

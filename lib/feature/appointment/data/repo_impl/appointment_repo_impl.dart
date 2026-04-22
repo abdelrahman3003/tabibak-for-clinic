@@ -4,7 +4,6 @@ import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 import 'package:tabibak_for_clinic/feature/appointment/data/data_source/appointment_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/appointment/data/models/appointment_model.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
-import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_home_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/repos/appointment_repos.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_entity.dart';
 
@@ -14,63 +13,11 @@ class AppointmentRepoImpl extends AppointmentRepo {
   AppointmentRepoImpl({required this.appointmentRemoteData});
 
   @override
-  Future<Either<ApiErrorModel, AppointmentHomeEntity>>
-      getAppointmentHome() async {
+  Future<Either<ApiErrorModel, List<AppointmentEntity>>> getAppointments(
+      {int? type, bool? isToday}) async {
     try {
-      final response = await appointmentRemoteData.getAppointmentHome();
-      return right(response);
-    } catch (e) {
-      return left(ErrorHandler.handle(e));
-    }
-  }
-
-  @override
-  Future<Either<ApiErrorModel, List<AppointmentEntity>>>
-      updateAppointmentStatus(
-          {required int statusIndex,
-          required int appointmentId,
-          bool isToday = false,
-          required int type}) async {
-    try {
-      final response = await appointmentRemoteData.updateAppointmentStatus(
-          statusIndex: statusIndex,
-          appointmentId: appointmentId,
-          type: type,
-          isToday: isToday);
-
-      return right(response);
-    } catch (e) {
-      return left(ErrorHandler.handle(e));
-    }
-  }
-
-  @override
-  Future<Either<ApiErrorModel, List<AppointmentEntity>>>
-      getCanceledAppointments() async {
-    try {
-      final response = await appointmentRemoteData.getUpcomingAppointments();
-      return right(response);
-    } catch (e) {
-      return left(ErrorHandler.handle(e));
-    }
-  }
-
-  @override
-  Future<Either<ApiErrorModel, List<AppointmentEntity>>>
-      getFinishedAppointments() async {
-    try {
-      final response = await appointmentRemoteData.getFinishedAppointments();
-      return right(response);
-    } catch (e) {
-      return left(ErrorHandler.handle(e));
-    }
-  }
-
-  @override
-  Future<Either<ApiErrorModel, List<AppointmentEntity>>>
-      getUpcomingAppointments() async {
-    try {
-      final response = await appointmentRemoteData.getCanceledAppointments();
+      final response = await appointmentRemoteData.getAppointments(
+          isToday: isToday, type: type);
       return right(response);
     } catch (e) {
       return left(ErrorHandler.handle(e));
@@ -94,6 +41,20 @@ class AppointmentRepoImpl extends AppointmentRepo {
       String dayEn) async {
     try {
       final response = await appointmentRemoteData.getAppointmentShift(dayEn);
+      return right(response);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, void>> updateAppointmentStatus(
+      {required int statusIndex, required int appointmentId}) async {
+    try {
+      final response = await appointmentRemoteData.updateAppointmentStatus(
+        statusIndex: statusIndex,
+        appointmentId: appointmentId,
+      );
       return right(response);
     } catch (e) {
       return left(ErrorHandler.handle(e));

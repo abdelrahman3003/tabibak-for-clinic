@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
+import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
-import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_home_entity.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_empty.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_list.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/today_banner.dart';
@@ -11,16 +12,11 @@ import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/sched
 
 class AppointmentBody extends StatelessWidget {
   const AppointmentBody(
-      {super.key,
-      required this.appointmentHomeEntity,
-      required this.doctorName});
-  final AppointmentHomeEntity appointmentHomeEntity;
+      {super.key, required this.appointmentList, required this.doctorName});
+  final List<AppointmentEntity> appointmentList;
   final String doctorName;
   @override
   Widget build(BuildContext context) {
-    final appointmentList = appointmentHomeEntity.appointmentTodayList ?? [];
-    final appointmentStatusList =
-        appointmentHomeEntity.appointmentStatusList ?? [];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
       child: Column(
@@ -34,8 +30,7 @@ class AppointmentBody extends StatelessWidget {
             title: AppString.appointmentsToday,
             subtitle: AppString.seeAll,
             onTap: () {
-              Navigator.pushNamed(context, Routes.allAppointmentScreen,
-                  arguments: appointmentStatusList);
+              context.pushNamed(Routes.allAppointmentScreen);
             },
           ),
           10.hBox,
@@ -43,10 +38,8 @@ class AppointmentBody extends StatelessWidget {
               ? Expanded(
                   child: AppointmentEmpty(title: AppString.noAppointmentsToday))
               : AppointmentList(
-                  type: 3,
-                  isToday: true,
                   appointmentList: appointmentList,
-                  appointmentStatusList: appointmentStatusList)
+                )
         ],
       ),
     );

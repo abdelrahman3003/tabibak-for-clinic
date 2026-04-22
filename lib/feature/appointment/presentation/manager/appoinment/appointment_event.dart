@@ -8,37 +8,24 @@ sealed class AppointmentEvent extends Equatable {
 }
 
 class GetAppointmentEvent extends AppointmentEvent {
-  final bool isUpdate;
-
-  const GetAppointmentEvent({this.isUpdate = true});
+  const GetAppointmentEvent();
 }
 
 class GetTodayAppointmentsEvent extends AppointmentEvent {}
 
-class GetUpcomingAppointmentsEvent extends AppointmentEvent {}
-
-class GetFinishedAppointmentsEvent extends AppointmentEvent {}
-
-class GetCanceledAppointmentsEvent extends AppointmentEvent {}
-
 class UpdateAppointmentStatusEvent extends AppointmentEvent {
   final int statusIndex;
   final int appointmentId;
-  final int type;
-  final bool isToday;
 
   const UpdateAppointmentStatusEvent({
     required this.statusIndex,
     required this.appointmentId,
-    required this.type,
-    required this.isToday,
   });
+
+  @override
+  List<Object> get props => [statusIndex, appointmentId];
 }
 
 class GetDoctorEvent extends AppointmentEvent {
   const GetDoctorEvent();
-}
-class ChangeTabEvent extends AppointmentEvent {
-  final int index;
-  const ChangeTabEvent(this.index);
 }

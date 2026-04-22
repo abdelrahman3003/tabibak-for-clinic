@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
@@ -7,48 +6,23 @@ import 'package:tabibak_for_clinic/core/functions/format_time.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/core/widgets/image_circle.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
-import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status_entity.dart';
 
 class AppointmentCard extends StatelessWidget {
   final AppointmentEntity appointmentEntity;
-  final List<AppointmentStatusEntity> appointmentStatusLis;
-  final ValueChanged<int>? onStatusChanged;
-
-  /// When true, the card checks the current status:
-  /// - "Upcoming" (pending) → shows Approve / Reject buttons
-  /// - Any other status (e.g. "Confirmed") → shows read-only badge only
+  final VoidCallback? onApprove;
+  final VoidCallback? onReject;
   final bool showActions;
 
   const AppointmentCard({
     super.key,
-    this.onStatusChanged,
-    required this.appointmentStatusLis,
+    this.onApprove,
+    this.onReject,
     required this.appointmentEntity,
     this.showActions = false,
   });
 
-  /// Returns true only when the appointment is still pending (statusEn == "Upcoming")
-  bool get _isPending =>
-      (appointmentEntity.statusEn ?? '').toLowerCase() == 'upcoming';
-
-  /// Find the "Confirmed" status ID dynamically from the status list
-  int? get _confirmedStatusId {
-    try {
-      return appointmentStatusLis
-          .firstWhere(
-            (s) => (s.statusEn ?? '').toLowerCase().contains('confirm'),
-          )
-          .id;
-    } catch (_) {
-      return null; // fallback – should not happen if DB has a Confirmed status
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final isArabic = context.locale.languageCode == 'ar';
-    final canTakeAction = showActions;
-
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -73,17 +47,47 @@ class AppointmentCard extends StatelessWidget {
               ),
               12.wBox,
               Expanded(child: _buildNameAndDate(context)),
-              _buildStatusBadge(context, isArabic),
+              _buildStatusBadge(context),
             ],
           ),
-          // Show approve/reject ONLY when pending (Upcoming status)
-          if (canTakeAction) ...[
+          if (showActions) ...[
             12.hBox,
             _buildActionButtons(context),
           ],
         ],
       ),
     );
+  }
+
+  Widget _buildStatusBadge(BuildContext context) {
+    final status = appointmentEntity.statusEn ?? "";
+    final color = _badgeColor(status);
+    final isArabic = appointmentEntity.statusAr != null &&
+        Localizations.localeOf(context).languageCode == 'ar';
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Text(
+        isArabic ? (appointmentEntity.statusAr ?? "") : status,
+        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
+      ),
+    );
+  }
+
+  Color _badgeColor(String status) {
+    final s = status.toLowerCase();
+    if (s == 'upcoming') return AppColors.statusUpcoming;
+    if (s.contains('confirm')) return AppColors.statusConfirmed;
+    if (s == 'finished' || s == 'completed') return AppColors.statusCompleted;
+    if (s == 'cancelled') return AppColors.statusCancelled;
+    return Colors.grey;
   }
 
   Widget _buildNameAndDate(BuildContext context) {
@@ -103,37 +107,12 @@ class AppointmentCard extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .bodySmall
-              ?.copyWith(color: const Color(0xff64748B), height: 12 / 16),
+              ?.copyWith(color: const Color(0xff64748B)),
         ),
       ],
     );
   }
 
-  /// Always read-only status badge
-  Widget _buildStatusBadge(BuildContext context, bool isArabic) {
-    final statusText = isArabic
-        ? (appointmentEntity.statusAr ?? "")
-        : (appointmentEntity.statusEn ?? "");
-    final color = _badgeColor(appointmentEntity.statusEn ?? "");
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(
-        statusText,
-        textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-              color: AppColors.white,
-              fontWeight: FontWeight.w600,
-            ),
-      ),
-    );
-  }
-
-  /// Approve → "Confirmed" status | Reject → Cancelled (status 1)
   Widget _buildActionButtons(BuildContext context) {
     return Row(
       children: [
@@ -142,7 +121,7 @@ class AppointmentCard extends StatelessWidget {
             label: AppString.reject,
             color: AppColors.statusCancelled,
             icon: Icons.close_rounded,
-            onTap: () => onStatusChanged?.call(1), // 1 = Cancelled
+            onTap: () => onReject?.call(),
           ),
         ),
         12.wBox,
@@ -151,25 +130,11 @@ class AppointmentCard extends StatelessWidget {
             label: AppString.approve,
             color: AppColors.statusCompleted,
             icon: Icons.check_rounded,
-            onTap: () {
-              final confirmedId = _confirmedStatusId;
-              if (confirmedId != null) {
-                onStatusChanged?.call(confirmedId);
-              }
-            },
+            onTap: () => onApprove?.call(),
           ),
         ),
       ],
     );
-  }
-
-  Color _badgeColor(String status) {
-    final s = status.toLowerCase();
-    if (s == 'upcoming') return AppColors.statusUpcoming;
-    if (s.contains('confirm')) return AppColors.statusConfirmed;
-    if (s == 'finished' || s == 'completed') return AppColors.statusCompleted;
-    if (s == 'cancelled') return AppColors.statusCancelled;
-    return Colors.grey;
   }
 }
 

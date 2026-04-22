@@ -10,11 +10,9 @@ import 'package:tabibak_for_clinic/feature/appointment/data/repo_impl/appointmen
 import 'package:tabibak_for_clinic/feature/appointment/domain/repos/appointment_repos.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/add_appointment_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointment_shift_use_case.dart';
-import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointments_home_use_case.dart';
-import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_canceled_appointments_use_case.dart';
-import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_finished_appointments_use_case.dart';
-import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_upcoming_appointments_use_case.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointments_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/update_appointment_status_use_case.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/all_appointment_bloc/bloc/all_appointments_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/create_appointment/create_appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
@@ -238,31 +236,19 @@ Future<void> initGetIt() async {
   //useCases
   getit.registerLazySingleton<GetAppointmentsUseCase>(
       () => GetAppointmentsUseCase(appointmentRepos: getit<AppointmentRepo>()));
-  getit.registerLazySingleton<UpdateAppointmentStatusUseCase>(() =>
-      UpdateAppointmentStatusUseCase(
-          appointmentRepos: getit<AppointmentRepo>()));
-  getit.registerLazySingleton<GetUpcomingAppointmentsUseCase>(() =>
-      GetUpcomingAppointmentsUseCase(
-          appointmentRepos: getit<AppointmentRepo>()));
-  getit.registerLazySingleton<GetFinishedAppointmentsUseCase>(() =>
-      GetFinishedAppointmentsUseCase(
-          appointmentRepos: getit<AppointmentRepo>()));
-  getit.registerLazySingleton<GetCanceledAppointmentsUseCase>(() =>
-      GetCanceledAppointmentsUseCase(
-          appointmentRepos: getit<AppointmentRepo>()));
   getit.registerLazySingleton<GetAppointmentShiftUseCase>(() =>
       GetAppointmentShiftUseCase(appointmentRepos: getit<AppointmentRepo>()));
   getit.registerLazySingleton<AddAppointmentUseCase>(
       () => AddAppointmentUseCase(appointmentRepos: getit<AppointmentRepo>()));
+  getit.registerLazySingleton<UpdateAppointmentStatusUseCase>(() =>
+      UpdateAppointmentStatusUseCase(
+          appointmentRepos: getit<AppointmentRepo>()));
   //blocs
   getit.registerFactory<AppointmentBloc>(() => AppointmentBloc(
-        getit<GetAppointmentsUseCase>(),
-        getit<UpdateAppointmentStatusUseCase>(),
-        getit<GetUpcomingAppointmentsUseCase>(),
-        getit<GetFinishedAppointmentsUseCase>(),
-        getit<GetCanceledAppointmentsUseCase>(),
-        getit<GetDoctorUseCase>(),
-      ));
+      getit<GetAppointmentsUseCase>(), getit<GetDoctorUseCase>()));
+  getit.registerFactory<AllAppointmentsBloc>(() => AllAppointmentsBloc(
+      getit<GetAppointmentsUseCase>(),
+      getit<UpdateAppointmentStatusUseCase>()));
   getit.registerFactory(
     () => CreateAppointmentBloc(
         getit<GetAppointmentShiftUseCase>(), getit<AddAppointmentUseCase>()),

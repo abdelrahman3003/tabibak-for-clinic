@@ -3,12 +3,16 @@ import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/repos/appointment_repos.dart';
 
-class GetUpcomingAppointmentsUseCase {
+class GetAppointmentsUseCase {
   final AppointmentRepo appointmentRepos;
 
-  GetUpcomingAppointmentsUseCase({required this.appointmentRepos});
-  Future<Either<ApiErrorModel, List<AppointmentEntity>>> call() async {
-    final result = await appointmentRepos.getUpcomingAppointments();
+  GetAppointmentsUseCase({required this.appointmentRepos});
+
+  Future<Either<ApiErrorModel, List<AppointmentEntity>?>> call(
+      {int? type, bool? isToday}) async {
+    final result =
+        await appointmentRepos.getAppointments(type: type, isToday: isToday);
+
     return result;
   }
 }
