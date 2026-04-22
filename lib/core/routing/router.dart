@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/route_screen_wapper.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/all_appointment_bloc/bloc/all_appointments_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/all_appointment/all_appointments_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appointment_details/appointment_details_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/create_appointment/create_appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens/add_appointment_screen.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens/all_appointment_screen.dart';
@@ -213,8 +214,15 @@ class AppRouter {
           child: const AddAppointmentScreen(),
         ));
         break;
+
       case Routes.appointmentDetailsScreen:
-        page = const RootScreenWrapper(child: AppointmentDetailsScreen());
+        final appointmentId = settings.arguments as int;
+        page = RootScreenWrapper(
+            child: BlocProvider(
+          create: (context) => getit<AppointmentDetailsBloc>()
+            ..add(GetAppointmentDetailsEvent(appointmentId: appointmentId)),
+          child: const AppointmentDetailsScreen(),
+        ));
         break;
 
       default:

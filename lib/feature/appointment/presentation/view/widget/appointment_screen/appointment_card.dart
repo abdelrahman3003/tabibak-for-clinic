@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
+import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/functions/format_time.dart';
+import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/core/widgets/image_circle.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
@@ -23,38 +25,50 @@ class AppointmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              ImageCircle(
-                imageUrl: appointmentEntity.userImage,
-                radius: 26.r,
+        splashColor: Colors.black.withValues(alpha: 0.05),
+        highlightColor: Colors.black.withValues(alpha: 0.03),
+        onTap: () {
+          context.pushNamed(Routes.appointmentDetailsScreen,
+              arguments: appointmentEntity.appointmentId);
+        },
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
               ),
-              12.wBox,
-              Expanded(child: _buildNameAndDate(context)),
-              _buildStatusBadge(context),
             ],
           ),
-          if (showActions) ...[
-            12.hBox,
-            _buildActionButtons(context),
-          ],
-        ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  ImageCircle(
+                    imageUrl: appointmentEntity.userImage,
+                    radius: 26.r,
+                  ),
+                  12.wBox,
+                  Expanded(child: _buildNameAndDate(context)),
+                  _buildStatusBadge(context),
+                ],
+              ),
+              if (showActions) ...[
+                12.hBox,
+                _buildActionButtons(context),
+              ],
+            ],
+          ),
+        ),
       ),
     );
   }

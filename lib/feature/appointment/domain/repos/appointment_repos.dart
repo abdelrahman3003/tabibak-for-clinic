@@ -12,4 +12,6 @@ abstract class AppointmentRepo {
       {required int statusIndex, required int appointmentId});
   Future<Either<ApiErrorModel, ClinicShiftEntity?>> getAppointmentShift(
       String dayEn);
+  Future<Either<ApiErrorModel, AppointmentEntity?>> getAppointmentDetails(
+      int appointmentId);
 }

@@ -7,7 +7,7 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_loading_widget.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/all_appointment_bloc/bloc/all_appointments_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/all_appointment/all_appointments_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/appointment_list_view.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/item_bar.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_empty.dart';

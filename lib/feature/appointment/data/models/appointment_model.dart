@@ -14,6 +14,7 @@ class AppointmentModel extends AppointmentEntity {
     super.phone,
     super.name,
     super.description,
+    super.appointmentType,
   });
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
@@ -25,6 +26,13 @@ class AppointmentModel extends AppointmentEntity {
       statusEn: json['appointments_status']['status_en'],
       phone: json['phone'],
       name: json['name'],
+      description: json['description'],
+      doctorId: json['doctor_id'].toString(),
+      userId: json['user_id'].toString(),
+      appointmentShift: json['appointment_shift'],
+      appointmentType: json['appointment_type'] != null
+          ? DateTime.parse(json['appointment_type'])
+          : null,
     );
   }
 
@@ -51,6 +59,7 @@ class AppointmentModel extends AppointmentEntity {
       appointmentShift: entity.appointmentShift,
       phone: entity.phone,
       description: entity.description,
+      appointmentType: entity.appointmentType,
     );
   }
 }

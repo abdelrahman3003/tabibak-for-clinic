@@ -9,11 +9,13 @@ import 'package:tabibak_for_clinic/feature/appointment/data/data_source/appointm
 import 'package:tabibak_for_clinic/feature/appointment/data/repo_impl/appointment_repo_impl.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/repos/appointment_repos.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/add_appointment_use_case.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointment_details_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointment_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointments_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/update_appointment_status_use_case.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/all_appointment_bloc/bloc/all_appointments_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/all_appointment/all_appointments_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appointment_details/appointment_details_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/create_appointment/create_appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data_imp.dart';
@@ -243,6 +245,8 @@ Future<void> initGetIt() async {
   getit.registerLazySingleton<UpdateAppointmentStatusUseCase>(() =>
       UpdateAppointmentStatusUseCase(
           appointmentRepos: getit<AppointmentRepo>()));
+  getit.registerLazySingleton<GetAppointmentDetailsUseCase>(() =>
+      GetAppointmentDetailsUseCase(appointmentRepos: getit<AppointmentRepo>()));
   //blocs
   getit.registerFactory<AppointmentBloc>(() => AppointmentBloc(
       getit<GetAppointmentsUseCase>(), getit<GetDoctorUseCase>()));
@@ -252,5 +256,8 @@ Future<void> initGetIt() async {
   getit.registerFactory(
     () => CreateAppointmentBloc(
         getit<GetAppointmentShiftUseCase>(), getit<AddAppointmentUseCase>()),
+  );
+  getit.registerFactory(
+    () => AppointmentDetailsBloc(getit<GetAppointmentDetailsUseCase>()),
   );
 }

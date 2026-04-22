@@ -59,6 +59,18 @@ class AppointmentRepoImpl extends AppointmentRepo {
       );
       return right(response);
     } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, AppointmentEntity?>> getAppointmentDetails(
+      int appointmentId) async {
+    try {
+      final response =
+          await appointmentRemoteData.getAppointmentDetails(appointmentId);
+      return right(response);
+    } catch (e) {
       log("--------_$e");
       return left(ErrorHandler.handle(e));
     }
