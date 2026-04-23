@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointment_details_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/update_appointment_status_use_case.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/all_appointment/all_appointments_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
 
 part 'appointment_details_event.dart';
@@ -13,8 +14,12 @@ class AppointmentDetailsBloc
   final GetAppointmentDetailsUseCase getAppointmentDetailsUseCase;
   final UpdateAppointmentStatusUseCase updateAppointmentStatusUseCase;
   final AppointmentBloc appointmentBloc;
-  AppointmentDetailsBloc(this.getAppointmentDetailsUseCase,
-      this.updateAppointmentStatusUseCase, this.appointmentBloc)
+  final AllAppointmentsBloc allAppointmentsBloc;
+  AppointmentDetailsBloc(
+      this.getAppointmentDetailsUseCase,
+      this.updateAppointmentStatusUseCase,
+      this.appointmentBloc,
+      this.allAppointmentsBloc)
       : super(AppointmentDetailsInitial()) {
     on<GetAppointmentDetailsEvent>((event, emit) async {
       emit(GetAppointmentDetailsLoading());
@@ -44,6 +49,7 @@ class AppointmentDetailsBloc
               emit(CancelAppointmentFailure(error.message ?? 'Unknown error')),
           (_) {
         appointmentBloc.add(const GetAppointmentEvent());
+        allAppointmentsBloc.add(GetCanceledAppointmentsEvent());
         emit(CancelAppointmentSuccess());
       });
     });

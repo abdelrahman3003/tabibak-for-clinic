@@ -248,17 +248,21 @@ Future<void> initGetIt() async {
   getit.registerLazySingleton<GetAppointmentDetailsUseCase>(() =>
       GetAppointmentDetailsUseCase(appointmentRepos: getit<AppointmentRepo>()));
   //blocs
-  getit.registerFactory<AppointmentBloc>(() => AppointmentBloc(
+  getit.registerLazySingleton<AppointmentBloc>(() => AppointmentBloc(
       getit<GetAppointmentsUseCase>(), getit<GetDoctorUseCase>()));
   getit.registerFactory<AllAppointmentsBloc>(() => AllAppointmentsBloc(
       getit<GetAppointmentsUseCase>(),
-      getit<UpdateAppointmentStatusUseCase>()));
-  getit.registerFactory(
+      getit<UpdateAppointmentStatusUseCase>(),
+      getit<AppointmentBloc>()));
+  getit.registerLazySingleton(
     () => CreateAppointmentBloc(
         getit<GetAppointmentShiftUseCase>(), getit<AddAppointmentUseCase>()),
   );
   getit.registerFactory(
-    () => AppointmentDetailsBloc(getit<GetAppointmentDetailsUseCase>(),
-        getit<UpdateAppointmentStatusUseCase>(), getit<AppointmentBloc>()),
+    () => AppointmentDetailsBloc(
+        getit<GetAppointmentDetailsUseCase>(),
+        getit<UpdateAppointmentStatusUseCase>(),
+        getit<AppointmentBloc>(),
+        getit<AllAppointmentsBloc>()),
   );
 }

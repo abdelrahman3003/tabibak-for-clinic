@@ -20,7 +20,10 @@ final class AppointmentFailed extends AppointmentState {
 final class AppointmentSuccess extends AppointmentState {
   final DoctorEntity? doctor;
   final List<AppointmentEntity>? appointmentsList;
-  const AppointmentSuccess({required this.doctor, required this.appointmentsList});
+  const AppointmentSuccess(
+      {required this.doctor, required this.appointmentsList});
+  @override
+  List<Object> get props => [doctor ?? "", appointmentsList ?? []];
 }
 
 final class TodayAppointmentsLoading extends AppointmentState {}

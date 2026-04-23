@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointments_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/update_appointment_status_use_case.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/appointment_list_view.dart';
 
 part 'all_appointments_event.dart';
@@ -12,7 +13,7 @@ class AllAppointmentsBloc
     extends Bloc<AllAppointmentsEvent, AllAppointmentsState> {
   final GetAppointmentsUseCase getAppointmentsUseCase;
   final UpdateAppointmentStatusUseCase updateAppointmentStatusUseCase;
-
+  final AppointmentBloc appointmentBloc;
   // ✅ Each tab keeps its own list independently
   List<AppointmentEntity> upcomingList = [];
   List<AppointmentEntity> finishedList = [];
@@ -22,6 +23,7 @@ class AllAppointmentsBloc
   AllAppointmentsBloc(
     this.getAppointmentsUseCase,
     this.updateAppointmentStatusUseCase,
+    this.appointmentBloc,
   ) : super(AllAppointmentsInitial()) {
     on<GetUpcomingAppointmentsEvent>((event, emit) async {
       emit(AllAppointmentsLoading(AppointmentType.upcoming));
@@ -69,11 +71,25 @@ class AllAppointmentsBloc
         statusIndex: event.statusIndex,
         appointmentId: event.appointmentId,
       );
-      result.fold(
-        (error) => emit(UpdateAppointmentStatusFailure(error.message!)),
-        (_) {
-          emit(UpdateAppointmentStatusSuccess());
-          add(GetUpcomingAppointmentsEvent());
+
+      await result.fold(
+        (error) async => emit(UpdateAppointmentStatusFailure(error.message!)),
+        (_) async {
+          final refreshResult = await getAppointmentsUseCase.call(type: 1);
+          refreshResult.fold(
+            (error) {
+              emit(UpdateAppointmentStatusSuccess());
+            },
+            (appointments) {
+              upcomingList = appointments ?? [];
+              finishedList.clear();
+              canceledList.clear();
+              appointmentBloc.add(const GetAppointmentEvent());
+              emit(UpdateAppointmentStatusSuccess());
+              emit(AllAppointmentsSuccess(
+                  upcomingList, AppointmentType.upcoming));
+            },
+          );
         },
       );
     });

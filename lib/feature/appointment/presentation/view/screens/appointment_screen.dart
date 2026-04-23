@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
@@ -12,8 +10,8 @@ class AppointmentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => getit<AppointmentBloc>(),
+    return BlocProvider.value(
+        value: getit<AppointmentBloc>(),
         child: BlocBuilder<AppointmentBloc, AppointmentState>(
           builder: (context, state) {
             if (state is AppointmentLoading) {
@@ -23,8 +21,6 @@ class AppointmentScreen extends StatelessWidget {
               return Center(child: ErrorWidget(state.errorMessage));
             }
             if (state is AppointmentSuccess) {
-              log("-------- ss ${state.appointmentsList?.length}");
-
               return AppointmentBody(
                 appointmentList: state.appointmentsList!,
                 doctorName: state.doctor?.name ?? "Unknown Doctor",

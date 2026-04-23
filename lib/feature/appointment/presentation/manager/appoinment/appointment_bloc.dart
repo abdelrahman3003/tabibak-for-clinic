@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
@@ -17,7 +15,6 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
   AppointmentBloc(this.getAppointmentsUseCase, this.getDoctorUseCase)
       : super(AppointmentInitial()) {
     on<GetAppointmentEvent>((event, emit) async {
-      log("---------GetAppointmentEvent triggered");
       emit(AppointmentLoading());
 
       final appointmentResult =
