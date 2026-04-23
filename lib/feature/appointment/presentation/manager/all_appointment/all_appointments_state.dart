@@ -38,7 +38,11 @@ class AllAppointmentsFailure extends AllAppointmentsState {
   List<Object?> get props => [message, type];
 }
 
-class UpdateAppointmentStatusLoading extends AllAppointmentsState {}
+class UpdateAppointmentStatusLoading extends AllAppointmentsState {
+  final String? loadingKey;
+
+  UpdateAppointmentStatusLoading({required this.loadingKey});
+}
 
 class UpdateAppointmentStatusSuccess extends AllAppointmentsState {}
 

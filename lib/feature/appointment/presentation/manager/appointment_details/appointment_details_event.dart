@@ -16,3 +16,14 @@ class GetAppointmentDetailsEvent extends AppointmentDetailsEvent {
   @override
   List<Object> get props => [appointmentId];
 }
+
+class CancelAppointmentEvent extends AppointmentDetailsEvent {
+  final int appointmentId;
+
+  const CancelAppointmentEvent({
+    required this.appointmentId,
+  });
+
+  @override
+  List<Object> get props => [appointmentId];
+}

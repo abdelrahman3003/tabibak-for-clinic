@@ -14,6 +14,8 @@ class AppointmentCard extends StatelessWidget {
   final VoidCallback? onApprove;
   final VoidCallback? onReject;
   final bool showActions;
+  final bool approveLoading;
+  final bool rejectLoading;
 
   const AppointmentCard({
     super.key,
@@ -21,6 +23,8 @@ class AppointmentCard extends StatelessWidget {
     this.onReject,
     required this.appointmentEntity,
     this.showActions = false,
+    this.approveLoading = false,
+    this.rejectLoading = false,
   });
 
   @override
@@ -32,8 +36,10 @@ class AppointmentCard extends StatelessWidget {
         splashColor: Colors.black.withValues(alpha: 0.05),
         highlightColor: Colors.black.withValues(alpha: 0.03),
         onTap: () {
-          context.pushNamed(Routes.appointmentDetailsScreen,
-              arguments: appointmentEntity.appointmentId);
+          context.pushNamed(
+            Routes.appointmentDetailsScreen,
+            arguments: appointmentEntity.appointmentId,
+          );
         },
         child: Container(
           padding: const EdgeInsets.all(14),
@@ -135,15 +141,19 @@ class AppointmentCard extends StatelessWidget {
             label: AppString.reject,
             color: AppColors.statusCancelled,
             icon: Icons.close_rounded,
+            isLoading: rejectLoading,
+            isDisabled: approveLoading,
             onTap: () => onReject?.call(),
           ),
         ),
-        12.wBox,
+        const SizedBox(width: 12),
         Expanded(
           child: _ActionButton(
             label: AppString.approve,
             color: AppColors.statusCompleted,
             icon: Icons.check_rounded,
+            isLoading: approveLoading,
+            isDisabled: rejectLoading,
             onTap: () => onApprove?.call(),
           ),
         ),
@@ -158,18 +168,25 @@ class _ActionButton extends StatelessWidget {
     required this.color,
     required this.icon,
     required this.onTap,
+    this.isLoading = false,
+    this.isDisabled = false,
   });
 
   final String label;
   final Color color;
   final IconData icon;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
+  final bool isLoading;
+  final bool isDisabled;
+
+  bool get _isTapEnabled => !isLoading && !isDisabled;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
+    return InkWell(
+      onTap: _isTapEnabled ? onTap : null,
+      borderRadius: BorderRadius.circular(10),
+      child: Ink(
         padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           color: color.withOpacity(0.1),
@@ -179,8 +196,18 @@ class _ActionButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 16, color: color),
-            6.wBox,
+            if (isLoading)
+              SizedBox(
+                width: 16,
+                height: 16,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(color),
+                ),
+              )
+            else
+              Icon(icon, size: 16, color: color),
+            const SizedBox(width: 6),
             Text(
               label,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(

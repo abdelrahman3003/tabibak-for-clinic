@@ -4,12 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
-import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
-import 'package:tabibak_for_clinic/core/widgets/app_loading_widget.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/all_appointment/all_appointments_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/appointment_list_view.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/item_bar.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/appointment_tap_bar.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_empty.dart';
 
 class AllAppointmentScreen extends StatefulWidget {
@@ -63,7 +61,6 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
           vertical: 5,
         ),
         child: BlocListener<AllAppointmentsBloc, AllAppointmentsState>(
-          // ✅ Show snackbar on update success/failure
           listener: (context, state) {
             if (state is UpdateAppointmentStatusSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -73,8 +70,6 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.message)),
               );
-            } else if (state is AllAppointmentsLoading) {
-              const AppLoadingWidget();
             }
           },
           child: BlocBuilder<AllAppointmentsBloc, AllAppointmentsState>(
@@ -85,7 +80,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
               return Column(
                 children: [
                   12.hBox,
-                  _TabBar(
+                  AppointmentTapBar(
                     selectedIndex: selectedIndex,
                     onTabChanged: (index) => _onTabChanged(context, index),
                   ),
@@ -169,48 +164,5 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
             type: type,
             appointments: appointments,
           );
-  }
-}
-
-class _TabBar extends StatelessWidget {
-  const _TabBar({
-    required this.selectedIndex,
-    required this.onTabChanged,
-  });
-
-  final int selectedIndex;
-  final ValueChanged<int> onTabChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: const Color(0xffF3F4F6),
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Row(
-        children: [
-          ItemBar(
-            isActive: selectedIndex == 0,
-            text: AppString.upcoming,
-            onTa: () => onTabChanged(0),
-            activeColor: AppColors.statusUpcoming,
-          ),
-          ItemBar(
-            isActive: selectedIndex == 1,
-            text: AppString.confirmed,
-            onTa: () => onTabChanged(1),
-            activeColor: AppColors.statusCompleted,
-          ),
-          ItemBar(
-            isActive: selectedIndex == 2,
-            text: AppString.cancelled,
-            onTa: () => onTabChanged(2),
-            activeColor: AppColors.statusCancelled,
-          ),
-        ],
-      ),
-    );
   }
 }

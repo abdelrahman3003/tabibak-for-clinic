@@ -4,7 +4,7 @@ class AppointmentEntity extends Equatable {
   final int? appointmentId;
   final String? doctorId;
   final DateTime? appointmentDate;
-  final DateTime? appointmentType;
+  final int? appointmentType;
   final String? statusEn;
   final String? statusAr;
   final int? statusId;

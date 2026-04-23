@@ -19,21 +19,19 @@ class AppointmentModel extends AppointmentEntity {
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
     return AppointmentModel(
-      appointmentId: json['id'],
-      appointmentDate: DateTime.parse(json['appointment_date']),
-      userImage: json['users']?['image'],
-      statusAr: json['appointments_status']['status_ar'],
-      statusEn: json['appointments_status']['status_en'],
-      phone: json['phone'],
-      name: json['name'],
-      description: json['description'],
-      doctorId: json['doctor_id'].toString(),
-      userId: json['user_id'].toString(),
-      appointmentShift: json['appointment_shift'],
-      appointmentType: json['appointment_type'] != null
-          ? DateTime.parse(json['appointment_type'])
-          : null,
-    );
+        appointmentId: json['id'],
+        appointmentDate: DateTime.parse(json['appointment_date']),
+        userImage: json['users']?['image'],
+        statusAr: json['appointments_status']['status_ar'],
+        statusEn: json['appointments_status']['status_en'],
+        statusId: json['appointments_status']['id'],
+        phone: json['phone'],
+        name: json['name'],
+        description: json['description'],
+        doctorId: json['doctor_id'].toString(),
+        userId: json['user_id'].toString(),
+        appointmentShift: json['appointment_shift'],
+        appointmentType: json['appointment_type']);
   }
 
   Map<String, dynamic> toJson() {

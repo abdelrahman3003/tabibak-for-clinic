@@ -69,7 +69,7 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
   Future<AppointmentModel> getAppointmentDetails(int appointmentId) async {
     final response = await supabase.client.from('appointments').select('''
         *,
-        appointments_status(status_en, status_ar),
+        appointments_status(status_en, status_ar,id),
         users(image, name,user_id)
       ''').eq('id', appointmentId).single();
 

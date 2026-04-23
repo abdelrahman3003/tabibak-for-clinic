@@ -17,6 +17,10 @@ class AppointmentDetailsScreen extends StatelessWidget {
       appBar: const AppBarWidget(title: "Appointment Details"),
       body: Center(
         child: BlocBuilder<AppointmentDetailsBloc, AppointmentDetailsState>(
+          buildWhen: (previous, current) =>
+              current is GetAppointmentDetailsSuccess ||
+              current is GetAppointmentDetailsFailure ||
+              current is GetAppointmentDetailsLoading,
           builder: (context, state) {
             if (state is GetAppointmentDetailsLoading) {
               return const AppLoadingWidget();

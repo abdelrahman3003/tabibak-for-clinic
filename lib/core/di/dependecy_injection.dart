@@ -258,6 +258,7 @@ Future<void> initGetIt() async {
         getit<GetAppointmentShiftUseCase>(), getit<AddAppointmentUseCase>()),
   );
   getit.registerFactory(
-    () => AppointmentDetailsBloc(getit<GetAppointmentDetailsUseCase>()),
+    () => AppointmentDetailsBloc(getit<GetAppointmentDetailsUseCase>(),
+        getit<UpdateAppointmentStatusUseCase>(), getit<AppointmentBloc>()),
   );
 }

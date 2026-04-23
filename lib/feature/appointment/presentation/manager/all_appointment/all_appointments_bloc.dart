@@ -63,7 +63,8 @@ class AllAppointmentsBloc
     });
 
     on<UpdateAppointmentStatusEvent>((event, emit) async {
-      emit(UpdateAppointmentStatusLoading());
+      emit(UpdateAppointmentStatusLoading(
+          loadingKey: "${event.appointmentId}-${event.statusIndex}"));
       final result = await updateAppointmentStatusUseCase.call(
         statusIndex: event.statusIndex,
         appointmentId: event.appointmentId,
@@ -72,7 +73,6 @@ class AllAppointmentsBloc
         (error) => emit(UpdateAppointmentStatusFailure(error.message!)),
         (_) {
           emit(UpdateAppointmentStatusSuccess());
-          // ✅ Auto-refresh current tab after status update
           add(GetUpcomingAppointmentsEvent());
         },
       );

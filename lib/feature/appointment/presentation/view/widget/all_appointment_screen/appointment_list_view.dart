@@ -17,16 +17,25 @@ class AppointmentListView extends StatelessWidget {
   final List<AppointmentEntity> appointments;
   @override
   Widget build(BuildContext context) {
-    return AppointmentList(
-      showActions: type == AppointmentType.upcoming,
-      appointmentList: appointments,
-      onStatusChanged: (appointmentId, statusIndex) {
-        context.read<AllAppointmentsBloc>().add(
-              UpdateAppointmentStatusEvent(
-                statusIndex: statusIndex!,
-                appointmentId: appointmentId!,
-              ),
-            );
+    return BlocBuilder<AllAppointmentsBloc, AllAppointmentsState>(
+      builder: (context, state) {
+        String? loadingKey;
+        if (state is UpdateAppointmentStatusLoading) {
+          loadingKey = state.loadingKey;
+        }
+        return AppointmentList(
+          showActions: type == AppointmentType.upcoming,
+          appointmentList: appointments,
+          loadingKey: loadingKey,
+          onStatusChanged: (appointmentId, statusIndex) {
+            context.read<AllAppointmentsBloc>().add(
+                  UpdateAppointmentStatusEvent(
+                    statusIndex: statusIndex!,
+                    appointmentId: appointmentId!,
+                  ),
+                );
+          },
+        );
       },
     );
   }

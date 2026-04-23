@@ -9,12 +9,13 @@ class AppointmentList extends StatelessWidget {
     required this.appointmentList,
     this.showActions = false,
     this.onStatusChanged,
+    this.loadingKey,
   });
 
   final List<AppointmentEntity> appointmentList;
   final bool showActions;
   final void Function(int? appointmentId, int? statusIndex)? onStatusChanged;
-
+  final String? loadingKey;
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
@@ -25,6 +26,8 @@ class AppointmentList extends StatelessWidget {
         final appointment = appointmentList[index];
         return AppointmentCard(
           showActions: showActions,
+          approveLoading: loadingKey == "${appointment.appointmentId}-5",
+          rejectLoading: loadingKey == "${appointment.appointmentId}-3",
           appointmentEntity: appointment,
           onApprove: onStatusChanged != null
               ? () => onStatusChanged!(

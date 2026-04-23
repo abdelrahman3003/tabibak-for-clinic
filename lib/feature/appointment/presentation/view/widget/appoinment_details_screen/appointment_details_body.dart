@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
-import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
-import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/appointment_details_cancel_button_states.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/detail_row.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/paient_card.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/section_card.dart';
@@ -18,7 +17,6 @@ class AppointmentDetailsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final e = appointmentEntity;
-
     final statusColor = _statusColor(e.statusId);
     final statusLabel = e.statusEn ?? '—';
 
@@ -101,12 +99,10 @@ class AppointmentDetailsBody extends StatelessWidget {
               ),
             ],
             32.hBox,
-            if (e.statusId == 1 || e.statusId == 2)
-              AppButton(
-                title: "Cancel Appointment",
-                color: AppColors.red,
-                onPressed: () {},
-              ),
+            if (e.statusId == 1 || e.statusId == 5)
+              AppointmentDetailsCancelButtonStates(
+                  appointmentId:
+                      e.appointmentId!), // Pass the appointment ID here
             20.hBox,
           ],
         ),
