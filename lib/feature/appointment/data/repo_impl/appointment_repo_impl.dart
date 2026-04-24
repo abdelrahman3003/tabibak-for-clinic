@@ -85,6 +85,7 @@ class AppointmentRepoImpl extends AppointmentRepo {
           appointmentId, followUpDate);
       return right(response);
     } catch (e) {
+      log("---------$e");
       return left(ErrorHandler.handle(e));
     }
   }

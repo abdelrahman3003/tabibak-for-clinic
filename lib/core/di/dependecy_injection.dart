@@ -12,6 +12,7 @@ import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/add_appoin
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointment_details_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointment_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointments_use_case.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/set_appointment_follow_up_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/update_appointment_status_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/all_appointment/all_appointments_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
@@ -247,10 +248,13 @@ Future<void> initGetIt() async {
           appointmentRepos: getit<AppointmentRepo>()));
   getit.registerLazySingleton<GetAppointmentDetailsUseCase>(() =>
       GetAppointmentDetailsUseCase(appointmentRepos: getit<AppointmentRepo>()));
+  getit.registerLazySingleton<SetAppointmentFollowUpUseCase>(() =>
+      SetAppointmentFollowUpUseCase(
+          appointmentRepos: getit<AppointmentRepo>()));
   //blocs
   getit.registerLazySingleton<AppointmentBloc>(() => AppointmentBloc(
       getit<GetAppointmentsUseCase>(), getit<GetDoctorUseCase>()));
-  getit.registerFactory<AllAppointmentsBloc>(() => AllAppointmentsBloc(
+  getit.registerLazySingleton<AllAppointmentsBloc>(() => AllAppointmentsBloc(
       getit<GetAppointmentsUseCase>(),
       getit<UpdateAppointmentStatusUseCase>(),
       getit<AppointmentBloc>()));
@@ -263,6 +267,7 @@ Future<void> initGetIt() async {
         getit<GetAppointmentDetailsUseCase>(),
         getit<UpdateAppointmentStatusUseCase>(),
         getit<AppointmentBloc>(),
-        getit<AllAppointmentsBloc>()),
+        getit<AllAppointmentsBloc>(),
+        getit<SetAppointmentFollowUpUseCase>()),
   );
 }

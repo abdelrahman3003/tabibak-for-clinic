@@ -24,13 +24,18 @@ class GetAppointmentDetailsFailure extends AppointmentDetailsState {
   List<Object?> get props => [message];
 }
 
-class CancelAppointmentLoading extends AppointmentDetailsState {}
+class AppointmentActionLoading extends AppointmentDetailsState {
+  final String actionType;
 
-class CancelAppointmentSuccess extends AppointmentDetailsState {}
+  const AppointmentActionLoading(
+      {required this.actionType}); // "cancel" or "followUp"
+}
 
-class CancelAppointmentFailure extends AppointmentDetailsState {
+class AppointmentActionSuccess extends AppointmentDetailsState {}
+
+class AppointmentActionFailure extends AppointmentDetailsState {
   final String message;
-  const CancelAppointmentFailure(this.message);
+  const AppointmentActionFailure(this.message);
   @override
   List<Object?> get props => [message];
 }

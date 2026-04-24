@@ -17,13 +17,25 @@ class GetAppointmentDetailsEvent extends AppointmentDetailsEvent {
   List<Object> get props => [appointmentId];
 }
 
-class CancelAppointmentEvent extends AppointmentDetailsEvent {
+class UpdateAppointmentEvent extends AppointmentDetailsEvent {
+  final String actionType; // "cancel" or "followUp"
   final int appointmentId;
 
-  const CancelAppointmentEvent({
+  const UpdateAppointmentEvent({
     required this.appointmentId,
+    required this.actionType,
   });
 
   @override
   List<Object> get props => [appointmentId];
+}
+
+class SetFollowUpEvent extends AppointmentDetailsEvent {
+  final DateTime date;
+  final int appointmentId;
+
+  const SetFollowUpEvent({
+    required this.date,
+    required this.appointmentId,
+  });
 }

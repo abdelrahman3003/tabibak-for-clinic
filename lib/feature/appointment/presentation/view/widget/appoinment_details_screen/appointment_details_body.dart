@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/appointment_actions_buttons.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/appointment_actions_buttons_states.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/appointment_info_section.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/paient_card.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/patien_info_section.dart';
@@ -11,21 +11,9 @@ class AppointmentDetailsBody extends StatelessWidget {
   const AppointmentDetailsBody({
     super.key,
     required this.appointmentEntity,
-    this.onComplete,
-    this.onFollowUp,
-    this.onCancel,
-    this.isCompleteLoading = false,
-    this.isFollowUpLoading = false,
-    this.isCancelLoading = false,
   });
 
   final AppointmentEntity appointmentEntity;
-  final VoidCallback? onComplete;
-  final void Function(DateTime date)? onFollowUp;
-  final VoidCallback? onCancel;
-  final bool isCompleteLoading;
-  final bool isFollowUpLoading;
-  final bool isCancelLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -60,16 +48,36 @@ class AppointmentDetailsBody extends StatelessWidget {
                 ],
               ),
             ],
+            24.hBox,
+            if (e.followUpDate != null) ...[
+              16.hBox,
+              SectionCard(
+                title: 'Follow Up Date',
+                children: [
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.event_repeat_rounded,
+                        size: 18,
+                        color: Color(0xFF6366F1),
+                      ),
+                      8.wBox,
+                      Text(
+                        e.followUpDate.toString().split(' ').first,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFF64748B),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
             32.hBox,
             if (e.statusId == 1 || e.statusId == 5)
-              AppointmentActionButtons(
-                isCompleteLoading: isCompleteLoading,
-                isFollowUpLoading: isFollowUpLoading,
-                isCancelLoading: isCancelLoading,
-                onComplete: onComplete,
-                onFollowUp: onFollowUp,
-                onCancel: onCancel,
-              ),
+              AppointmentActionsButtonsStates(appointmentId: e.appointmentId!),
             20.hBox,
           ],
         ),

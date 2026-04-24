@@ -21,7 +21,6 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
   @override
   void initState() {
     super.initState();
-    // ✅ Load first tab on open
     context.read<AllAppointmentsBloc>().add(GetUpcomingAppointmentsEvent());
   }
 

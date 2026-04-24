@@ -123,7 +123,9 @@ class AppointmentCard extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          "${formatDayMonth(appointmentEntity.appointmentDate.toString())} · 11:00 AM",
+          appointmentEntity.followUpDate != null
+              ? formatDayMonth(appointmentEntity.followUpDate.toString())
+              : formatDayMonth(appointmentEntity.appointmentDate.toString()),
           style: Theme.of(context)
               .textTheme
               .bodySmall

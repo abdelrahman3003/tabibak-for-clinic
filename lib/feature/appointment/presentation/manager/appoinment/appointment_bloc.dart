@@ -12,8 +12,10 @@ part 'appointment_state.dart';
 class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
   final GetAppointmentsUseCase getAppointmentsUseCase;
   final GetDoctorUseCase getDoctorUseCase;
-  AppointmentBloc(this.getAppointmentsUseCase, this.getDoctorUseCase)
-      : super(AppointmentInitial()) {
+  AppointmentBloc(
+    this.getAppointmentsUseCase,
+    this.getDoctorUseCase,
+  ) : super(AppointmentInitial()) {
     on<GetAppointmentEvent>((event, emit) async {
       emit(AppointmentLoading());
 
