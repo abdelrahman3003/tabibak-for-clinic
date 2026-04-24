@@ -30,7 +30,6 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
     bloc.add(ChangeTabEvent(index));
     switch (index) {
       case 0:
-        // ✅ Only fetch if list is empty (avoid redundant calls)
         if (bloc.upcomingList.isEmpty) bloc.add(GetUpcomingAppointmentsEvent());
       case 1:
         if (bloc.finishedList.isEmpty) bloc.add(GetFinishedAppointmentsEvent());

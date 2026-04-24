@@ -11,17 +11,17 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
 
   @override
   Future<List<AppointmentModel>> getAppointments(
-      {int? type, bool? isToday}) async {
+      {int? status, bool? isToday}) async {
     var query = supabase.client
         .from('appointments')
         .select(
             'name,appointment_types(*),appointments_status(status_en,status_ar),id,appointment_date,users(image)')
         .eq('doctor_id', currentDoctorId)
-        .eq('status', type ?? 1);
+        .eq('status', status ?? 1);
 
     final today = DateTime.now().toIso8601String().split('T').first;
 
-    if (type == 5) {
+    if (status == 5) {
       if (isToday == true) {
         query = query.eq('appointment_date', today);
       } else {

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
@@ -27,7 +29,7 @@ class AllAppointmentsBloc
   ) : super(AllAppointmentsInitial()) {
     on<GetUpcomingAppointmentsEvent>((event, emit) async {
       emit(AllAppointmentsLoading(AppointmentType.upcoming));
-      final result = await getAppointmentsUseCase.call(type: 1);
+      final result = await getAppointmentsUseCase.call(status: 1);
       result.fold(
         (error) => emit(
             AllAppointmentsFailure(error.message!, AppointmentType.upcoming)),
@@ -40,7 +42,7 @@ class AllAppointmentsBloc
 
     on<GetFinishedAppointmentsEvent>((event, emit) async {
       emit(AllAppointmentsLoading(AppointmentType.finished));
-      final result = await getAppointmentsUseCase.call(type: 5);
+      final result = await getAppointmentsUseCase.call(status: 5);
       result.fold(
         (error) => emit(
             AllAppointmentsFailure(error.message!, AppointmentType.finished)),
@@ -53,7 +55,7 @@ class AllAppointmentsBloc
 
     on<GetCanceledAppointmentsEvent>((event, emit) async {
       emit(AllAppointmentsLoading(AppointmentType.canceled));
-      final result = await getAppointmentsUseCase.call(type: 3);
+      final result = await getAppointmentsUseCase.call(status: 3);
       result.fold(
         (error) => emit(
             AllAppointmentsFailure(error.message!, AppointmentType.canceled)),
@@ -75,12 +77,13 @@ class AllAppointmentsBloc
       await result.fold(
         (error) async => emit(UpdateAppointmentStatusFailure(error.message!)),
         (_) async {
-          final refreshResult = await getAppointmentsUseCase.call(type: 1);
+          final refreshResult = await getAppointmentsUseCase.call(status: 1);
           refreshResult.fold(
             (error) {
               emit(UpdateAppointmentStatusSuccess());
             },
             (appointments) {
+              log("Refreshed appointments: ${appointments?.length}");
               upcomingList = appointments ?? [];
               finishedList.clear();
               canceledList.clear();

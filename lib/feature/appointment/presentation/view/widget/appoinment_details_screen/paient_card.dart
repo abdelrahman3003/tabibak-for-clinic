@@ -7,18 +7,16 @@ class PatientCard extends StatelessWidget {
   const PatientCard({
     super.key,
     required this.entity,
-    required this.statusColor,
     required this.statusLabel,
-    required this.statusIcon,
   });
 
   final AppointmentEntity entity;
-  final Color statusColor;
   final String statusLabel;
-  final IconData statusIcon;
 
   @override
   Widget build(BuildContext context) {
+    final statusColor = _statusColor(entity.statusId);
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(20.r),
@@ -111,4 +109,34 @@ class PatientCard extends StatelessWidget {
         size: 36.r,
         color: color,
       );
+
+  Color _statusColor(int? id) {
+    switch (id) {
+      case 1:
+        return const Color(0xFFF59E0B);
+      case 2:
+        return const Color(0xFF10B981);
+      case 3:
+        return const Color(0xFFEF4444);
+      case 5:
+        return const Color(0xFF3B82F6);
+      default:
+        return Colors.grey;
+    }
+  }
+
+  IconData _statusIcon(int? id) {
+    switch (id) {
+      case 1:
+        return Icons.hourglass_empty_rounded;
+      case 2:
+        return Icons.check_circle_outline_rounded;
+      case 3:
+        return Icons.cancel_outlined;
+      case 4:
+        return Icons.task_alt_rounded;
+      default:
+        return Icons.info_outline;
+    }
+  }
 }

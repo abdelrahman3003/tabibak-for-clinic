@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
@@ -82,7 +80,6 @@ class AppointmentCard extends StatelessWidget {
   }
 
   Widget _buildStatusBadge(BuildContext context) {
-    log("---------${appointmentEntity.appointmentTypeEn}----------------");
     final appointmentType = appointmentEntity.appointmentTypeEn ?? "";
     final color = _badgeColor(appointmentType);
     final isArabic = appointmentEntity.appointmentTypeAr != null &&
@@ -108,7 +105,7 @@ class AppointmentCard extends StatelessWidget {
 
   Color _badgeColor(String status) {
     final s = status;
-    if (s == 'Consultation') return AppColors.statusCompleted;
+    if (s == 'Consultation') return AppColors.primaryDark;
     if (s == 'Follow-up') return AppColors.statusConfirmed;
     return Colors.grey;
   }

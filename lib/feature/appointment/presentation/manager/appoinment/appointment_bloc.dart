@@ -18,7 +18,7 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
       emit(AppointmentLoading());
 
       final appointmentResult =
-          await getAppointmentsUseCase.call(type: 5, isToday: true);
+          await getAppointmentsUseCase.call(status: 5, isToday: true);
       final doctorResult = await getDoctorUseCase.call();
 
       appointmentResult.fold(

@@ -5,7 +5,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_e
 
 abstract class AppointmentRepo {
   Future<Either<ApiErrorModel, List<AppointmentEntity>>> getAppointments(
-      {int? type, bool? isToday});
+      {int? status, bool? isToday});
   Future<Either<ApiErrorModel, void>> addAppointment(
       AppointmentEntity appointment);
   Future<Either<ApiErrorModel, void>> updateAppointmentStatus(
