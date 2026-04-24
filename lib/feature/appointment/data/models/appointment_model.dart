@@ -1,21 +1,21 @@
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 
 class AppointmentModel extends AppointmentEntity {
-  const AppointmentModel({
-    super.appointmentId,
-    super.appointmentDate,
-    super.statusEn,
-    super.statusAr,
-    super.statusId,
-    super.doctorId,
-    super.userId,
-    super.userImage,
-    super.appointmentShift,
-    super.phone,
-    super.name,
-    super.description,
-    super.appointmentType,
-  });
+  const AppointmentModel(
+      {super.appointmentId,
+      super.appointmentDate,
+      super.statusEn,
+      super.statusAr,
+      super.statusId,
+      super.doctorId,
+      super.userId,
+      super.userImage,
+      super.appointmentShift,
+      super.phone,
+      super.name,
+      super.description,
+      super.appointmentTypeEn,
+      super.appointmentTypeAr});
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
     return AppointmentModel(
@@ -31,7 +31,8 @@ class AppointmentModel extends AppointmentEntity {
         doctorId: json['doctor_id'].toString(),
         userId: json['user_id'].toString(),
         appointmentShift: json['appointment_shift'],
-        appointmentType: json['appointment_type']);
+        appointmentTypeEn: json['appointment_types']?['appointment_type_en'],
+        appointmentTypeAr: json['appointment_types']?['appointment_type_ar']);
   }
 
   Map<String, dynamic> toJson() {
@@ -57,7 +58,8 @@ class AppointmentModel extends AppointmentEntity {
       appointmentShift: entity.appointmentShift,
       phone: entity.phone,
       description: entity.description,
-      appointmentType: entity.appointmentType,
+      appointmentTypeEn: entity.appointmentTypeEn,
+      appointmentTypeAr: entity.appointmentTypeAr,
     );
   }
 }

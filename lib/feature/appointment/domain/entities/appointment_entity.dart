@@ -4,7 +4,8 @@ class AppointmentEntity extends Equatable {
   final int? appointmentId;
   final String? doctorId;
   final DateTime? appointmentDate;
-  final int? appointmentType;
+  final String? appointmentTypeEn;
+  final String? appointmentTypeAr;
   final String? statusEn;
   final String? statusAr;
   final int? statusId;
@@ -17,7 +18,8 @@ class AppointmentEntity extends Equatable {
 
   const AppointmentEntity({
     this.appointmentId,
-    this.appointmentType,
+    this.appointmentTypeEn,
+    this.appointmentTypeAr,
     this.doctorId,
     this.appointmentDate,
     this.statusEn,

@@ -22,6 +22,8 @@ class AppointmentRepoImpl extends AppointmentRepo {
           isToday: isToday, type: type);
       return right(response);
     } catch (e) {
+      log("--------_$e");
+
       return left(ErrorHandler.handle(e));
     }
   }
@@ -71,7 +73,6 @@ class AppointmentRepoImpl extends AppointmentRepo {
           await appointmentRemoteData.getAppointmentDetails(appointmentId);
       return right(response);
     } catch (e) {
-      log("--------_$e");
       return left(ErrorHandler.handle(e));
     }
   }

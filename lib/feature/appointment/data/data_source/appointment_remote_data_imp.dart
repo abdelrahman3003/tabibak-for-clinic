@@ -15,7 +15,7 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
     var query = supabase.client
         .from('appointments')
         .select(
-            'name,appointments_status(status_en,status_ar),id,appointment_date,users(image)')
+            'name,appointment_types(*),appointments_status(status_en,status_ar),id,appointment_date,users(image)')
         .eq('doctor_id', currentDoctorId)
         .eq('status', type ?? 1);
 

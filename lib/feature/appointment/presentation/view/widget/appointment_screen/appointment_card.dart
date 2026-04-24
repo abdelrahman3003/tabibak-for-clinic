@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
@@ -80,9 +82,10 @@ class AppointmentCard extends StatelessWidget {
   }
 
   Widget _buildStatusBadge(BuildContext context) {
-    final status = appointmentEntity.statusEn ?? "";
-    final color = _badgeColor(status);
-    final isArabic = appointmentEntity.statusAr != null &&
+    log("---------${appointmentEntity.appointmentTypeEn}----------------");
+    final appointmentType = appointmentEntity.appointmentTypeEn ?? "";
+    final color = _badgeColor(appointmentType);
+    final isArabic = appointmentEntity.appointmentTypeAr != null &&
         Localizations.localeOf(context).languageCode == 'ar';
 
     return Container(
@@ -92,7 +95,9 @@ class AppointmentCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
-        isArabic ? (appointmentEntity.statusAr ?? "") : status,
+        isArabic
+            ? (appointmentEntity.appointmentTypeAr ?? "")
+            : appointmentType,
         style: Theme.of(context).textTheme.bodySmall!.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.w600,
@@ -102,11 +107,9 @@ class AppointmentCard extends StatelessWidget {
   }
 
   Color _badgeColor(String status) {
-    final s = status.toLowerCase();
-    if (s == 'upcoming') return AppColors.statusUpcoming;
-    if (s.contains('confirm')) return AppColors.statusConfirmed;
-    if (s == 'finished' || s == 'completed') return AppColors.statusCompleted;
-    if (s == 'cancelled') return AppColors.statusCancelled;
+    final s = status;
+    if (s == 'Consultation') return AppColors.statusCompleted;
+    if (s == 'Follow-up') return AppColors.statusConfirmed;
     return Colors.grey;
   }
 
