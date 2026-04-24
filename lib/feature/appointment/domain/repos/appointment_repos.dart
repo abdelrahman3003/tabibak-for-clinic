@@ -14,4 +14,6 @@ abstract class AppointmentRepo {
       String dayEn);
   Future<Either<ApiErrorModel, AppointmentEntity?>> getAppointmentDetails(
       int appointmentId);
+  Future<Either<ApiErrorModel, void>> setAppointmentFollowUp(
+      {required int appointmentId, required DateTime followUpDate});
 }

@@ -75,4 +75,16 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
 
     return AppointmentModel.fromJson(response);
   }
+
+  @override
+  Future<void> setAppointmentFollowUp(
+      int appointmentId, DateTime followUpDate) {
+    return supabase.client.functions.invoke(
+      'set-follow-up',
+      body: {
+        'appointment_id': appointmentId,
+        'follow_up_date': followUpDate.toIso8601String(),
+      },
+    );
+  }
 }

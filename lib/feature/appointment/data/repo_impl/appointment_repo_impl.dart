@@ -76,4 +76,16 @@ class AppointmentRepoImpl extends AppointmentRepo {
       return left(ErrorHandler.handle(e));
     }
   }
+
+  @override
+  Future<Either<ApiErrorModel, void>> setAppointmentFollowUp(
+      {required int appointmentId, required DateTime followUpDate}) async {
+    try {
+      final response = await appointmentRemoteData.setAppointmentFollowUp(
+          appointmentId, followUpDate);
+      return right(response);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/appointment_actions_buttons.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/appointment_info_Section.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/appointment_info_section.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/paient_card.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/patien_info_section.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/section_card.dart';
@@ -30,8 +30,6 @@ class AppointmentDetailsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final e = appointmentEntity;
-    final statusLabel = e.statusEn ?? '—';
-
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -40,7 +38,7 @@ class AppointmentDetailsBody extends StatelessWidget {
           children: [
             PatientCard(
               entity: e,
-              statusLabel: statusLabel,
+              statusLabel: e.statusEn ?? '—',
             ),
             24.hBox,
             AppointmentInfoSection(entity: e),

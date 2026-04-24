@@ -8,4 +8,5 @@ abstract class AppointmentRemoteData {
   Future<void> addAppointment(AppointmentModel appointment);
   Future<AppointmentModel> getAppointmentDetails(int appointmentId);
   Future<ClinicShiftModel?> getAppointmentShift(String dayEn);
+  Future<void> setAppointmentFollowUp(int appointmentId, DateTime followUpDate);
 }

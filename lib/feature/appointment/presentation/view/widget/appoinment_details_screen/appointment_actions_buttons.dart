@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/functions/show_confirmed_dialog.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/action_button.dart';
 
@@ -29,35 +30,6 @@ class AppointmentActionButtons extends StatelessWidget {
     );
   }
 
-  void _showCompleteDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Complete Appointment'),
-        content: const Text('Would you like to schedule a follow-up?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(dialogContext);
-              onComplete?.call();
-            },
-            child: const Text('No Follow-up'),
-          ),
-          TextButton(
-            onPressed: () async {
-              Navigator.pop(dialogContext);
-              final date = await _pickDate(context);
-              if (date != null && context.mounted) {
-                onFollowUp?.call(date);
-              }
-            },
-            child: const Text('Pick Date'),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final isBusy = isCompleteLoading || isFollowUpLoading || isCancelLoading;
@@ -73,24 +45,31 @@ class AppointmentActionButtons extends StatelessWidget {
                 icon: Icons.task_alt_rounded,
                 isLoading: isCompleteLoading,
                 isDisabled: isBusy && !isCompleteLoading,
-                onTap: () => _showCompleteDialog(context),
+                onTap: () {
+                  showConfirmDialog(
+                    context: context,
+                    title: "Confirm Completion",
+                    message:
+                        "Are you sure you want to complete this appointment?",
+                    onConfirm: onComplete ?? () {},
+                  );
+                },
               ),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: ActionButton(
-                label: 'Follow-up',
-                color: AppColors.statusUpcoming,
-                icon: Icons.event_repeat_rounded,
-                isLoading: isFollowUpLoading,
-                isDisabled: isBusy && !isFollowUpLoading,
-                onTap: () async {
-                  final date = await _pickDate(context);
-                  if (date != null && context.mounted) {
-                    onFollowUp?.call(date);
-                  }
-                },
-              ),
+                  label: 'Follow-up',
+                  color: AppColors.statusUpcoming,
+                  icon: Icons.event_repeat_rounded,
+                  isLoading: isFollowUpLoading,
+                  isDisabled: isBusy && !isFollowUpLoading,
+                  onTap: () async {
+                    final date = await _pickDate(context);
+                    if (date != null && context.mounted) {
+                      onFollowUp?.call(date);
+                    }
+                  }),
             ),
           ],
         ),
@@ -102,7 +81,14 @@ class AppointmentActionButtons extends StatelessWidget {
           isLoading: isCancelLoading,
           isDisabled: isBusy && !isCancelLoading,
           fullWidth: true,
-          onTap: onCancel,
+          onTap: () {
+            showConfirmDialog(
+              context: context,
+              title: "Confirm Cancellation",
+              message: "Are you sure you want to cancel this appointment?",
+              onConfirm: onCancel ?? () {},
+            );
+          },
         ),
       ],
     );
