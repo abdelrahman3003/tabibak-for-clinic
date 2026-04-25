@@ -41,12 +41,14 @@ class AppointmentRepoImpl extends AppointmentRepo {
   }
 
   @override
-  Future<Either<ApiErrorModel, ClinicShiftEntity?>> getAppointmentShift(
+  Future<Either<ApiErrorModel, List<ClinicShiftEntity>?>> getAppointmentShift(
       String dayEn) async {
     try {
       final response = await appointmentRemoteData.getAppointmentShift(dayEn);
       return right(response);
     } catch (e) {
+      log("---------$e");
+
       return left(ErrorHandler.handle(e));
     }
   }
@@ -85,7 +87,6 @@ class AppointmentRepoImpl extends AppointmentRepo {
           appointmentId, followUpDate);
       return right(response);
     } catch (e) {
-      log("---------$e");
       return left(ErrorHandler.handle(e));
     }
   }

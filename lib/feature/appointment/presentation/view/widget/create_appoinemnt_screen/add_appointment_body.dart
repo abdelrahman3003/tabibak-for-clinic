@@ -33,33 +33,35 @@ class _AddAppointmentBodyState extends State<AddAppointmentBody> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
-      child: Column(
-        children: [
-          TextFormFiledWidget(
-            label: "Patient Name",
-            controller: patientNameController,
-          ),
-          TextFormFiledWidget(
-            label: "Phone Number",
-            keyboardType: TextInputType.number,
-            controller: phonePhoneController,
-          ),
-          TextFormFiledWidget(
-            label: "Date",
-            onTap: () async {
-              dateTime = await _pickDate(context);
-            },
-            controller: dateController,
-          ),
-          10.hBox,
-          const AddAppointmentDropDownStates(),
-          TextFormFiledWidget(
-            label: "Description",
-            maxLines: 3,
-            keyboardType: TextInputType.number,
-            controller: descriptionController,
-          ),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            TextFormFiledWidget(
+              label: "Patient Name",
+              controller: patientNameController,
+            ),
+            TextFormFiledWidget(
+              label: "Phone Number",
+              keyboardType: TextInputType.number,
+              controller: phonePhoneController,
+            ),
+            TextFormFiledWidget(
+              readOnly: true,
+              label: "Date",
+              onTap: () async {
+                dateTime = await _pickDate(context);
+              },
+              controller: dateController,
+            ),
+            10.hBox,
+            const AddAppointmentDropDownStates(),
+            TextFormFiledWidget(
+              label: "Description",
+              maxLines: 3,
+              controller: descriptionController,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -83,9 +85,9 @@ class _AddAppointmentBodyState extends State<AddAppointmentBody> {
 
     if (pickedDate != null) {
       final selectedDayName = DateFormat('EEEE', 'en_US').format(pickedDate);
-      context.read<CreateAppointmentBloc>().add(
-            GetAppointmentShiftEvent(dayEn: selectedDayName),
-          );
+      context
+          .read<CreateAppointmentBloc>()
+          .add(GetAppointmentShiftEvent(dayEn: selectedDayName));
       dateController.text = "${pickedDate.day}/${pickedDate.month}";
       return pickedDate;
     }

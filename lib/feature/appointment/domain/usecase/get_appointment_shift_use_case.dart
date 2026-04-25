@@ -8,7 +8,8 @@ class GetAppointmentShiftUseCase {
 
   GetAppointmentShiftUseCase({required this.appointmentRepos});
 
-  Future<Either<ApiErrorModel, ClinicShiftEntity?>> call(String dayEn) async {
+  Future<Either<ApiErrorModel, List<ClinicShiftEntity>?>> call(
+      String dayEn) async {
     final result = await appointmentRepos.getAppointmentShift(dayEn);
 
     return result;

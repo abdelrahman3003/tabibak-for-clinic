@@ -21,6 +21,7 @@ class _AddAppointmentDropDownStatesState
   String? selectedShift;
   String? errorMessage;
   int? shiftId;
+  Map<String, int> shiftMap = {}; // move here
 
   @override
   Widget build(BuildContext context) {
@@ -29,20 +30,21 @@ class _AddAppointmentDropDownStatesState
           current is GetAppointmentShiftSuccess ||
           current is GetAppointmentShiftFailed,
       builder: (context, state) {
-        Map<String, int> shiftMap = {};
-
         if (state is GetAppointmentShiftFailed) {
           errorMessage = state.errorMessage;
           shiftId = null;
+          shiftMap = {}; // clear on failure
         } else if (state is GetAppointmentShiftSuccess) {
-          if (state.clinicShiftEntity == null) {
+          if (state.clinicShiftEntityList == null ||
+              state.clinicShiftEntityList!.isEmpty) {
             errorMessage = "This day has no shifts";
             shiftId = null;
+            shiftMap = {}; // clear if empty
           } else {
             errorMessage = null;
             shiftMap = _getShiftMap(
-              shiftMorning: state.clinicShiftEntity!,
-              shiftEvening: state.clinicShiftEntity!,
+              shiftMorning: state.clinicShiftEntityList!.first,
+              shiftEvening: state.clinicShiftEntityList!.last,
             );
           }
         }
@@ -64,9 +66,7 @@ class _AddAppointmentDropDownStatesState
                   shiftId = shiftMap[value];
                   widget.onShiftSelected?.call(shiftId!);
                 }
-                setState(() {
-                  selectedShift = value;
-                });
+                setState(() => selectedShift = value);
               },
               filledColor: Colors.transparent,
               hint: "Select Shift",
@@ -86,18 +86,19 @@ class _AddAppointmentDropDownStatesState
   }
 }
 
-Map<String, int> _getShiftMap(
-    {required ClinicShiftEntity shiftMorning,
-    required ClinicShiftEntity shiftEvening}) {
+Map<String, int> _getShiftMap({
+  required ClinicShiftEntity shiftMorning,
+  required ClinicShiftEntity shiftEvening,
+}) {
   final map = <String, int>{};
 
   if (shiftMorning.start != null && shiftMorning.end != null) {
-    map['Morning ${formatTime(shiftMorning.start!)} - ${formatTime(shiftMorning.start!)}'] =
+    map['Morning ${formatTime(shiftMorning.start!)} - ${formatTime(shiftMorning.end!)}'] =
         shiftMorning.shiftId ?? 0;
   }
 
   if (shiftEvening.start != null && shiftEvening.end != null) {
-    map['Evening ${formatTime(shiftEvening.start!)} - ${formatTime(shiftEvening.start!)}'] =
+    map['Evening ${formatTime(shiftEvening.start!)} - ${formatTime(shiftEvening.end!)}'] =
         shiftEvening.shiftId ?? 0;
   }
 

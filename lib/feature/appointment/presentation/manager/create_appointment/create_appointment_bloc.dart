@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
@@ -24,8 +26,9 @@ class CreateAppointmentBloc
         (error) {
           emit(GetAppointmentShiftFailed(errorMessage: error.message!));
         },
-        (shift) {
-          emit(GetAppointmentShiftSuccess(clinicShiftEntity: shift));
+        (shifts) {
+          log("-------${shifts?.length}-------");
+          emit(GetAppointmentShiftSuccess(clinicShiftEntityList: shifts));
         },
       );
     });

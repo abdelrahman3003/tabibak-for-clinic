@@ -6,6 +6,7 @@ class ClinicShiftModel extends ClinicShiftEntity {
     super.shiftId,
     super.start,
     super.end,
+    super.shiftType,
     super.isActive,
   });
 
@@ -14,6 +15,7 @@ class ClinicShiftModel extends ClinicShiftEntity {
       shiftId: json['id'],
       start: parseTime(json['start']),
       end: parseTime(json['end']),
+      shiftType: json['shift_type'],
       isActive: true,
     );
   }

@@ -9,7 +9,6 @@ sealed class CreateAppointmentEvent extends Equatable {
 
 class GetAppointmentShiftEvent extends CreateAppointmentEvent {
   final String dayEn;
-
   const GetAppointmentShiftEvent({required this.dayEn});
 
   @override

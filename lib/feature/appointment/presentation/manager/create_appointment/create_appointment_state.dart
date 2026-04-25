@@ -12,11 +12,11 @@ final class CreateAppointmentInitial extends CreateAppointmentState {}
 final class GetAppointmentShiftLoading extends CreateAppointmentState {}
 
 final class GetAppointmentShiftSuccess extends CreateAppointmentState {
-  final ClinicShiftEntity? clinicShiftEntity;
+  final List<ClinicShiftEntity>? clinicShiftEntityList;
 
-  const GetAppointmentShiftSuccess({required this.clinicShiftEntity});
+  const GetAppointmentShiftSuccess({required this.clinicShiftEntityList});
   @override
-  List<Object> get props => [clinicShiftEntity ?? 'null'];
+  List<Object> get props => [clinicShiftEntityList ?? 'null'];
 }
 
 final class GetAppointmentShiftFailed extends CreateAppointmentState {

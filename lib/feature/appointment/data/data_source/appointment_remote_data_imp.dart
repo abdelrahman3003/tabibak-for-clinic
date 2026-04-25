@@ -55,14 +55,18 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
   }
 
   @override
-  Future<ClinicShiftModel?> getAppointmentShift(String dayEn) async {
+  Future<List<ClinicShiftModel>?> getAppointmentShift(String dayEn) async {
     final response = await supabase.client.rpc(
       'get_shift_by_day',
-      params: {'p_day_en': dayEn},
+      params: {
+        'p_doctor_id': currentDoctorId,
+        'p_day_en': dayEn,
+      },
     );
     if (response == null) return null;
 
-    return ClinicShiftModel.fromJson(response);
+    return List<ClinicShiftModel>.from(
+        response.map((json) => ClinicShiftModel.fromJson(json)));
   }
 
   @override
