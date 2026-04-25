@@ -1,18 +1,14 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
-import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
-import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/create_appointment/create_appointment_bloc.dart';
-import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/create_appoinemnt_screen/drop_down_states.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/create_appoinemnt_screen/add_appointment_body.dart';
 import 'package:tabibak_for_clinic/layout_screen.dart';
 
 class AddAppointmentScreen extends StatefulWidget {
@@ -75,63 +71,9 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
             context.pop();
           }
         },
-        child: Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
-          child: Column(
-            children: [
-              TextFormFiledWidget(
-                label: "Patient Name",
-                controller: patientNameController,
-              ),
-              TextFormFiledWidget(
-                label: "Phone Number",
-                keyboardType: TextInputType.number,
-                controller: phonePhoneController,
-              ),
-              TextFormFiledWidget(
-                label: "Date",
-                onTap: () async {
-                  dateTime = await _pickDate(context);
-                },
-                controller: dateController,
-              ),
-              10.hBox,
-              DropDownStates(
-                onShiftSelected: (value) {
-                  shiftId = value;
-                },
-              ),
-              TextFormFiledWidget(
-                label: "Description",
-                maxLines: 3,
-                keyboardType: TextInputType.text,
-                controller: descriptionController,
-              ),
-            ],
-          ),
-        ),
+        child: const AddAppointmentBody(),
       ),
     );
-  }
-
-  Future<DateTime?> _pickDate(BuildContext context) async {
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(DateTime.now().year + 1),
-    );
-
-    if (pickedDate != null) {
-      final selectedDayName = DateFormat('EEEE', 'en_US').format(pickedDate);
-      context.read<CreateAppointmentBloc>().add(
-            GetAppointmentShiftEvent(dayEn: selectedDayName),
-          );
-      dateController.text = "${pickedDate.day}/${pickedDate.month}";
-      return pickedDate;
-    }
-    return null;
   }
 
   @override

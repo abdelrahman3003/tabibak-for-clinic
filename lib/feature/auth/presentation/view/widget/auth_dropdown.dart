@@ -5,11 +5,13 @@ class AppDropdown<T> extends StatefulWidget {
   final T? value;
   final String hint;
   final Widget? prefixIcon;
-  final Color? color;
   final String Function(T item) labelBuilder;
   final void Function(T? value)? onChanged;
   final String? Function(T?)? validator;
-
+  final EdgeInsetsGeometry? contentPadding;
+  final Color? filledColor;
+  final TextStyle? textStyle;
+  final TextStyle? hintStyle;
   const AppDropdown({
     super.key,
     required this.items,
@@ -17,9 +19,12 @@ class AppDropdown<T> extends StatefulWidget {
     required this.hint,
     this.value,
     this.prefixIcon,
-    this.color,
     this.onChanged,
     this.validator,
+    this.contentPadding,
+    this.filledColor,
+    this.textStyle,
+    this.hintStyle,
   });
 
   @override
@@ -38,11 +43,19 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<T>(
-      value: selectedItem,
+      initialValue: selectedItem,
+      hint: Text(widget.hint, style: widget.hintStyle
+
+          // hint color here
+          ),
       decoration: InputDecoration(
-        hintText: widget.hint,
         prefixIcon: widget.prefixIcon,
-        contentPadding: const EdgeInsets.all(14),
+        border: const UnderlineInputBorder(),
+        filled: true,
+        fillColor: widget.filledColor ??
+            Theme.of(context).inputDecorationTheme.fillColor,
+        contentPadding:
+            widget.contentPadding ?? const EdgeInsets.symmetric(horizontal: 10),
       ),
       validator: widget.validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -54,6 +67,7 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
             ),
           )
           .toList(),
+      style: widget.textStyle,
       onChanged: (value) {
         setState(() => selectedItem = value);
         widget.onChanged?.call(value);

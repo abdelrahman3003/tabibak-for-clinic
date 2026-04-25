@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/functions/format_time.dart';
+import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/create_appointment/create_appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_dropdown.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_entity.dart';
 
-class DropDownStates extends StatefulWidget {
+class AddAppointmentDropDownStates extends StatefulWidget {
   final ValueChanged<int>? onShiftSelected;
 
-  const DropDownStates({super.key, this.onShiftSelected});
+  const AddAppointmentDropDownStates({super.key, this.onShiftSelected});
 
   @override
-  State<DropDownStates> createState() => _DropDownStatesState();
+  State<AddAppointmentDropDownStates> createState() =>
+      _AddAppointmentDropDownStatesState();
 }
 
-class _DropDownStatesState extends State<DropDownStates> {
+class _AddAppointmentDropDownStatesState
+    extends State<AddAppointmentDropDownStates> {
   String? selectedShift;
   String? errorMessage;
   int? shiftId;
@@ -48,6 +51,10 @@ class _DropDownStatesState extends State<DropDownStates> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppDropdown<String>(
+              hintStyle: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: AppColors.primary),
               items: shiftMap.keys.toList(),
               labelBuilder: (item) => item,
               validator: (item) =>
@@ -61,6 +68,7 @@ class _DropDownStatesState extends State<DropDownStates> {
                   selectedShift = value;
                 });
               },
+              filledColor: Colors.transparent,
               hint: "Select Shift",
             ),
             if (errorMessage != null)

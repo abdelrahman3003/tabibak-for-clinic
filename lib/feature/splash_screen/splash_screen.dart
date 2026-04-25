@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
         body: BlocListener<SplashBloc, SplashState>(
           listener: (context, state) {
             if (state is SplashSuccess) {
-              //    _checkInitPage(state, context);
+              _checkInitPage(state, context);
             }
           },
           child: Center(
