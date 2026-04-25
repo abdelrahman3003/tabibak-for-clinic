@@ -11,8 +11,9 @@ class AppointmentEntity extends Equatable {
   final int? statusId;
   final String? userId;
   final String? userImage;
-  final int? appointmentShift;
   final String? phone;
+  final int? appointmentMorningShiftId;
+  final int? appointmentEveningShiftId;
   final String? name;
   final String? description;
   final DateTime? followUpDate;
@@ -27,7 +28,8 @@ class AppointmentEntity extends Equatable {
     this.statusId,
     this.userId,
     this.userImage,
-    this.appointmentShift,
+    this.appointmentMorningShiftId,
+    this.appointmentEveningShiftId,
     this.phone,
     this.name,
     this.description,
@@ -43,7 +45,8 @@ class AppointmentEntity extends Equatable {
         userImage,
         userId,
         name,
-        appointmentShift,
+        appointmentMorningShiftId,
+        appointmentEveningShiftId,
         phone,
         description,
         statusId

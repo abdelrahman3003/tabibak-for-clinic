@@ -9,7 +9,7 @@ import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/create_appointment/create_appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/create_appoinemnt_screen/add_appointment_body.dart';
-import 'package:tabibak_for_clinic/layout_screen.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_entity.dart';
 
 class AddAppointmentScreen extends StatefulWidget {
   const AddAppointmentScreen({super.key});
@@ -23,8 +23,11 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
   late TextEditingController phonePhoneController;
   late TextEditingController descriptionController;
   late TextEditingController dateController;
+
   DateTime? dateTime;
-  int? shiftId;
+
+  ClinicShiftEntity? selectedShift;
+
   @override
   void initState() {
     patientNameController = TextEditingController();
@@ -41,17 +44,28 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
         text: "Add Appointment",
         onTap: () {
           final doctorId = getit<Supabase>().client.auth.currentUser!.id;
-          context.read<CreateAppointmentBloc>().add(AddAppointmentEvent(
+
+          context.read<CreateAppointmentBloc>().add(
+                AddAppointmentEvent(
                   appointment: AppointmentEntity(
-                doctorId: doctorId,
-                userId: doctorId,
-                name: patientNameController.text,
-                statusId: 1,
-                phone: phonePhoneController.text,
-                appointmentDate: dateTime,
-                description: descriptionController.text,
-                appointmentShift: shiftId,
-              )));
+                    doctorId: doctorId,
+                    userId: doctorId,
+                    name: patientNameController.text,
+                    statusId: 5,
+                    phone: phonePhoneController.text,
+                    appointmentDate: dateTime,
+                    description: descriptionController.text,
+                    appointmentMorningShiftId:
+                        selectedShift?.shiftType == "morning"
+                            ? selectedShift?.shiftId
+                            : null,
+                    appointmentEveningShiftId:
+                        selectedShift?.shiftType == "evening"
+                            ? selectedShift?.shiftId
+                            : null,
+                  ),
+                ),
+              );
         },
       ),
       body: BlocListener<CreateAppointmentBloc, CreateAppointmentState>(
@@ -59,19 +73,36 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
           if (state is AddAppointmentLoading) {
             Dialogs.showLoading(context);
           }
+
           if (state is AddAppointmentSuccess) {
             context.pop();
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const LayoutScreen(initialIndex: 1)));
-          }
-          if (state is AddAppointmentFailed) {
-            AppSnackBar.show(context: context, message: state.errorMessage);
             context.pop();
+            AppSnackBar.show(
+              context: context,
+              message: "Appointment added",
+            );
+          }
+
+          if (state is AddAppointmentFailed) {
+            context.pop();
+            AppSnackBar.show(
+              context: context,
+              message: state.errorMessage,
+            );
           }
         },
-        child: const AddAppointmentBody(),
+        child: AddAppointmentBody(
+          nameController: patientNameController,
+          descriptionController: descriptionController,
+          phoneController: phonePhoneController,
+          dateController: dateController,
+          onDateSelected: (value) {
+            dateTime = value;
+          },
+          onShiftSelected: (value) {
+            selectedShift = value;
+          },
+        ),
       ),
     );
   }

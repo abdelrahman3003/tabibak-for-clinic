@@ -36,6 +36,8 @@ class AppointmentRepoImpl extends AppointmentRepo {
           .addAppointment(AppointmentModel.fromEntity(appointment));
       return right(response);
     } catch (e) {
+      log("---------$e");
+
       return left(ErrorHandler.handle(e));
     }
   }
@@ -47,8 +49,6 @@ class AppointmentRepoImpl extends AppointmentRepo {
       final response = await appointmentRemoteData.getAppointmentShift(dayEn);
       return right(response);
     } catch (e) {
-      log("---------$e");
-
       return left(ErrorHandler.handle(e));
     }
   }

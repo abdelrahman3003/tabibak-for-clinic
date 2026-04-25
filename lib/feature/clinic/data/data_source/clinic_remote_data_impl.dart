@@ -1,6 +1,5 @@
-import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tabibak_for_clinic/core/functions/format_time.dart';
 import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_address_model.dart';
@@ -79,60 +78,27 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
     required int clinicId,
     required List<ClinicWorkingDayModel> selectedDays,
   }) async {
-    for (int dayId = 1; dayId <= 7; dayId++) {
-      final selectedDay = selectedDays.firstWhereOrNull(
-        (e) => e.clinicDayEntity?.id == dayId,
-      );
+    final response = await Supabase.instance.client.functions.invoke(
+      'save-clinic-working-days',
+      body: {
+        "clinicId": clinicId,
+        "selectedDays": selectedDays.map((day) {
+          return {
+            "dayId": day.clinicDayEntity?.id,
+            "isSelected": day.isSelected ?? false,
+            "morningStart": _formatTime(day.clinicShiftMorningEntity?.start),
+            "morningEnd": _formatTime(day.clinicShiftMorningEntity?.end),
+            "eveningStart": _formatTime(day.clinicShiftEveningEntity?.start),
+            "eveningEnd": _formatTime(day.clinicShiftEveningEntity?.end),
+          };
+        }).toList(),
+      },
+    );
 
-      final isSelected = selectedDay?.isSelected ?? false;
+    final data = response.data;
 
-      int? shiftMorningId;
-      int? shiftEveningId;
-
-      if (isSelected && selectedDay != null) {
-        final morningShift = selectedDay.clinicShiftMorningEntity;
-        if (morningShift != null &&
-            (morningShift.isActive ?? false) &&
-            morningShift.start != null &&
-            morningShift.end != null) {
-          final shiftMorningResponse = await supabase
-              .from('shifts_morning')
-              .upsert({
-                'start': formatTime(morningShift.start!),
-                'end': formatTime(morningShift.end!),
-              })
-              .select()
-              .single();
-          shiftMorningId = shiftMorningResponse['id'];
-        }
-
-        final eveningShift = selectedDay.clinicShiftEveningEntity;
-        if (eveningShift != null &&
-            (eveningShift.isActive ?? false) &&
-            eveningShift.start != null &&
-            eveningShift.end != null) {
-          final shiftEveningResponse = await supabase
-              .from('shift_evening')
-              .upsert({
-                'start': formatTime(eveningShift.start!),
-                'end': formatTime(eveningShift.end!),
-              })
-              .select()
-              .single();
-          shiftEveningId = shiftEveningResponse['id'];
-        }
-      }
-
-      await supabase.from('working_day').upsert(
-        {
-          'clinic_id': clinicId,
-          'day_id': dayId,
-          'is_selected': isSelected,
-          'shift_morning_id': shiftMorningId,
-          'shift_evening_id': shiftEveningId,
-        },
-        onConflict: 'clinic_id,day_id',
-      );
+    if (data == null || data['success'] != true) {
+      throw Exception(data?['error'] ?? "Unknown error");
     }
   }
 
@@ -154,5 +120,15 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
     await supabase
         .from('clinic_data')
         .update({'is_available': isAvailable}).eq('id', clinicId);
+  }
+
+  String? _formatTime(TimeOfDay? time) {
+    if (time == null) return null;
+
+    final now = DateTime.now();
+    final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);
+
+    return "${dt.hour.toString().padLeft(2, '0')}:"
+        "${dt.minute.toString().padLeft(2, '0')}:00";
   }
 }

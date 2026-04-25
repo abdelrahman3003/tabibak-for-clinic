@@ -6,28 +6,25 @@ import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/create_appointment/create_appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/create_appoinemnt_screen/add_appointment_drop_down_states.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_entity.dart';
 
-class AddAppointmentBody extends StatefulWidget {
-  const AddAppointmentBody({super.key});
+class AddAppointmentBody extends StatelessWidget {
+  const AddAppointmentBody({
+    super.key,
+    this.onShiftSelected,
+    this.onDateSelected,
+    required this.nameController,
+    required this.phoneController,
+    required this.descriptionController,
+    required this.dateController,
+  });
 
-  @override
-  State<AddAppointmentBody> createState() => _AddAppointmentBodyState();
-}
-
-class _AddAppointmentBodyState extends State<AddAppointmentBody> {
-  late TextEditingController patientNameController;
-  late TextEditingController phonePhoneController;
-  late TextEditingController descriptionController;
-  late TextEditingController dateController;
-  DateTime? dateTime;
-  @override
-  void initState() {
-    patientNameController = TextEditingController();
-    phonePhoneController = TextEditingController();
-    descriptionController = TextEditingController();
-    dateController = TextEditingController();
-    super.initState();
-  }
+  final ValueChanged<ClinicShiftEntity>? onShiftSelected;
+  final ValueChanged<DateTime>? onDateSelected;
+  final TextEditingController nameController;
+  final TextEditingController phoneController;
+  final TextEditingController descriptionController;
+  final TextEditingController dateController;
 
   @override
   Widget build(BuildContext context) {
@@ -38,23 +35,30 @@ class _AddAppointmentBodyState extends State<AddAppointmentBody> {
           children: [
             TextFormFiledWidget(
               label: "Patient Name",
-              controller: patientNameController,
+              controller: nameController,
             ),
             TextFormFiledWidget(
               label: "Phone Number",
               keyboardType: TextInputType.number,
-              controller: phonePhoneController,
+              controller: phoneController,
             ),
             TextFormFiledWidget(
               readOnly: true,
               label: "Date",
               onTap: () async {
-                dateTime = await _pickDate(context);
+                final dateTime = await _pickDate(context);
+                if (dateTime != null) {
+                  onDateSelected?.call(dateTime);
+                }
               },
               controller: dateController,
             ),
             10.hBox,
-            const AddAppointmentDropDownStates(),
+            AddAppointmentDropDownStates(
+              onShiftSelected: (value) {
+                onShiftSelected?.call(value);
+              },
+            ),
             TextFormFiledWidget(
               label: "Description",
               maxLines: 3,
@@ -64,15 +68,6 @@ class _AddAppointmentBodyState extends State<AddAppointmentBody> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    patientNameController.dispose();
-    phonePhoneController.dispose();
-    dateController.dispose();
-    descriptionController.dispose();
-    super.dispose();
   }
 
   Future<DateTime?> _pickDate(BuildContext context) async {
@@ -85,10 +80,13 @@ class _AddAppointmentBodyState extends State<AddAppointmentBody> {
 
     if (pickedDate != null) {
       final selectedDayName = DateFormat('EEEE', 'en_US').format(pickedDate);
-      context
-          .read<CreateAppointmentBloc>()
-          .add(GetAppointmentShiftEvent(dayEn: selectedDayName));
+
+      context.read<CreateAppointmentBloc>().add(
+            GetAppointmentShiftEvent(dayEn: selectedDayName),
+          );
+
       dateController.text = "${pickedDate.day}/${pickedDate.month}";
+
       return pickedDate;
     }
     return null;

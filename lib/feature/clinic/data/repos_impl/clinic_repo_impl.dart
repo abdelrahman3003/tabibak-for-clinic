@@ -88,7 +88,7 @@ class ClinicRepoImpl implements ClinicRepo {
       );
       return right(null);
     } catch (e, stackTrace) {
-      log("-----$stackTrace");
+      log("-----$e");
       return left(ErrorHandler.handle(e));
     }
   }

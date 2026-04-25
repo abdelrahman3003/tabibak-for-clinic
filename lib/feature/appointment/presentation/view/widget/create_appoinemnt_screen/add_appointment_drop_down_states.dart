@@ -7,7 +7,7 @@ import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_dr
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_entity.dart';
 
 class AddAppointmentDropDownStates extends StatefulWidget {
-  final ValueChanged<int>? onShiftSelected;
+  final ValueChanged<ClinicShiftEntity>? onShiftSelected;
 
   const AddAppointmentDropDownStates({super.key, this.onShiftSelected});
 
@@ -18,10 +18,10 @@ class AddAppointmentDropDownStates extends StatefulWidget {
 
 class _AddAppointmentDropDownStatesState
     extends State<AddAppointmentDropDownStates> {
-  String? selectedShift;
   String? errorMessage;
   int? shiftId;
-  Map<String, int> shiftMap = {}; // move here
+
+  List<ClinicShiftEntity> shifts = [];
 
   @override
   Widget build(BuildContext context) {
@@ -32,44 +32,41 @@ class _AddAppointmentDropDownStatesState
       builder: (context, state) {
         if (state is GetAppointmentShiftFailed) {
           errorMessage = state.errorMessage;
+          shifts = [];
           shiftId = null;
-          shiftMap = {}; // clear on failure
         } else if (state is GetAppointmentShiftSuccess) {
-          if (state.clinicShiftEntityList == null ||
-              state.clinicShiftEntityList!.isEmpty) {
+          final data = state.clinicShiftEntityList;
+
+          if (data == null || data.isEmpty) {
             errorMessage = "This day has no shifts";
-            shiftId = null;
-            shiftMap = {}; // clear if empty
+            shifts = [];
           } else {
             errorMessage = null;
-            shiftMap = _getShiftMap(
-              shiftMorning: state.clinicShiftEntityList!.first,
-              shiftEvening: state.clinicShiftEntityList!.last,
-            );
+            shifts = data;
           }
         }
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppDropdown<String>(
+            AppDropdown<ClinicShiftEntity>(
               hintStyle: Theme.of(context)
                   .textTheme
                   .bodyMedium
                   ?.copyWith(color: AppColors.primary),
-              items: shiftMap.keys.toList(),
-              labelBuilder: (item) => item,
+              items: shifts,
+              labelBuilder: (item) =>
+                  "${item.shiftType} ${formatTime(item.start!)} - ${formatTime(item.end!)}",
               validator: (item) =>
                   item == null ? "Please select a shift" : null,
               onChanged: (value) {
                 if (value != null) {
-                  shiftId = shiftMap[value];
-                  widget.onShiftSelected?.call(shiftId!);
+                  shiftId = value.shiftId;
+                  widget.onShiftSelected?.call(value);
                 }
-                setState(() => selectedShift = value);
               },
               filledColor: Colors.transparent,
-              hint: "Select Shift",
+              hint: shifts.isEmpty ? "No shifts available" : "Select Shift",
             ),
             if (errorMessage != null)
               Padding(
@@ -84,23 +81,4 @@ class _AddAppointmentDropDownStatesState
       },
     );
   }
-}
-
-Map<String, int> _getShiftMap({
-  required ClinicShiftEntity shiftMorning,
-  required ClinicShiftEntity shiftEvening,
-}) {
-  final map = <String, int>{};
-
-  if (shiftMorning.start != null && shiftMorning.end != null) {
-    map['Morning ${formatTime(shiftMorning.start!)} - ${formatTime(shiftMorning.end!)}'] =
-        shiftMorning.shiftId ?? 0;
-  }
-
-  if (shiftEvening.start != null && shiftEvening.end != null) {
-    map['Evening ${formatTime(shiftEvening.start!)} - ${formatTime(shiftEvening.end!)}'] =
-        shiftEvening.shiftId ?? 0;
-  }
-
-  return map;
 }
