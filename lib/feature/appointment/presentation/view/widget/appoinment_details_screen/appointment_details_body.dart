@@ -76,7 +76,7 @@ class AppointmentDetailsBody extends StatelessWidget {
               ),
             ],
             32.hBox,
-            if (e.statusId == 1 || e.statusId == 5)
+            if (e.statusId == 5)
               AppointmentActionsButtonsStates(appointmentId: e.appointmentId!),
             20.hBox,
           ],
