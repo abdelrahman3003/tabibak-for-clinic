@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
         body: BlocListener<SplashBloc, SplashState>(
           listener: (context, state) {
             if (state is SplashSuccess) {
-              _checkInitPage(state, context);
+              //    _checkInitPage(state, context);
             }
           },
           child: Center(
@@ -69,12 +69,13 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset(
-                    "assets/images/app_logo.png",
-                    color: AppColors.primary,
-                    height: 180.h,
-                    width: 350.w,
-                    fit: BoxFit.cover,
+                  SizedBox(
+                    height: 200.h,
+                    child: Image.asset(
+                      "assets/images/app_logo-2.png",
+                      color: AppColors.primary,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                   Text(
                     "طبيبك",
