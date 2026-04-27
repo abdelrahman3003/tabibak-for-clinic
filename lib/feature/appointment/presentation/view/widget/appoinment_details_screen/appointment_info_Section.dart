@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/detail_row.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/section_card.dart';
 
 class AppointmentInfoSection extends StatelessWidget {
@@ -9,11 +10,11 @@ class AppointmentInfoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SectionCard(
-      title: 'Appointment Info',
+      title: 'Appointment Info'.tr(),
       children: [
         DetailRow(
           icon: Icons.calendar_today_rounded,
-          label: 'Date',
+          label: 'Date'.tr(),
           value: _formatDate(entity.appointmentDate),
           iconColor: const Color(0xFF6366F1),
         ),
@@ -21,7 +22,7 @@ class AppointmentInfoSection extends StatelessWidget {
           icon: entity.appointmentMorningShiftId != null
               ? _shiftIcon(entity.appointmentMorningShiftId)
               : _shiftIcon(entity.appointmentEveningShiftId),
-          label: 'Shift',
+          label: 'Shift'.tr(),
           value: entity.appointmentMorningShiftId != null
               ? _shiftLabel(entity.appointmentMorningShiftId)
               : _shiftLabel(entity.appointmentEveningShiftId),
@@ -32,7 +33,7 @@ class AppointmentInfoSection extends StatelessWidget {
         ),
         DetailRow(
           icon: Icons.tag_rounded,
-          label: 'Appointment ID',
+          label: 'Appointment ID'.tr(),
           value: '#${entity.appointmentId ?? '—'}',
           iconColor: const Color(0xFF14B8A6),
         ),
@@ -43,9 +44,9 @@ class AppointmentInfoSection extends StatelessWidget {
   String _shiftLabel(int? shift) {
     switch (shift) {
       case 1:
-        return 'Morning';
+        return 'Morning'.tr();
       case 2:
-        return 'Evening';
+        return 'Evening'.tr();
       default:
         return '—';
     }

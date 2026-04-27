@@ -5,6 +5,7 @@ import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/appointment_info_section.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/paient_card.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/patien_info_section.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/section_card.dart';
 
 class AppointmentDetailsBody extends StatelessWidget {
@@ -26,7 +27,10 @@ class AppointmentDetailsBody extends StatelessWidget {
           children: [
             PatientCard(
               entity: e,
-              statusLabel: e.statusEn ?? '—',
+              statusLabel: (context.locale.languageCode == 'ar'
+                      ? e.statusAr
+                      : e.statusEn) ??
+                  '—',
             ),
             24.hBox,
             AppointmentInfoSection(entity: e),
@@ -35,7 +39,7 @@ class AppointmentDetailsBody extends StatelessWidget {
             if (e.description != null && e.description!.isNotEmpty) ...[
               16.hBox,
               SectionCard(
-                title: 'Description',
+                title: 'Description'.tr(),
                 children: [
                   Text(
                     e.description!,
@@ -52,7 +56,7 @@ class AppointmentDetailsBody extends StatelessWidget {
             if (e.followUpDate != null) ...[
               16.hBox,
               SectionCard(
-                title: 'Follow Up Date',
+                title: 'Follow Up Date'.tr(),
                 children: [
                   Row(
                     children: [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_loading_widget.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appointment_details/appointment_details_bloc.dart';
@@ -14,7 +15,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
-      appBar: const AppBarWidget(title: "Appointment Details"),
+      appBar: AppBarWidget(title: AppString.appointmentsDetails),
       body: Center(
         child: BlocBuilder<AppointmentDetailsBloc, AppointmentDetailsState>(
           buildWhen: (previous, current) =>
@@ -39,9 +40,3 @@ class AppointmentDetailsScreen extends StatelessWidget {
     );
   }
 }
-
-// ── Patient header card ──────────────────────────────────────────────
-
-// ── Section card wrapper ─────────────────────────────────────────────
-
-// ── Single detail row ────────────────────────────────────────────────

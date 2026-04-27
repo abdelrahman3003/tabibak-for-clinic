@@ -100,6 +100,7 @@ class AppString {
   // Appointments Localization
   static String get appointments => "Appointments".tr();
   static String get appointmentsToday => "Appointments Today".tr();
+  static String get appointmentsDetails => "Appointment Details".tr();
   static String get seeAll => "See All".tr();
   static String get noUpcomingAppointments => "No Upcoming Appointments".tr();
   static String get noCanceledAppointments => "No Canceled Appointments".tr();

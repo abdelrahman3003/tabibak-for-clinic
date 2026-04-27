@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/helper/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appointment_details/appointment_details_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/appointment_actions_buttons.dart';
 
 class AppointmentActionsButtonsStates extends StatelessWidget {
@@ -19,7 +20,8 @@ class AppointmentActionsButtonsStates extends StatelessWidget {
         }
         if (state is AppointmentActionSuccess) {
           context.pop();
-          AppSnackBar.show(context, message: "Action completed successfully");
+          AppSnackBar.show(context,
+              message: "Action completed successfully".tr());
         }
       },
       builder: (context, state) {

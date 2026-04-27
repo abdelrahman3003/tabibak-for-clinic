@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 
 class PatientCard extends StatelessWidget {
@@ -69,7 +70,7 @@ class PatientCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  entity.name ?? 'Unknown Patient',
+                  entity.name ?? 'Unknown Patient'.tr(),
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w700,

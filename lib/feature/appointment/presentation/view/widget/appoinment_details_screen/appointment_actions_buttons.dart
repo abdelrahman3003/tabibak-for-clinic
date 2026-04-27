@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/functions/show_confirmed_dialog.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/action_button.dart';
 
 class AppointmentActionButtons extends StatelessWidget {
@@ -40,7 +41,7 @@ class AppointmentActionButtons extends StatelessWidget {
           children: [
             Expanded(
               child: ActionButton(
-                label: 'Complete',
+                label: 'Complete'.tr(),
                 color: AppColors.statusCompleted,
                 icon: Icons.task_alt_rounded,
                 isLoading: isCompleteLoading,
@@ -48,9 +49,10 @@ class AppointmentActionButtons extends StatelessWidget {
                 onTap: () {
                   showConfirmDialog(
                     context: context,
-                    title: "Confirm Completion",
+                    title: "Confirm Completion".tr(),
                     message:
-                        "Are you sure you want to complete this appointment?",
+                        "Are you sure you want to complete this appointment?"
+                            .tr(),
                     onConfirm: onComplete ?? () {},
                   );
                 },
@@ -59,7 +61,7 @@ class AppointmentActionButtons extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: ActionButton(
-                  label: 'Follow-up',
+                  label: 'Follow-up'.tr(),
                   color: AppColors.statusUpcoming,
                   icon: Icons.event_repeat_rounded,
                   isLoading: isFollowUpLoading,
@@ -75,7 +77,7 @@ class AppointmentActionButtons extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         ActionButton(
-          label: 'Cancel Appointment',
+          label: 'Cancel Appointment'.tr(),
           color: AppColors.red,
           icon: Icons.close_rounded,
           isLoading: isCancelLoading,
@@ -84,8 +86,8 @@ class AppointmentActionButtons extends StatelessWidget {
           onTap: () {
             showConfirmDialog(
               context: context,
-              title: "Confirm Cancellation",
-              message: "Are you sure you want to cancel this appointment?",
+              title: "Confirm Cancellation".tr(),
+              message: "Are you sure you want to cancel this appointment?".tr(),
               onConfirm: onCancel ?? () {},
             );
           },
