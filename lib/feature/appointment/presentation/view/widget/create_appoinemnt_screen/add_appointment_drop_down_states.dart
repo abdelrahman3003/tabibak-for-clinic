@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/functions/format_time.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/create_appointment/create_appointment_bloc.dart';
@@ -42,7 +43,7 @@ class _AddAppointmentDropDownStatesState
           final data = state.clinicShiftEntityList;
 
           if (data == null || data.isEmpty) {
-            errorMessage = "This day has no shifts";
+            errorMessage = AppString.thisDayHasNoShifts;
             shifts = [];
             selectedShift = null;
           } else {
@@ -69,7 +70,7 @@ class _AddAppointmentDropDownStatesState
               labelBuilder: (item) =>
                   "${item.shiftType} ${formatTime(item.start!)} - ${formatTime(item.end!)}",
               validator: (item) =>
-                  item == null ? "Please select a shift" : null,
+                  item == null ? AppString.pleaseSelectAShift : null,
               onChanged: (value) {
                 if (value != null) {
                   setState(() {
@@ -80,7 +81,9 @@ class _AddAppointmentDropDownStatesState
                 }
               },
               filledColor: Colors.transparent,
-              hint: shifts.isEmpty ? "No shifts available" : "Select Shift",
+              hint: shifts.isEmpty
+                  ? AppString.noShiftsAvailable
+                  : AppString.selectShift,
             ),
             if (errorMessage != null)
               Padding(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/create_appoinemnt_screen/add_appointment_drop_down_states.dart';
@@ -31,17 +32,17 @@ class AddAppointmentBody extends StatelessWidget {
         child: Column(
           children: [
             TextFormFiledWidget(
-              label: "Patient Name",
+              label: AppString.patientName,
               controller: nameController,
             ),
             TextFormFiledWidget(
-              label: "Phone Number",
+              label: AppString.phoneNumber,
               keyboardType: TextInputType.number,
               controller: phoneController,
             ),
             TextFormFiledWidget(
               readOnly: true,
-              label: "Date",
+              label: AppString.date,
               onTap: () async {
                 final dateTime = await _pickDate(context);
                 if (dateTime != null) {
@@ -57,7 +58,7 @@ class AddAppointmentBody extends StatelessWidget {
               },
             ),
             TextFormFiledWidget(
-              label: "Description",
+              label: AppString.description,
               maxLines: 3,
               controller: descriptionController,
             ),

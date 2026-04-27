@@ -206,5 +206,12 @@
     "Are you sure you want to complete this appointment?": "Are you sure you want to complete this appointment?",
     "Confirm Cancellation": "Confirm Cancellation",
     "Are you sure you want to cancel this appointment?": "Are you sure you want to cancel this appointment?",
-    "Action completed successfully": "Action completed successfully"
+    "Action completed successfully": "Action completed successfully",
+    "Add Appointment": "Add Appointment",
+    "Appointment added": "Appointment added",
+    "Patient Name": "Patient Name",
+    "This day has no shifts": "This day has no shifts",
+    "Please select a shift": "Please select a shift",
+    "No shifts available": "No shifts available",
+    "Select Shift": "Select Shift"
 }

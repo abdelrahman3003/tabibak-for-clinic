@@ -207,5 +207,12 @@
     "Are you sure you want to complete this appointment?": "هل أنت متأكد أنك تريد إنجاز هذا الموعد؟",
     "Confirm Cancellation": "تأكيد الإلغاء",
     "Are you sure you want to cancel this appointment?": "هل أنت متأكد أنك تريد إلغاء هذا الموعد؟",
-    "Action completed successfully": "تمت العملية بنجاح"
+    "Action completed successfully": "تمت العملية بنجاح",
+    "Add Appointment": "إضافة موعد",
+    "Appointment added": "تمت إضافة الموعد بنجاح",
+    "Patient Name": "اسم المريض",
+    "This day has no shifts": "هذا اليوم لا يوجد فيه فترات عمل",
+    "Please select a shift": "يرجى اختيار فترة",
+    "No shifts available": "لا توجد فترات متاحة",
+    "Select Shift": "اختر الفترة"
 }

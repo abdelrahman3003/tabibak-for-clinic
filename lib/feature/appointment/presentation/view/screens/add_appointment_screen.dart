@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
@@ -54,7 +55,7 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarSave(
-        text: "Add Appointment",
+        text: AppString.addAppointment,
         onTap: () {
           final doctorId = getit<Supabase>().client.auth.currentUser!.id;
 
@@ -92,7 +93,7 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
             context.pop();
             AppSnackBar.show(
               context: context,
-              message: "Appointment added",
+              message: AppString.appointmentAdded,
             );
           }
 

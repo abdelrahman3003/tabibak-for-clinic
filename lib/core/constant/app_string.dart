@@ -117,6 +117,15 @@ class AppString {
   static String get approve => "Approve".tr();
   static String get reject => "Reject".tr();
   static String get confirmed => "Confirmed".tr();
+  static String get addAppointment => "Add Appointment".tr();
+  static String get appointmentAdded => "Appointment added".tr();
+  static String get patientName => "Patient Name".tr();
+  static String get date => "Date".tr();
+  static String get description => "Description".tr();
+  static String get thisDayHasNoShifts => "This day has no shifts".tr();
+  static String get pleaseSelectAShift => "Please select a shift".tr();
+  static String get noShiftsAvailable => "No shifts available".tr();
+  static String get selectShift => "Select Shift".tr();
 
   // Clinic Localization
   static String get addressNotAvailable => "Address Not Available".tr();
