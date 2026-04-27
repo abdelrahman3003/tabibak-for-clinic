@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -25,16 +26,28 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
   late TextEditingController dateController;
 
   DateTime? dateTime;
-
   ClinicShiftEntity? selectedShift;
 
   @override
   void initState() {
+    super.initState();
     patientNameController = TextEditingController();
     phonePhoneController = TextEditingController();
     descriptionController = TextEditingController();
     dateController = TextEditingController();
-    super.initState();
+  }
+
+  void _onDateSelected(DateTime value) {
+    setState(() {
+      dateTime = value;
+      dateController.text = "${value.day}/${value.month}";
+    });
+
+    final selectedDayName = DateFormat('EEEE', 'en_US').format(value);
+
+    context.read<CreateAppointmentBloc>().add(
+          GetAppointmentShiftEvent(dayEn: selectedDayName),
+        );
   }
 
   @override
@@ -96,9 +109,7 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
           descriptionController: descriptionController,
           phoneController: phonePhoneController,
           dateController: dateController,
-          onDateSelected: (value) {
-            dateTime = value;
-          },
+          onDateSelected: _onDateSelected,
           onShiftSelected: (value) {
             selectedShift = value;
           },

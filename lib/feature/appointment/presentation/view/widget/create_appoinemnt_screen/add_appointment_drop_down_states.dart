@@ -9,7 +9,10 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_e
 class AddAppointmentDropDownStates extends StatefulWidget {
   final ValueChanged<ClinicShiftEntity>? onShiftSelected;
 
-  const AddAppointmentDropDownStates({super.key, this.onShiftSelected});
+  const AddAppointmentDropDownStates({
+    super.key,
+    this.onShiftSelected,
+  });
 
   @override
   State<AddAppointmentDropDownStates> createState() =>
@@ -19,9 +22,10 @@ class AddAppointmentDropDownStates extends StatefulWidget {
 class _AddAppointmentDropDownStatesState
     extends State<AddAppointmentDropDownStates> {
   String? errorMessage;
-  int? shiftId;
 
   List<ClinicShiftEntity> shifts = [];
+
+  ClinicShiftEntity? selectedShift;
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +37,22 @@ class _AddAppointmentDropDownStatesState
         if (state is GetAppointmentShiftFailed) {
           errorMessage = state.errorMessage;
           shifts = [];
-          shiftId = null;
+          selectedShift = null;
         } else if (state is GetAppointmentShiftSuccess) {
           final data = state.clinicShiftEntityList;
 
           if (data == null || data.isEmpty) {
             errorMessage = "This day has no shifts";
             shifts = [];
+            selectedShift = null;
           } else {
             errorMessage = null;
             shifts = data;
+
+            if (selectedShift != null &&
+                !shifts.any((e) => e.shiftId == selectedShift!.shiftId)) {
+              selectedShift = null;
+            }
           }
         }
 
@@ -55,13 +65,17 @@ class _AddAppointmentDropDownStatesState
                   .bodyMedium
                   ?.copyWith(color: AppColors.primary),
               items: shifts,
+              value: selectedShift,
               labelBuilder: (item) =>
                   "${item.shiftType} ${formatTime(item.start!)} - ${formatTime(item.end!)}",
               validator: (item) =>
                   item == null ? "Please select a shift" : null,
               onChanged: (value) {
                 if (value != null) {
-                  shiftId = value.shiftId;
+                  setState(() {
+                    selectedShift = value;
+                  });
+
                   widget.onShiftSelected?.call(value);
                 }
               },
@@ -73,7 +87,10 @@ class _AddAppointmentDropDownStatesState
                 padding: const EdgeInsets.only(left: 12, top: 5),
                 child: Text(
                   errorMessage!,
-                  style: const TextStyle(color: Colors.red, fontSize: 12),
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 12,
+                  ),
                 ),
               ),
           ],
