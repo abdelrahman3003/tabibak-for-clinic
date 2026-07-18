@@ -247,4 +247,6 @@ class AppString {
   static String get passwordsNotMatching => "Not Matching Password".tr();
   static String get clinicWorkingDaysAndTime =>
       "Clinic Working Days & Time".tr();
+  static String get address => "Address".tr();
+  static String get selectAddressValidator => "Please select an address".tr();
 }

@@ -14,3 +14,9 @@ class SaveClinicAddressEvent extends ClinicAddressEvent {
   @override
   List<Object> get props => [clinicAddressEntity];
 }
+
+class GetCitiesEvent extends ClinicAddressEvent {
+  const GetCitiesEvent();
+  @override
+  List<Object> get props => [];
+}

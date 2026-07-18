@@ -1,3 +1,4 @@
+import 'package:tabibak_for_clinic/feature/clinic/data/models/city_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_address_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
@@ -21,4 +22,5 @@ abstract class ClinicRemoteData {
     required int clinicId,
     required bool isAvailable,
   });
+  Future<List<CityModel>> getCities();
 }

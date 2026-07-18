@@ -18,3 +18,9 @@ final class ClinicAddressFailed extends ClinicAddressState {
 }
 
 final class ClinicAddressSuccess extends ClinicAddressState {}
+
+final class GetCitiesSuccess extends ClinicAddressState {
+  final List<CityEntity> cities;
+
+  const GetCitiesSuccess({required this.cities});
+}

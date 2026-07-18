@@ -12,14 +12,14 @@ class ClinicInfoModel extends ClinicInfoEntity {
       required super.isAvailable});
 
   factory ClinicInfoModel.fromJson(Map<String, dynamic> json) {
+    final addressList = json['clinic_address'] as List?;
     return ClinicInfoModel(
       id: json["id"],
       clinicName: json["clinic_name"],
       phoneNumber: json["phone_number"],
-      address: json['clinic_address'] != null
+      address: (addressList != null && addressList.isNotEmpty)
           ? ClinicAddressModel.fromJson(
-              json['clinic_address'] as Map<String, dynamic>,
-            )
+              addressList.first as Map<String, dynamic>)
           : null,
       consultationFee: json["consultation_fee"],
       isBooking: json["is_booking"],

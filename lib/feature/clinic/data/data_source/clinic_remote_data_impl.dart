@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote_data.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/city_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_address_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
@@ -37,13 +38,11 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
   Future<List<ClinicInfoModel>> getClinicInfo() async {
     final response = await supabase
         .from('clinic_data')
-        .select('*, clinic_address(*)')
+        .select('*, clinic_address(*, city(*))')
         .eq('doctor_id', supabase.auth.currentUser!.id);
 
-    final data = response as List<dynamic>;
-
-    return data
-        .map((e) => ClinicInfoModel.fromJson(e as Map<String, dynamic>))
+    return (response as List)
+        .map((json) => ClinicInfoModel.fromJson(json))
         .toList();
   }
 
@@ -108,7 +107,6 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
   }) async {
     await supabase.from('clinic_address').upsert(
           clinicAddressModel.toJson(),
-          onConflict: 'clinic_id',
         );
   }
 
@@ -130,5 +128,13 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
 
     return "${dt.hour.toString().padLeft(2, '0')}:"
         "${dt.minute.toString().padLeft(2, '0')}:00";
+  }
+
+  @override
+  Future<List<CityModel>> getCities() async {
+    final response = await supabase.from('city').select("*");
+
+    final data = response as List;
+    return data.map((json) => CityModel.fromJson(json)).toList();
   }
 }

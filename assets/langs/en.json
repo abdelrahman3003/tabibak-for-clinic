@@ -213,5 +213,7 @@
     "This day has no shifts": "This day has no shifts",
     "Please select a shift": "Please select a shift",
     "No shifts available": "No shifts available",
-    "Select Shift": "Select Shift"
+    "Select Shift": "Select Shift",
+    "address": "Address",
+    "selectAddressValidator": "Please select an address"
 }

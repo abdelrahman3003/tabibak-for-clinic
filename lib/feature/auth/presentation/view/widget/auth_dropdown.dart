@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 
 class AppDropdown<T> extends StatefulWidget {
   final List<T> items;
@@ -44,18 +45,18 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
   Widget build(BuildContext context) {
     return DropdownButtonFormField<T>(
       initialValue: selectedItem,
-      hint: Text(widget.hint, style: widget.hintStyle
-
-          // hint color here
-          ),
+      hint: Text(widget.hint, style: widget.hintStyle),
       decoration: InputDecoration(
+        labelText: widget.hint,
+        labelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
+              color: AppColors.primary,
+              fontWeight: FontWeight.w500,
+            ),
         prefixIcon: widget.prefixIcon,
-        border: const UnderlineInputBorder(),
-        filled: true,
-        fillColor: widget.filledColor ??
-            Theme.of(context).inputDecorationTheme.fillColor,
         contentPadding:
             widget.contentPadding ?? const EdgeInsets.symmetric(horizontal: 10),
+        fillColor: Colors.transparent,
+        filled: true,
       ),
       validator: widget.validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,

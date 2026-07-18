@@ -214,5 +214,7 @@
     "This day has no shifts": "هذا اليوم لا يوجد فيه فترات عمل",
     "Please select a shift": "يرجى اختيار فترة",
     "No shifts available": "لا توجد فترات متاحة",
-    "Select Shift": "اختر الفترة"
+    "Select Shift": "اختر الفترة",
+    "address": "العنوان",
+    "selectAddressValidator": "يرجى اختيار العنوان"
 }

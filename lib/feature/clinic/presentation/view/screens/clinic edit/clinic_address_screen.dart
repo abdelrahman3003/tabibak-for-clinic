@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
+import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/helper/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_address_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/city_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_address/clinic_address_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_layout_screen/city_drop_down.dart';
 
 class ClinicAddressScreen extends StatefulWidget {
   const ClinicAddressScreen({super.key});
@@ -24,6 +27,7 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
   late TextEditingController _streetController;
   late TextEditingController _floorController;
   late TextEditingController _departmentController;
+  CityEntity? selectedCity;
   ClinicInfoEntity? clinicInfo;
 
   @override
@@ -33,6 +37,7 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
     _streetController = TextEditingController();
     _floorController = TextEditingController();
     _departmentController = TextEditingController();
+    context.read<ClinicAddressBloc>().add(const GetCitiesEvent());
     super.initState();
   }
 
@@ -54,7 +59,6 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
 
     if (clinicInfo?.address != null) {
       _clinicAddressController.text = clinicInfo?.address?.clinicAddress ?? '';
-      _cityController.text = clinicInfo?.address?.city ?? '';
       _streetController.text = clinicInfo?.address?.street ?? '';
       _floorController.text = clinicInfo?.address?.floor ?? '';
       _departmentController.text = clinicInfo?.address?.department ?? '';
@@ -68,13 +72,14 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
           text: AppString.clinicAddress,
           onTap: () {
             context.read<ClinicAddressBloc>().add(SaveClinicAddressEvent(
-                clinicAddressEntity: ClinicAddressModel(
-                    clinicAddress: _clinicAddressController.text,
-                    city: _cityController.text,
-                    street: _streetController.text,
-                    floor: _floorController.text,
-                    department: _departmentController.text,
-                    clinicId: clinicInfo?.id)));
+                    clinicAddressEntity: ClinicAddressModel(
+                  clinicAddress: _clinicAddressController.text,
+                  city: selectedCity,
+                  street: _streetController.text,
+                  floor: _floorController.text,
+                  department: _departmentController.text,
+                  clinicId: clinicInfo?.id,
+                )));
           },
         ),
         body: Padding(
@@ -96,14 +101,14 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  TextFormFiledWidget(
-                    label: AppString.clinicAddress,
-                    controller: _clinicAddressController,
+                  15.hBox,
+                  CityDropDown(
+                    initialValue: clinicInfo?.address?.city,
+                    onChangedAddress: (value) {
+                      selectedCity = value;
+                    },
                   ),
-                  TextFormFiledWidget(
-                    label: AppString.city,
-                    controller: _cityController,
-                  ),
+                  15.hBox,
                   TextFormFiledWidget(
                     label: AppString.street,
                     controller: _streetController,

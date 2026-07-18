@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/city_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_address_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
@@ -28,4 +29,5 @@ abstract class ClinicRepo {
     required int clinicId,
     required bool isAvailable,
   });
+  Future<Either<ApiErrorModel, List<CityEntity>>> getCities();
 }

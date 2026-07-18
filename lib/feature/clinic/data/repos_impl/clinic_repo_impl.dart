@@ -8,6 +8,7 @@ import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_address_mod
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/city_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_address_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
@@ -48,6 +49,8 @@ class ClinicRepoImpl implements ClinicRepo {
 
       return right(response);
     } catch (e) {
+      log("Error in getCities: $e");
+
       return left(ErrorHandler.handle(e));
     }
   }
@@ -87,8 +90,7 @@ class ClinicRepoImpl implements ClinicRepo {
         selectedDays: days,
       );
       return right(null);
-    } catch (e, stackTrace) {
-      log("-----$e");
+    } catch (e) {
       return left(ErrorHandler.handle(e));
     }
   }
@@ -103,6 +105,7 @@ class ClinicRepoImpl implements ClinicRepo {
 
       return right(null);
     } catch (e) {
+      log("Error in getCities: $e");
       return left(ErrorHandler.handle(e));
     }
   }
@@ -113,6 +116,16 @@ class ClinicRepoImpl implements ClinicRepo {
     try {
       final response = await clinicRemoteData.toggleClinicAvailable(
           clinicId: clinicId, isAvailable: isAvailable);
+      return right(response);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, List<CityEntity>>> getCities() async {
+    try {
+      final response = await clinicRemoteData.getCities();
       return right(response);
     } catch (e) {
       return left(ErrorHandler.handle(e));

@@ -1,10 +1,11 @@
 import 'package:equatable/equatable.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/city_entity.dart';
 
 class ClinicAddressEntity extends Equatable {
   final int? id;
   final int? clinicId;
+  final CityEntity? city;
   final String? clinicAddress;
-  final String? city;
   final String? street;
   final String? floor;
   final String? department;
