@@ -12,3 +12,9 @@ class CreateClinicInfoEvent extends ClinicInfoEvent {
 
   const CreateClinicInfoEvent({required this.clinicInfoEntity});
 }
+
+class GetCitiesEvent extends ClinicInfoEvent {
+  const GetCitiesEvent();
+  @override
+  List<Object> get props => [];
+}

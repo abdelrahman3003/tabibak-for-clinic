@@ -23,6 +23,8 @@ class ClinicRepoImpl implements ClinicRepo {
   Future<Either<ApiErrorModel, int>> createClinicInfo(
       {required ClinicInfoEntity clinicInfoEntity}) async {
     final model = clinicInfoEntity.toModel();
+    log("ClinicRepoImpl createClinicInfo model: ${model.toJson()}");
+    log("address: ${model.toJson()}");
     try {
       final result = await clinicRemoteData.createClinicInfo(model);
       return right(result);

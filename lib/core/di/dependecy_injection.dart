@@ -169,7 +169,8 @@ Future<void> initGetIt() async {
   getit.registerLazySingleton<GetCitiesUseCase>(
       () => GetCitiesUseCase(clinicRepo: getit<ClinicRepo>()));
   // blocs
-  getit.registerFactory(() => ClinicInfoBloc(getit<CreateClinicInfoUseCase>()));
+  getit.registerFactory(() => ClinicInfoBloc(
+      getit<CreateClinicInfoUseCase>(), getit<GetCitiesUseCase>()));
   getit.registerFactory(
       () => ClinicWorkingDayBloc(getDaysUseCase: getit<GetDaysUseCase>()));
   getit.registerFactory(

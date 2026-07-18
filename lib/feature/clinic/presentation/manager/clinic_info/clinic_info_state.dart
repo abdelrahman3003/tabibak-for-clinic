@@ -22,3 +22,9 @@ final class ClinicInfoSuccess extends ClinicInfoState {
 
   const ClinicInfoSuccess({required this.clinicId});
 }
+
+final class GetCitiesSuccess extends ClinicInfoState {
+  final List<CityEntity> cities;
+
+  const GetCitiesSuccess({required this.cities});
+}

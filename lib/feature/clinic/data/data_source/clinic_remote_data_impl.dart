@@ -18,11 +18,17 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
   @override
   Future<int> createClinicInfo(ClinicInfoModel model) async {
     final data = model.toJson()..['doctor_id'] = supabase.auth.currentUser!.id;
-
     final response =
         await supabase.from('clinic_data').insert(data).select('id').single();
+    final clinicId = response['id'] as int;
+    if (model.address != null) {
+      final address = ClinicAddressModel.fromEntity(model.address!);
 
-    return response['id'] as int;
+      await supabase.from('clinic_address').insert(
+            address.toJson()..['clinic_id'] = clinicId,
+          );
+    }
+    return clinicId;
   }
 
   @override

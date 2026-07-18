@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/view/widget/auth_dropdown.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/city_entity.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_address/clinic_address_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
 
-class CityDropDown extends StatefulWidget {
-  const CityDropDown({
+class CityInitDropDown extends StatelessWidget {
+  const CityInitDropDown({
     super.key,
     this.onChangedAddress,
     this.initialValue,
@@ -16,38 +16,22 @@ class CityDropDown extends StatefulWidget {
   final CityEntity? initialValue;
 
   @override
-  State<CityDropDown> createState() => _CityDropDownState();
-}
-
-class _CityDropDownState extends State<CityDropDown> {
-  CityEntity? selectedCity;
-
-  @override
-  void initState() {
-    super.initState();
-    selectedCity = widget.initialValue;
-  }
-
-  @override
-  void didUpdateWidget(covariant CityDropDown oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    if (widget.initialValue != oldWidget.initialValue) {
-      selectedCity = widget.initialValue;
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ClinicAddressBloc, ClinicAddressState>(
+    return BlocBuilder<ClinicInfoBloc, ClinicInfoState>(
       buildWhen: (previous, current) => current is GetCitiesSuccess,
       builder: (context, state) {
         final List<CityEntity> items =
             state is GetCitiesSuccess ? state.cities : [];
 
         return AppDropdown<CityEntity>(
+          textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+          hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).colorScheme.primary),
           items: items,
-          value: selectedCity,
+          value: initialValue,
           hint: AppString.city,
           labelBuilder: (item) =>
               Localizations.localeOf(context).languageCode == 'ar'
@@ -56,11 +40,7 @@ class _CityDropDownState extends State<CityDropDown> {
           validator: (value) =>
               value == null ? AppString.selectAddressValidator : null,
           onChanged: (value) {
-            setState(() {
-              selectedCity = value;
-            });
-
-            widget.onChangedAddress?.call(value);
+            onChangedAddress?.call(value);
           },
         );
       },

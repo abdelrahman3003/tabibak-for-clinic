@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 
 class AppDropdown<T> extends StatefulWidget {
   final List<T> items;
@@ -47,9 +46,10 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
       initialValue: selectedItem,
       hint: Text(widget.hint, style: widget.hintStyle),
       decoration: InputDecoration(
-        labelText: widget.hint,
+        hintText: selectedItem == null ? widget.hint : null,
+        labelText: selectedItem != null ? widget.hint : null,
         labelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: AppColors.primary,
+              color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.w500,
             ),
         prefixIcon: widget.prefixIcon,

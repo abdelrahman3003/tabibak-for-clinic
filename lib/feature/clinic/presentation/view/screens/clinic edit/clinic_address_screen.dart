@@ -23,28 +23,28 @@ class ClinicAddressScreen extends StatefulWidget {
 
 class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
   late TextEditingController _clinicAddressController;
-  late TextEditingController _cityController;
   late TextEditingController _streetController;
   late TextEditingController _floorController;
   late TextEditingController _departmentController;
+
   CityEntity? selectedCity;
   ClinicInfoEntity? clinicInfo;
 
   @override
   void initState() {
+    super.initState();
+
     _clinicAddressController = TextEditingController();
-    _cityController = TextEditingController();
     _streetController = TextEditingController();
     _floorController = TextEditingController();
     _departmentController = TextEditingController();
+
     context.read<ClinicAddressBloc>().add(const GetCitiesEvent());
-    super.initState();
   }
 
   @override
   void dispose() {
     _clinicAddressController.dispose();
-    _cityController.dispose();
     _streetController.dispose();
     _floorController.dispose();
     _departmentController.dispose();
@@ -54,13 +54,19 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
     clinicInfo =
         ModalRoute.of(context)!.settings.arguments as ClinicInfoEntity?;
 
-    if (clinicInfo?.address != null) {
+    if (clinicInfo?.address != null && selectedCity == null) {
+      selectedCity = clinicInfo!.address!.city;
+
       _clinicAddressController.text = clinicInfo?.address?.clinicAddress ?? '';
+
       _streetController.text = clinicInfo?.address?.street ?? '';
+
       _floorController.text = clinicInfo?.address?.floor ?? '';
+
       _departmentController.text = clinicInfo?.address?.department ?? '';
     }
   }
@@ -68,63 +74,75 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarSave(
-          text: AppString.clinicAddress,
-          onTap: () {
-            context.read<ClinicAddressBloc>().add(SaveClinicAddressEvent(
-                    clinicAddressEntity: ClinicAddressModel(
-                  clinicAddress: _clinicAddressController.text,
-                  city: selectedCity,
-                  street: _streetController.text,
-                  floor: _floorController.text,
-                  department: _departmentController.text,
-                  clinicId: clinicInfo?.id,
-                )));
+      appBar: AppBarSave(
+        text: AppString.clinicAddress,
+        onTap: () {
+          context.read<ClinicAddressBloc>().add(
+                SaveClinicAddressEvent(
+                  clinicAddressEntity: ClinicAddressModel(
+                    clinicAddress: _clinicAddressController.text,
+                    city: selectedCity,
+                    street: _streetController.text,
+                    floor: _floorController.text,
+                    department: _departmentController.text,
+                    clinicId: clinicInfo?.id,
+                  ),
+                ),
+              );
+        },
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: BlocListener<ClinicAddressBloc, ClinicAddressState>(
+          listener: (context, state) {
+            if (state is ClinicAddressLoading) {
+              Dialogs.showLoading(context);
+            }
+
+            if (state is ClinicAddressFailed) {
+              context.pop();
+              AppSnackBar.show(
+                context,
+                message: state.errorMessage,
+              );
+            }
+
+            if (state is ClinicAddressSuccess) {
+              context.pop();
+              context.pushReplacementNamed(
+                Routes.layOutScreen,
+                arguments: 0,
+              );
+            }
           },
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: BlocListener<ClinicAddressBloc, ClinicAddressState>(
-            listener: (context, state) {
-              if (state is ClinicAddressLoading) {
-                Dialogs.showLoading(context);
-              }
-              if (state is ClinicAddressFailed) {
-                context.pop();
-                AppSnackBar.show(context, message: state.errorMessage);
-              }
-              if (state is ClinicAddressSuccess) {
-                context.pop();
-                context.pushReplacementNamed(Routes.layOutScreen, arguments: 0);
-              }
-            },
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  15.hBox,
-                  CityDropDown(
-                    initialValue: clinicInfo?.address?.city,
-                    onChangedAddress: (value) {
-                      selectedCity = value;
-                    },
-                  ),
-                  15.hBox,
-                  TextFormFiledWidget(
-                    label: AppString.street,
-                    controller: _streetController,
-                  ),
-                  TextFormFiledWidget(
-                    label: AppString.floor,
-                    controller: _floorController,
-                  ),
-                  TextFormFiledWidget(
-                    label: AppString.department,
-                    controller: _departmentController,
-                  ),
-                ],
-              ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                15.hBox,
+                CityDropDown(
+                  initialValue: selectedCity,
+                  onChangedAddress: (value) {
+                    selectedCity = value;
+                  },
+                ),
+                15.hBox,
+                TextFormFiledWidget(
+                  label: AppString.street,
+                  controller: _streetController,
+                ),
+                TextFormFiledWidget(
+                  label: AppString.floor,
+                  controller: _floorController,
+                ),
+                TextFormFiledWidget(
+                  label: AppString.department,
+                  controller: _departmentController,
+                ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
