@@ -65,7 +65,9 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
   }) async {
     final data = educationModel.toJson()
       ..removeWhere((key, value) => value == null);
+
     data['doctor_id'] = currentDoctorId;
+
     if (file != null) {
       final imageUrl = await uploadFileSupabase(
         bucket: 'profile_images',
@@ -73,10 +75,14 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
       );
       data['certificate'] = imageUrl;
     }
-    await supabase.client
+
+    final response = await supabase.client
         .from('education')
-        .update(data)
-        .eq('doctor_id', currentDoctorId!);
+        .upsert(
+          data,
+          onConflict: 'doctor_id',
+        )
+        .select();
   }
 
   @override

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
@@ -85,12 +84,10 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
                 controller: phoneController,
               ),
               TextFormFiledWidget(
-                contentPadding: EdgeInsets.symmetric(vertical: 16.h),
                 label: AppString.bioAr,
                 controller: bioArController,
               ),
               TextFormFiledWidget(
-                contentPadding: EdgeInsets.symmetric(vertical: 16.h),
                 label: AppString.bioEn,
                 controller: bioEnController,
               ),

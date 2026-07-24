@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
@@ -29,8 +30,11 @@ class ClinicInfoSection extends StatelessWidget {
         15.hBox,
         EditItem(
           title: AppString.clinicAddress,
-          subtitle: clinicInfoEntity.address?.clinicAddress ??
-              AppString.addressNotAvailable,
+          subtitle: context.locale.languageCode == "en"
+              ? clinicInfoEntity.address?.city?.nameEn ??
+                  AppString.addressNotAvailable
+              : clinicInfoEntity.address?.city?.nameEn ??
+                  AppString.addressNotAvailable,
           onTap: () {
             context.pushNamed(Routes.clinicAddressScreen,
                 arguments: clinicInfoEntity);

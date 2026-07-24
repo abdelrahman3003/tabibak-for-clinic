@@ -22,8 +22,6 @@ class AppointmentRepoImpl extends AppointmentRepo {
           isToday: isToday, status: status);
       return right(response);
     } catch (e) {
-      log("--------_$e");
-
       return left(ErrorHandler.handle(e));
     }
   }

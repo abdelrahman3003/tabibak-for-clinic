@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 
 class PatientCard extends StatelessWidget {
@@ -118,26 +118,11 @@ class PatientCard extends StatelessWidget {
       case 2:
         return const Color(0xFF10B981);
       case 3:
+        return const Color(0xFF10B981);
+      case 4:
         return const Color(0xFFEF4444);
-      case 5:
-        return const Color(0xFF3B82F6);
       default:
         return Colors.grey;
-    }
-  }
-
-  IconData _statusIcon(int? id) {
-    switch (id) {
-      case 1:
-        return Icons.hourglass_empty_rounded;
-      case 2:
-        return Icons.check_circle_outline_rounded;
-      case 3:
-        return Icons.cancel_outlined;
-      case 4:
-        return Icons.task_alt_rounded;
-      default:
-        return Icons.info_outline;
     }
   }
 }

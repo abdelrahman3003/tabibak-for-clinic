@@ -41,72 +41,67 @@ class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
     return Scaffold(
       appBar: AppBarWidget(title: AppString.createClinic),
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppPadding.horizontal,
-                ),
-                child: Column(
-                  children: [
-                    TextFormFiledWidget(
-                      label: AppString.clinicName,
-                      controller: clinicNameController,
-                    ),
-                    CityInitDropDown(
-                      initialValue: selectedCity,
-                      onChangedAddress: (value) {
-                        selectedCity = value;
-                      },
-                    ),
-                    TextFormFiledWidget(
-                      label: AppString.phoneNumber,
-                      keyboardType: TextInputType.number,
-                      controller: clinicPhoneController,
-                    ),
-                    TextFormFiledWidget(
-                      label: AppString.consultationFee,
-                      keyboardType: TextInputType.number,
-                      controller: clinicConsultationFeeController,
-                      suffixText: AppString.egyptianPound,
-                    ),
-                    20.hBox,
-                    ClinicIsOnline(
-                      onChanged: (value) {
-                        setState(() {
-                          isOnline = value!;
-                        });
-                      },
-                    ),
-                    20.hBox, // spacing instead of Spacer()
-                  ],
-                ),
+        child: SingleChildScrollView(
+          padding: EdgeInsets.fromLTRB(
+            AppPadding.horizontal,
+            0,
+            AppPadding.horizontal,
+            MediaQuery.of(context).viewInsets.bottom + 30,
+          ),
+          child: Column(
+            children: [
+              TextFormFiledWidget(
+                label: AppString.clinicName,
+                controller: clinicNameController,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppPadding.horizontal,
-              ).copyWith(bottom: 25),
-              child: ClinicInfoButtonStates(
-                onPressed: () {
-                  context.read<ClinicInfoBloc>().add(CreateClinicInfoEvent(
-                        clinicInfoEntity: ClinicInfoEntity(
-                          clinicName: clinicNameController.text,
-                          phoneNumber: clinicPhoneController.text,
-                          consultationFee: int.tryParse(
-                                  clinicConsultationFeeController.text) ??
-                              0,
-                          isBooking: isOnline,
-                          address: ClinicAddressEntity(
-                            city: selectedCity,
-                          ),
-                        ),
-                      ));
+              CityInitDropDown(
+                initialValue: selectedCity,
+                onChangedAddress: (value) {
+                  selectedCity = value;
                 },
               ),
-            ),
-          ],
+              TextFormFiledWidget(
+                label: AppString.phoneNumber,
+                keyboardType: TextInputType.number,
+                controller: clinicPhoneController,
+              ),
+              TextFormFiledWidget(
+                label: AppString.consultationFee,
+                keyboardType: TextInputType.number,
+                controller: clinicConsultationFeeController,
+                suffixText: AppString.egyptianPound,
+              ),
+              20.hBox,
+              ClinicIsOnline(
+                onChanged: (value) {
+                  setState(() {
+                    isOnline = value!;
+                  });
+                },
+              ),
+              30.hBox,
+              ClinicInfoButtonStates(
+                onPressed: () {
+                  context.read<ClinicInfoBloc>().add(
+                        CreateClinicInfoEvent(
+                          clinicInfoEntity: ClinicInfoEntity(
+                            clinicName: clinicNameController.text,
+                            phoneNumber: clinicPhoneController.text,
+                            consultationFee: int.tryParse(
+                                    clinicConsultationFeeController.text) ??
+                                0,
+                            isBooking: isOnline,
+                            address: ClinicAddressEntity(
+                              city: selectedCity,
+                            ),
+                          ),
+                        ),
+                      );
+                },
+              ),
+              const SizedBox(height: 30),
+            ],
+          ),
         ),
       ),
     );

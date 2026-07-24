@@ -42,7 +42,7 @@ class AllAppointmentsBloc
 
     on<GetFinishedAppointmentsEvent>((event, emit) async {
       emit(AllAppointmentsLoading(AppointmentType.finished));
-      final result = await getAppointmentsUseCase.call(status: 5);
+      final result = await getAppointmentsUseCase.call(status: 3);
       result.fold(
         (error) => emit(
             AllAppointmentsFailure(error.message!, AppointmentType.finished)),
@@ -55,7 +55,7 @@ class AllAppointmentsBloc
 
     on<GetCanceledAppointmentsEvent>((event, emit) async {
       emit(AllAppointmentsLoading(AppointmentType.canceled));
-      final result = await getAppointmentsUseCase.call(status: 3);
+      final result = await getAppointmentsUseCase.call(status: 4);
       result.fold(
         (error) => emit(
             AllAppointmentsFailure(error.message!, AppointmentType.canceled)),

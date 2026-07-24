@@ -24,7 +24,6 @@ class DoctorProfileRepoImp implements DoctorProfileRepo {
       }
       return right(doctorModel);
     } catch (e) {
-      log("----- get doctor repo imp error: $e");
       return left(ErrorHandler.handle(e));
     }
   }
@@ -66,11 +65,14 @@ class DoctorProfileRepoImp implements DoctorProfileRepo {
   Future<Either<ApiErrorModel, void>> updateEducation(
       {EducationEntity? educationEntity, XFile? file}) async {
     try {
+      log("-----${educationEntity?.country}");
+      log("-----${educationEntity?.university}");
       final educationModel = EducationModel.fromEntity(educationEntity!);
       final result = await doctorProfileRemoteData.updateEducation(
           educationModel: educationModel, file: file);
       return right(result);
     } catch (e) {
+      log("----- : $e");
       return left(ErrorHandler.handle(e));
     }
   }

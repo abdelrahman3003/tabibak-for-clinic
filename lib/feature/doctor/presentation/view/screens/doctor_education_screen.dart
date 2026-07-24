@@ -26,8 +26,10 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
   final universityController = TextEditingController();
   final degreeController = TextEditingController();
   final yearController = TextEditingController();
+
   XFile? file;
   EducationEntity? education;
+
   @override
   void didChangeDependencies() {
     education = ModalRoute.of(context)?.settings.arguments as EducationEntity?;
@@ -45,45 +47,52 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarSave(
-          text: AppString.doctorEducation,
-          onTap: () {
-            context.read<DoctorEducationBloc>().add(
-                  UpdateDoctorEducationEvent(
-                      file: file,
-                      educationEntity: EducationEntity(
-                        university: universityController.text,
-                        country: countryController.text,
-                        degree: degreeController.text,
-                        year: int.tryParse(
-                          yearController.text,
-                        ),
-                        certificate: education?.certificate,
-                      )),
-                );
-          },
+      appBar: AppBarSave(
+        text: AppString.doctorEducation,
+        onTap: () {
+          context.read<DoctorEducationBloc>().add(
+                UpdateDoctorEducationEvent(
+                  file: file,
+                  educationEntity: EducationEntity(
+                    university: universityController.text,
+                    country: countryController.text,
+                    degree: degreeController.text,
+                    year: int.tryParse(yearController.text),
+                    certificate: education?.certificate,
+                  ),
+                ),
+              );
+        },
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppPadding.horizontal,
         ),
-        body: Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
-          child: BlocListener<DoctorEducationBloc, DoctorEducationState>(
-            listenWhen: (previous, current) =>
-                current is DoctorEducationLoading ||
-                current is DoctorEducationSuccess ||
-                current is DoctorEducationFailed,
-            listener: (context, state) {
-              if (state is DoctorEducationLoading) {
-                Dialogs.showLoading(context);
-              }
-              if (state is DoctorEducationSuccess) {
-                context.pop();
-                context.pushReplacementNamed(Routes.layOutScreen, arguments: 2);
-              }
-              if (state is DoctorEducationFailed) {
-                context.pop();
-                AppSnackBar.show(context: context, message: state.errorMessage);
-              }
-            },
+        child: BlocListener<DoctorEducationBloc, DoctorEducationState>(
+          listenWhen: (previous, current) =>
+              current is DoctorEducationLoading ||
+              current is DoctorEducationSuccess ||
+              current is DoctorEducationFailed,
+          listener: (context, state) {
+            if (state is DoctorEducationLoading) {
+              Dialogs.showLoading(context);
+            }
+            if (state is DoctorEducationSuccess) {
+              context.pop();
+              context.pushReplacementNamed(
+                Routes.layOutScreen,
+                arguments: 2,
+              );
+            }
+            if (state is DoctorEducationFailed) {
+              context.pop();
+              AppSnackBar.show(
+                context: context,
+                message: state.errorMessage,
+              );
+            }
+          },
+          child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -115,11 +124,13 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
                   onSelected: (selectedFile) {
                     file = selectedFile;
                   },
-                )
+                ),
               ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   @override
@@ -128,7 +139,6 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
     universityController.dispose();
     degreeController.dispose();
     yearController.dispose();
-
     super.dispose();
   }
 }
