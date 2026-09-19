@@ -42,12 +42,15 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
     setState(() {
       dateTime = value;
       dateController.text = "${value.day}/${value.month}";
+      selectedShift = null;
     });
 
     final selectedDayName = DateFormat('EEEE', 'en_US').format(value);
 
     context.read<CreateAppointmentBloc>().add(
-          GetAppointmentShiftEvent(dayEn: selectedDayName),
+          GetAppointmentShiftEvent(
+            dayEn: selectedDayName,
+          ),
         );
   }
 

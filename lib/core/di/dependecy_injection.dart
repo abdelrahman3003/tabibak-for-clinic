@@ -262,7 +262,7 @@ Future<void> initGetIt() async {
       getit<GetAppointmentsUseCase>(),
       getit<UpdateAppointmentStatusUseCase>(),
       getit<AppointmentBloc>()));
-  getit.registerLazySingleton(
+  getit.registerFactory(
     () => CreateAppointmentBloc(
         getit<GetAppointmentShiftUseCase>(), getit<AddAppointmentUseCase>()),
   );

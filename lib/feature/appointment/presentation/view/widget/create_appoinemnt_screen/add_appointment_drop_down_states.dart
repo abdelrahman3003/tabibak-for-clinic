@@ -39,21 +39,19 @@ class _AddAppointmentDropDownStatesState
           errorMessage = state.errorMessage;
           shifts = [];
           selectedShift = null;
-        } else if (state is GetAppointmentShiftSuccess) {
+        }
+
+        if (state is GetAppointmentShiftSuccess) {
           final data = state.clinicShiftEntityList;
+
+          selectedShift = null;
 
           if (data == null || data.isEmpty) {
             errorMessage = AppString.thisDayHasNoShifts;
             shifts = [];
-            selectedShift = null;
           } else {
             errorMessage = null;
             shifts = data;
-
-            if (selectedShift != null &&
-                !shifts.any((e) => e.shiftId == selectedShift!.shiftId)) {
-              selectedShift = null;
-            }
           }
         }
 
@@ -61,10 +59,10 @@ class _AddAppointmentDropDownStatesState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppDropdown<ClinicShiftEntity>(
-              hintStyle: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: AppColors.primary),
+              key: ValueKey(shifts),
+              hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: AppColors.primary,
+                  ),
               items: shifts,
               value: selectedShift,
               labelBuilder: (item) =>
@@ -87,7 +85,10 @@ class _AddAppointmentDropDownStatesState
             ),
             if (errorMessage != null)
               Padding(
-                padding: const EdgeInsets.only(left: 12, top: 5),
+                padding: const EdgeInsets.only(
+                  left: 12,
+                  top: 5,
+                ),
                 child: Text(
                   errorMessage!,
                   style: const TextStyle(
