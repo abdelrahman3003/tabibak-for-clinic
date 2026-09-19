@@ -22,14 +22,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _initSplash();
-  }
 
-  void _initSplash() {
     Future.delayed(const Duration(milliseconds: 200), () {
+      if (!mounted) return;
+
       setState(() {
         opacity = 1;
       });
+
       Future.delayed(const Duration(milliseconds: 1200), () {});
     });
   }
@@ -42,6 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
       );
     } else {
       getit<Supabase>().client.auth.signOut();
+
       context.pushNamedAndRemoveUntil(
         Routes.signinScreen,
         (_) => false,
@@ -52,7 +53,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SplashBloc(getit<GetDoctorAuthUseCase>()),
+      create: (context) => SplashBloc(
+        getit<GetDoctorAuthUseCase>(),
+      ),
       child: Scaffold(
         backgroundColor: AppColors.white,
         body: BlocListener<SplashBloc, SplashState>(
@@ -69,19 +72,17 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
-                    height: 200.h,
-                    child: Image.asset(
-                      "assets/images/app_logo-2.png",
-                      color: AppColors.primary,
-                      fit: BoxFit.contain,
-                    ),
+                  Image.asset(
+                    "assets/images/splash.png",
+                    color: AppColors.primary,
+                    height: 150.h,
+                    width: 250.w,
+                    fit: BoxFit.cover,
                   ),
                   Text(
-                    "طبيبك",
-                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                    " طبيبك",
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
                           fontWeight: FontWeight.w800,
-                          fontFamily: "Inter",
                           color: AppColors.primary,
                         ),
                   ),
