@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,25 +30,113 @@ class _SplashScreenState extends State<SplashScreen> {
       setState(() {
         opacity = 1;
       });
-
-      Future.delayed(const Duration(milliseconds: 1200), () {});
     });
   }
 
-  void _checkInitPage(SplashSuccess state, BuildContext context) {
-    if (state.doctorEntity != null) {
-      context.pushNamedAndRemoveUntil(
-        Routes.layOutScreen,
-        (_) => false,
-      );
-    } else {
-      getit<Supabase>().client.auth.signOut();
+  Future<bool> _isOffline() async {
+    final result = await Connectivity().checkConnectivity();
+    return result.contains(ConnectivityResult.none);
+  }
 
-      context.pushNamedAndRemoveUntil(
-        Routes.signinScreen,
-        (_) => false,
-      );
+  Future<void> _checkInitPage(SplashSuccess state) async {
+    if (state.doctorEntity != null) {
+      _goTo(Routes.layOutScreen);
+      return;
     }
+
+    if (await _isOffline()) {
+      _showNoInternetDialog(context);
+      return;
+    }
+
+    await getit<Supabase>().client.auth.signOut();
+
+    _goTo(Routes.signinScreen);
+  }
+
+  void _goTo(String route) {
+    if (!mounted) return;
+
+    context.pushNamedAndRemoveUntil(
+      route,
+      (_) => false,
+    );
+  }
+
+  void _showNoInternetDialog(BuildContext blocContext) {
+    if (!mounted) return;
+
+    showDialog(
+      context: blocContext,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return PopScope(
+          canPop: false,
+          child: AlertDialog(
+            title: const Text(
+              'لا يوجد اتصال بالإنترنت',
+            ),
+            content: const Text(
+              'تأكد من اتصالك بالإنترنت وحاول مرة أخرى',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+
+                  blocContext.read<SplashBloc>().add(
+                        CheckDoctorEvent(
+                          user: Supabase.instance.client.auth.currentUser,
+                        ),
+                      );
+                },
+                child: const Text(
+                  'إعادة المحاولة',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showErrorDialog(BuildContext blocContext) {
+    if (!mounted) return;
+
+    showDialog(
+      context: blocContext,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return PopScope(
+          canPop: false,
+          child: AlertDialog(
+            title: const Text(
+              'خطأ في الاتصال',
+            ),
+            content: const Text(
+              'تعذر الاتصال بالخادم. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+
+                  blocContext.read<SplashBloc>().add(
+                        CheckDoctorEvent(
+                          user: Supabase.instance.client.auth.currentUser,
+                        ),
+                      );
+                },
+                child: const Text(
+                  'إعادة المحاولة',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -55,13 +144,21 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocProvider(
       create: (context) => SplashBloc(
         getit<GetDoctorAuthUseCase>(),
-      ),
+      )..add(
+          CheckDoctorEvent(
+            user: Supabase.instance.client.auth.currentUser,
+          ),
+        ),
       child: Scaffold(
         backgroundColor: AppColors.white,
         body: BlocListener<SplashBloc, SplashState>(
           listener: (context, state) {
             if (state is SplashSuccess) {
-              _checkInitPage(state, context);
+              _checkInitPage(state);
+            }
+
+            if (state is SplashError) {
+              _showErrorDialog(context);
             }
           },
           child: Center(
@@ -73,14 +170,14 @@ class _SplashScreenState extends State<SplashScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Image.asset(
-                    "assets/images/splash.png",
+                    'assets/images/splash.png',
                     color: AppColors.primary,
                     height: 150.h,
                     width: 250.w,
                     fit: BoxFit.cover,
                   ),
                   Text(
-                    " طبيبك",
+                    ' طبيبك',
                     style: Theme.of(context).textTheme.displaySmall?.copyWith(
                           fontWeight: FontWeight.w800,
                           color: AppColors.primary,
