@@ -41,7 +41,7 @@ class AllAppointmentsBloc
 
     on<GetFinishedAppointmentsEvent>((event, emit) async {
       emit(AllAppointmentsLoading(AppointmentType.finished));
-      final result = await getAppointmentsUseCase.call(status: 3);
+      final result = await getAppointmentsUseCase.call(status: 2);
       result.fold(
         (error) => emit(
             AllAppointmentsFailure(error.message!, AppointmentType.finished)),
