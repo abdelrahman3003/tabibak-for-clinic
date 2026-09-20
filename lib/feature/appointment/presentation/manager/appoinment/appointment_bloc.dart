@@ -24,9 +24,7 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
       final doctorResult = await getDoctorUseCase.call();
 
       appointmentResult.fold(
-        (error) {
-          emit(AppointmentFailed(errorMessage: error.message!));
-        },
+        (error) {},
         (appointmentsList) {
           doctorResult.fold(
             (error) {

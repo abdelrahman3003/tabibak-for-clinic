@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
@@ -21,11 +23,12 @@ class ClinicLayoutBloc extends Bloc<ClinicLayoutEvent, ClinicLayoutState> {
       emit(ClinicLayoutLoading());
       final result = await getClinicInfoUseCase.call();
       await result.fold(
-        (error) async => emit(ClinicLayoutFailed(errorMessage: error.message!)),
+        (error) async {},
         (list) async {
           if (list.isEmpty) {
             emit(ClinicLayoutEmpty());
           } else {
+            log("======++11");
             final result2 =
                 await getClinicWorkingDayShiftUseCase.call(list[0].id!);
             await result2.fold(

@@ -19,9 +19,7 @@ class DoctorProfileBloc extends Bloc<DoctorProfileEvent, DoctorProfileState> {
       emit(DoctorProfileLoading());
       final result = await getDoctorUseCase.call();
       result.fold(
-        (error) {
-          emit(DoctorProfileFailed(errorMessage: error.message!));
-        },
+        (error) {},
         (doctor) {
           emit(DoctorProfileSuccess(doctorEntity: doctor));
         },
