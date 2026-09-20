@@ -16,7 +16,6 @@ class AllAppointmentsBloc
   final GetAppointmentsUseCase getAppointmentsUseCase;
   final UpdateAppointmentStatusUseCase updateAppointmentStatusUseCase;
   final AppointmentBloc appointmentBloc;
-  // ✅ Each tab keeps its own list independently
   List<AppointmentEntity> upcomingList = [];
   List<AppointmentEntity> finishedList = [];
   List<AppointmentEntity> canceledList = [];

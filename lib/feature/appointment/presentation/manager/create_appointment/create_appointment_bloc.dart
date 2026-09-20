@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
@@ -20,8 +18,6 @@ class CreateAppointmentBloc
       this.getAppointmentShiftUseCase, this.addAppointmentUseCase)
       : super(CreateAppointmentInitial()) {
     on<GetAppointmentShiftEvent>((event, emit) async {
-      log("--------111111");
-
       emit(GetAppointmentShiftLoading());
       final result = await getAppointmentShiftUseCase.call(event.dayEn);
       result.fold(

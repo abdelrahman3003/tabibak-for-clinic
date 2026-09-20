@@ -68,7 +68,7 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
                     doctorId: doctorId,
                     userId: doctorId,
                     name: patientNameController.text,
-                    statusId: 3,
+                    statusId: 2,
                     phone: phonePhoneController.text,
                     appointmentDate: dateTime,
                     description: descriptionController.text,

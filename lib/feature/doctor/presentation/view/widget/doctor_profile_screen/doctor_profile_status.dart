@@ -13,19 +13,19 @@ class DoctorProfileStatus extends StatelessWidget {
     switch (statusEntity.id) {
       case 1:
         return const _StatusStyle(
-          color: AppColors.primary,
-          icon: Icons.check_circle_outline,
+          color: Colors.orange,
+          icon: Icons.pending_actions,
         );
       case 2:
         return const _StatusStyle(
           color: Colors.green,
-          icon: Icons.cancel_outlined,
+          icon: Icons.check_circle_outline,
         );
       case 3:
       default:
         return const _StatusStyle(
           color: AppColors.red,
-          icon: Icons.pending_actions,
+          icon: Icons.cancel_outlined,
         );
     }
   }

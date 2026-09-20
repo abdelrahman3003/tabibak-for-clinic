@@ -26,16 +26,14 @@ class AppointmentList extends StatelessWidget {
         final appointment = appointmentList[index];
         return AppointmentCard(
           showActions: showActions,
-          approveLoading: loadingKey == "${appointment.appointmentId}-5",
-          rejectLoading: loadingKey == "${appointment.appointmentId}-3",
+          approveLoading: loadingKey == "${appointment.appointmentId}-2",
+          rejectLoading: loadingKey == "${appointment.appointmentId}-4",
           appointmentEntity: appointment,
           onApprove: onStatusChanged != null
-              ? () => onStatusChanged!(
-                  appointment.appointmentId, 5) // 4 for Confirmed?
+              ? () => onStatusChanged!(appointment.appointmentId, 2)
               : null,
           onReject: onStatusChanged != null
-              ? () => onStatusChanged!(
-                  appointment.appointmentId, 3) // 1 for Canceled
+              ? () => onStatusChanged!(appointment.appointmentId, 4)
               : null,
         );
       },

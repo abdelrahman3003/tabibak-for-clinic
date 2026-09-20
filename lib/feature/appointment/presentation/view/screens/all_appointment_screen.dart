@@ -87,7 +87,6 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
                     child: IndexedStack(
                       index: selectedIndex,
                       children: [
-                        // ✅ Each tab gets its own data from bloc cache
                         _buildTab(
                           context,
                           state,
@@ -118,18 +117,12 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
     );
   }
 
-  Widget _buildTab(
-    BuildContext context,
-    AllAppointmentsState state,
-    AppointmentType type,
-    List<AppointmentEntity> appointments,
-  ) {
-    // ✅ Show loader only for this tab's loading state
+  Widget _buildTab(BuildContext context, AllAppointmentsState state,
+      AppointmentType type, List<AppointmentEntity> appointments) {
     if (state is AllAppointmentsLoading && state.type == type) {
       return const Center(child: CircularProgressIndicator());
     }
 
-    // ✅ Show error only for this tab
     if (state is AllAppointmentsFailure && state.type == type) {
       return Center(
         child: Column(
