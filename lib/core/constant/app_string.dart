@@ -249,4 +249,10 @@ class AppString {
       "Clinic Working Days & Time".tr();
   static String get address => "Address".tr();
   static String get selectAddressValidator => "Please select an address".tr();
+  static String get noInternetConnection => "No internet connection".tr();
+  static String get checkInternetConnection => "Make sure you are connected to the internet and try again".tr();
+  static String get retry => "Retry".tr();
+  static String get connectionError => "Connection error".tr();
+  static String get unableToConnectServer => "Unable to connect to the server. Make sure you are connected to the internet and try again.".tr();
+  static String get yourDoctor => "Your Doctor".tr();
 }

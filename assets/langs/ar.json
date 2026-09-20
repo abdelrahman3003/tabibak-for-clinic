@@ -216,5 +216,11 @@
     "No shifts available": "لا توجد فترات متاحة",
     "Select Shift": "اختر الفترة",
     "address": "العنوان",
-    "selectAddressValidator": "يرجى اختيار العنوان"
+    "selectAddressValidator": "يرجى اختيار العنوان",
+    "noInternetConnection": "لا يوجد اتصال بالإنترنت",
+    "checkInternetConnection": "تأكد من اتصالك بالإنترنت وحاول مرة أخرى",
+    "retry": "إعادة المحاولة",
+    "connectionError": "خطأ في الاتصال",
+    "unableToConnectServer": "تعذر الاتصال بالخادم. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.",
+    "yourDoctor": "طبيبك"
 }

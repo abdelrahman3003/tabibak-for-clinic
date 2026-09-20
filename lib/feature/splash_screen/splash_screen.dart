@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
+import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart' show AppColors;
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/get_doctor_auth_use_case.dart';
@@ -73,12 +75,8 @@ class _SplashScreenState extends State<SplashScreen> {
         return PopScope(
           canPop: false,
           child: AlertDialog(
-            title: const Text(
-              'لا يوجد اتصال بالإنترنت',
-            ),
-            content: const Text(
-              'تأكد من اتصالك بالإنترنت وحاول مرة أخرى',
-            ),
+            title: Text(AppString.noInternetConnection),
+            content: Text(AppString.checkInternetConnection),
             actions: [
               TextButton(
                 onPressed: () {
@@ -90,9 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         ),
                       );
                 },
-                child: const Text(
-                  'إعادة المحاولة',
-                ),
+                child: Text(AppString.retry),
               ),
             ],
           ),
@@ -111,12 +107,8 @@ class _SplashScreenState extends State<SplashScreen> {
         return PopScope(
           canPop: false,
           child: AlertDialog(
-            title: const Text(
-              'خطأ في الاتصال',
-            ),
-            content: const Text(
-              'تعذر الاتصال بالخادم. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.',
-            ),
+            title: Text(AppString.connectionError),
+            content: Text(AppString.unableToConnectServer),
             actions: [
               TextButton(
                 onPressed: () {
@@ -128,9 +120,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         ),
                       );
                 },
-                child: const Text(
-                  'إعادة المحاولة',
-                ),
+                child: Text(AppString.retry),
               ),
             ],
           ),
@@ -176,8 +166,9 @@ class _SplashScreenState extends State<SplashScreen> {
                     width: 250.w,
                     fit: BoxFit.cover,
                   ),
+                  10.hBox,
                   Text(
-                    ' طبيبك',
+                    "طبيبك ",
                     style: Theme.of(context).textTheme.displaySmall?.copyWith(
                           fontWeight: FontWeight.w800,
                           color: AppColors.primary,

@@ -215,5 +215,11 @@
     "No shifts available": "No shifts available",
     "Select Shift": "Select Shift",
     "address": "Address",
-    "selectAddressValidator": "Please select an address"
+    "selectAddressValidator": "Please select an address",
+    "noInternetConnection": "No internet connection",
+    "checkInternetConnection": "Make sure you are connected to the internet and try again",
+    "retry": "Retry",
+    "connectionError": "Connection error",
+    "unableToConnectServer": "Unable to connect to the server. Make sure you are connected to the internet and try again.",
+    "yourDoctor": "Your Doctor"
 }
