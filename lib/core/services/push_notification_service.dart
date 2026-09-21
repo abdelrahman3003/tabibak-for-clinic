@@ -5,39 +5,54 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:tabibak_for_clinic/core/services/local_notification_services.dart';
 
 class PushNotificationService {
-  static FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  static final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
   static Future<void> init() async {
-    await firebaseMessaging.requestPermission();
+    try {
+      await firebaseMessaging.requestPermission();
 
-    String? token = await getToken();
-    log("------- token $token");
+      final token = await getToken();
+      log('------- FCM token: $token');
 
-    FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
-    FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
+      FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
+
+      FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
+    } catch (e, stackTrace) {
+      log(
+        '------- Firebase Messaging Error: $e',
+        stackTrace: stackTrace,
+      );
+    }
   }
 
   static Future<String?> getToken() async {
-    String? token;
-    if (Platform.isIOS) {
-      // Wait for APNs token first — required on iOS
-      final apnsToken = await firebaseMessaging.getAPNSToken();
-      if (apnsToken != null) {
-        token = await firebaseMessaging.getToken();
-      } else {
-        log("------- APNs token not available (likely a simulator)");
+    try {
+      if (Platform.isIOS) {
+        final apnsToken = await firebaseMessaging.getAPNSToken();
+
+        if (apnsToken == null) {
+          log('------- APNs token not available');
+          return null;
+        }
       }
-    } else {
-      token = await firebaseMessaging.getToken();
+
+      return await firebaseMessaging.getToken();
+    } catch (e, stackTrace) {
+      log(
+        '------- FCM getToken Error: $e',
+        stackTrace: stackTrace,
+      );
+      return null;
     }
-    return token;
   }
 
   static void _handleForegroundMessage(RemoteMessage message) {
     LocalNotificationServices.showBasicNotification(message);
   }
 
-  static Future<void> _handleBackgroundMessage(RemoteMessage message) async {
-    log("---- message  ${message.notification?.title}");
+  static Future<void> _handleBackgroundMessage(
+    RemoteMessage message,
+  ) async {
+    log('---- message ${message.notification?.title}');
   }
 }
