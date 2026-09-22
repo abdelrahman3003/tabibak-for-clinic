@@ -125,7 +125,41 @@ class AppString {
   static String get thisDayHasNoShifts => "This day has no shifts".tr();
   static String get pleaseSelectAShift => "Please select a shift".tr();
   static String get noShiftsAvailable => "No shifts available".tr();
-  static String get selectShift => "Select Shift".tr();
+    static String get selectShift => "Select Shift".tr();
+
+  // Appointment Type Localization
+  static String get consultation => "Consultation".tr();
+  static String get followUp => "Follow-up".tr();
+  static String get checkup => "Check-up".tr();
+  static String get emergency => "Emergency".tr();
+  static String get surgery => "Surgery".tr();
+  static String get newPatient => "New Patient".tr();
+  static String get vaccination => "Vaccination".tr();
+
+  /// Maps raw API appointment type strings to localized display strings.
+  static String localizedType(String? type) {
+    final t = type?.trim().toLowerCase() ?? "";
+    switch (t) {
+      case 'consultation':
+        return consultation;
+      case 'follow-up':
+      case 'follow up':
+        return followUp;
+      case 'checkup':
+      case 'check-up':
+        return checkup;
+      case 'emergency':
+        return emergency;
+      case 'surgery':
+        return surgery;
+      case 'new patient':
+        return newPatient;
+      case 'vaccination':
+        return vaccination;
+      default:
+        return type ?? '';
+    }
+  }
 
   // Clinic Localization
   static String get addressNotAvailable => "Address Not Available".tr();

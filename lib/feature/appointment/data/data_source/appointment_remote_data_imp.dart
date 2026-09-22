@@ -50,8 +50,12 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
   }
 
   @override
+  @override
   Future<void> addAppointment(AppointmentModel appointment) async {
-    await supabase.client.from('appointments').insert(appointment.toJson());
+    await supabase.client.functions.invoke(
+      'add_appoinement_doctor',
+      body: appointment.toJson(),
+    );
   }
 
   @override

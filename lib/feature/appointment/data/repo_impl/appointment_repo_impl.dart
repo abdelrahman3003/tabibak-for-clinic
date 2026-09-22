@@ -34,8 +34,7 @@ class AppointmentRepoImpl extends AppointmentRepo {
           .addAppointment(AppointmentModel.fromEntity(appointment));
       return right(response);
     } catch (e) {
-      log("---------$e");
-
+      log("=======+$e");
       return left(ErrorHandler.handle(e));
     }
   }

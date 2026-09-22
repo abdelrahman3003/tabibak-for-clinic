@@ -9,22 +9,6 @@ import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/core/widgets/image_circle.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 
-/// Professional / enterprise styling notes:
-/// - Solid saturated fills replaced with a thin border + very light tint
-///   (outlined-pill style), the pattern used by most B2B/medical dashboards
-///   for status chips — calmer, more "clinical", less "consumer app".
-/// - Heavy drop shadow replaced with a hairline border (Colors.grey.shade200)
-///   plus a barely-there shadow, which reads as flatter and more precise on
-///   a light background instead of "card floating in a game UI".
-/// - Typography tightened: name uses a slightly smaller, tighter weight;
-///   secondary text (date/labels) uses letter-spacing + uppercase micro-labels
-///   for a more structured, data-table feel.
-/// - Accent bar removed in favor of a small colored dot next to the type
-///   label — subtler than a full color block, common in professional
-///   status indicators (Linear, Notion, healthcare portals).
-/// - Buttons restyled as outlined, lower-contrast controls with uppercase
-///   letter-spacing, matching typical professional action-row patterns
-///   rather than bright rounded pill buttons.
 class AppointmentCard extends StatelessWidget {
   final AppointmentEntity appointmentEntity;
   final VoidCallback? onApprove;

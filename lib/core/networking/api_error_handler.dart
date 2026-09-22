@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/networking/api_error_model.dart';
 
 class ErrorHandler {
@@ -15,8 +16,13 @@ class ErrorHandler {
     if (error is PostgrestException) {
       return _handlePostgrestError(error);
     }
+    if (error is FunctionException) {
+      return ApiErrorModel(
+        message: error.details?['error']?.toString() ?? AppString.unknownError,
+      );
+    }
 
-    return ApiErrorModel(message: "An unknown error occurred");
+    return ApiErrorModel(message: AppString.unknownError);
   }
 
   static ApiErrorModel _handleDioError(DioException error) {

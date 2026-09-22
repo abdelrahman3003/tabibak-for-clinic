@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/detail_row.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -12,6 +13,14 @@ class AppointmentInfoSection extends StatelessWidget {
     return SectionCard(
       title: 'Appointment Info'.tr(),
       children: [
+        DetailRow(
+          icon: Icons.tag_rounded,
+          label: 'Appointment Type'.tr(),
+          value: entity.appointmentTypeEn != null
+              ? AppString.localizedType(entity.appointmentTypeEn)
+              : '—',
+          iconColor: const Color(0xFF14B8A6),
+        ),
         DetailRow(
           icon: Icons.calendar_today_rounded,
           label: 'Date'.tr(),

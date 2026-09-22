@@ -23,39 +23,39 @@ class AppointmentModel extends AppointmentEntity {
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
     return AppointmentModel(
-        appointmentId: json['id'],
-        appointmentDate: DateTime.parse(json['appointment_date']),
-        userImage: json['users']?['image'],
-        statusAr: json['appointments_status']['status_ar'],
-        statusEn: json['appointments_status']['status_en'],
-        statusId: json['appointments_status']['id'],
-        phone: json['phone'],
-        name: json['name'],
-        description: json['description'],
-        doctorId: json['doctor_id'].toString(),
-        userId: json['user_id'].toString(),
-        appointmentMorningShiftId: json['appointment_morning_shift_id'],
-        appointmentEveningShiftId: json['appointment_evening_shift_id'],
-        appointmentTypeEn: json['appointment_types']?['appointment_type_en'],
-        appointmentTypeAr: json['appointment_types']?['appointment_type_ar'],
-        followUpDate: json['follow_up_date'] != null
-            ? DateTime.parse(json['follow_up_date'])
-            : null,
-        queueNumber: json['queue_number']);
+      appointmentId: json['id'],
+      appointmentDate: DateTime.parse(json['appointment_date']),
+      userImage: json['users']?['image'],
+      statusAr: json['appointments_status']?['status_ar'],
+      statusEn: json['appointments_status']?['status_en'],
+      statusId: json['appointments_status']?['id'],
+      phone: json['phone'],
+      name: json['name'],
+      description: json['description'],
+      doctorId: json['doctor_id']?.toString(),
+      userId: json['user_id']?.toString(),
+      appointmentMorningShiftId: json['appointment_morning_shift_id'],
+      appointmentEveningShiftId: json['appointment_evening_shift_id'],
+      appointmentTypeEn: json['appointment_types']?['appointment_type_en'],
+      appointmentTypeAr: json['appointment_types']?['appointment_type_ar'],
+      followUpDate: json['follow_up_date'] != null
+          ? DateTime.parse(json['follow_up_date'])
+          : null,
+      queueNumber: json['queue_number'],
+    );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "doctor_id": doctorId,
-      "user_id": userId,
+      'doctor_id': doctorId,
+      'user_id': userId,
       'name': name,
       'appointment_date': appointmentDate?.toIso8601String(),
       'status': statusId,
-      'appointment_morning_shift_id': appointmentMorningShiftId,
-      'appointment_evening_shift_id': appointmentEveningShiftId,
+      'shift_morning_id': appointmentMorningShiftId,
+      'shift_evening_id': appointmentEveningShiftId,
       'phone': phone,
       'description': description,
-      'queue_number': queueNumber,
     };
   }
 
