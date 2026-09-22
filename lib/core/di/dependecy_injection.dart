@@ -256,9 +256,9 @@ Future<void> initGetIt() async {
       SetAppointmentFollowUpUseCase(
           appointmentRepos: getit<AppointmentRepo>()));
   //blocs
-  getit.registerFactory<AppointmentBloc>(() => AppointmentBloc(
+  getit.registerLazySingleton<AppointmentBloc>(() => AppointmentBloc(
       getit<GetAppointmentsUseCase>(), getit<GetDoctorUseCase>()));
-  getit.registerFactory<AllAppointmentsBloc>(() => AllAppointmentsBloc(
+  getit.registerLazySingleton<AllAppointmentsBloc>(() => AllAppointmentsBloc(
       getit<GetAppointmentsUseCase>(),
       getit<UpdateAppointmentStatusUseCase>(),
       getit<AppointmentBloc>()));

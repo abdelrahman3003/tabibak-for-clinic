@@ -13,6 +13,8 @@ class GetFinishedAppointmentsEvent extends AllAppointmentsEvent {}
 
 class GetCanceledAppointmentsEvent extends AllAppointmentsEvent {}
 
+class RefreshAllAppointmentsEvent extends AllAppointmentsEvent {}
+
 class UpdateAppointmentStatusEvent extends AllAppointmentsEvent {
   final int statusIndex;
   final int appointmentId;

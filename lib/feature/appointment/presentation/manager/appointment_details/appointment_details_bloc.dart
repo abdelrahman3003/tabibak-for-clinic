@@ -51,8 +51,7 @@ class AppointmentDetailsBloc
               emit(AppointmentActionFailure(error.message ?? 'Unknown error')),
           (_) {
         appointmentBloc.add(const GetAppointmentEvent());
-        allAppointmentsBloc.add(GetCanceledAppointmentsEvent());
-        allAppointmentsBloc.add(GetFinishedAppointmentsEvent());
+        allAppointmentsBloc.add(RefreshAllAppointmentsEvent());
         emit(AppointmentActionSuccess());
       });
     });
@@ -67,7 +66,7 @@ class AppointmentDetailsBloc
               emit(AppointmentActionFailure(error.message ?? 'Unknown error')),
           (_) {
         appointmentBloc.add(const GetAppointmentEvent());
-        allAppointmentsBloc.add(GetFinishedAppointmentsEvent());
+        allAppointmentsBloc.add(RefreshAllAppointmentsEvent());
         emit(AppointmentActionSuccess());
       });
     });

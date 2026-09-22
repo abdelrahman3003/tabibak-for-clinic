@@ -21,7 +21,19 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<AllAppointmentsBloc>().add(GetUpcomingAppointmentsEvent());
+    context.read<AllAppointmentsBloc>().add(RefreshAllAppointmentsEvent());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Refresh when returning from appointment details while this screen is kept
+    // in the navigation stack.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<AllAppointmentsBloc>().add(RefreshAllAppointmentsEvent());
+      }
+    });
   }
 
   void _onTabChanged(BuildContext context, int index) {
@@ -29,11 +41,11 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
     bloc.add(ChangeTabEvent(index));
     switch (index) {
       case 0:
-        if (bloc.upcomingList.isEmpty) bloc.add(GetUpcomingAppointmentsEvent());
+      bloc.add(GetUpcomingAppointmentsEvent());
       case 1:
-        if (bloc.finishedList.isEmpty) bloc.add(GetFinishedAppointmentsEvent());
+      bloc.add(GetFinishedAppointmentsEvent());
       case 2:
-        if (bloc.canceledList.isEmpty) bloc.add(GetCanceledAppointmentsEvent());
+      bloc.add(GetCanceledAppointmentsEvent());
     }
   }
 

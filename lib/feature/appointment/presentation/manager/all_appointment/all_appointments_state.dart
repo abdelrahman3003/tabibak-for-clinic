@@ -46,6 +46,10 @@ class UpdateAppointmentStatusLoading extends AllAppointmentsState {
 
 class UpdateAppointmentStatusSuccess extends AllAppointmentsState {}
 
+class AllAppointmentsRefreshing extends AllAppointmentsState {}
+
+class AllAppointmentsRefreshed extends AllAppointmentsState {}
+
 class UpdateAppointmentStatusFailure extends AllAppointmentsState {
   final String message;
   UpdateAppointmentStatusFailure(this.message);

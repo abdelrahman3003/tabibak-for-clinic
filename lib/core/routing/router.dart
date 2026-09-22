@@ -202,7 +202,7 @@ class AppRouter {
         page = RootScreenWrapper(
           child: BlocProvider.value(
             value: getit<AllAppointmentsBloc>()
-              ..add(GetUpcomingAppointmentsEvent()),
+              ..add(RefreshAllAppointmentsEvent()),
             child: const AllAppointmentScreen(),
           ),
         );

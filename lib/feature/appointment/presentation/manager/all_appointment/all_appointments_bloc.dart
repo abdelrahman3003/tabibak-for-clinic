@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
@@ -69,6 +67,13 @@ class AllAppointmentsBloc
       );
     });
 
+    on<RefreshAllAppointmentsEvent>((event, emit) async {
+      emit(AllAppointmentsRefreshing());
+      await _refreshLists();
+      appointmentBloc.add(const GetAppointmentEvent());
+      emit(AllAppointmentsRefreshed());
+    });
+
     on<UpdateAppointmentStatusEvent>((event, emit) async {
       emit(UpdateAppointmentStatusLoading(
           loadingKey: "${event.appointmentId}-${event.statusIndex}"));
@@ -80,23 +85,11 @@ class AllAppointmentsBloc
       await result.fold(
         (error) async => emit(UpdateAppointmentStatusFailure(error.message!)),
         (_) async {
-          final refreshResult = await getAppointmentsUseCase.call(
-              status: AppointmentStatus.pending.id);
-          refreshResult.fold(
-            (error) {
-              emit(UpdateAppointmentStatusSuccess());
-            },
-            (appointments) {
-              log("Refreshed appointments: ${appointments?.length}");
-              upcomingList = appointments ?? [];
-              finishedList.clear();
-              canceledList.clear();
-              appointmentBloc.add(const GetAppointmentEvent());
-              emit(UpdateAppointmentStatusSuccess());
-              emit(AllAppointmentsSuccess(
-                  upcomingList, AppointmentType.upcoming));
-            },
-          );
+          emit(AllAppointmentsRefreshing());
+          await _refreshLists();
+          appointmentBloc.add(const GetAppointmentEvent());
+          emit(UpdateAppointmentStatusSuccess());
+          emit(AllAppointmentsRefreshed());
         },
       );
     });
@@ -104,6 +97,23 @@ class AllAppointmentsBloc
     on<ChangeTabEvent>((event, emit) {
       currentIndex = event.index;
       emit(ToggleIndexState(event.index));
+    });
+  }
+
+  Future<void> _refreshLists() async {
+    final results = await Future.wait([
+      getAppointmentsUseCase.call(status: AppointmentStatus.pending.id),
+      getAppointmentsUseCase.call(status: AppointmentStatus.confirmed.id),
+      getAppointmentsUseCase.call(status: AppointmentStatus.cancelled.id),
+    ]);
+    results[0].fold((_) {}, (appointments) {
+      upcomingList = appointments ?? [];
+    });
+    results[1].fold((_) {}, (appointments) {
+      finishedList = appointments ?? [];
+    });
+    results[2].fold((_) {}, (appointments) {
+      canceledList = appointments ?? [];
     });
   }
 }
