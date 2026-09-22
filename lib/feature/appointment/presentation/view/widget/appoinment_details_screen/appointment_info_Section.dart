@@ -26,10 +26,10 @@ class AppointmentInfoSection extends StatelessWidget {
           value: entity.appointmentMorningShiftId != null
               ? _shiftLabel(entity.appointmentMorningShiftId)
               : _shiftLabel(entity.appointmentEveningShiftId),
-          iconColor: entity.appointmentMorningShiftId != null &&
-                  entity.appointmentMorningShiftId == 1
-              ? const Color(0xFFF59E0B)
-              : const Color(0xFF8B5CF6),
+            iconColor: entity.appointmentMorningShiftId != null &&
+                    entity.appointmentMorningShiftId == 1
+                ? const Color(0xFFF59E0B)
+                : const Color(0xFF8B5CF6),
         ),
         DetailRow(
           icon: Icons.tag_rounded,

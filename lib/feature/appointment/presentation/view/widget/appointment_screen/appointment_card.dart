@@ -9,6 +9,22 @@ import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:tabibak_for_clinic/core/widgets/image_circle.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 
+/// Professional / enterprise styling notes:
+/// - Solid saturated fills replaced with a thin border + very light tint
+///   (outlined-pill style), the pattern used by most B2B/medical dashboards
+///   for status chips — calmer, more "clinical", less "consumer app".
+/// - Heavy drop shadow replaced with a hairline border (Colors.grey.shade200)
+///   plus a barely-there shadow, which reads as flatter and more precise on
+///   a light background instead of "card floating in a game UI".
+/// - Typography tightened: name uses a slightly smaller, tighter weight;
+///   secondary text (date/labels) uses letter-spacing + uppercase micro-labels
+///   for a more structured, data-table feel.
+/// - Accent bar removed in favor of a small colored dot next to the type
+///   label — subtler than a full color block, common in professional
+///   status indicators (Linear, Notion, healthcare portals).
+/// - Buttons restyled as outlined, lower-contrast controls with uppercase
+///   letter-spacing, matching typical professional action-row patterns
+///   rather than bright rounded pill buttons.
 class AppointmentCard extends StatelessWidget {
   final AppointmentEntity appointmentEntity;
   final VoidCallback? onApprove;
@@ -27,14 +43,21 @@ class AppointmentCard extends StatelessWidget {
     this.rejectLoading = false,
   });
 
+  Color get _accentColor {
+    final type = appointmentEntity.appointmentTypeEn ?? "";
+    if (type == 'Consultation') return AppColors.primaryDark;
+    if (type == 'Follow-up') return AppColors.statusConfirmed;
+    return const Color(0xff64748B);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(16),
-        splashColor: Colors.black.withValues(alpha: 0.05),
-        highlightColor: Colors.black.withValues(alpha: 0.03),
+        borderRadius: BorderRadius.circular(12),
+        splashColor: Colors.black.withValues(alpha: 0.03),
+        highlightColor: Colors.black.withValues(alpha: 0.02),
         onTap: () {
           context.pushNamed(
             Routes.appointmentDetailsScreen,
@@ -42,38 +65,29 @@ class AppointmentCard extends StatelessWidget {
           );
         },
         child: Container(
-          padding: const EdgeInsets.all(14),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(12),
             color: Colors.white,
+            border: Border.all(color: const Color(0xffE7EAEE)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
+                color: Colors.black.withValues(alpha: 0.02),
+                blurRadius: 6,
+                offset: const Offset(0, 1),
               ),
             ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  ImageCircle(
-                    imageUrl: appointmentEntity.userImage,
-                    radius: 26.r,
-                  ),
-                  12.wBox,
-                  Expanded(child: _buildNameAndDate(context)),
-                  _buildStatusBadge(context),
-                ],
-              ),
-              if (appointmentEntity.queueNumber != null) ...[
-                6.hBox,
-                _buildQueueNumber(context),
-              ],
+              _buildHeaderRow(context),
+              12.hBox,
+              Container(height: 1, color: const Color(0xffF1F3F5)),
+              12.hBox,
+              _buildMetaRow(context),
               if (showActions) ...[
-                12.hBox,
+                14.hBox,
                 _buildActionButtons(context),
               ],
             ],
@@ -83,54 +97,84 @@ class AppointmentCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusBadge(BuildContext context) {
-    final appointmentType = appointmentEntity.appointmentTypeEn ?? "";
-    final color = _badgeColor(appointmentType);
-    final isArabic = appointmentEntity.appointmentTypeAr != null &&
-        Localizations.localeOf(context).languageCode == 'ar';
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(
-        isArabic
-            ? (appointmentEntity.appointmentTypeAr ?? "")
-            : appointmentType,
-        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-            ),
-      ),
+  Widget _buildHeaderRow(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        ImageCircle(
+          imageUrl: appointmentEntity.userImage,
+          radius: 22.r,
+        ),
+        12.wBox,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                appointmentEntity.name ?? "",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: -0.1,
+                      color: const Color(0xff1E293B),
+                    ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                appointmentEntity.followUpDate != null
+                    ? formatDayMonth(appointmentEntity.followUpDate.toString())
+                    : formatDayMonth(
+                        appointmentEntity.appointmentDate.toString()),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: const Color(0xff94A3B8),
+                      fontWeight: FontWeight.w500,
+                    ),
+              ),
+            ],
+          ),
+        ),
+        _buildStatusBadge(context),
+      ],
     );
   }
 
-  Widget _buildQueueNumber(BuildContext context) {
+  Widget _buildMetaRow(BuildContext context) {
+    if (appointmentEntity.queueNumber == null) return const SizedBox.shrink();
+    return _buildQueueNumber(context);
+  }
+
+  Widget _buildStatusBadge(BuildContext context) {
+    final appointmentType = appointmentEntity.appointmentTypeEn ?? "";
+    final isArabic = appointmentEntity.appointmentTypeAr != null &&
+        Localizations.localeOf(context).languageCode == 'ar';
+    final color = _accentColor;
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            AppColors.primaryDark.withValues(alpha: 0.15),
-            AppColors.primaryDark.withValues(alpha: 0.05),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.primaryDark.withValues(alpha: 0.2)),
+        color: color.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: color.withValues(alpha: 0.25)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.queue, size: 13.r, color: AppColors.primaryDark),
-          4.wBox,
+          Container(
+            width: 6,
+            height: 6,
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          ),
+          6.wBox,
           Text(
-            '${AppString.queueNumber}: ${appointmentEntity.queueNumber}',
+            isArabic
+                ? (appointmentEntity.appointmentTypeAr ?? "")
+                : appointmentType,
             style: TextStyle(
               fontSize: 11.sp,
-              fontWeight: FontWeight.w700,
-              color: AppColors.primaryDark,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.2,
+              color: color,
             ),
           ),
         ],
@@ -138,33 +182,29 @@ class AppointmentCard extends StatelessWidget {
     );
   }
 
-  Color _badgeColor(String status) {
-    final s = status;
-    if (s == 'Consultation') return AppColors.primaryDark;
-    if (s == 'Follow-up') return AppColors.statusConfirmed;
-    return Colors.grey;
-  }
-
-  Widget _buildNameAndDate(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildQueueNumber(BuildContext context) {
+    return Row(
       children: [
+        Icon(Icons.confirmation_number_outlined,
+            size: 14.r, color: const Color(0xff64748B)),
+        6.wBox,
         Text(
-          appointmentEntity.name ?? "",
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(fontWeight: FontWeight.bold),
+          AppString.queueNumber,
+          style: TextStyle(
+            fontSize: 11.sp,
+            fontWeight: FontWeight.w500,
+            letterSpacing: 0.3,
+            color: const Color(0xff94A3B8),
+          ),
         ),
-        const SizedBox(height: 4),
+        4.wBox,
         Text(
-          appointmentEntity.followUpDate != null
-              ? formatDayMonth(appointmentEntity.followUpDate.toString())
-              : formatDayMonth(appointmentEntity.appointmentDate.toString()),
-          style: Theme.of(context)
-              .textTheme
-              .bodySmall
-              ?.copyWith(color: const Color(0xff64748B)),
+          '${appointmentEntity.queueNumber}',
+          style: TextStyle(
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xff1E293B),
+          ),
         ),
       ],
     );
@@ -183,7 +223,7 @@ class AppointmentCard extends StatelessWidget {
             onTap: () => onReject?.call(),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 10),
         Expanded(
           child: _ActionButton(
             label: AppString.approve,
@@ -192,6 +232,7 @@ class AppointmentCard extends StatelessWidget {
             isLoading: approveLoading,
             isDisabled: rejectLoading,
             onTap: () => onApprove?.call(),
+            filled: true,
           ),
         ),
       ],
@@ -207,6 +248,7 @@ class _ActionButton extends StatelessWidget {
     required this.onTap,
     this.isLoading = false,
     this.isDisabled = false,
+    this.filled = false,
   });
 
   final String label;
@@ -215,6 +257,7 @@ class _ActionButton extends StatelessWidget {
   final VoidCallback? onTap;
   final bool isLoading;
   final bool isDisabled;
+  final bool filled;
 
   bool get _isTapEnabled => !isLoading && !isDisabled;
 
@@ -222,34 +265,37 @@ class _ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: _isTapEnabled ? onTap : null,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(8),
       child: Ink(
         padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: color.withOpacity(0.4)),
+          color: filled ? color.withValues(alpha: 0.08) : Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: color.withValues(alpha: filled ? 0.3 : 0.35),
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (isLoading)
               SizedBox(
-                width: 16,
-                height: 16,
+                width: 14,
+                height: 14,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
                   valueColor: AlwaysStoppedAnimation<Color>(color),
                 ),
               )
             else
-              Icon(icon, size: 16, color: color),
+              Icon(icon, size: 15, color: color),
             const SizedBox(width: 6),
             Text(
-              label,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              label.toUpperCase(),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: color,
                     fontWeight: FontWeight.w700,
+                    letterSpacing: 0.4,
                   ),
             ),
           ],

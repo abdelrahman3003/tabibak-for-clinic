@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointments_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/update_appointment_status_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
@@ -28,7 +29,8 @@ class AllAppointmentsBloc
   ) : super(AllAppointmentsInitial()) {
     on<GetUpcomingAppointmentsEvent>((event, emit) async {
       emit(AllAppointmentsLoading(AppointmentType.upcoming));
-      final result = await getAppointmentsUseCase.call(status: 1);
+      final result = await getAppointmentsUseCase.call(
+          status: AppointmentStatus.pending.id);
       result.fold(
         (error) => emit(
             AllAppointmentsFailure(error.message!, AppointmentType.upcoming)),
@@ -41,7 +43,8 @@ class AllAppointmentsBloc
 
     on<GetFinishedAppointmentsEvent>((event, emit) async {
       emit(AllAppointmentsLoading(AppointmentType.finished));
-      final result = await getAppointmentsUseCase.call(status: 2);
+      final result = await getAppointmentsUseCase.call(
+          status: AppointmentStatus.confirmed.id);
       result.fold(
         (error) => emit(
             AllAppointmentsFailure(error.message!, AppointmentType.finished)),
@@ -54,7 +57,8 @@ class AllAppointmentsBloc
 
     on<GetCanceledAppointmentsEvent>((event, emit) async {
       emit(AllAppointmentsLoading(AppointmentType.canceled));
-      final result = await getAppointmentsUseCase.call(status: 4);
+      final result = await getAppointmentsUseCase.call(
+          status: AppointmentStatus.cancelled.id);
       result.fold(
         (error) => emit(
             AllAppointmentsFailure(error.message!, AppointmentType.canceled)),
@@ -76,7 +80,8 @@ class AllAppointmentsBloc
       await result.fold(
         (error) async => emit(UpdateAppointmentStatusFailure(error.message!)),
         (_) async {
-          final refreshResult = await getAppointmentsUseCase.call(status: 1);
+          final refreshResult = await getAppointmentsUseCase.call(
+              status: AppointmentStatus.pending.id);
           refreshResult.fold(
             (error) {
               emit(UpdateAppointmentStatusSuccess());

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status.dart';
 
 class PatientCard extends StatelessWidget {
   const PatientCard({
@@ -112,17 +113,15 @@ class PatientCard extends StatelessWidget {
       );
 
   Color _statusColor(int? id) {
-    switch (id) {
-      case 1:
-        return const Color(0xFFF59E0B);
-      case 2:
-        return const Color(0xFF10B981);
-      case 3:
-        return const Color(0xFF10B981);
-      case 4:
-        return const Color(0xFFEF4444);
-      default:
-        return Colors.grey;
+    if (id == AppointmentStatus.pending.id) {
+      return const Color(0xFFF59E0B);
+    } else if (id == AppointmentStatus.confirmed.id) {
+      return const Color(0xFF10B981);
+    } else if (id == AppointmentStatus.completed.id) {
+      return const Color(0xFF10B981);
+    } else if (id == AppointmentStatus.cancelled.id) {
+      return const Color(0xFFEF4444);
     }
+    return Colors.grey;
   }
 }

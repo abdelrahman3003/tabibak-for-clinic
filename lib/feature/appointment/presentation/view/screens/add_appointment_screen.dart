@@ -9,6 +9,7 @@ import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/core/widgets/dialogs.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_status.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/create_appointment/create_appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/create_appoinemnt_screen/add_appointment_body.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_entity.dart';
@@ -68,7 +69,7 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
                     doctorId: doctorId,
                     userId: doctorId,
                     name: patientNameController.text,
-                    statusId: 2,
+                    statusId: AppointmentStatus.confirmed.id,
                     phone: phonePhoneController.text,
                     appointmentDate: dateTime,
                     description: descriptionController.text,

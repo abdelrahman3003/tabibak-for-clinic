@@ -21,7 +21,7 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
 
     final today = DateTime.now().toIso8601String().split('T').first;
 
-    if (status == 5) {
+    if (status == 2) {
       if (isToday == true) {
         query = query.eq('appointment_date', today);
       } else {
