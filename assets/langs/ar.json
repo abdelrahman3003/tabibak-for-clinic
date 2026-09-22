@@ -222,5 +222,6 @@
     "retry": "إعادة المحاولة",
     "connectionError": "خطأ في الاتصال",
     "unableToConnectServer": "تعذر الاتصال بالخادم. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.",
-    "yourDoctor": "طبيبك"
+    "yourDoctor": "طبيبك",
+    "Queue Number": "رقم الطابور"
 }

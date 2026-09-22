@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
@@ -5,7 +6,6 @@ import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/appointment_info_section.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/paient_card.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/patien_info_section.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/section_card.dart';
 
 class AppointmentDetailsBody extends StatelessWidget {
@@ -80,7 +80,7 @@ class AppointmentDetailsBody extends StatelessWidget {
               ),
             ],
             32.hBox,
-            if (e.statusId == 5)
+            if (e.statusId == 2)
               AppointmentActionsButtonsStates(appointmentId: e.appointmentId!),
             20.hBox,
           ],

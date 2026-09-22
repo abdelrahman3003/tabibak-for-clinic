@@ -68,6 +68,10 @@ class AppointmentCard extends StatelessWidget {
                   _buildStatusBadge(context),
                 ],
               ),
+              if (appointmentEntity.queueNumber != null) ...[
+                6.hBox,
+                _buildQueueNumber(context),
+              ],
               if (showActions) ...[
                 12.hBox,
                 _buildActionButtons(context),
@@ -99,6 +103,37 @@ class AppointmentCard extends StatelessWidget {
               color: Colors.white,
               fontWeight: FontWeight.w600,
             ),
+      ),
+    );
+  }
+
+  Widget _buildQueueNumber(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            AppColors.primaryDark.withValues(alpha: 0.15),
+            AppColors.primaryDark.withValues(alpha: 0.05),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppColors.primaryDark.withValues(alpha: 0.2)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.queue, size: 13.r, color: AppColors.primaryDark),
+          4.wBox,
+          Text(
+            '${AppString.queueNumber}: ${appointmentEntity.queueNumber}',
+            style: TextStyle(
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w700,
+              color: AppColors.primaryDark,
+            ),
+          ),
+        ],
       ),
     );
   }

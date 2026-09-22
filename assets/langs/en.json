@@ -221,5 +221,6 @@
     "retry": "Retry",
     "connectionError": "Connection error",
     "unableToConnectServer": "Unable to connect to the server. Make sure you are connected to the internet and try again.",
-    "yourDoctor": "Your Doctor"
+    "yourDoctor": "Your Doctor",
+    "Queue Number": "Queue Number"
 }

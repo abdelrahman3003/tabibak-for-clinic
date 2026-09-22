@@ -37,6 +37,13 @@ class AppointmentInfoSection extends StatelessWidget {
           value: '#${entity.appointmentId ?? '—'}',
           iconColor: const Color(0xFF14B8A6),
         ),
+        if (entity.queueNumber != null)
+          DetailRow(
+            icon: Icons.queue_rounded,
+            label: 'Queue Number'.tr(),
+            value: '${entity.queueNumber}',
+            iconColor: const Color(0xFFF59E0B),
+          ),
       ],
     );
   }
