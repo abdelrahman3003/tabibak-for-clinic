@@ -6,6 +6,8 @@ import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/set_appoin
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/update_appointment_status_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/all_appointment/all_appointments_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
+import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_reports_refresh_notifier.dart';
 
 part 'appointment_details_event.dart';
 part 'appointment_details_state.dart';
@@ -42,14 +44,24 @@ class AppointmentDetailsBloc
     });
 
     on<UpdateAppointmentEvent>((event, emit) async {
+      if (event.actionType == "complete") {
+        final appointmentDay = DateTime(event.appointmentDate.year,
+            event.appointmentDate.month, event.appointmentDate.day);
+        final today = DateTime.now();
+        if (appointmentDay.isAfter(DateTime(today.year, today.month, today.day))) {
+          emit(AppointmentActionFailure('Cannot complete an appointment before its scheduled day.'));
+          return;
+        }
+      }
       emit(AppointmentActionLoading(actionType: event.actionType));
       final result = await updateAppointmentStatusUseCase.call(
           appointmentId: event.appointmentId,
-          statusIndex: event.actionType == "cancel" ? 3 : 2);
+          statusIndex: event.actionType == "cancel" ? 4 : 3);
       result.fold(
           (error) =>
               emit(AppointmentActionFailure(error.message ?? 'Unknown error')),
           (_) {
+        getit<ClinicReportsRefreshNotifier>().notifyChanged();
         appointmentBloc.add(const GetAppointmentEvent());
         allAppointmentsBloc.add(RefreshAllAppointmentsEvent());
         emit(AppointmentActionSuccess());
@@ -65,6 +77,7 @@ class AppointmentDetailsBloc
           (error) =>
               emit(AppointmentActionFailure(error.message ?? 'Unknown error')),
           (_) {
+        getit<ClinicReportsRefreshNotifier>().notifyChanged();
         appointmentBloc.add(const GetAppointmentEvent());
         allAppointmentsBloc.add(RefreshAllAppointmentsEvent());
         emit(AppointmentActionSuccess());

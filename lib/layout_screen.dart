@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/screens/appointment_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic_layout.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic_reports_screen.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_layout/clinic_layout_bloc.dart';
+import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_profile_screen.dart';
 
 import 'core/theme/app_colors.dart';
@@ -27,8 +31,16 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => getit<ClinicLayoutBloc>(),
+      child: Builder(builder: _buildLayout),
+    );
+  }
+
+  Widget _buildLayout(BuildContext context) {
     final List<Widget> screens = [
       const ClinicLayout(),
+      const ClinicReportsScreen(),
       const AppointmentScreen(),
       const DoctorProfileScreen(),
     ];
@@ -39,6 +51,12 @@ class _LayoutScreenState extends State<LayoutScreen> {
         iconActiveColor: AppColors.primary,
         iconColor: Colors.grey,
         text: AppString.clinic,
+      ),
+      GButton(
+        icon: Icons.analytics_outlined,
+        iconActiveColor: AppColors.primary,
+        iconColor: Colors.grey,
+        text: AppString.dashboard,
       ),
       GButton(
         icon: Icons.event,
@@ -58,7 +76,9 @@ class _LayoutScreenState extends State<LayoutScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            Expanded(child: screens[_selectedIndex]),
+            Expanded(
+              child: IndexedStack(index: _selectedIndex, children: screens),
+            ),
             GNav(
               gap: 12,
               activeColor: AppColors.primary,

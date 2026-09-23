@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/functions/show_confirmed_dialog.dart';
+import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/action_button.dart';
@@ -13,6 +14,7 @@ class AppointmentActionButtons extends StatelessWidget {
     this.isCompleteLoading = false,
     this.isFollowUpLoading = false,
     this.isCancelLoading = false,
+    required this.appointmentDate,
   });
 
   final VoidCallback? onComplete;
@@ -21,6 +23,7 @@ class AppointmentActionButtons extends StatelessWidget {
   final bool isCompleteLoading;
   final bool isFollowUpLoading;
   final bool isCancelLoading;
+  final DateTime appointmentDate;
 
   Future<DateTime?> _pickDate(BuildContext context) async {
     return showDatePicker(
@@ -34,30 +37,35 @@ class AppointmentActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isBusy = isCompleteLoading || isFollowUpLoading || isCancelLoading;
+    final today = DateTime.now();
+    final isAppointmentToday = appointmentDate.year == today.year &&
+        appointmentDate.month == today.month &&
+        appointmentDate.day == today.day;
 
     return Column(
       children: [
         Row(
           children: [
-            Expanded(
-              child: ActionButton(
-                label: 'Complete'.tr(),
-                color: AppColors.statusCompleted,
-                icon: Icons.task_alt_rounded,
-                isLoading: isCompleteLoading,
-                isDisabled: isBusy && !isCompleteLoading,
-                onTap: () {
-                  showConfirmDialog(
-                    context: context,
-                    title: "Confirm Completion".tr(),
-                    message:
-                        "Are you sure you want to complete this appointment?"
-                            .tr(),
-                    onConfirm: onComplete ?? () {},
-                  );
-                },
+            if (isAppointmentToday)
+              Expanded(
+                child: ActionButton(
+                  label: 'Complete'.tr(),
+                  color: AppColors.statusCompleted,
+                  icon: Icons.task_alt_rounded,
+                  isLoading: isCompleteLoading,
+                  isDisabled: isBusy && !isCompleteLoading,
+                  onTap: () {
+                    showConfirmDialog(
+                      context: context,
+                      title: "Confirm Completion".tr(),
+                      message:
+                          "Are you sure you want to complete this appointment?"
+                              .tr(),
+                      onConfirm: onComplete ?? () {},
+                    );
+                  },
+                ),
               ),
-            ),
             const SizedBox(width: 12),
             Expanded(
               child: ActionButton(

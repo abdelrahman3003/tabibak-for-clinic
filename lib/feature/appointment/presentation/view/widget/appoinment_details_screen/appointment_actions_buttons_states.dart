@@ -8,8 +8,11 @@ import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/
 
 class AppointmentActionsButtonsStates extends StatelessWidget {
   const AppointmentActionsButtonsStates(
-      {super.key, required this.appointmentId});
+      {super.key,
+      required this.appointmentId,
+      required this.appointmentDate});
   final int appointmentId;
+  final DateTime appointmentDate;
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<AppointmentDetailsBloc>();
@@ -26,6 +29,7 @@ class AppointmentActionsButtonsStates extends StatelessWidget {
       },
       builder: (context, state) {
         return AppointmentActionButtons(
+          appointmentDate: appointmentDate,
           isCompleteLoading: state is AppointmentActionLoading &&
               state.actionType == "complete",
           isFollowUpLoading: state is AppointmentActionLoading &&
@@ -34,7 +38,9 @@ class AppointmentActionsButtonsStates extends StatelessWidget {
               state is AppointmentActionLoading && state.actionType == "cancel",
           onComplete: () {
             bloc.add(UpdateAppointmentEvent(
-                appointmentId: appointmentId, actionType: "complete"));
+                appointmentId: appointmentId,
+                actionType: "complete",
+                appointmentDate: appointmentDate));
           },
           onFollowUp: (date) {
             bloc.add(
@@ -42,7 +48,9 @@ class AppointmentActionsButtonsStates extends StatelessWidget {
           },
           onCancel: () {
             bloc.add(UpdateAppointmentEvent(
-                appointmentId: appointmentId, actionType: "cancel"));
+                appointmentId: appointmentId,
+                actionType: "cancel",
+                appointmentDate: appointmentDate));
           },
         );
       },

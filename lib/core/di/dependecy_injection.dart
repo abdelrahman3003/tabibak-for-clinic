@@ -50,6 +50,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_ad
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_info_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_working_day_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/toggle_clinic_available_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_reports_refresh_notifier.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_address/clinic_address_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info_save/clinic_info_save_bloc.dart';
@@ -84,6 +85,8 @@ Future<void> initGetIt() async {
       () => SharedPrefHelper(sharedPreferences));
   getit.registerLazySingleton<Dio>(() => dio);
   getit.registerLazySingleton<Supabase>(() => supabase);
+  getit.registerLazySingleton<ClinicReportsRefreshNotifier>(
+      () => ClinicReportsRefreshNotifier());
 
   //! Auth Features
 

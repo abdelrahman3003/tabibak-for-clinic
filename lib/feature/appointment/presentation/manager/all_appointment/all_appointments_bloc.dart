@@ -6,6 +6,8 @@ import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appoin
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/update_appointment_status_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/all_appointment_screen/appointment_list_view.dart';
+import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_reports_refresh_notifier.dart';
 
 part 'all_appointments_event.dart';
 part 'all_appointments_state.dart';
@@ -120,6 +122,7 @@ class AllAppointmentsBloc
       await result.fold(
         (error) async => emit(UpdateAppointmentStatusFailure(error.message!)),
         (_) async {
+          getit<ClinicReportsRefreshNotifier>().notifyChanged();
           emit(AllAppointmentsRefreshing());
           await _refreshLists();
           appointmentBloc.add(const GetAppointmentEvent());

@@ -82,7 +82,10 @@ class AppointmentDetailsBody extends StatelessWidget {
             ],
             32.hBox,
             if (e.statusId == AppointmentStatus.confirmed.id)
-              AppointmentActionsButtonsStates(appointmentId: e.appointmentId!),
+              AppointmentActionsButtonsStates(
+                appointmentId: e.appointmentId!,
+                appointmentDate: e.appointmentDate!,
+              ),
             20.hBox,
           ],
         ),

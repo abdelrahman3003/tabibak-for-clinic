@@ -119,13 +119,14 @@ class AppString {
   static String get confirmed => "Confirmed".tr();
   static String get addAppointment => "Add Appointment".tr();
   static String get appointmentAdded => "Appointment added".tr();
+  static String get completeOnlyOnAppointmentDay => "An appointment can only be completed on its scheduled day.".tr();
   static String get patientName => "Patient Name".tr();
   static String get date => "Date".tr();
-  static String get description => "Description".tr();
   static String get thisDayHasNoShifts => "This day has no shifts".tr();
   static String get pleaseSelectAShift => "Please select a shift".tr();
   static String get noShiftsAvailable => "No shifts available".tr();
-    static String get selectShift => "Select Shift".tr();
+  static String get selectShift => "Select Shift".tr();
+  static String get save => "save".tr();
 
   // Appointment Type Localization
   static String get consultation => "Consultation".tr();
@@ -192,7 +193,6 @@ class AppString {
   static String get startTime => "Start Time".tr();
   static String get endTime => "End Time".tr();
   static String get selectTime => "Select Time".tr();
-  static String get save => "Save".tr();
   static String get clinic => "Clinic".tr();
   static String get profile => "Profile".tr();
   static String get changeAvailability => "Change Availability".tr();
@@ -208,7 +208,8 @@ class AppString {
   static String get setting => "Setting".tr();
   static String get aboutUs => "About Us".tr();
   static String get privacy => "Privacy".tr();
-  static String get featureNotAvailable => "This feature is not available yet.".tr();
+  static String get featureNotAvailable =>
+      "This feature is not available yet.".tr();
   static String get report => "Report a problem".tr();
   static String get reportType => "Report type".tr();
   static String get bugReport => "Bug".tr();
@@ -217,7 +218,28 @@ class AppString {
   static String get describeIssue => "Describe your issue".tr();
   static String get sendReport => "Send report".tr();
   static String get reportSent => "Your report was sent.".tr();
-  static String get reportFailed => "Could not send your report. Please try again.".tr();
+  static String get reportFailed =>
+      "Could not send your report. Please try again.".tr();
+  static String get clinicReports => "Clinic Reports".tr();
+  static String get dashboard => "Dashboard".tr();
+  static String get daily => "Daily".tr();
+  static String get monthly => "Monthly".tr();
+  static String get totalBookings => "Total bookings".tr();
+  static String get completedBookings => "Completed bookings".tr();
+  static String get cancelledBookings => "Cancelled bookings".tr();
+  static String get totalRevenue => "Total revenue".tr();
+  static String get totalExpenses => "Total expenses".tr();
+  static String get netProfit => "Net profit".tr();
+  static String get addExpense => "Add expense".tr();
+  static String get amount => "Amount".tr();
+  static String get description => "Description".tr();
+  static String get refresh => "Refresh".tr();
+  static String get revenueTrend => "Revenue trend".tr();
+  static String get revenueEstimateNote =>
+      "Revenue is estimated from completed bookings and the clinic consultation fee."
+          .tr();
+  static String get reportLoadFailed => "Could not load clinic reports.".tr();
+  static String get currency => "EGP".tr();
   static String get switchLanguage => "Switch Language".tr();
   static String get arabic => "Arabic".tr();
   static String get english => "English".tr();
@@ -294,9 +316,12 @@ class AppString {
   static String get address => "Address".tr();
   static String get selectAddressValidator => "Please select an address".tr();
   static String get noInternetConnection => "No internet connection".tr();
-  static String get checkInternetConnection => "Make sure you are connected to the internet and try again".tr();
+  static String get checkInternetConnection =>
+      "Make sure you are connected to the internet and try again".tr();
   static String get retry => "Retry".tr();
   static String get connectionError => "Connection error".tr();
-  static String get unableToConnectServer => "Unable to connect to the server. Make sure you are connected to the internet and try again.".tr();
-    static String get queueNumber => "Queue Number".tr();
+  static String get unableToConnectServer =>
+      "Unable to connect to the server. Make sure you are connected to the internet and try again."
+          .tr();
+  static String get queueNumber => "Queue Number".tr();
 }

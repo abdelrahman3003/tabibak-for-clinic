@@ -6,6 +6,7 @@ import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/add_appoin
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointment_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/appoinment/appointment_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_reports_refresh_notifier.dart';
 
 part 'create_appointment_event.dart';
 part 'create_appointment_state.dart';
@@ -37,6 +38,7 @@ class CreateAppointmentBloc
           emit(AddAppointmentFailed(errorMessage: error.message!));
         },
         (shift) {
+          getit<ClinicReportsRefreshNotifier>().notifyChanged();
           getit<AppointmentBloc>().add(const GetAppointmentEvent());
           emit(AddAppointmentSuccess());
         },
