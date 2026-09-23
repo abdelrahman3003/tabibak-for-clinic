@@ -209,6 +209,15 @@ class AppString {
   static String get aboutUs => "About Us".tr();
   static String get privacy => "Privacy".tr();
   static String get featureNotAvailable => "This feature is not available yet.".tr();
+  static String get report => "Report a problem".tr();
+  static String get reportType => "Report type".tr();
+  static String get bugReport => "Bug".tr();
+  static String get suggestion => "Suggestion".tr();
+  static String get otherReport => "Other".tr();
+  static String get describeIssue => "Describe your issue".tr();
+  static String get sendReport => "Send report".tr();
+  static String get reportSent => "Your report was sent.".tr();
+  static String get reportFailed => "Could not send your report. Please try again.".tr();
   static String get switchLanguage => "Switch Language".tr();
   static String get arabic => "Arabic".tr();
   static String get english => "English".tr();

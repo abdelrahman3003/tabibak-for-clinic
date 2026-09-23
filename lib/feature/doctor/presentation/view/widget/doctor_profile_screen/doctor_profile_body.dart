@@ -12,6 +12,7 @@ import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/docto
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/log_out_dialog_states.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/personal_image.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/profile_title.dart';
+import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/report_dialog.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/setting_item.dart';
 
 class DoctorProfileBody extends StatelessWidget {
@@ -104,6 +105,15 @@ class DoctorProfileBody extends StatelessWidget {
                 title: AppString.privacy,
                 icon: Icons.privacy_tip,
                 onTap: () => _showUnavailableDialog(context, AppString.privacy),
+              ),
+              15.hBox,
+              SettingItem(
+                title: AppString.report,
+                icon: Icons.flag_outlined,
+                onTap: () => showDialog<void>(
+                  context: context,
+                  builder: (_) => const ReportDialog(),
+                ),
               ),
               15.hBox,
               SettingItem(
