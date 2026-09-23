@@ -10,38 +10,101 @@ import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/today_banner.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/title_text_row.dart';
 
-class AppointmentBody extends StatelessWidget {
+class AppointmentBody extends StatefulWidget {
   const AppointmentBody(
       {super.key, required this.appointmentList, required this.doctorName});
   final List<AppointmentEntity> appointmentList;
   final String doctorName;
+
+  @override
+  State<AppointmentBody> createState() => _AppointmentBodyState();
+}
+
+class _AppointmentBodyState extends State<AppointmentBody> {
+  String _typeFilter = 'all';
+
   @override
   Widget build(BuildContext context) {
+    final filteredAppointments = _typeFilter == 'all'
+        ? widget.appointmentList
+        : widget.appointmentList.where((appointment) {
+            final appointmentType =
+                (appointment.appointmentTypeEn ?? '').trim().toLowerCase();
+            if (_typeFilter == 'consultation') {
+              return appointmentType == 'consultation';
+            }
+            return appointmentType == 'follow-up' ||
+                appointmentType == 'follow up';
+          }).toList();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
       child: Column(
         children: [
           TodayBanner(
-            doctorName: doctorName,
-            appointmentLength: appointmentList.length,
+            doctorName: widget.doctorName,
+            appointmentLength: widget.appointmentList.length,
           ),
           32.hBox,
           TitleTextRow(
             title: AppString.appointmentsToday,
             subtitle: AppString.seeAll,
+            trailingWidget: PopupMenuButton<String>(
+              tooltip: 'Filter appointments',
+              icon: Icon(
+                Icons.filter_list_rounded,
+                color: _typeFilter == 'all'
+                    ? Theme.of(context).iconTheme.color
+                    : Theme.of(context).colorScheme.primary,
+              ),
+              onSelected: (value) => setState(() => _typeFilter = value),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: 'all',
+                  child: _buildFilterMenuItem('all', 'All'),
+                ),
+                PopupMenuItem(
+                  value: 'consultation',
+                  child: _buildFilterMenuItem(
+                      'consultation', AppString.consultation),
+                ),
+                PopupMenuItem(
+                  value: 'follow-up',
+                  child: _buildFilterMenuItem('follow-up', AppString.followUp),
+                ),
+              ],
+            ),
             onTap: () {
-              context.pushNamed(Routes.allAppointmentScreen);
+              context.pushNamed(
+                Routes.allAppointmentScreen,
+                arguments: _typeFilter,
+              );
             },
           ),
           10.hBox,
-          appointmentList.isEmpty
+          filteredAppointments.isEmpty
               ? Expanded(
-                  child: AppointmentEmpty(title: AppString.noAppointmentsToday))
+                  child: AppointmentEmpty(
+                    title: _typeFilter == 'all'
+                        ? AppString.noAppointmentsToday
+                        : 'No appointments found',
+                  ),
+                )
               : AppointmentList(
-                  appointmentList: appointmentList,
+                  appointmentList: filteredAppointments,
                 )
         ],
       ),
+    );
+  }
+
+  Widget _buildFilterMenuItem(String value, String label) {
+    return Row(
+      children: [
+        Expanded(child: Text(label)),
+        if (_typeFilter == value)
+          const Icon(Icons.check_rounded, size: 18),
+      ],
     );
   }
 }

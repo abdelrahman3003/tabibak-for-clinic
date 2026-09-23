@@ -4,17 +4,23 @@ import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/docto
 
 class TitleTextRow extends StatelessWidget {
   const TitleTextRow(
-      {super.key, required this.title, required this.subtitle, this.onTap});
+      {super.key,
+      required this.title,
+      required this.subtitle,
+      this.onTap,
+      this.trailingWidget});
   final String title;
   final String subtitle;
   final Function()? onTap;
+  final Widget? trailingWidget;
   @override
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(child: TitleText(title: title)),
-        TextButtonWidget(text: subtitle, onTap: onTap)
+        TextButtonWidget(text: subtitle, onTap: onTap),
+        if (trailingWidget != null) trailingWidget!,
       ],
     );
   }

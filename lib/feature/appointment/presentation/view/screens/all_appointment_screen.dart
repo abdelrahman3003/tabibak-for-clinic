@@ -11,7 +11,8 @@ import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appointment_screen/appointment_empty.dart';
 
 class AllAppointmentScreen extends StatefulWidget {
-  const AllAppointmentScreen({super.key});
+  const AllAppointmentScreen({super.key, this.initialTypeFilter = 'all'});
+  final String initialTypeFilter;
 
   @override
   State<AllAppointmentScreen> createState() => _AllAppointmentScreenState();
@@ -26,6 +27,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
     super.initState();
     final bloc = context.read<AllAppointmentsBloc>();
     _searchController = TextEditingController(text: bloc.searchName);
+    _typeFilter = widget.initialTypeFilter;
     bloc.add(RefreshAllAppointmentsEvent());
   }
 

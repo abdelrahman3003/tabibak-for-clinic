@@ -199,11 +199,14 @@ class AppRouter {
 
       //appointment
       case Routes.allAppointmentScreen:
+        final initialTypeFilter = settings.arguments as String? ?? 'all';
         page = RootScreenWrapper(
           child: BlocProvider.value(
             value: getit<AllAppointmentsBloc>()
               ..add(RefreshAllAppointmentsEvent()),
-            child: const AllAppointmentScreen(),
+            child: AllAppointmentScreen(
+              initialTypeFilter: initialTypeFilter,
+            ),
           ),
         );
         break;
