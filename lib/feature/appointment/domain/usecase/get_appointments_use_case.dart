@@ -9,9 +9,9 @@ class GetAppointmentsUseCase {
   GetAppointmentsUseCase({required this.appointmentRepos});
 
   Future<Either<ApiErrorModel, List<AppointmentEntity>?>> call(
-      {int? status, bool? isToday}) async {
+      {int? status, bool? isToday, String? name}) async {
     final result = await appointmentRepos.getAppointments(
-        status: status, isToday: isToday);
+        status: status, isToday: isToday, name: name);
 
     return result;
   }

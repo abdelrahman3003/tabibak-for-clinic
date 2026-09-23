@@ -19,6 +19,9 @@ class AllAppointmentsBloc
   List<AppointmentEntity> finishedList = [];
   List<AppointmentEntity> canceledList = [];
   int currentIndex = 0;
+  String searchName = '';
+  List<AppointmentEntity>? searchResults;
+  int _searchRequestId = 0;
 
   AllAppointmentsBloc(
     this.getAppointmentsUseCase,
@@ -33,7 +36,7 @@ class AllAppointmentsBloc
         (error) => emit(
             AllAppointmentsFailure(error.message!, AppointmentType.upcoming)),
         (appointments) {
-          upcomingList = appointments ?? [];
+          upcomingList = _sortAppointments(appointments ?? [], ascending: true);
           emit(AllAppointmentsSuccess(upcomingList, AppointmentType.upcoming));
         },
       );
@@ -47,7 +50,7 @@ class AllAppointmentsBloc
         (error) => emit(
             AllAppointmentsFailure(error.message!, AppointmentType.finished)),
         (appointments) {
-          finishedList = appointments ?? [];
+          finishedList = _sortAppointments(appointments ?? [], ascending: false);
           emit(AllAppointmentsSuccess(finishedList, AppointmentType.finished));
         },
       );
@@ -61,7 +64,7 @@ class AllAppointmentsBloc
         (error) => emit(
             AllAppointmentsFailure(error.message!, AppointmentType.canceled)),
         (appointments) {
-          canceledList = appointments ?? [];
+          canceledList = _sortAppointments(appointments ?? [], ascending: false);
           emit(AllAppointmentsSuccess(canceledList, AppointmentType.canceled));
         },
       );
@@ -72,6 +75,38 @@ class AllAppointmentsBloc
       await _refreshLists();
       appointmentBloc.add(const GetAppointmentEvent());
       emit(AllAppointmentsRefreshed());
+    });
+
+    on<SearchAppointmentsEvent>((event, emit) async {
+      searchName = event.name.trim();
+      final requestId = ++_searchRequestId;
+      final type = AppointmentType.values[currentIndex];
+      emit(AllAppointmentsLoading(type));
+      final status = switch (type) {
+        AppointmentType.upcoming => AppointmentStatus.pending.id,
+        AppointmentType.finished => AppointmentStatus.confirmed.id,
+        AppointmentType.canceled => AppointmentStatus.cancelled.id,
+      };
+      final result = await getAppointmentsUseCase.call(
+        status: status,
+        name: searchName.isEmpty ? null : searchName,
+      );
+      if (requestId != _searchRequestId) return;
+      result.fold(
+        (error) {
+          searchResults = null;
+          emit(AllAppointmentsFailure(error.message!, type));
+        },
+        (appointments) {
+          final matchingAppointments = (appointments ?? []).where((appointment) {
+            final appointmentName = appointment.name?.trim().toLowerCase() ?? '';
+            return appointmentName.contains(searchName.toLowerCase());
+          }).toList();
+          searchResults = _sortAppointments(matchingAppointments,
+              ascending: type == AppointmentType.upcoming);
+          emit(AllAppointmentsSuccess(searchResults!, type));
+        },
+      );
     });
 
     on<UpdateAppointmentStatusEvent>((event, emit) async {
@@ -107,13 +142,29 @@ class AllAppointmentsBloc
       getAppointmentsUseCase.call(status: AppointmentStatus.cancelled.id),
     ]);
     results[0].fold((_) {}, (appointments) {
-      upcomingList = appointments ?? [];
+      upcomingList = _sortAppointments(appointments ?? [], ascending: true);
     });
     results[1].fold((_) {}, (appointments) {
-      finishedList = appointments ?? [];
+      finishedList = _sortAppointments(appointments ?? [], ascending: false);
     });
     results[2].fold((_) {}, (appointments) {
-      canceledList = appointments ?? [];
+      canceledList = _sortAppointments(appointments ?? [], ascending: false);
     });
+  }
+
+  List<AppointmentEntity> _sortAppointments(
+    List<AppointmentEntity> appointments, {
+    required bool ascending,
+  }) {
+    final sortedAppointments = List<AppointmentEntity>.of(appointments);
+    sortedAppointments.sort((first, second) {
+      final firstDate = first.appointmentDate;
+      final secondDate = second.appointmentDate;
+      if (firstDate == null) return secondDate == null ? 0 : 1;
+      if (secondDate == null) return -1;
+      final order = firstDate.compareTo(secondDate);
+      return ascending ? order : -order;
+    });
+    return sortedAppointments;
   }
 }

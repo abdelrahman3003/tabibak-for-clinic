@@ -11,13 +11,18 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
 
   @override
   Future<List<AppointmentModel>> getAppointments(
-      {int? status, bool? isToday}) async {
+      {int? status, bool? isToday, String? name}) async {
     var query = supabase.client
         .from('appointments')
         .select(
             '*,name,appointment_types(*),appointments_status(status_en,status_ar),id,appointment_date,users(image)')
         .eq('doctor_id', currentDoctorId)
         .eq('status', status ?? 1);
+
+    final normalizedName = name?.trim();
+    if (normalizedName != null && normalizedName.isNotEmpty) {
+      query = query.ilike('name', '%$normalizedName%');
+    }
 
     final today = DateTime.now().toIso8601String().split('T').first;
 

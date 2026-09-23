@@ -18,10 +18,20 @@ class AllAppointmentScreen extends StatefulWidget {
 }
 
 class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
+  late final TextEditingController _searchController;
+
   @override
   void initState() {
     super.initState();
-    context.read<AllAppointmentsBloc>().add(RefreshAllAppointmentsEvent());
+    final bloc = context.read<AllAppointmentsBloc>();
+    _searchController = TextEditingController(text: bloc.searchName);
+    bloc.add(RefreshAllAppointmentsEvent());
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -39,14 +49,13 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
   void _onTabChanged(BuildContext context, int index) {
     final bloc = context.read<AllAppointmentsBloc>();
     bloc.add(ChangeTabEvent(index));
-    switch (index) {
-      case 0:
-      bloc.add(GetUpcomingAppointmentsEvent());
-      case 1:
-      bloc.add(GetFinishedAppointmentsEvent());
-      case 2:
-      bloc.add(GetCanceledAppointmentsEvent());
-    }
+    bloc.add(SearchAppointmentsEvent(bloc.searchName));
+  }
+
+  void _searchAppointments([String? value]) {
+    context
+        .read<AllAppointmentsBloc>()
+        .add(SearchAppointmentsEvent(value ?? _searchController.text));
   }
 
   @override
@@ -95,6 +104,38 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
                     onTabChanged: (index) => _onTabChanged(context, index),
                   ),
                   12.hBox,
+                  TextField(
+                    controller: _searchController,
+                    textInputAction: TextInputAction.search,
+                    onSubmitted: _searchAppointments,
+                    decoration: InputDecoration(
+                      hintText: 'Search appointments by name',
+                      prefixIcon: const Icon(Icons.search),
+                      suffixIcon: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            tooltip: 'Search',
+                            icon: const Icon(Icons.search),
+                            onPressed: () => _searchAppointments(),
+                          ),
+                          IconButton(
+                            tooltip: 'Clear search',
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              _searchController.clear();
+                              _searchAppointments('');
+                            },
+                          ),
+                        ],
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      isDense: true,
+                    ),
+                  ),
+                  12.hBox,
                   Expanded(
                     child: IndexedStack(
                       index: selectedIndex,
@@ -103,19 +144,25 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
                           context,
                           state,
                           AppointmentType.upcoming,
-                          bloc.upcomingList,
+                          selectedIndex == 0 && bloc.searchName.isNotEmpty
+                              ? bloc.searchResults ?? []
+                              : bloc.upcomingList,
                         ),
                         _buildTab(
                           context,
                           state,
                           AppointmentType.finished,
-                          bloc.finishedList,
+                          selectedIndex == 1 && bloc.searchName.isNotEmpty
+                              ? bloc.searchResults ?? []
+                              : bloc.finishedList,
                         ),
                         _buildTab(
                           context,
                           state,
                           AppointmentType.canceled,
-                          bloc.canceledList,
+                          selectedIndex == 2 && bloc.searchName.isNotEmpty
+                              ? bloc.searchResults ?? []
+                              : bloc.canceledList,
                         ),
                       ],
                     ),
@@ -161,11 +208,23 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
       );
     }
 
-    return appointments.isEmpty
-        ? Center(child: AppointmentEmpty(title: "No ${type.name} appointments"))
+    final searchTerm = _searchController.text.trim().toLowerCase();
+    final visibleAppointments = searchTerm.isEmpty
+        ? appointments
+        : appointments.where((appointment) {
+            final patientName = appointment.name?.trim().toLowerCase() ?? '';
+            return patientName.contains(searchTerm);
+          }).toList();
+
+    return visibleAppointments.isEmpty
+        ? Center(
+            child: searchTerm.isNotEmpty
+                ? const Text('No appointments found')
+                : AppointmentEmpty(title: "No ${type.name} appointments"),
+          )
         : AppointmentListView(
             type: type,
-            appointments: appointments,
+            appointments: visibleAppointments,
           );
   }
 }

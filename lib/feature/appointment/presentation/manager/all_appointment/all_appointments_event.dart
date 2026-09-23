@@ -15,6 +15,14 @@ class GetCanceledAppointmentsEvent extends AllAppointmentsEvent {}
 
 class RefreshAllAppointmentsEvent extends AllAppointmentsEvent {}
 
+class SearchAppointmentsEvent extends AllAppointmentsEvent {
+  final String name;
+  const SearchAppointmentsEvent(this.name);
+
+  @override
+  List<Object> get props => [name];
+}
+
 class UpdateAppointmentStatusEvent extends AllAppointmentsEvent {
   final int statusIndex;
   final int appointmentId;
