@@ -208,6 +208,7 @@ class AppString {
   static String get setting => "Setting".tr();
   static String get aboutUs => "About Us".tr();
   static String get privacy => "Privacy".tr();
+  static String get featureNotAvailable => "This feature is not available yet.".tr();
   static String get switchLanguage => "Switch Language".tr();
   static String get arabic => "Arabic".tr();
   static String get english => "English".tr();

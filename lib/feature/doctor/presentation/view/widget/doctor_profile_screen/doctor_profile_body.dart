@@ -94,9 +94,17 @@ class DoctorProfileBody extends StatelessWidget {
               20.hBox,
               ProfileTitle(title: AppString.setting, icon: Icons.settings),
               10.hBox,
-              SettingItem(title: AppString.aboutUs, icon: Icons.info_outline),
+              SettingItem(
+                title: AppString.aboutUs,
+                icon: Icons.info_outline,
+                onTap: () => _showUnavailableDialog(context, AppString.aboutUs),
+              ),
               15.hBox,
-              SettingItem(title: AppString.privacy, icon: Icons.privacy_tip),
+              SettingItem(
+                title: AppString.privacy,
+                icon: Icons.privacy_tip,
+                onTap: () => _showUnavailableDialog(context, AppString.privacy),
+              ),
               15.hBox,
               SettingItem(
                 title: AppString.switchLanguage,
@@ -117,6 +125,22 @@ class DoctorProfileBody extends StatelessWidget {
                 },
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showUnavailableDialog(BuildContext context, String title) {
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(title),
+        content: Text(AppString.featureNotAvailable),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(AppString.close),
           ),
         ],
       ),
