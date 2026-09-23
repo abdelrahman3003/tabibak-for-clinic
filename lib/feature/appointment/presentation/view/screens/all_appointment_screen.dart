@@ -19,6 +19,7 @@ class AllAppointmentScreen extends StatefulWidget {
 
 class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
   late final TextEditingController _searchController;
+  String _typeFilter = 'all';
 
   @override
   void initState() {
@@ -136,6 +137,15 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
                     ),
                   ),
                   12.hBox,
+                  Wrap(
+                    spacing: 8,
+                    children: [
+                      _buildTypeFilterChip('all', 'All'),
+                      _buildTypeFilterChip('consultation', AppString.consultation),
+                      _buildTypeFilterChip('follow-up', AppString.followUp),
+                    ],
+                  ),
+                  12.hBox,
                   Expanded(
                     child: IndexedStack(
                       index: selectedIndex,
@@ -215,16 +225,35 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
             final patientName = appointment.name?.trim().toLowerCase() ?? '';
             return patientName.contains(searchTerm);
           }).toList();
+    final typeFilteredAppointments = _typeFilter == 'all'
+        ? visibleAppointments
+        : visibleAppointments.where((appointment) {
+            final appointmentType =
+                (appointment.appointmentTypeEn ?? '').trim().toLowerCase();
+            if (_typeFilter == 'consultation') {
+              return appointmentType == 'consultation';
+            }
+            return appointmentType == 'follow-up' ||
+                appointmentType == 'follow up';
+          }).toList();
 
-    return visibleAppointments.isEmpty
+    return typeFilteredAppointments.isEmpty
         ? Center(
-            child: searchTerm.isNotEmpty
+            child: searchTerm.isNotEmpty || _typeFilter != 'all'
                 ? const Text('No appointments found')
                 : AppointmentEmpty(title: "No ${type.name} appointments"),
           )
         : AppointmentListView(
             type: type,
-            appointments: visibleAppointments,
+            appointments: typeFilteredAppointments,
           );
+  }
+
+  Widget _buildTypeFilterChip(String value, String label) {
+    return FilterChip(
+      label: Text(label),
+      selected: _typeFilter == value,
+      onSelected: (_) => setState(() => _typeFilter = value),
+    );
   }
 }
