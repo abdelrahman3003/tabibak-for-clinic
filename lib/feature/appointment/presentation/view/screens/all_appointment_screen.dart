@@ -111,7 +111,28 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
                     onSubmitted: _searchAppointments,
                     decoration: InputDecoration(
                       hintText: 'Search appointments by name',
-                      prefixIcon: const Icon(Icons.search),
+                      prefixIcon: PopupMenuButton<String>(
+                        tooltip: 'Filter appointments',
+                        icon: Icon(
+                          Icons.filter_list_rounded,
+                          color: _typeFilter == 'all'
+                              ? Theme.of(context).iconTheme.color
+                              : Theme.of(context).colorScheme.primary,
+                        ),
+                        onSelected: (value) =>
+                            setState(() => _typeFilter = value),
+                        itemBuilder: (context) => [
+                          const PopupMenuItem(value: 'all', child: Text('All')),
+                          PopupMenuItem(
+                            value: 'consultation',
+                            child: Text(AppString.consultation),
+                          ),
+                          PopupMenuItem(
+                            value: 'follow-up',
+                            child: Text(AppString.followUp),
+                          ),
+                        ],
+                      ),
                       suffixIcon: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -136,14 +157,23 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
                       isDense: true,
                     ),
                   ),
-                  12.hBox,
-                  Wrap(
-                    spacing: 8,
-                    children: [
-                      _buildTypeFilterChip('all', 'All'),
-                      _buildTypeFilterChip('consultation', AppString.consultation),
-                      _buildTypeFilterChip('follow-up', AppString.followUp),
-                    ],
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.only(
+                          start: 12, top: 6),
+                      child: Text(
+                        _typeFilter == 'consultation'
+                            ? AppString.consultation
+                            : _typeFilter == 'follow-up'
+                                ? AppString.followUp
+                                : 'All appointments',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ),
                   ),
                   12.hBox,
                   Expanded(
@@ -247,13 +277,5 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
             type: type,
             appointments: typeFilteredAppointments,
           );
-  }
-
-  Widget _buildTypeFilterChip(String value, String label) {
-    return FilterChip(
-      label: Text(label),
-      selected: _typeFilter == value,
-      onSelected: (_) => setState(() => _typeFilter = value),
-    );
   }
 }
