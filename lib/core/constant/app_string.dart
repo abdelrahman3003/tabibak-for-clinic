@@ -217,6 +217,7 @@ class AppString {
   static String get otherReport => "Other".tr();
   static String get describeIssue => "Describe your issue".tr();
   static String get sendReport => "Send report".tr();
+  static String get sendingReport => "Sending report...".tr();
   static String get reportSent => "Your report was sent.".tr();
   static String get reportFailed =>
       "Could not send your report. Please try again.".tr();
@@ -239,6 +240,7 @@ class AppString {
       "Revenue is estimated from completed bookings and the clinic consultation fee."
           .tr();
   static String get reportLoadFailed => "Could not load clinic reports.".tr();
+  static String get expenseSaveFailed => "Could not save expense.".tr();
   static String get currency => "EGP".tr();
   static String get switchLanguage => "Switch Language".tr();
   static String get arabic => "Arabic".tr();

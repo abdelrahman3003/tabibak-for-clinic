@@ -105,9 +105,16 @@ class _ReportDialogState extends State<ReportDialog> {
         FilledButton(
           onPressed: _isSubmitting ? null : _submitReport,
           child: _isSubmitting
-              ? const SizedBox.square(
-                  dimension: 18,
-                  child: CircularProgressIndicator(strokeWidth: 2),
+              ? Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox.square(
+                      dimension: 18,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(AppString.sendingReport),
+                  ],
                 )
               : Text(AppString.sendReport),
         ),

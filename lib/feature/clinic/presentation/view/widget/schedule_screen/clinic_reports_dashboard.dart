@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
@@ -78,7 +79,7 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
       } catch (_) {
         if (mounted)
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(AppString.reportFailed)));
+              .showSnackBar(SnackBar(content: Text(AppString.expenseSaveFailed)));
       }
     }
   }
@@ -94,9 +95,10 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = context.locale.toString();
     final dateLabel = _monthly
-        ? DateFormat.yMMMM().format(_selectedDate)
-        : DateFormat.yMMMd().format(_selectedDate);
+        ? DateFormat.yMMMM(locale).format(_selectedDate)
+        : DateFormat.yMMMd(locale).format(_selectedDate);
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(
@@ -172,13 +174,13 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
                         data.cancelledBookings.toString(),
                         Icons.cancel_outlined,
                         AppColors.statusCancelled),
-                    _metric(AppString.totalRevenue, _money(data.totalRevenue),
+                    _metric(AppString.totalRevenue, _money(data.totalRevenue, locale),
                         Icons.trending_up, AppColors.statusConfirmed),
-                    _metric(AppString.totalExpenses, _money(data.totalExpenses),
+                    _metric(AppString.totalExpenses, _money(data.totalExpenses, locale),
                         Icons.receipt_long_outlined, AppColors.orange),
                     _metric(
                         AppString.netProfit,
-                        _money(data.netProfit),
+                        _money(data.netProfit, locale),
                         Icons.account_balance_wallet_outlined,
                         data.netProfit < 0
                             ? AppColors.red
@@ -196,7 +198,7 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
                 const SizedBox(height: 12),
                 SizedBox(
                     height: 112,
-                    child: _RevenueChart(values: data.dailyRevenue)),
+                    child: _RevenueChart(values: data.dailyRevenue, locale: locale)),
                 Align(
                     alignment: AlignmentDirectional.centerStart,
                     child: Text(AppString.revenueEstimateNote,
@@ -244,8 +246,8 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
         ]),
       );
 
-  String _money(double value) =>
-      '${value.toStringAsFixed(value % 1 == 0 ? 0 : 2)} ${AppString.currency}';
+  String _money(double value, String locale) =>
+      '${NumberFormat.decimalPattern(locale).format(value % 1 == 0 ? value.toInt() : value)} ${AppString.currency}';
 }
 
 class _ExpenseDraft {
@@ -322,8 +324,9 @@ class _AddExpenseDialogState extends State<_AddExpenseDialog> {
 }
 
 class _RevenueChart extends StatelessWidget {
-  const _RevenueChart({required this.values});
+  const _RevenueChart({required this.values, required this.locale});
   final List<double> values;
+  final String locale;
 
   @override
   Widget build(BuildContext context) {
@@ -338,7 +341,7 @@ class _RevenueChart extends StatelessWidget {
             child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2),
           child: Tooltip(
-            message: value.toStringAsFixed(0),
+            message: NumberFormat.decimalPattern(locale).format(value.round()),
             child: Align(
                 alignment: Alignment.bottomCenter,
                 child: FractionallySizedBox(
