@@ -66,21 +66,23 @@ class AppointmentActionButtons extends StatelessWidget {
                   },
                 ),
               ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: ActionButton(
-                  label: 'Follow-up'.tr(),
-                  color: AppColors.statusUpcoming,
-                  icon: Icons.event_repeat_rounded,
-                  isLoading: isFollowUpLoading,
-                  isDisabled: isBusy && !isFollowUpLoading,
-                  onTap: () async {
-                    final date = await _pickDate(context);
-                    if (date != null && context.mounted) {
-                      onFollowUp?.call(date);
-                    }
-                  }),
-            ),
+            if (isAppointmentToday) ...[
+              const SizedBox(width: 12),
+              Expanded(
+                child: ActionButton(
+                    label: 'Follow-up'.tr(),
+                    color: AppColors.statusUpcoming,
+                    icon: Icons.event_repeat_rounded,
+                    isLoading: isFollowUpLoading,
+                    isDisabled: isBusy && !isFollowUpLoading,
+                    onTap: () async {
+                      final date = await _pickDate(context);
+                      if (date != null && context.mounted) {
+                        onFollowUp?.call(date);
+                      }
+                    }),
+              ),
+            ],
           ],
         ),
         const SizedBox(height: 12),

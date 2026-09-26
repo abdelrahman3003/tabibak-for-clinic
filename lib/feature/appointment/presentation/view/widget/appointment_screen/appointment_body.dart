@@ -50,7 +50,7 @@ class _AppointmentBodyState extends State<AppointmentBody> {
             title: AppString.appointmentsToday,
             subtitle: AppString.seeAll,
             trailingWidget: PopupMenuButton<String>(
-              tooltip: 'Filter appointments',
+              tooltip: AppString.filterAppointments,
               icon: Icon(
                 Icons.filter_list_rounded,
                 color: _typeFilter == 'all'
@@ -61,7 +61,7 @@ class _AppointmentBodyState extends State<AppointmentBody> {
               itemBuilder: (context) => [
                 PopupMenuItem(
                   value: 'all',
-                  child: _buildFilterMenuItem('all', 'All'),
+                  child: _buildFilterMenuItem('all', AppString.all),
                 ),
                 PopupMenuItem(
                   value: 'consultation',
@@ -87,7 +87,7 @@ class _AppointmentBodyState extends State<AppointmentBody> {
                   child: AppointmentEmpty(
                     title: _typeFilter == 'all'
                         ? AppString.noAppointmentsToday
-                        : 'No appointments found',
+                        : AppString.noAppointmentsFound,
                   ),
                 )
               : AppointmentList(

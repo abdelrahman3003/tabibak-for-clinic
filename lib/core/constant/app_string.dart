@@ -112,6 +112,15 @@ class AppString {
   static String get finished => "Finished".tr();
   static String get today => "Today".tr();
   static String get all => "All".tr();
+  static String get allAppointments => "All appointments".tr();
+  static String get searchAppointmentsByName =>
+      "Search appointments by name".tr();
+  static String get filterAppointments => "Filter appointments".tr();
+  static String get search => "Search".tr();
+  static String get clearSearch => "Clear search".tr();
+  static String get noAppointmentsFound => "No appointments found".tr();
+  static String get statusUpdatedSuccessfully =>
+      "Status updated successfully".tr();
   static String get appointmentEmptySubtitle =>
       "You have a clear schedule for now. \nEnjoy your free time!".tr();
   static String get approve => "Approve".tr();
@@ -119,14 +128,15 @@ class AppString {
   static String get confirmed => "Confirmed".tr();
   static String get addAppointment => "Add Appointment".tr();
   static String get appointmentAdded => "Appointment added".tr();
-  static String get completeOnlyOnAppointmentDay => "An appointment can only be completed on its scheduled day.".tr();
+  static String get completeOnlyOnAppointmentDay =>
+      "An appointment can only be completed on its scheduled day.".tr();
   static String get patientName => "Patient Name".tr();
   static String get date => "Date".tr();
   static String get thisDayHasNoShifts => "This day has no shifts".tr();
   static String get pleaseSelectAShift => "Please select a shift".tr();
   static String get noShiftsAvailable => "No shifts available".tr();
   static String get selectShift => "Select Shift".tr();
-  static String get save => "save".tr();
+  static String get save => "Save".tr();
 
   // Appointment Type Localization
   static String get consultation => "Consultation".tr();

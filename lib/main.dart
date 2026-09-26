@@ -13,21 +13,16 @@ import 'my_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await dotenv.load(fileName: ".env");
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await EnvService.init();
-
   await Future.wait([
     EasyLocalization.ensureInitialized(),
     SupabaseService.init(),
   ]);
-
   await initGetIt();
-
   await LocalNotificationServices.init();
   await PushNotificationService.init();
 

@@ -86,7 +86,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
           listener: (context, state) {
             if (state is UpdateAppointmentStatusSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Status updated successfully')),
+                SnackBar(content: Text(AppString.statusUpdatedSuccessfully)),
               );
             } else if (state is UpdateAppointmentStatusFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -112,9 +112,9 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
                     textInputAction: TextInputAction.search,
                     onSubmitted: _searchAppointments,
                     decoration: InputDecoration(
-                      hintText: 'Search appointments by name',
+                      hintText: AppString.searchAppointmentsByName,
                       prefixIcon: PopupMenuButton<String>(
-                        tooltip: 'Filter appointments',
+                        tooltip: AppString.filterAppointments,
                         icon: Icon(
                           Icons.filter_list_rounded,
                           color: _typeFilter == 'all'
@@ -124,7 +124,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
                         onSelected: (value) =>
                             setState(() => _typeFilter = value),
                         itemBuilder: (context) => [
-                          const PopupMenuItem(value: 'all', child: Text('All')),
+                          PopupMenuItem(value: 'all', child: Text(AppString.all)),
                           PopupMenuItem(
                             value: 'consultation',
                             child: Text(AppString.consultation),
@@ -139,12 +139,12 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            tooltip: 'Search',
+                            tooltip: AppString.search,
                             icon: const Icon(Icons.search),
                             onPressed: () => _searchAppointments(),
                           ),
                           IconButton(
-                            tooltip: 'Clear search',
+                            tooltip: AppString.clearSearch,
                             icon: const Icon(Icons.close),
                             onPressed: () {
                               _searchController.clear();
@@ -169,7 +169,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
                             ? AppString.consultation
                             : _typeFilter == 'follow-up'
                                 ? AppString.followUp
-                                : 'All appointments',
+                                : AppString.allAppointments,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.w600,
@@ -243,7 +243,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
                     bloc.add(GetCanceledAppointmentsEvent());
                 }
               },
-              child: const Text('Retry'),
+              child: Text(AppString.retry),
             ),
           ],
         ),
@@ -272,7 +272,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen> {
     return typeFilteredAppointments.isEmpty
         ? Center(
             child: searchTerm.isNotEmpty || _typeFilter != 'all'
-                ? const Text('No appointments found')
+                ? Text(AppString.noAppointmentsFound)
                 : AppointmentEmpty(title: "No ${type.name} appointments"),
           )
         : AppointmentListView(
