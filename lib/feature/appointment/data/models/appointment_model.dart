@@ -18,7 +18,7 @@ class AppointmentModel extends AppointmentEntity {
     super.appointmentTypeEn,
     super.appointmentTypeAr,
     super.followUpDate,
-    super.queueNumber,
+    super.waitingList,
   });
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
@@ -41,7 +41,7 @@ class AppointmentModel extends AppointmentEntity {
       followUpDate: json['follow_up_date'] != null
           ? DateTime.parse(json['follow_up_date'])
           : null,
-      queueNumber: json['queue_number'],
+      waitingList: json['waiting_list'],
     );
   }
 
@@ -72,7 +72,7 @@ class AppointmentModel extends AppointmentEntity {
       description: entity.description,
       appointmentTypeEn: entity.appointmentTypeEn,
       appointmentTypeAr: entity.appointmentTypeAr,
-      queueNumber: entity.queueNumber,
+      waitingList: entity.waitingList,
     );
   }
 }

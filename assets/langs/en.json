@@ -268,5 +268,7 @@
     "connectionError": "Connection error",
     "unableToConnectServer": "Unable to connect to the server. Make sure you are connected to the internet and try again.",
     "yourDoctor": "Your Doctor",
-    "Queue Number": "Queue Number"
+    "Queue Number": "Queue Number",
+    "Waiting list": "Waiting list",
+    "Your turn": "Your turn"
 }

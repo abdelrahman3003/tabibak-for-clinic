@@ -124,7 +124,7 @@ class AppointmentCard extends StatelessWidget {
   }
 
   Widget _buildMetaRow(BuildContext context) {
-    if (appointmentEntity.queueNumber == null) return const SizedBox.shrink();
+    if (appointmentEntity.waitingList == null) return const SizedBox.shrink();
     return _buildQueueNumber(context);
   }
 
@@ -173,7 +173,7 @@ class AppointmentCard extends StatelessWidget {
             size: 14.r, color: const Color(0xff64748B)),
         6.wBox,
         Text(
-          AppString.queueNumber,
+          AppString.waitingList,
           style: TextStyle(
             fontSize: 11.sp,
             fontWeight: FontWeight.w500,
@@ -183,7 +183,9 @@ class AppointmentCard extends StatelessWidget {
         ),
         4.wBox,
         Text(
-          '${appointmentEntity.queueNumber}',
+          appointmentEntity.waitingList == 0
+              ? AppString.yourTurn
+              : '${appointmentEntity.waitingList}',
           style: TextStyle(
             fontSize: 12.sp,
             fontWeight: FontWeight.w700,

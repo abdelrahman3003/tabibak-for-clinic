@@ -1,8 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointment_entity.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/detail_row.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/appoinment_details_screen/section_card.dart';
 
 class AppointmentInfoSection extends StatelessWidget {
@@ -35,10 +35,10 @@ class AppointmentInfoSection extends StatelessWidget {
           value: entity.appointmentMorningShiftId != null
               ? _shiftLabel(entity.appointmentMorningShiftId)
               : _shiftLabel(entity.appointmentEveningShiftId),
-            iconColor: entity.appointmentMorningShiftId != null &&
-                    entity.appointmentMorningShiftId == 1
-                ? const Color(0xFFF59E0B)
-                : const Color(0xFF8B5CF6),
+          iconColor: entity.appointmentMorningShiftId != null &&
+                  entity.appointmentMorningShiftId == 1
+              ? const Color(0xFFF59E0B)
+              : const Color(0xFF8B5CF6),
         ),
         DetailRow(
           icon: Icons.tag_rounded,
@@ -46,11 +46,13 @@ class AppointmentInfoSection extends StatelessWidget {
           value: '#${entity.appointmentId ?? '—'}',
           iconColor: const Color(0xFF14B8A6),
         ),
-        if (entity.queueNumber != null)
+        if (entity.waitingList != null)
           DetailRow(
             icon: Icons.queue_rounded,
-            label: 'Queue Number'.tr(),
-            value: '${entity.queueNumber}',
+            label: AppString.waitingList,
+            value: entity.waitingList == 0
+                ? AppString.yourTurn
+                : '${entity.waitingList}',
             iconColor: const Color(0xFFF59E0B),
           ),
       ],

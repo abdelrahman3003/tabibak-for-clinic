@@ -268,5 +268,7 @@
     "connectionError": "خطأ في الاتصال",
     "unableToConnectServer": "تعذر الاتصال بالخادم. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.",
     "yourDoctor": "طبيبك",
-    "Queue Number": "رقم الطابور"
+    "Queue Number": "رقم الطابور",
+    "Waiting list": "قائمة الانتظار",
+    "Your turn": "حان دورك"
 }

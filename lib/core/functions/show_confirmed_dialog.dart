@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 Future<void> showConfirmDialog({
   required BuildContext context,
@@ -15,14 +16,14 @@ Future<void> showConfirmDialog({
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
+            child: Text("Cancel".tr()),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
               onConfirm();
             },
-            child: const Text("OK"),
+            child: Text("OK".tr()),
           ),
         ],
       );

@@ -17,7 +17,7 @@ class AppointmentEntity extends Equatable {
   final String? name;
   final String? description;
   final DateTime? followUpDate;
-  final int? queueNumber;
+  final int? waitingList;
   const AppointmentEntity({
     this.appointmentId,
     this.appointmentTypeEn,
@@ -35,7 +35,7 @@ class AppointmentEntity extends Equatable {
     this.name,
     this.description,
     this.followUpDate,
-    this.queueNumber,
+    this.waitingList,
   });
 
   @override
@@ -52,6 +52,6 @@ class AppointmentEntity extends Equatable {
         phone,
         description,
         statusId,
-        queueNumber
+        waitingList
       ];
 }

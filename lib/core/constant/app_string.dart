@@ -349,4 +349,6 @@ class AppString {
       "Unable to connect to the server. Make sure you are connected to the internet and try again."
           .tr();
   static String get queueNumber => "Queue Number".tr();
+  static String get waitingList => "Waiting list".tr();
+  static String get yourTurn => "Your turn".tr();
 }
