@@ -1,6 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 
 class ReportDialog extends StatefulWidget {
@@ -16,6 +16,13 @@ class _ReportDialogState extends State<ReportDialog> {
   String _type = 'bug';
   bool _isSubmitting = false;
 
+  String _localized(
+    BuildContext context, {
+    required String english,
+    required String arabic,
+  }) =>
+      context.locale.languageCode == 'ar' ? arabic : english;
+
   @override
   void dispose() {
     _descriptionController.dispose();
@@ -27,7 +34,13 @@ class _ReportDialogState extends State<ReportDialog> {
     final doctorId = getit<Supabase>().client.auth.currentUser?.id;
     if (doctorId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppString.reportFailed)),
+        SnackBar(
+          content: Text(_localized(
+            context,
+            english: 'Could not send your report. Please try again.',
+            arabic: 'تعذر إرسال البلاغ. حاول مرة أخرى.',
+          )),
+        ),
       );
       return;
     }
@@ -42,12 +55,24 @@ class _ReportDialogState extends State<ReportDialog> {
       if (!mounted) return;
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppString.reportSent)),
+        SnackBar(
+          content: Text(_localized(
+            context,
+            english: 'Your report was sent.',
+            arabic: 'تم إرسال بلاغك.',
+          )),
+        ),
       );
     } catch (_) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppString.reportFailed)),
+        SnackBar(
+          content: Text(_localized(
+            context,
+            english: 'Could not send your report. Please try again.',
+            arabic: 'تعذر إرسال البلاغ. حاول مرة أخرى.',
+          )),
+        ),
       );
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
@@ -57,7 +82,11 @@ class _ReportDialogState extends State<ReportDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(AppString.report),
+      title: Text(_localized(
+        context,
+        english: 'Report a problem',
+        arabic: 'الإبلاغ عن مشكلة',
+      )),
       content: Form(
         key: _formKey,
         child: Column(
@@ -65,13 +94,38 @@ class _ReportDialogState extends State<ReportDialog> {
           children: [
             DropdownButtonFormField<String>(
               value: _type,
-              decoration: InputDecoration(labelText: AppString.reportType),
+              decoration: InputDecoration(
+                labelText: _localized(
+                  context,
+                  english: 'Report type',
+                  arabic: 'نوع البلاغ',
+                ),
+              ),
               items: [
-                DropdownMenuItem(value: 'bug', child: Text(AppString.bugReport)),
                 DropdownMenuItem(
-                    value: 'suggestion', child: Text(AppString.suggestion)),
+                  value: 'bug',
+                  child: Text(_localized(
+                    context,
+                    english: 'Bug',
+                    arabic: 'خلل تقني',
+                  )),
+                ),
                 DropdownMenuItem(
-                    value: 'other', child: Text(AppString.otherReport)),
+                  value: 'suggestion',
+                  child: Text(_localized(
+                    context,
+                    english: 'Suggestion',
+                    arabic: 'اقتراح',
+                  )),
+                ),
+                DropdownMenuItem(
+                  value: 'other',
+                  child: Text(_localized(
+                    context,
+                    english: 'Other',
+                    arabic: 'أخرى',
+                  )),
+                ),
               ],
               onChanged: _isSubmitting
                   ? null
@@ -87,12 +141,22 @@ class _ReportDialogState extends State<ReportDialog> {
               maxLength: 1000,
               enabled: !_isSubmitting,
               decoration: InputDecoration(
-                labelText: AppString.describeIssue,
+                labelText: _localized(
+                  context,
+                  english: 'Describe your issue',
+                  arabic: 'اكتب وصف المشكلة',
+                ),
                 border: const OutlineInputBorder(),
                 alignLabelWithHint: true,
               ),
               validator: (value) =>
-                  value == null || value.trim().isEmpty ? AppString.required : null,
+                  value == null || value.trim().isEmpty
+                      ? _localized(
+                          context,
+                          english: 'Required',
+                          arabic: 'مطلوب',
+                        )
+                      : null,
             ),
           ],
         ),
@@ -100,7 +164,7 @@ class _ReportDialogState extends State<ReportDialog> {
       actions: [
         TextButton(
           onPressed: _isSubmitting ? null : () => Navigator.of(context).pop(),
-          child: Text(AppString.cancel),
+          child: Text(_localized(context, english: 'Cancel', arabic: 'إلغاء')),
         ),
         FilledButton(
           onPressed: _isSubmitting ? null : _submitReport,
@@ -113,10 +177,18 @@ class _ReportDialogState extends State<ReportDialog> {
                       child: CircularProgressIndicator(strokeWidth: 2),
                     ),
                     const SizedBox(width: 8),
-                    Text(AppString.sendingReport),
+                    Text(_localized(
+                      context,
+                      english: 'Sending report...',
+                      arabic: 'جارٍ إرسال البلاغ...',
+                    )),
                   ],
                 )
-              : Text(AppString.sendReport),
+              : Text(_localized(
+                  context,
+                  english: 'Send report',
+                  arabic: 'إرسال البلاغ',
+                )),
         ),
       ],
     );

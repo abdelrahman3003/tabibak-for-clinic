@@ -116,7 +116,9 @@ class DoctorProfileBody extends StatelessWidget {
               ),
               15.hBox,
               SettingItem(
-                title: AppString.report,
+                title: context.locale.languageCode == 'ar'
+                    ? 'الإبلاغ عن مشكلة'
+                    : 'Report a problem',
                 icon: Icons.flag_outlined,
                 onTap: () => showDialog<void>(
                   context: context,
