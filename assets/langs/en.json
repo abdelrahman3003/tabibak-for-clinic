@@ -270,5 +270,8 @@
     "yourDoctor": "Your Doctor",
     "Queue Number": "Queue Number",
     "Waiting list": "Waiting list",
-    "Your turn": "Your turn"
+    "Your turn": "Your turn",
+    "Update required": "Update required",
+    "Please update the app to continue.": "Please update the app to continue.",
+    "Update now": "Update now"
 }

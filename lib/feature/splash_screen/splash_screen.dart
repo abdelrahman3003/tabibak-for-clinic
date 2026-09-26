@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,9 +9,11 @@ import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
+import 'package:tabibak_for_clinic/core/services/force_update_service.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart' show AppColors;
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/get_doctor_auth_use_case.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/splash/splash_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -41,6 +44,12 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _checkInitPage(SplashSuccess state) async {
+    final updateInfo = await ForceUpdateService.checkForRequiredUpdate();
+    if (updateInfo != null) {
+      _showForceUpdateDialog(updateInfo);
+      return;
+    }
+
     if (state.doctorEntity != null) {
       _goTo(Routes.layOutScreen);
       return;
@@ -54,6 +63,33 @@ class _SplashScreenState extends State<SplashScreen> {
     await getit<Supabase>().client.auth.signOut();
 
     _goTo(Routes.signinScreen);
+  }
+
+  void _showForceUpdateDialog(ForceUpdateInfo updateInfo) {
+    if (!mounted) return;
+
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => PopScope(
+        canPop: false,
+        child: AlertDialog(
+          title: Text(AppString.updateRequired),
+          content: Text(AppString.updateRequiredMessage),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                final uri = Uri.tryParse(updateInfo.storeUrl);
+                if (uri != null && uri.hasScheme) {
+                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                }
+              },
+              child: Text(AppString.updateNow),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void _goTo(String route) {

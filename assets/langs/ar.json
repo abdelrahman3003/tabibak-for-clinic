@@ -270,5 +270,8 @@
     "yourDoctor": "طبيبك",
     "Queue Number": "رقم الطابور",
     "Waiting list": "قائمة الانتظار",
-    "Your turn": "حان دورك"
+    "Your turn": "حان دورك",
+    "Update required": "يلزم تحديث التطبيق",
+    "Please update the app to continue.": "يرجى تحديث التطبيق للمتابعة.",
+    "Update now": "حدّث الآن"
 }
