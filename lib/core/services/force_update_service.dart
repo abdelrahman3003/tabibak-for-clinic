@@ -12,10 +12,10 @@ class ForceUpdateInfo {
 class ForceUpdateService {
   ForceUpdateService._();
 
-  static const _androidMinimumBuildKey = 'android_minimum_build';
-  static const _iosMinimumBuildKey = 'ios_minimum_build';
-  static const _androidStoreUrlKey = 'android_store_url';
-  static const _iosStoreUrlKey = 'ios_store_url';
+  static const _androidMinimumBuildKey = 'tabibak_android_minimum_build';
+  static const _iosMinimumBuildKey = 'tabibak_ios_minimum_build';
+  static const _androidStoreUrlKey = 'tabibak_android_store_url';
+  static const _iosStoreUrlKey = 'tabibak_ios_store_url';
 
   static Future<ForceUpdateInfo?> checkForRequiredUpdate() async {
     try {
