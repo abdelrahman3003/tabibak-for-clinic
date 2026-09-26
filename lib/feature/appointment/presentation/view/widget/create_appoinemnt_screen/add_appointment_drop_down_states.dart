@@ -66,7 +66,7 @@ class _AddAppointmentDropDownStatesState
               items: shifts,
               value: selectedShift,
               labelBuilder: (item) =>
-                  "${item.shiftType} ${formatTime(item.start!)} - ${formatTime(item.end!)}",
+                  "${AppString.shiftType(item.shiftType)} ${formatTime(item.start!)} - ${formatTime(item.end!)}",
               validator: (item) =>
                   item == null ? AppString.pleaseSelectAShift : null,
               onChanged: (value) {

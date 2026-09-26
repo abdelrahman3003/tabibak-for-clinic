@@ -70,6 +70,19 @@ class AppString {
   static String get day => "Day".tr();
   static String get morning => "Morning".tr();
   static String get evening => "Evening".tr();
+  static String shiftType(String? value) {
+    switch (value?.toLowerCase()) {
+      case 'morning':
+        return morning;
+      case 'evening':
+        return evening;
+      case null:
+      case '':
+        return '';
+      default:
+        return value!.tr();
+    }
+  }
   static String get checkEmail => "Check your email".tr();
   static String get verificationEmailSent =>
       "We have sent a verification email to your email address. Please check your inbox and follow the instructions to verify your account."
