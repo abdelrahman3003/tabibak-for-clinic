@@ -26,7 +26,10 @@ class SpecialtiesDropDown extends StatelessWidget {
           items: items,
           hint: AppString.selectSpecialty,
           prefixIcon: const Icon(Icons.medical_services_outlined),
-          labelBuilder: (item) => item.nameEn,
+          labelBuilder: (item) =>
+              Localizations.localeOf(context).languageCode == 'ar'
+                  ? item.nameAr
+                  : item.nameEn,
           validator: (value) =>
               value == null ? AppString.selectSpecialtyValidator : null,
           onChanged: (value) {
