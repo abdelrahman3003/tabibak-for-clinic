@@ -56,12 +56,16 @@ class DoctorProfileBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ProfileTitle(
-                title: AppString.doctorInformation,
+                title: context.locale.languageCode == 'ar'
+                    ? 'معلومات الطبيب'
+                    : 'Doctor Information',
                 icon: Icons.medical_services,
               ),
               10.hBox,
               EditItem(
-                title: AppString.personalInformation,
+                title: context.locale.languageCode == 'ar'
+                    ? 'المعلومات الشخصية'
+                    : 'Personal Information',
                 subtitle: doctor.phone ?? "",
                 onTap: () {
                   context.pushNamed(Routes.doctorPersonalInfo,
@@ -70,7 +74,9 @@ class DoctorProfileBody extends StatelessWidget {
               ),
               15.hBox,
               EditItem(
-                title: AppString.specialty,
+                title: context.locale.languageCode == 'ar'
+                    ? 'التخصص'
+                    : 'Specialty',
                 subtitle: (context.locale.languageCode == 'ar'
                         ? doctor.specialtyData?.nameAr
                         : doctor.specialtyData?.nameEn) ??
@@ -82,7 +88,9 @@ class DoctorProfileBody extends StatelessWidget {
               ),
               15.hBox,
               EditItem(
-                title: AppString.education,
+                title: context.locale.languageCode == 'ar'
+                    ? 'التعليم'
+                    : 'Education',
                 subtitle:
                     doctor.education?.university ?? AppString.educationIsEmpty,
                 onTap: () {
@@ -146,7 +154,11 @@ class DoctorProfileBody extends StatelessWidget {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(title),
-        content: Text(AppString.featureNotAvailable),
+        content: Text(
+          context.locale.languageCode == 'ar'
+              ? 'هذه الميزة غير متاحة حاليًا.'
+              : 'This feature is not available yet.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),

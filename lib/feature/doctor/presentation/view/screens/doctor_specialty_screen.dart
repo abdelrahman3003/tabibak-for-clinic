@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
@@ -32,7 +33,9 @@ class _DoctorSpecialtyScreenState extends State<DoctorSpecialtyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBarSave(
-          text: AppString.doctorSpecialty,
+          text: context.locale.languageCode == 'ar'
+              ? 'تخصص الطبيب'
+              : 'Doctor Specialty',
           onTap: () {
             if (_selectedSpecialtyId != null) {
               context.read<DoctorSpecialtyBloc>().add(
@@ -71,7 +74,10 @@ class _DoctorSpecialtyScreenState extends State<DoctorSpecialtyScreen> {
                   return AppDropdown<SpecialtyEntity>(
                     items: specialties,
                     hint: AppString.selectSpecialty,
-                    labelBuilder: (item) => item.nameEn,
+                    labelBuilder: (item) =>
+                        Localizations.localeOf(context).languageCode == 'ar'
+                            ? item.nameAr
+                            : item.nameEn,
                     validator: (value) =>
                         value == null ? AppString.selectSpecialtyValidator : null,
                     onChanged: (value) {

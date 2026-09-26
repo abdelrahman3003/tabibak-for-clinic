@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -48,7 +49,9 @@ class _DoctorEducationScreenState extends State<DoctorEducationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarSave(
-        text: AppString.doctorEducation,
+        text: context.locale.languageCode == 'ar'
+            ? 'المؤهل العلمي للطبيب'
+            : 'Doctor Education',
         onTap: () {
           context.read<DoctorEducationBloc>().add(
                 UpdateDoctorEducationEvent(

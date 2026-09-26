@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
@@ -40,7 +41,9 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarSave(
-        text: AppString.doctorPersonalInfo,
+        text: context.locale.languageCode == 'ar'
+            ? 'المعلومات الشخصية للطبيب'
+            : 'Doctor Personal Information',
         onTap: () {
           context.read<DoctorInfoBloc>().add(
                 UpdateDoctorInfo(
@@ -66,7 +69,7 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
                     builder: (context) => const LayoutScreen(initialIndex: 2),
                   ));
               AppSnackBar.show(
-                  context: context, message: "Doctor info was Updated");
+                  context: context, message: AppString.doctorInfoUpdated);
             }
             if (state is DoctorInfoFailed) {
               context.pop();
@@ -76,7 +79,9 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
           child: Column(
             children: [
               TextFormFiledWidget(
-                label: AppString.doctorName,
+                label: context.locale.languageCode == 'ar'
+                    ? 'اسم الطبيب'
+                    : 'Doctor Name',
                 controller: nameController,
               ),
               TextFormFiledWidget(

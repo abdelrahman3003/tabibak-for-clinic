@@ -54,6 +54,8 @@ class ErrorHandler {
     }
 
     switch (message) {
+      case 'device_limit_reached':
+        return ApiErrorModel(message: AppString.maximumDevicesReached);
       case "validation_failed":
         return ApiErrorModel(message: "Validation failed");
       case "missing email or phone":

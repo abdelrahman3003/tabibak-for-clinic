@@ -285,6 +285,7 @@ class AppString {
   static String get degree => "Degree".tr();
   static String get certificatePhoto => "Certificate Photo".tr();
   static String get doctorSpecialty => "Doctor Specialty".tr();
+  static String get doctorInfoUpdated => "Doctor info was Updated".tr();
   static String get profilePending => "Pending Verification".tr();
   static String get profilePublished => "Profile Published".tr();
   static String get profileRejected => "Profile Rejected".tr();
@@ -355,4 +356,8 @@ class AppString {
   static String get updateRequiredMessage =>
       "Please update the app to continue.".tr();
   static String get updateNow => "Update now".tr();
+  static String get maximumDevicesReached =>
+      "This account is already active on two devices. Sign out from another device and try again."
+          .tr();
+  static String get deviceLimitReached => "Device limit reached".tr();
 }

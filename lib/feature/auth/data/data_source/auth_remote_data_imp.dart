@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/functions/upload_file.dart';
 import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 import 'package:tabibak_for_clinic/core/services/env_service.dart';
+import 'package:tabibak_for_clinic/core/services/device_registration_service.dart';
 import 'package:tabibak_for_clinic/core/services/push_notification_service.dart';
 import 'package:tabibak_for_clinic/feature/auth/data/data_source/auth_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/dotcor_model.dart';
@@ -34,7 +35,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
       deleteDoctor(user.id);
       throw const AuthException('email_not_confirmed');
     }
-    updateDoctorFcmToken(user.id);
+    await _registerCurrentDevice(user.id);
     return getDoctor(user: user);
   }
 
@@ -47,6 +48,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
     data['image'] = user.userMetadata?['avatar_url'] ?? '';
     data['fcm_token'] = fcmToken;
     await supabase.client.from('doctors').insert(data);
+    await _registerCurrentDevice(user.id, token: fcmToken);
     await supabase.client.from('doctor_file').insert({
       'doctor_id': user.id,
       'file': doctorModel.medicalLicense,
@@ -89,6 +91,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
       idToken: googleUser.authentication.idToken!,
     );
 
+    await _registerCurrentDevice(response.user!.id);
     return await getDoctor(user: response.user!);
   }
 
@@ -142,5 +145,33 @@ class AuthRemoteDataImp implements AuthRemoteData {
     await supabase.client
         .from('doctors')
         .update({'fcm_token': token}).eq('id', doctorId);
+  }
+
+  Future<void> _registerCurrentDevice(String userId, {String? token}) async {
+    try {
+      final fcmToken = token ?? await PushNotificationService.getToken();
+      final registered = await DeviceRegistrationService.registerCurrentDevice(
+        fcmToken: fcmToken,
+      );
+      if (!registered) {
+        await supabase.client.auth.signOut();
+        throw const AuthException('device_limit_reached');
+      }
+
+      // Keep the legacy token column updated until notification senders have
+      // migrated to public.user_devices.
+      if (fcmToken != null) {
+        try {
+          await updateDoctorFcmToken(userId);
+        } catch (_) {
+          // Device registration is authoritative; the legacy field is best effort.
+        }
+      }
+    } catch (error) {
+      if (supabase.client.auth.currentUser != null) {
+        await supabase.client.auth.signOut();
+      }
+      rethrow;
+    }
   }
 }

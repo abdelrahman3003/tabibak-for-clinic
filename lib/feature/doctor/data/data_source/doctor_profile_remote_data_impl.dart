@@ -2,6 +2,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/functions/upload_file.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/data_source/doctor_profile_remote_data.dart';
+import 'package:tabibak_for_clinic/core/services/device_registration_service.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/dotcor_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/education_model.dart';
 import 'package:tabibak_for_clinic/feature/doctor/data/model/specialty_model.dart';
@@ -101,6 +102,11 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
 
   @override
   Future<void> logOut() async {
+    try {
+      await DeviceRegistrationService.unregisterCurrentDevice();
+    } catch (_) {
+      // Always complete logout even if the device cannot reach Supabase.
+    }
     await supabase.client.auth.signOut();
   }
 }

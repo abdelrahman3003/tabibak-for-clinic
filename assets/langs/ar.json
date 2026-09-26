@@ -273,5 +273,15 @@
     "Your turn": "حان دورك",
     "Update required": "يلزم تحديث التطبيق",
     "Please update the app to continue.": "يرجى تحديث التطبيق للمتابعة.",
-    "Update now": "حدّث الآن"
+    "Update now": "حدّث الآن",
+    "This account is already active on two devices. Sign out from another device and try again.": "هذا الحساب نشط بالفعل على جهازين. سجّل الخروج من جهاز آخر ثم حاول مرة أخرى.",
+    "Device limit reached": "تم بلوغ الحد الأقصى للأجهزة",
+    "Doctor Personal Info": "المعلومات الشخصية للطبيب",
+    "Doctor Education": "المؤهل العلمي للطبيب",
+    "Doctor Specialty": "تخصص الطبيب",
+    "Doctor Name": "اسم الطبيب",
+    "Country": "الدولة",
+    "Degree": "الدرجة العلمية",
+    "Certificate Photo": "صورة الشهادة",
+    "Doctor info was Updated": "تم تحديث معلومات الطبيب"
 }

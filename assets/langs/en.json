@@ -273,5 +273,15 @@
     "Your turn": "Your turn",
     "Update required": "Update required",
     "Please update the app to continue.": "Please update the app to continue.",
-    "Update now": "Update now"
+    "Update now": "Update now",
+    "This account is already active on two devices. Sign out from another device and try again.": "This account is already active on two devices. Sign out from another device and try again.",
+    "Device limit reached": "Device limit reached",
+    "Doctor Personal Info": "Doctor Personal Information",
+    "Doctor Education": "Doctor Education",
+    "Doctor Specialty": "Doctor Specialty",
+    "Doctor Name": "Doctor Name",
+    "Country": "Country",
+    "Degree": "Degree",
+    "Certificate Photo": "Certificate Photo",
+    "Doctor info was Updated": "Doctor information was updated"
 }

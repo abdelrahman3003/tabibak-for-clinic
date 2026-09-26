@@ -22,6 +22,5 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         emit(const SplashSuccess());
       }
     });
-    add(CheckDoctorEvent(user: Supabase.instance.client.auth.currentUser));
   }
 }

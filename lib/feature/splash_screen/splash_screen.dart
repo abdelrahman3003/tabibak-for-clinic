@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,9 @@ import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
+import 'package:tabibak_for_clinic/core/services/device_registration_service.dart';
 import 'package:tabibak_for_clinic/core/services/force_update_service.dart';
+import 'package:tabibak_for_clinic/core/services/push_notification_service.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart' show AppColors;
 import 'package:tabibak_for_clinic/feature/auth/domain/usecases/get_doctor_auth_use_case.dart';
 import 'package:tabibak_for_clinic/feature/auth/presentation/managers/splash/splash_bloc.dart';
@@ -43,7 +46,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return result.contains(ConnectivityResult.none);
   }
 
-  Future<void> _checkInitPage(SplashSuccess state) async {
+  Future<void> _checkInitPage(
+    BuildContext blocContext,
+    SplashSuccess state,
+  ) async {
     final updateInfo = await ForceUpdateService.checkForRequiredUpdate();
     if (updateInfo != null) {
       _showForceUpdateDialog(updateInfo);
@@ -51,12 +57,30 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     if (state.doctorEntity != null) {
+      bool deviceRegistered;
+      try {
+        deviceRegistered = await DeviceRegistrationService.registerCurrentDevice(
+          fcmToken: await PushNotificationService.getToken(),
+        );
+      } catch (error, stackTrace) {
+        debugPrint('Device registration failed during splash: $error');
+        debugPrintStack(stackTrace: stackTrace);
+        _showErrorDialog(blocContext);
+        return;
+      }
+
+      if (!deviceRegistered) {
+        await getit<Supabase>().client.auth.signOut();
+        _showDeviceLimitDialog();
+        return;
+      }
+
       _goTo(Routes.layOutScreen);
       return;
     }
 
     if (await _isOffline()) {
-      _showNoInternetDialog(context);
+      _showNoInternetDialog(blocContext);
       return;
     }
 
@@ -85,6 +109,31 @@ class _SplashScreenState extends State<SplashScreen> {
                 }
               },
               child: Text(AppString.updateNow),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showDeviceLimitDialog() {
+    if (!mounted) return;
+
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => PopScope(
+        canPop: false,
+        child: AlertDialog(
+          title: Text(AppString.deviceLimitReached),
+          content: Text(AppString.maximumDevicesReached),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+                _goTo(Routes.signinScreen);
+              },
+              child: Text('OK'.tr()),
             ),
           ],
         ),
@@ -180,7 +229,7 @@ class _SplashScreenState extends State<SplashScreen> {
         body: BlocListener<SplashBloc, SplashState>(
           listener: (context, state) {
             if (state is SplashSuccess) {
-              _checkInitPage(state);
+              _checkInitPage(context, state);
             }
 
             if (state is SplashError) {
@@ -218,4 +267,5 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
+
 }
