@@ -57,8 +57,8 @@ class _LanguageItem extends StatelessWidget {
       trailing: isSelected
           ? const Icon(Icons.check_circle, color: AppColors.primary)
           : null,
-      onTap: () {
-        context.setLocale(locale);
+      onTap: () async {
+        await context.setLocale(locale);
       },
     );
   }

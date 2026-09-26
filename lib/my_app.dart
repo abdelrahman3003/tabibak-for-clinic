@@ -10,6 +10,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = context.locale;
+    final localizationDelegates = context.localizationDelegates;
+    final supportedLocales = context.supportedLocales;
+
     return ScreenUtilInit(
         designSize: const Size(375, 812),
         minTextAdapt: true,
@@ -18,9 +22,9 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Tabibak For Clinic',
             theme: AppTheme.lightTheme,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
+            localizationsDelegates: localizationDelegates,
+            supportedLocales: supportedLocales,
+            locale: locale,
             onGenerateRoute: AppRouter.generateRoute,
             initialRoute: Routes.splashScreen,
           );
