@@ -35,13 +35,13 @@ class ScheduleHoursItem extends StatelessWidget {
                         children: [
                           _buildHourText(
                             shiftMorning?.start != null
-                                ? formatTime(shiftMorning!.start!)
+                                ? _formatScheduleTime(shiftMorning!.start!, context)
                                 : "--:--",
                             context,
                           ),
                           _buildHourText(
                             shiftMorning?.end != null
-                                ? formatTime(shiftMorning!.end!)
+                                ? _formatScheduleTime(shiftMorning!.end!, context)
                                 : "--:--",
                             context,
                           ),
@@ -56,13 +56,13 @@ class ScheduleHoursItem extends StatelessWidget {
                         children: [
                           _buildHourText(
                             shiftEvening?.start != null
-                                ? formatTime(shiftEvening!.start!)
+                                ? _formatScheduleTime(shiftEvening!.start!, context)
                                 : "--:--",
                             context,
                           ),
                           _buildHourText(
                             shiftEvening?.end != null
-                                ? formatTime(shiftEvening!.end!)
+                                ? _formatScheduleTime(shiftEvening!.end!, context)
                                 : "--:--",
                             context,
                           ),
@@ -82,5 +82,10 @@ class ScheduleHoursItem extends StatelessWidget {
             .textTheme
             .labelLarge
             ?.copyWith(color: const Color(0xff475569)));
+  }
+
+  String _formatScheduleTime(TimeOfDay time, BuildContext context) {
+    final dateTime = DateTime(2000, 1, 1, time.hour, time.minute);
+    return DateFormat.jm(context.locale.toString()).format(dateTime);
   }
 }

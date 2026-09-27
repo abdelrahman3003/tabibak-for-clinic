@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
@@ -21,8 +22,7 @@ class ScheduleScreen extends StatelessWidget {
         children: [
           ClinicHeader(
             clinicName: clinicInfoEntity.clinicName ?? "",
-            clinicAddress: clinicInfoEntity.address?.clinicAddress ??
-                AppString.addressNotAvailable,
+            clinicAddress: _clinicAddress(context),
             isAvailable: clinicInfoEntity.isAvailable!,
             clinicId: clinicInfoEntity.id!,
           ),
@@ -45,5 +45,18 @@ class ScheduleScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _clinicAddress(BuildContext context) {
+    final address = clinicInfoEntity.address;
+    final city = context.locale.languageCode == 'ar'
+        ? address?.city?.nameAr
+        : address?.city?.nameEn;
+    final parts = [address?.clinicAddress, city]
+        .where((part) => part != null && part.trim().isNotEmpty)
+        .cast<String>()
+        .toList();
+
+    return parts.isEmpty ? AppString.addressNotAvailable : parts.join(', ');
   }
 }
