@@ -144,7 +144,7 @@ class AuthRemoteDataImp implements AuthRemoteData {
 
     await supabase.client
         .from('doctors')
-        .update({'fcm_token': token}).eq('id', doctorId);
+        .update({'fcm_token': token}).eq('doctor_id', doctorId);
   }
 
   Future<void> _registerCurrentDevice(String userId, {String? token}) async {

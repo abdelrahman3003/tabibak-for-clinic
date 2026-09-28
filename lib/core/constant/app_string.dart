@@ -31,6 +31,13 @@ class AppString {
   static String get selectGovernorateValidator =>
       "Please select a governorate".tr();
   static String get selectMarkazValidator => "Please select a markaz".tr();
+  static String get clinicNameValidator => "Please enter clinic name".tr();
+  static String get phoneValidator => "Please enter phone number".tr();
+  static String get consultationFeeValidator =>
+      "Please enter consultation fee".tr();
+  static String get streetValidator => "Please enter street".tr();
+  static String get selectShiftTimesValidator =>
+      "Please select start and end times for all active shifts".tr();
   static String get clinicLocation => "Clinic location".tr();
   static String get pickOnMap => "Pick on map".tr();
   static String get workingHours => "Working hours".tr();

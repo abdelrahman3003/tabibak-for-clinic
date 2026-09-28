@@ -290,5 +290,11 @@
     "Select Markaz": "Select District (Markaz)",
     "Select Village": "Select Village / City",
     "Please select a governorate": "Please select a governorate",
-    "Please select a markaz": "Please select a district"
+    "Please select a markaz": "Please select a district",
+    "Follow-up fee": "Follow-up fee",
+    "Please enter clinic name": "Please enter clinic name",
+    "Please enter phone number": "Please enter phone number",
+    "Please enter consultation fee": "Please enter consultation fee",
+    "Please enter street": "Please enter street",
+    "Please select start and end times for all active shifts": "Please select start and end times for all active shifts"
 }

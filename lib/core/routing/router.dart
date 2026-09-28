@@ -30,6 +30,7 @@ import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_sh
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_working_day/clinic_working_day_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20creation/clinic_days_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20creation/clinic_structure_screen.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20creation/clinic_creation_address_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20edit/clinic_address_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20edit/clinic_info_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20edit/clinic_offer_screen.dart';
@@ -37,6 +38,7 @@ import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clin
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic%20schedule/schedule_edit_days_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_args.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/manager/doctor_education/doctor_education_bloc.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/manager/doctor_info/doctor_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/manager/doctor_specialty/doctor_specialty_bloc.dart';
@@ -174,6 +176,16 @@ class AppRouter {
           child: BlocProvider(
             create: (context) => getit<ClinicInfoBloc>(),
             child: const ClinicStructureScreen(),
+          ),
+        );
+        break;
+
+      case Routes.clinicCreationAddressScreen:
+        final clinicInfo = settings.arguments as ClinicInfoEntity;
+        page = RootScreenWrapper(
+          child: BlocProvider(
+            create: (context) => getit<ClinicInfoBloc>(),
+            child: ClinicCreationAddressScreen(partialClinicInfo: clinicInfo),
           ),
         );
         break;

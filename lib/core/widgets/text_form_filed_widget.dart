@@ -12,6 +12,8 @@ class TextFormFiledWidget extends StatelessWidget {
       this.maxLines,
       this.onTap,
       this.contentPadding,
+      this.validator,
+      this.autovalidateMode,
       this.readOnly});
   final TextEditingController? controller;
   final String label;
@@ -20,6 +22,8 @@ class TextFormFiledWidget extends StatelessWidget {
   final int? maxLines;
   final Function()? onTap;
   final EdgeInsetsGeometry? contentPadding;
+  final String? Function(String?)? validator;
+  final AutovalidateMode? autovalidateMode;
   final bool? readOnly;
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,8 @@ class TextFormFiledWidget extends StatelessWidget {
         onTap: onTap,
         controller: controller,
         keyboardType: keyboardType,
+        validator: validator,
+        autovalidateMode: autovalidateMode,
         decoration: InputDecoration(
           suffixIcon: _buildSuffixText(context),
           labelText: label,

@@ -5,6 +5,7 @@ import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/routing/routes.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_button.dart';
+import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_args.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_work_day_screen/clinic_working_day_item.dart';
@@ -28,26 +29,42 @@ class _ClinicDayBodyState extends State<ClinicDayBody> {
         Column(
           children: List.generate(
             widget.days.length,
-            (index) => ClinicWorkingDayItem(
-              text: widget.days[index].clinicDayEntity!.dayEn!.tr(),
-              onChanged: (value) {
-                if (value) {
-                  selectedDays.add(widget.days[index]);
-                } else {
-                  selectedDays.remove(widget.days[index]);
-                }
-              },
-            ),
+            (index) {
+              final day = widget.days[index];
+              return ClinicWorkingDayItem(
+                text: day.clinicDayEntity?.dayEn?.tr() ?? "",
+                value: day.isSelected ?? false,
+                onChanged: (value) {
+                  day.isSelected = value;
+                  if (value) {
+                    if (!selectedDays.contains(day)) {
+                      selectedDays.add(day);
+                    }
+                  } else {
+                    selectedDays.remove(day);
+                  }
+                },
+              );
+            },
           ),
         ),
         const Spacer(),
         AppButton(
           title: AppString.continueButton,
           onPressed: () {
+            if (selectedDays.isEmpty) {
+              AppSnackBar.show(
+                context: context,
+                message: AppString.selectWorkingDays,
+              );
+              return;
+            }
             context.pushNamed(
               Routes.clinicShiftsTimeScreen,
               arguments: ClinicWorkingDayArgs(
-                  selectedDays: selectedDays, clinicId: widget.clinicId),
+                selectedDays: selectedDays,
+                clinicId: widget.clinicId,
+              ),
             );
           },
         ),

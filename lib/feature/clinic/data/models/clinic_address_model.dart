@@ -20,7 +20,8 @@ class ClinicAddressModel extends ClinicAddressEntity {
       id: json["id"],
       clinicId: json["clinic_id"],
       governorate: json["governorate"] != null
-          ? GovernorateModel.fromJson(json["governorate"] as Map<String, dynamic>)
+          ? GovernorateModel.fromJson(
+              json["governorate"] as Map<String, dynamic>)
           : null,
       markaz: json["markaz"] != null
           ? CityModel.fromJson(json["markaz"] as Map<String, dynamic>)
@@ -61,4 +62,3 @@ class ClinicAddressModel extends ClinicAddressEntity {
     );
   }
 }
-

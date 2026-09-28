@@ -119,18 +119,53 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
                   50.hBox,
                   ClinicShiftButtonStates(
                     onPressed: () {
-                      final hasInvalidDay = selectedDays
+                      final activeDays = selectedDays
                           .where((d) => d.isSelected == true)
-                          .any((d) =>
-                              !(d.clinicShiftMorningEntity?.isActive ??
-                                  false) &&
-                              !(d.clinicShiftEveningEntity?.isActive ??
-                                  false));
+                          .toList();
 
-                      if (hasInvalidDay) {
+                      if (activeDays.isEmpty) {
+                        AppSnackBar.show(
+                          context: context,
+                          message: AppString.selectWorkingDays,
+                        );
+                        return;
+                      }
+
+                      final hasDayWithoutActiveShift = activeDays.any((d) =>
+                          !(d.clinicShiftMorningEntity?.isActive ?? false) &&
+                          !(d.clinicShiftEveningEntity?.isActive ?? false));
+
+                      if (hasDayWithoutActiveShift) {
                         AppSnackBar.show(
                           context: context,
                           message: AppString.selectShift,
+                        );
+                        return;
+                      }
+
+                      final hasIncompleteShift = activeDays.any((d) {
+                        final mActive =
+                            d.clinicShiftMorningEntity?.isActive ?? false;
+                        final eActive =
+                            d.clinicShiftEveningEntity?.isActive ?? false;
+
+                        if (mActive &&
+                            (d.clinicShiftMorningEntity?.start == null ||
+                                d.clinicShiftMorningEntity?.end == null)) {
+                          return true;
+                        }
+                        if (eActive &&
+                            (d.clinicShiftEveningEntity?.start == null ||
+                                d.clinicShiftEveningEntity?.end == null)) {
+                          return true;
+                        }
+                        return false;
+                      });
+
+                      if (hasIncompleteShift) {
+                        AppSnackBar.show(
+                          context: context,
+                          message: AppString.selectShiftTimesValidator,
                         );
                         return;
                       }

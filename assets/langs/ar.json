@@ -290,5 +290,11 @@
     "Select Markaz": "اختر المركز",
     "Select Village": "اختر القرية / المدينة",
     "Please select a governorate": "يرجى اختيار المحافظة",
-    "Please select a markaz": "يرجى اختيار المركز"
+    "Please select a markaz": "يرجى اختيار المركز",
+    "Follow-up fee": "رسوم الاستشارة",
+    "Please enter clinic name": "يرجى إدخال اسم العيادة",
+    "Please enter phone number": "يرجى إدخال رقم الهاتف",
+    "Please enter consultation fee": "يرجى إدخال رسوم الكشف",
+    "Please enter street": "يرجى إدخال اسم الشارع",
+    "Please select start and end times for all active shifts": "يرجى تحديد أوقات البدء والانتهاء لجميع الفترات المفعلة"
 }
