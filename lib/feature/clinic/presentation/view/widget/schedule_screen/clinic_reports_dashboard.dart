@@ -187,25 +187,6 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
                             : AppColors.statusCompleted),
                   ],
                 ),
-                const SizedBox(height: 18),
-                Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: Text(AppString.revenueTrend,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(fontWeight: FontWeight.w600))),
-                const SizedBox(height: 12),
-                SizedBox(
-                    height: 112,
-                    child: _RevenueChart(values: data.dailyRevenue, locale: locale)),
-                Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: Text(AppString.revenueEstimateNote,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: AppColors.grey))),
               ]);
             },
           ),
@@ -320,41 +301,5 @@ class _AddExpenseDialogState extends State<_AddExpenseDialog> {
         FilledButton(onPressed: _save, child: Text(AppString.save)),
       ],
     );
-  }
-}
-
-class _RevenueChart extends StatelessWidget {
-  const _RevenueChart({required this.values, required this.locale});
-  final List<double> values;
-  final String locale;
-
-  @override
-  Widget build(BuildContext context) {
-    final buckets = values.length > 14
-        ? List<double>.generate(
-            7, (i) => values.skip(i * 4).take(4).fold(0, (a, b) => a + b))
-        : values;
-    final maxValue = buckets.fold<double>(0, (a, b) => a > b ? a : b);
-    return Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-      for (final value in buckets)
-        Expanded(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2),
-          child: Tooltip(
-            message: NumberFormat.decimalPattern(locale).format(value.round()),
-            child: Align(
-                alignment: Alignment.bottomCenter,
-                child: FractionallySizedBox(
-                  heightFactor:
-                      maxValue == 0 ? .04 : (value / maxValue).clamp(.04, 1),
-                  child: DecoratedBox(
-                      decoration: BoxDecoration(
-                          color: AppColors.primary.withValues(alpha: .78),
-                          borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(4)))),
-                )),
-          ),
-        )),
-    ]);
   }
 }
