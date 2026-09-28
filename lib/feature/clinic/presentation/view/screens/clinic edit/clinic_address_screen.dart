@@ -11,8 +11,11 @@ import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_address_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/city_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/governorate_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_address/clinic_address_bloc.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_layout_screen/city_drop_down.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_layout_screen/governorate_drop_down.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_layout_screen/markaz_drop_down.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_layout_screen/village_drop_down.dart';
 
 class ClinicAddressScreen extends StatefulWidget {
   const ClinicAddressScreen({super.key});
@@ -27,7 +30,9 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
   late TextEditingController _floorController;
   late TextEditingController _departmentController;
 
-  CityEntity? selectedCity;
+  GovernorateEntity? selectedGovernorate;
+  CityEntity? selectedMarkaz;
+  CityEntity? selectedVillage;
   ClinicInfoEntity? clinicInfo;
 
   @override
@@ -39,7 +44,7 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
     _floorController = TextEditingController();
     _departmentController = TextEditingController();
 
-    context.read<ClinicAddressBloc>().add(const GetCitiesEvent());
+    context.read<ClinicAddressBloc>().add(const GetGovernoratesEvent());
   }
 
   @override
@@ -58,16 +63,24 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
     clinicInfo =
         ModalRoute.of(context)!.settings.arguments as ClinicInfoEntity?;
 
-    if (clinicInfo?.address != null && selectedCity == null) {
-      selectedCity = clinicInfo!.address!.city;
-
+    if (clinicInfo?.address != null && _clinicAddressController.text.isEmpty) {
       _clinicAddressController.text = clinicInfo?.address?.clinicAddress ?? '';
-
       _streetController.text = clinicInfo?.address?.street ?? '';
-
       _floorController.text = clinicInfo?.address?.floor ?? '';
-
       _departmentController.text = clinicInfo?.address?.department ?? '';
+
+      selectedGovernorate = clinicInfo?.address?.governorate;
+      selectedMarkaz = clinicInfo?.address?.markaz;
+      selectedVillage = clinicInfo?.address?.village;
+      
+      if (selectedGovernorate?.id != null) {
+        context.read<ClinicAddressBloc>().add(
+            GetCitiesByGovernorateEvent(governorateId: selectedGovernorate!.id!));
+      }
+      if (selectedMarkaz?.id != null) {
+        context.read<ClinicAddressBloc>().add(
+            GetCitiesByParentEvent(parentId: selectedMarkaz!.id!));
+      }
     }
   }
 
@@ -81,7 +94,9 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
                 SaveClinicAddressEvent(
                   clinicAddressEntity: ClinicAddressModel(
                     clinicAddress: _clinicAddressController.text,
-                    city: selectedCity,
+                    governorate: selectedGovernorate,
+                    markaz: selectedMarkaz,
+                    village: selectedVillage,
                     street: _streetController.text,
                     floor: _floorController.text,
                     department: _departmentController.text,
@@ -119,10 +134,42 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
             child: Column(
               children: [
                 15.hBox,
-                CityDropDown(
-                  initialValue: selectedCity,
-                  onChangedAddress: (value) {
-                    selectedCity = value;
+                GovernorateDropDown(
+                  initialValue: selectedGovernorate,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedGovernorate = value;
+                      selectedMarkaz = null;
+                      selectedVillage = null;
+                    });
+                    if (value?.id != null) {
+                      context.read<ClinicAddressBloc>().add(
+                          GetCitiesByGovernorateEvent(
+                              governorateId: value!.id!));
+                    }
+                  },
+                ),
+                15.hBox,
+                MarkazDropDown(
+                  initialValue: selectedMarkaz,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedMarkaz = value;
+                      selectedVillage = null;
+                    });
+                    if (value?.id != null) {
+                      context.read<ClinicAddressBloc>().add(
+                          GetCitiesByParentEvent(parentId: value!.id!));
+                    }
+                  },
+                ),
+                15.hBox,
+                VillageDropDown(
+                  initialValue: selectedVillage,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedVillage = value;
+                    });
                   },
                 ),
                 15.hBox,
@@ -146,3 +193,4 @@ class _ClinicAddressScreenState extends State<ClinicAddressScreen> {
     );
   }
 }
+

@@ -283,5 +283,12 @@
     "Country": "الدولة",
     "Degree": "الدرجة العلمية",
     "Certificate Photo": "صورة الشهادة",
-    "Doctor info was Updated": "تم تحديث معلومات الطبيب"
+    "Doctor info was Updated": "تم تحديث معلومات الطبيب",
+    "Markaz": "المركز",
+    "Village": "القرية",
+    "Select Governorate": "اختر المحافظة",
+    "Select Markaz": "اختر المركز",
+    "Select Village": "اختر القرية / المدينة",
+    "Please select a governorate": "يرجى اختيار المحافظة",
+    "Please select a markaz": "يرجى اختيار المركز"
 }

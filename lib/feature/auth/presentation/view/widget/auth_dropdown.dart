@@ -41,9 +41,26 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
   }
 
   @override
+  void didUpdateWidget(AppDropdown<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.value != oldWidget.value) {
+      selectedItem = widget.value;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // Ensure selectedItem is present in items to prevent Flutter assertion errors
+    if (selectedItem != null && widget.items.isNotEmpty) {
+      if (!widget.items.contains(selectedItem)) {
+        // If not found by equality, try to clear it or it will crash.
+        // We will just set it to null if it's strictly not in the items list.
+        selectedItem = null;
+      }
+    }
+
     return DropdownButtonFormField<T>(
-      initialValue: selectedItem,
+      value: selectedItem,
       hint: Text(widget.hint, style: widget.hintStyle),
       decoration: InputDecoration(
         hintText: selectedItem == null ? widget.hint : null,

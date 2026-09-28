@@ -13,6 +13,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_address
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working_day_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/governorate_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/repos/clinic_repo.dart';
 
 class ClinicRepoImpl implements ClinicRepo {
@@ -133,4 +134,40 @@ class ClinicRepoImpl implements ClinicRepo {
       return left(ErrorHandler.handle(e));
     }
   }
+
+  @override
+  Future<Either<ApiErrorModel, List<GovernorateEntity>>>
+      getGovernorates() async {
+    try {
+      final response = await clinicRemoteData.getGovernorates();
+      return right(response);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, List<CityEntity>>> getCitiesByGovernorate(
+      {required int governorateId}) async {
+    try {
+      final response = await clinicRemoteData.getCitiesByGovernorate(
+          governorateId: governorateId);
+      return right(response);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, List<CityEntity>>> getCitiesByParent(
+      {required int parentId}) async {
+    try {
+      final response =
+          await clinicRemoteData.getCitiesByParent(parentId: parentId);
+      return right(response);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
 }
+

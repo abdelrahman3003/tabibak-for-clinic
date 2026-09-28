@@ -43,6 +43,9 @@ import 'package:tabibak_for_clinic/feature/clinic/data/repos_impl/clinic_repo_im
 import 'package:tabibak_for_clinic/feature/clinic/domain/repos/clinic_repo.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_info_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_cities_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_governorates_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_cities_by_governorate_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_cities_by_parent_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_info_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_working_day_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_days_use_case.dart';
@@ -171,9 +174,20 @@ Future<void> initGetIt() async {
       () => ToggleClinicAvailableUseCase(clinicRepo: getit<ClinicRepo>()));
   getit.registerLazySingleton<GetCitiesUseCase>(
       () => GetCitiesUseCase(clinicRepo: getit<ClinicRepo>()));
+  getit.registerLazySingleton<GetGovernoratesUseCase>(
+      () => GetGovernoratesUseCase(clinicRepo: getit<ClinicRepo>()));
+  getit.registerLazySingleton<GetCitiesByGovernorateUseCase>(
+      () => GetCitiesByGovernorateUseCase(clinicRepo: getit<ClinicRepo>()));
+  getit.registerLazySingleton<GetCitiesByParentUseCase>(
+      () => GetCitiesByParentUseCase(clinicRepo: getit<ClinicRepo>()));
+
   // blocs
   getit.registerFactory(() => ClinicInfoBloc(
-      getit<CreateClinicInfoUseCase>(), getit<GetCitiesUseCase>()));
+      getit<CreateClinicInfoUseCase>(),
+      getit<GetCitiesUseCase>(),
+      getit<GetGovernoratesUseCase>(),
+      getit<GetCitiesByGovernorateUseCase>(),
+      getit<GetCitiesByParentUseCase>()));
   getit.registerFactory(
       () => ClinicWorkingDayBloc(getDaysUseCase: getit<GetDaysUseCase>()));
   getit.registerFactory(
@@ -188,7 +202,11 @@ Future<void> initGetIt() async {
   getit.registerFactory(
       () => ClinicScheduleUpdateBloc(getit<SaveClinicWorkingDayUseCase>()));
   getit.registerFactory(() => ClinicAddressBloc(
-      getit<SaveClinicAddressUseCase>(), getit<GetCitiesUseCase>()));
+      getit<SaveClinicAddressUseCase>(),
+      getit<GetCitiesUseCase>(),
+      getit<GetGovernoratesUseCase>(),
+      getit<GetCitiesByGovernorateUseCase>(),
+      getit<GetCitiesByParentUseCase>()));
 
   //! Doctor Feature
   // remote data source

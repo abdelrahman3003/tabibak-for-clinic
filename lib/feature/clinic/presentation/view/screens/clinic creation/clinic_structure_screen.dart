@@ -8,9 +8,12 @@ import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/city_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_address_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/governorate_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_structure_screen/%20clinic_is_online.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_structure_screen/city_init_drop_down.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_structure_screen/governorate_init_drop_down.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_structure_screen/markaz_init_drop_down.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_structure_screen/village_init_drop_down.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_structure_screen/clinic_info_button_states.dart';
 
 class ClinicStructureScreen extends StatefulWidget {
@@ -25,7 +28,10 @@ class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
   late TextEditingController clinicPhoneController;
   late TextEditingController clinicConsultationFeeController;
   late TextEditingController clinicFollowUpFeeController;
-  CityEntity? selectedCity;
+  
+  GovernorateEntity? selectedGovernorate;
+  CityEntity? selectedMarkaz;
+  CityEntity? selectedVillage;
   bool isOnline = false;
 
   @override
@@ -34,7 +40,7 @@ class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
     clinicPhoneController = TextEditingController();
     clinicConsultationFeeController = TextEditingController();
     clinicFollowUpFeeController = TextEditingController();
-    context.read<ClinicInfoBloc>().add(const GetCitiesEvent());
+    context.read<ClinicInfoBloc>().add(const GetGovernoratesEvent());
     super.initState();
   }
 
@@ -56,10 +62,40 @@ class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
                 label: AppString.clinicName,
                 controller: clinicNameController,
               ),
-              CityInitDropDown(
-                initialValue: selectedCity,
-                onChangedAddress: (value) {
-                  selectedCity = value;
+              GovernorateInitDropDown(
+                initialValue: selectedGovernorate,
+                onChanged: (value) {
+                  setState(() {
+                    selectedGovernorate = value;
+                    selectedMarkaz = null;
+                    selectedVillage = null;
+                  });
+                  if (value?.id != null) {
+                    context.read<ClinicInfoBloc>().add(
+                        GetCitiesByGovernorateEvent(
+                            governorateId: value!.id!));
+                  }
+                },
+              ),
+              MarkazInitDropDown(
+                initialValue: selectedMarkaz,
+                onChanged: (value) {
+                  setState(() {
+                    selectedMarkaz = value;
+                    selectedVillage = null;
+                  });
+                  if (value?.id != null) {
+                    context.read<ClinicInfoBloc>().add(
+                        GetCitiesByParentEvent(parentId: value!.id!));
+                  }
+                },
+              ),
+              VillageInitDropDown(
+                initialValue: selectedVillage,
+                onChanged: (value) {
+                  setState(() {
+                    selectedVillage = value;
+                  });
                 },
               ),
               TextFormFiledWidget(
@@ -103,7 +139,9 @@ class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
                                 0,
                             isBooking: isOnline,
                             address: ClinicAddressEntity(
-                              city: selectedCity,
+                              governorate: selectedGovernorate,
+                              markaz: selectedMarkaz,
+                              village: selectedVillage,
                             ),
                           ),
                         ),
@@ -123,6 +161,8 @@ class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
     clinicNameController.dispose();
     clinicPhoneController.dispose();
     clinicConsultationFeeController.dispose();
+    clinicFollowUpFeeController.dispose();
     super.dispose();
   }
 }
+

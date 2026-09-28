@@ -5,6 +5,9 @@ class CityModel extends CityEntity {
     super.id,
     super.nameAr,
     super.nameEn,
+    super.governorateId,
+    super.parentId,
+    super.type,
   });
 
   factory CityModel.fromJson(Map<String, dynamic> json) {
@@ -12,6 +15,9 @@ class CityModel extends CityEntity {
       id: json['id'],
       nameAr: json['name_ar'],
       nameEn: json['name_en'],
+      governorateId: json['governorate_id'],
+      parentId: json['parent_id'],
+      type: json['type'],
     );
   }
 
@@ -20,6 +26,9 @@ class CityModel extends CityEntity {
       'id': id,
       'name_ar': nameAr,
       'name_en': nameEn,
+      'governorate_id': governorateId,
+      'parent_id': parentId,
+      'type': type,
     };
   }
 }
@@ -30,6 +39,9 @@ extension CityMapper on CityModel {
       id: id,
       nameAr: nameAr,
       nameEn: nameEn,
+      governorateId: governorateId,
+      parentId: parentId,
+      type: type,
     );
   }
 }

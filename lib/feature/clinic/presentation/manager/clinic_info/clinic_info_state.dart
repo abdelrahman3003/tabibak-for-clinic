@@ -28,3 +28,21 @@ final class GetCitiesSuccess extends ClinicInfoState {
 
   const GetCitiesSuccess({required this.cities});
 }
+
+final class GetGovernoratesSuccess extends ClinicInfoState {
+  final List<GovernorateEntity> governorates;
+
+  const GetGovernoratesSuccess({required this.governorates});
+}
+
+final class GetMarkazSuccess extends ClinicInfoState {
+  final List<CityEntity> cities;
+
+  const GetMarkazSuccess({required this.cities});
+}
+
+final class GetVillagesSuccess extends ClinicInfoState {
+  final List<CityEntity> cities;
+
+  const GetVillagesSuccess({required this.cities});
+}

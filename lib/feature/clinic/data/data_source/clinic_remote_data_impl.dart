@@ -7,6 +7,7 @@ import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_address_mod
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/governorate_model.dart';
 
 class ClinicRemoteDataImpl implements ClinicRemoteData {
   final SupabaseClient supabase;
@@ -44,7 +45,7 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
   Future<List<ClinicInfoModel>> getClinicInfo() async {
     final response = await supabase
         .from('clinic_data')
-        .select('*, clinic_address(*, city(*))')
+        .select('*, clinic_address(*, governorate(*), markaz:clinic_address_markaz_id_fkey(*), village:clinic_address_village_id_fkey(*))')
         .eq('doctor_id', supabase.auth.currentUser!.id);
 
     return (response as List)
@@ -164,4 +165,40 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
     final data = response as List;
     return data.map((json) => CityModel.fromJson(json)).toList();
   }
+
+  @override
+  Future<List<GovernorateModel>> getGovernorates() async {
+    final response = await supabase.from('governorate').select("*");
+
+    final data = response as List;
+    return data.map((json) => GovernorateModel.fromJson(json)).toList();
+  }
+
+  @override
+  Future<List<CityModel>> getCitiesByGovernorate({
+    required int governorateId,
+  }) async {
+    final response = await supabase
+        .from('city')
+        .select("*")
+        .eq('governorate_id', governorateId)
+        .eq('type', 'markaz');
+
+    final data = response as List;
+    return data.map((json) => CityModel.fromJson(json)).toList();
+  }
+
+  @override
+  Future<List<CityModel>> getCitiesByParent({
+    required int parentId,
+  }) async {
+    final response = await supabase
+        .from('city')
+        .select("*")
+        .eq('parent_id', parentId);
+
+    final data = response as List;
+    return data.map((json) => CityModel.fromJson(json)).toList();
+  }
 }
+

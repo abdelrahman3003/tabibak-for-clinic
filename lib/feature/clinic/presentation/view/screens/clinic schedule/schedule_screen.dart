@@ -50,8 +50,8 @@ class ScheduleScreen extends StatelessWidget {
   String _clinicAddress(BuildContext context) {
     final address = clinicInfoEntity.address;
     final city = context.locale.languageCode == 'ar'
-        ? address?.city?.nameAr
-        : address?.city?.nameEn;
+        ? (address?.village?.nameAr ?? address?.markaz?.nameAr ?? address?.governorate?.nameAr)
+        : (address?.village?.nameEn ?? address?.markaz?.nameEn ?? address?.governorate?.nameEn);
     final parts = [address?.clinicAddress, city]
         .where((part) => part != null && part.trim().isNotEmpty)
         .cast<String>()

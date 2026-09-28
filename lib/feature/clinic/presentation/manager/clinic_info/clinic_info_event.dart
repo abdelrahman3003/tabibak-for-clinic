@@ -18,3 +18,25 @@ class GetCitiesEvent extends ClinicInfoEvent {
   @override
   List<Object> get props => [];
 }
+
+class GetGovernoratesEvent extends ClinicInfoEvent {
+  const GetGovernoratesEvent();
+  @override
+  List<Object> get props => [];
+}
+
+class GetCitiesByGovernorateEvent extends ClinicInfoEvent {
+  final int governorateId;
+
+  const GetCitiesByGovernorateEvent({required this.governorateId});
+  @override
+  List<Object> get props => [governorateId];
+}
+
+class GetCitiesByParentEvent extends ClinicInfoEvent {
+  final int parentId;
+
+  const GetCitiesByParentEvent({required this.parentId});
+  @override
+  List<Object> get props => [parentId];
+}

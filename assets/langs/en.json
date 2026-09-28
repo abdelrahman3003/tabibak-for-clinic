@@ -283,5 +283,12 @@
     "Country": "Country",
     "Degree": "Degree",
     "Certificate Photo": "Certificate Photo",
-    "Doctor info was Updated": "Doctor information was updated"
+    "Doctor info was Updated": "Doctor information was updated",
+    "Markaz": "District (Markaz)",
+    "Village": "Village",
+    "Select Governorate": "Select Governorate",
+    "Select Markaz": "Select District (Markaz)",
+    "Select Village": "Select Village / City",
+    "Please select a governorate": "Please select a governorate",
+    "Please select a markaz": "Please select a district"
 }

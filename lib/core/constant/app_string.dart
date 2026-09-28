@@ -23,6 +23,14 @@ class AppString {
   static String get city => "City".tr();
   static String get floor => "Floor".tr();
   static String get department => "Department".tr();
+  static String get markaz => "Markaz".tr();
+  static String get village => "Village".tr();
+  static String get selectGovernorate => "Select Governorate".tr();
+  static String get selectMarkaz => "Select Markaz".tr();
+  static String get selectVillage => "Select Village".tr();
+  static String get selectGovernorateValidator =>
+      "Please select a governorate".tr();
+  static String get selectMarkazValidator => "Please select a markaz".tr();
   static String get clinicLocation => "Clinic location".tr();
   static String get pickOnMap => "Pick on map".tr();
   static String get workingHours => "Working hours".tr();

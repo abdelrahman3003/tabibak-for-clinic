@@ -1,20 +1,14 @@
 import 'package:equatable/equatable.dart';
 
-class CityEntity extends Equatable {
+class GovernorateEntity extends Equatable {
   final int? id;
   final String? nameAr;
   final String? nameEn;
-  final int? governorateId;
-  final int? parentId;
-  final String? type;
 
-  const CityEntity({
+  const GovernorateEntity({
     this.id,
     this.nameAr,
     this.nameEn,
-    this.governorateId,
-    this.parentId,
-    this.type,
   });
 
   @override
@@ -22,8 +16,5 @@ class CityEntity extends Equatable {
         id,
         nameAr,
         nameEn,
-        governorateId,
-        parentId,
-        type,
       ];
 }
