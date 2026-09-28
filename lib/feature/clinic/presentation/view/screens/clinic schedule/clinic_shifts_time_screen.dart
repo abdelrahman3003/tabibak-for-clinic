@@ -172,19 +172,59 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
       eveningActive: eveningActive,
     );
 
-    // Auto-fill the same time to all other days with the same shift
-    if (morningStart != null ||
-        morningEnd != null ||
-        eveningStart != null ||
-        eveningEnd != null) {
-      for (final otherDay in selectedDays) {
-        if (otherDay.clinicDayEntity?.id == day.id) continue;
+    // Auto-fill logic
+    for (final otherDay in selectedDays) {
+      if (otherDay.clinicDayEntity?.id == day.id) continue;
+
+      TimeOfDay? fillMorningStart;
+      TimeOfDay? fillMorningEnd;
+      TimeOfDay? fillEveningStart;
+      TimeOfDay? fillEveningEnd;
+      bool? fillMorningActive;
+      bool? fillEveningActive;
+
+      // Only auto-fill active state if turning ON and the other day is OFF
+      if (morningActive == true &&
+          !(otherDay.clinicShiftMorningEntity?.isActive ?? false)) {
+        fillMorningActive = true;
+      }
+      if (eveningActive == true &&
+          !(otherDay.clinicShiftEveningEntity?.isActive ?? false)) {
+        fillEveningActive = true;
+      }
+
+      // Only auto-fill times if the other day's time is null
+      if (morningStart != null &&
+          otherDay.clinicShiftMorningEntity?.start == null) {
+        fillMorningStart = morningStart;
+      }
+      if (morningEnd != null &&
+          otherDay.clinicShiftMorningEntity?.end == null) {
+        fillMorningEnd = morningEnd;
+      }
+      if (eveningStart != null &&
+          otherDay.clinicShiftEveningEntity?.start == null) {
+        fillEveningStart = eveningStart;
+      }
+      if (eveningEnd != null &&
+          otherDay.clinicShiftEveningEntity?.end == null) {
+        fillEveningEnd = eveningEnd;
+      }
+
+      if (fillMorningStart != null ||
+          fillMorningEnd != null ||
+          fillEveningStart != null ||
+          fillEveningEnd != null ||
+          fillMorningActive != null ||
+          fillEveningActive != null) {
         _updateDay(
           otherDay.clinicDayEntity!,
-          morningStart: morningStart,
-          morningEnd: morningEnd,
-          eveningStart: eveningStart,
-          eveningEnd: eveningEnd,
+          morningStart: fillMorningStart,
+          morningEnd: fillMorningEnd,
+          eveningStart: fillEveningStart,
+          eveningEnd: fillEveningEnd,
+          morningActive: fillMorningActive,
+          eveningActive: fillEveningActive,
         );
       }
     }
