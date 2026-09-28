@@ -21,10 +21,18 @@ class TimeField extends StatefulWidget {
 class _TimeFieldState extends State<TimeField> {
   TimeOfDay? selectedTime;
 
+  @override
+  void didUpdateWidget(covariant TimeField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.value != oldWidget.value) {
+      selectedTime = widget.value;
+    }
+  }
+
   Future<void> pickTime() async {
     final TimeOfDay? time = await showTimePicker(
       context: context,
-      initialTime: selectedTime ?? TimeOfDay.now(),
+      initialTime: selectedTime ?? widget.value ?? TimeOfDay.now(),
     );
 
     if (time != null) {

@@ -4,6 +4,7 @@ import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_widget.dart';
+import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_shift_entity.dart';
@@ -46,11 +47,9 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
           slivers: [
             SliverToBoxAdapter(
               child: Column(
-                children: List.generate(
-                  widget.clinicWorkingDayArgs.selectedDays.length,
-                  (index) {
-                    final workingDay =
-                        widget.clinicWorkingDayArgs.selectedDays[index];
+                children: selectedDays
+                    .where((d) => d.isSelected == true)
+                    .map((workingDay) {
 
                     return ShiftDayTime(
                       day: workingDay.clinicDayEntity!,
@@ -62,14 +61,12 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
                           workingDay.clinicShiftMorningEntity?.start,
                       initialMorningEnd:
                           workingDay.clinicShiftMorningEntity?.end,
-                      isMorningActive: selectedDays[index]
-                              .clinicShiftMorningEntity
-                              ?.isActive ??
-                          false,
-                      isEveningActive: selectedDays[index]
-                              .clinicShiftEveningEntity
-                              ?.isActive ??
-                          false,
+                      isMorningActive:
+                          workingDay.clinicShiftMorningEntity?.isActive ??
+                              false,
+                      isEveningActive:
+                          workingDay.clinicShiftEveningEntity?.isActive ??
+                              false,
                       onStarMorningSelected: (value) {
                         _saveDayTime(
                           workingDay.clinicDayEntity!,
@@ -111,8 +108,7 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
                         );
                       },
                     );
-                  },
-                ),
+                  }).toList(),
               ),
             ),
             SliverFillRemaining(
@@ -123,6 +119,22 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
                   50.hBox,
                   ClinicShiftButtonStates(
                     onPressed: () {
+                      final hasInvalidDay = selectedDays
+                          .where((d) => d.isSelected == true)
+                          .any((d) =>
+                              !(d.clinicShiftMorningEntity?.isActive ??
+                                  false) &&
+                              !(d.clinicShiftEveningEntity?.isActive ??
+                                  false));
+
+                      if (hasInvalidDay) {
+                        AppSnackBar.show(
+                          context: context,
+                          message: AppString.selectShift,
+                        );
+                        return;
+                      }
+
                       context.read<ClinicShiftBloc>().add(
                             CreateClinicShiftEvent(
                                 widget.clinicWorkingDayArgs.clinicId,
@@ -149,43 +161,66 @@ class _ClinicShiftsTimeScreenState extends State<ClinicShiftsTimeScreen> {
     bool? morningActive,
     bool? eveningActive,
   }) {
+    // Update the specific day first
+    _updateDay(
+      day,
+      morningStart: morningStart,
+      morningEnd: morningEnd,
+      eveningStart: eveningStart,
+      eveningEnd: eveningEnd,
+      morningActive: morningActive,
+      eveningActive: eveningActive,
+    );
+
+    // Auto-fill the same time to all other days with the same shift
+    if (morningStart != null ||
+        morningEnd != null ||
+        eveningStart != null ||
+        eveningEnd != null) {
+      for (final otherDay in selectedDays) {
+        if (otherDay.clinicDayEntity?.id == day.id) continue;
+        _updateDay(
+          otherDay.clinicDayEntity!,
+          morningStart: morningStart,
+          morningEnd: morningEnd,
+          eveningStart: eveningStart,
+          eveningEnd: eveningEnd,
+        );
+      }
+    }
+
+    setState(() {});
+  }
+
+  void _updateDay(
+    ClinicDayEntity day, {
+    TimeOfDay? morningStart,
+    TimeOfDay? morningEnd,
+    TimeOfDay? eveningStart,
+    TimeOfDay? eveningEnd,
+    bool? morningActive,
+    bool? eveningActive,
+  }) {
     final index =
         selectedDays.indexWhere((e) => e.clinicDayEntity?.id == day.id);
 
-    if (index == -1) {
-      selectedDays.add(
-        ClinicWorkingDayModel(
-            clinicDayEntity: day,
-            isSelected: true,
-            clinicShiftMorningEntity: ClinicShiftEntity(
-              start: morningStart,
-              end: morningEnd,
-              isActive: morningActive ?? false,
-            ),
-            clinicShiftEveningEntity: ClinicShiftEntity(
-              start: eveningStart,
-              end: eveningEnd,
-              isActive: eveningActive ?? false,
-            )),
-      );
-    } else {
-      final old = selectedDays[index];
-      selectedDays[index] = ClinicWorkingDayModel(
-        id: old.id,
-        isSelected: true,
-        clinicDayEntity: day,
-        clinicShiftMorningEntity: ClinicShiftEntity(
-          start: morningStart ?? old.clinicShiftMorningEntity?.start,
-          end: morningEnd ?? old.clinicShiftMorningEntity?.end,
-          isActive: morningActive ?? old.clinicShiftMorningEntity?.isActive,
-        ),
-        clinicShiftEveningEntity: ClinicShiftEntity(
-          start: eveningStart ?? old.clinicShiftEveningEntity?.start,
-          end: eveningEnd ?? old.clinicShiftEveningEntity?.end,
-          isActive: eveningActive ?? old.clinicShiftEveningEntity?.isActive,
-        ),
-      );
-    }
-    setState(() {});
+    if (index == -1) return;
+
+    final old = selectedDays[index];
+    selectedDays[index] = ClinicWorkingDayModel(
+      id: old.id,
+      isSelected: old.isSelected,
+      clinicDayEntity: day,
+      clinicShiftMorningEntity: ClinicShiftEntity(
+        start: morningStart ?? old.clinicShiftMorningEntity?.start,
+        end: morningEnd ?? old.clinicShiftMorningEntity?.end,
+        isActive: morningActive ?? old.clinicShiftMorningEntity?.isActive,
+      ),
+      clinicShiftEveningEntity: ClinicShiftEntity(
+        start: eveningStart ?? old.clinicShiftEveningEntity?.start,
+        end: eveningEnd ?? old.clinicShiftEveningEntity?.end,
+        isActive: eveningActive ?? old.clinicShiftEveningEntity?.isActive,
+      ),
+    );
   }
 }

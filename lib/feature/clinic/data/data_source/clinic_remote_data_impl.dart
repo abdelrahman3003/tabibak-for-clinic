@@ -83,28 +83,36 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
     required int clinicId,
     required List<ClinicWorkingDayModel> selectedDays,
   }) async {
-    final response = await Supabase.instance.client.functions.invoke(
+    await Supabase.instance.client.functions.invoke(
       'save-clinic-working-days',
       body: {
         "clinicId": clinicId,
         "selectedDays": selectedDays.map((day) {
+          final isMorningActive =
+              day.clinicShiftMorningEntity?.isActive ?? false;
+          final isEveningActive =
+              day.clinicShiftEveningEntity?.isActive ?? false;
           return {
             "dayId": day.clinicDayEntity?.id,
             "isSelected": day.isSelected ?? false,
-            "morningStart": _formatTime(day.clinicShiftMorningEntity?.start),
-            "morningEnd": _formatTime(day.clinicShiftMorningEntity?.end),
-            "eveningStart": _formatTime(day.clinicShiftEveningEntity?.start),
-            "eveningEnd": _formatTime(day.clinicShiftEveningEntity?.end),
+            "morningActive": isMorningActive,
+            "morningStart": isMorningActive
+                ? _formatTime(day.clinicShiftMorningEntity?.start)
+                : null,
+            "morningEnd": isMorningActive
+                ? _formatTime(day.clinicShiftMorningEntity?.end)
+                : null,
+            "eveningActive": isEveningActive,
+            "eveningStart": isEveningActive
+                ? _formatTime(day.clinicShiftEveningEntity?.start)
+                : null,
+            "eveningEnd": isEveningActive
+                ? _formatTime(day.clinicShiftEveningEntity?.end)
+                : null,
           };
         }).toList(),
       },
     );
-
-    final data = response.data;
-
-    if (data == null || data['success'] != true) {
-      throw Exception(data?['error'] ?? "Unknown error");
-    }
   }
 
   @override

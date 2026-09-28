@@ -71,12 +71,10 @@ class _ScheduleEditDaysScreenState extends State<ScheduleEditDaysScreen> {
             AppButton(
               title: AppString.continueButton,
               onPressed: () {
-                final selectedDays =
-                    days.where((e) => e.isSelected == true).toList();
                 context.pushNamed(
                   Routes.clinicShiftsTimeScreen,
                   arguments: ClinicWorkingDayArgs(
-                      selectedDays: selectedDays, clinicId: args.clinicId),
+                      selectedDays: days, clinicId: args.clinicId),
                 );
               },
             ),
