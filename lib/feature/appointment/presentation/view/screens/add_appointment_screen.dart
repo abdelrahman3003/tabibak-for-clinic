@@ -61,18 +61,42 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
       appBar: AppBarSave(
         text: AppString.addAppointment,
         onTap: () {
+          if (patientNameController.text.trim().isEmpty) {
+            AppSnackBar.show(
+              context: context,
+              message: AppString.patientName,
+            );
+            return;
+          }
+
+          if (dateTime == null) {
+            AppSnackBar.show(
+              context: context,
+              message: AppString.date,
+            );
+            return;
+          }
+
+          if (selectedShift == null) {
+            AppSnackBar.show(
+              context: context,
+              message: AppString.selectShift,
+            );
+            return;
+          }
+
           final doctorId = getit<Supabase>().client.auth.currentUser!.id;
 
           context.read<CreateAppointmentBloc>().add(
                 AddAppointmentEvent(
                   appointment: AppointmentEntity(
                     doctorId: doctorId,
-                    userId: doctorId,
-                    name: patientNameController.text,
+                    userId: null,
+                    name: patientNameController.text.trim(),
                     statusId: AppointmentStatus.confirmed.id,
-                    phone: phonePhoneController.text,
+                    phone: phonePhoneController.text.trim(),
                     appointmentDate: dateTime,
-                    description: descriptionController.text,
+                    description: descriptionController.text.trim(),
                     appointmentMorningShiftId:
                         selectedShift?.shiftType == "morning"
                             ? selectedShift?.shiftId
