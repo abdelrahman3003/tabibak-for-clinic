@@ -119,10 +119,22 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
   Future<void> saveClinicAddress({
     required ClinicAddressModel clinicAddressModel,
   }) async {
-    await supabase
+    final existing = await supabase
         .from('clinic_address')
-        .update(clinicAddressModel.toJson())
-        .eq('clinic_id', clinicAddressModel.clinicId!);
+        .select('id')
+        .eq('clinic_id', clinicAddressModel.clinicId!)
+        .maybeSingle();
+
+    if (existing != null) {
+      await supabase
+          .from('clinic_address')
+          .update(clinicAddressModel.toJson())
+          .eq('clinic_id', clinicAddressModel.clinicId!);
+    } else {
+      await supabase
+          .from('clinic_address')
+          .insert(clinicAddressModel.toJson());
+    }
   }
 
   @override
