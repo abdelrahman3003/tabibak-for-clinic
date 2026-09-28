@@ -7,6 +7,7 @@ class ClinicInfoModel extends ClinicInfoEntity {
       required super.clinicName,
       required super.phoneNumber,
       required super.consultationFee,
+      super.followUpFee,
       required super.address,
       required super.isBooking,
       required super.isAvailable});
@@ -22,6 +23,7 @@ class ClinicInfoModel extends ClinicInfoEntity {
               addressList.first as Map<String, dynamic>)
           : null,
       consultationFee: json["consultation_fee"],
+      followUpFee: json["follow_up_fee"],
       isBooking: json["is_booking"],
       isAvailable: json["is_available"],
     );
@@ -32,6 +34,7 @@ class ClinicInfoModel extends ClinicInfoEntity {
       "clinic_name": clinicName,
       "phone_number": phoneNumber,
       "consultation_fee": consultationFee,
+      "follow_up_fee": followUpFee,
       "is_booking": isBooking,
       "is_available": isBooking,
     };
@@ -46,6 +49,7 @@ extension ClinicInfoEntityMapper on ClinicInfoEntity {
         phoneNumber: phoneNumber,
         address: address,
         consultationFee: consultationFee,
+        followUpFee: followUpFee,
         isBooking: isBooking,
         isAvailable: isAvailable);
   }

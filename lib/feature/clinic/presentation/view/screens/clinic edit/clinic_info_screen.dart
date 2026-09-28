@@ -25,11 +25,13 @@ class _ClinicInfoScreenState extends State<ClinicInfoScreen> {
   late TextEditingController _clinicNameController;
   late TextEditingController _phoneController;
   late TextEditingController _feeController;
+  late TextEditingController _followUpFeeController;
   @override
   void initState() {
     _clinicNameController = TextEditingController();
     _phoneController = TextEditingController();
     _feeController = TextEditingController();
+    _followUpFeeController = TextEditingController();
 
     super.initState();
   }
@@ -43,6 +45,7 @@ class _ClinicInfoScreenState extends State<ClinicInfoScreen> {
     _clinicNameController.text = clinicInfo.clinicName ?? '';
     _phoneController.text = clinicInfo.phoneNumber ?? '';
     _feeController.text = clinicInfo.consultationFee?.toString() ?? '';
+    _followUpFeeController.text = clinicInfo.followUpFee?.toString() ?? '';
     super.didChangeDependencies();
   }
 
@@ -58,6 +61,7 @@ class _ClinicInfoScreenState extends State<ClinicInfoScreen> {
                     clinicName: _clinicNameController.text,
                     phoneNumber: _phoneController.text,
                     consultationFee: int.tryParse(_feeController.text),
+                    followUpFee: int.tryParse(_followUpFeeController.text),
                     isBooking: isOnline,
                   ),
                 ));
@@ -94,6 +98,12 @@ class _ClinicInfoScreenState extends State<ClinicInfoScreen> {
                   label: AppString.consultationFee,
                   keyboardType: TextInputType.number,
                   controller: _feeController,
+                  suffixText: AppString.egyptianPound,
+                ),
+                TextFormFiledWidget(
+                  label: AppString.followUpFee,
+                  keyboardType: TextInputType.number,
+                  controller: _followUpFeeController,
                   suffixText: AppString.egyptianPound,
                 ),
                 ClinicIsOnline(

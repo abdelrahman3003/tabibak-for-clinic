@@ -31,6 +31,7 @@ class AppString {
   static String get mainSpecialization => "Main specialization".tr();
   static String get subSpecializations => "Sub specializations (optional)".tr();
   static String get consultationFee => "Consultation fee".tr();
+  static String get followUpFee => "Follow-up fee".tr();
   static String get consultationDuration => "Consultation duration".tr();
   static String get uploadDocuments => "Upload documents".tr();
   static String get nationalId => "National ID".tr();

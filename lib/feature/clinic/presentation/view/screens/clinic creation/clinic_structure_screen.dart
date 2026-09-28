@@ -24,6 +24,7 @@ class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
   late TextEditingController clinicNameController;
   late TextEditingController clinicPhoneController;
   late TextEditingController clinicConsultationFeeController;
+  late TextEditingController clinicFollowUpFeeController;
   CityEntity? selectedCity;
   bool isOnline = false;
 
@@ -32,6 +33,7 @@ class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
     clinicNameController = TextEditingController();
     clinicPhoneController = TextEditingController();
     clinicConsultationFeeController = TextEditingController();
+    clinicFollowUpFeeController = TextEditingController();
     context.read<ClinicInfoBloc>().add(const GetCitiesEvent());
     super.initState();
   }
@@ -71,6 +73,12 @@ class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
                 controller: clinicConsultationFeeController,
                 suffixText: AppString.egyptianPound,
               ),
+              TextFormFiledWidget(
+                label: AppString.followUpFee,
+                keyboardType: TextInputType.number,
+                controller: clinicFollowUpFeeController,
+                suffixText: AppString.egyptianPound,
+              ),
               20.hBox,
               ClinicIsOnline(
                 onChanged: (value) {
@@ -89,6 +97,9 @@ class _ClinicStructureScreenState extends State<ClinicStructureScreen> {
                             phoneNumber: clinicPhoneController.text,
                             consultationFee: int.tryParse(
                                     clinicConsultationFeeController.text) ??
+                                0,
+                            followUpFee: int.tryParse(
+                                    clinicFollowUpFeeController.text) ??
                                 0,
                             isBooking: isOnline,
                             address: ClinicAddressEntity(

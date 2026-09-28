@@ -6,6 +6,7 @@ class ClinicInfoEntity {
   final String? phoneNumber;
   final ClinicAddressEntity? address;
   final int? consultationFee;
+  final int? followUpFee;
   final bool? isBooking;
   final bool? isAvailable;
 
@@ -15,6 +16,7 @@ class ClinicInfoEntity {
     required this.phoneNumber,
     this.address,
     required this.consultationFee,
+    this.followUpFee,
     required this.isBooking,
     this.isAvailable,
   });
