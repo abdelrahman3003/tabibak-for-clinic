@@ -34,7 +34,9 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
       }
     }
 
-    final response = await query.order('appointment_date', ascending: true);
+    final response = await query
+        .order('appointment_date', ascending: true)
+        .order('waiting_list', ascending: true);
     final data = response as List;
 
     return data.map((json) => AppointmentModel.fromJson(json)).toList();
@@ -99,5 +101,26 @@ class AppointmentRemoteDataImp implements AppointmentRemoteData {
         'follow_up_date': followUpDate.toIso8601String(),
       },
     );
+  }
+
+  @override
+  Future<void> postponeAppointment({
+    required int appointmentId,
+    required int positions,
+  }) async {
+    final response = await supabase.client.functions.invoke(
+      'postpone-appointment',
+      body: {
+        'appointment_id': appointmentId,
+        'positions': positions,
+      },
+    );
+
+    if (response.status != 200) {
+      final errorMsg = response.data is Map
+          ? (response.data['error'] ?? 'Failed to postpone appointment')
+          : 'Failed to postpone appointment';
+      throw Exception(errorMsg);
+    }
   }
 }

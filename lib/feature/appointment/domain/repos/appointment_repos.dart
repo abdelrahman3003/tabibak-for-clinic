@@ -16,4 +16,6 @@ abstract class AppointmentRepo {
       int appointmentId);
   Future<Either<ApiErrorModel, void>> setAppointmentFollowUp(
       {required int appointmentId, required DateTime followUpDate});
+  Future<Either<ApiErrorModel, void>> postponeAppointment(
+      {required int appointmentId, required int positions});
 }

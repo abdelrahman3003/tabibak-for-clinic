@@ -87,4 +87,18 @@ class AppointmentRepoImpl extends AppointmentRepo {
       return left(ErrorHandler.handle(e));
     }
   }
+
+  @override
+  Future<Either<ApiErrorModel, void>> postponeAppointment(
+      {required int appointmentId, required int positions}) async {
+    try {
+      final response = await appointmentRemoteData.postponeAppointment(
+        appointmentId: appointmentId,
+        positions: positions,
+      );
+      return right(response);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
 }

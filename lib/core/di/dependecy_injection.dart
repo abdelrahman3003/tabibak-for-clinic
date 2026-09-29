@@ -12,6 +12,7 @@ import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/add_appoin
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointment_details_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointment_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/get_appointments_use_case.dart';
+import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/postpone_appointment_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/set_appointment_follow_up_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/domain/usecase/update_appointment_status_use_case.dart';
 import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/all_appointment/all_appointments_bloc.dart';
@@ -282,6 +283,8 @@ Future<void> initGetIt() async {
   getit.registerLazySingleton<SetAppointmentFollowUpUseCase>(() =>
       SetAppointmentFollowUpUseCase(
           appointmentRepos: getit<AppointmentRepo>()));
+  getit.registerLazySingleton<PostponeAppointmentUseCase>(() =>
+      PostponeAppointmentUseCase(appointmentRepo: getit<AppointmentRepo>()));
   //blocs
   getit.registerLazySingleton<AppointmentBloc>(() => AppointmentBloc(
       getit<GetAppointmentsUseCase>(), getit<GetDoctorUseCase>()));
@@ -299,6 +302,7 @@ Future<void> initGetIt() async {
         getit<UpdateAppointmentStatusUseCase>(),
         getit<AppointmentBloc>(),
         getit<AllAppointmentsBloc>(),
-        getit<SetAppointmentFollowUpUseCase>()),
+        getit<SetAppointmentFollowUpUseCase>(),
+        getit<PostponeAppointmentUseCase>()),
   );
 }

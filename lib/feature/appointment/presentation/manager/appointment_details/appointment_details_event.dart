@@ -40,4 +40,21 @@ class SetFollowUpEvent extends AppointmentDetailsEvent {
     required this.date,
     required this.appointmentId,
   });
+
+  @override
+  List<Object> get props => [date, appointmentId];
 }
+
+class PostponeAppointmentEvent extends AppointmentDetailsEvent {
+  final int appointmentId;
+  final int positions;
+
+  const PostponeAppointmentEvent({
+    required this.appointmentId,
+    required this.positions,
+  });
+
+  @override
+  List<Object> get props => [appointmentId, positions];
+}
+
