@@ -29,6 +29,12 @@ final class UploadImageProfileSuccess extends DoctorProfileState {}
 
 final class UploadImageProfileFailed extends DoctorProfileState {}
 
+final class DeleteImageProfileLoading extends DoctorProfileState {}
+
+final class DeleteImageProfileSuccess extends DoctorProfileState {}
+
+final class DeleteImageProfileFailed extends DoctorProfileState {}
+
 final class LogOutDoctorLoading extends DoctorProfileState {}
 
 final class LogOutDoctorSuccess extends DoctorProfileState {}

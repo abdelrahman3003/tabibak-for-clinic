@@ -8,6 +8,7 @@ import 'package:tabibak_for_clinic/feature/doctor/domain/entities/specialty_enti
 abstract class DoctorProfileRepo {
   Future<Either<ApiErrorModel, DoctorEntity>> getDoctor();
   Future<Either<ApiErrorModel, void>> uploadImage(String imagePath);
+  Future<Either<ApiErrorModel, void>> deleteImage();
   Future<Either<ApiErrorModel, void>> updateDoctorInfo({
     String? name,
     String? phone,

@@ -15,4 +15,6 @@ class UploadImageProfileEvent extends DoctorProfileEvent {
   const UploadImageProfileEvent({required this.imagePath});
 }
 
+class DeleteImageProfileEvent extends DoctorProfileEvent {}
+
 class LogOutDoctorEvent extends DoctorProfileEvent {}

@@ -10,8 +10,9 @@ class ImageCircle extends StatelessWidget {
     return CircleAvatar(
       radius: radius ?? 26,
       backgroundColor: Colors.grey.shade100,
-      backgroundImage:
-          imageUrl == null ? null : CachedNetworkImageProvider(imageUrl!),
+      backgroundImage: (imageUrl != null && imageUrl!.isNotEmpty)
+          ? CachedNetworkImageProvider(imageUrl!)
+          : const AssetImage("assets/images/person_blank.png") as ImageProvider,
     );
   }
 }

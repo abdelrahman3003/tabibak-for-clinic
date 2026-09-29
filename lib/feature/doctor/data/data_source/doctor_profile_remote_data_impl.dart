@@ -38,6 +38,13 @@ class DoctorProfileRemoteDataImpl implements DoctorProfileRemoteData {
   }
 
   @override
+  Future<void> deleteImage() async {
+    await supabase.client
+        .from('doctors')
+        .update({'image': null}).eq('doctor_id', currentDoctorId!);
+  }
+
+  @override
   Future<void> updateDoctorInfo({
     String? name,
     String? phone,

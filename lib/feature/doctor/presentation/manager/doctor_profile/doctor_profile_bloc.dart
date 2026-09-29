@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/entities/doctor_entity.dart';
+import 'package:tabibak_for_clinic/feature/doctor/domain/usecase/delete_image_profile_use_case.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/usecase/get_doctor_use_case.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/usecase/log_out_use_case.dart';
 import 'package:tabibak_for_clinic/feature/doctor/domain/usecase/upload_image_profile_use_case.dart';
@@ -11,9 +12,13 @@ part 'doctor_profile_state.dart';
 class DoctorProfileBloc extends Bloc<DoctorProfileEvent, DoctorProfileState> {
   final GetDoctorUseCase getDoctorUseCase;
   final UploadImageProfileUseCase uploadImageProfileUseCase;
+  final DeleteImageProfileUseCase deleteImageProfileUseCase;
   final LogOutUseCase logOutUseCase;
   DoctorProfileBloc(
-      this.getDoctorUseCase, this.uploadImageProfileUseCase, this.logOutUseCase)
+      this.getDoctorUseCase,
+      this.uploadImageProfileUseCase,
+      this.deleteImageProfileUseCase,
+      this.logOutUseCase)
       : super(DoctorProfileInitial()) {
     on<GetDoctorProfileEvent>((event, emit) async {
       emit(DoctorProfileLoading());
@@ -29,9 +34,25 @@ class DoctorProfileBloc extends Bloc<DoctorProfileEvent, DoctorProfileState> {
       emit(UploadImageProfileLoading());
       final result = await uploadImageProfileUseCase.call(event.imagePath);
       result.fold(
-        (error) {},
+        (error) {
+          emit(UploadImageProfileFailed());
+        },
         (doctor) {
           emit(UploadImageProfileSuccess());
+          add(GetDoctorProfileEvent());
+        },
+      );
+    });
+    on<DeleteImageProfileEvent>((event, emit) async {
+      emit(DeleteImageProfileLoading());
+      final result = await deleteImageProfileUseCase.call();
+      result.fold(
+        (error) {
+          emit(DeleteImageProfileFailed());
+        },
+        (_) {
+          emit(DeleteImageProfileSuccess());
+          add(GetDoctorProfileEvent());
         },
       );
     });

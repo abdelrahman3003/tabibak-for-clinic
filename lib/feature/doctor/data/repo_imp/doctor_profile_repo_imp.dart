@@ -40,6 +40,16 @@ class DoctorProfileRepoImp implements DoctorProfileRepo {
   }
 
   @override
+  Future<Either<ApiErrorModel, void>> deleteImage() async {
+    try {
+      final result = await doctorProfileRemoteData.deleteImage();
+      return right(result);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
   Future<Either<ApiErrorModel, void>> updateDoctorInfo({
     String? name,
     String? phone,

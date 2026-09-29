@@ -6,6 +6,7 @@ import 'package:tabibak_for_clinic/feature/doctor/data/model/specialty_model.dar
 abstract class DoctorProfileRemoteData {
   Future<DoctorModel?> getDoctor();
   Future<void> uploadImage(String imageUrl);
+  Future<void> deleteImage();
   Future<void> updateDoctorInfo(
       {String? name,
       String? phone,
