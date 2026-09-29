@@ -35,9 +35,10 @@ class AppointmentModel extends AppointmentEntity {
       doctorId: json['doctor_id']?.toString(),
       userId: json['user_id']?.toString(),
       appointmentMorningShiftId: json['appointment_morning_shift_id'],
-      appointmentEveningShiftId: json['appointment_evening_shift_id'],
-      appointmentTypeEn: json['appointment_types']?['appointment_type_en'],
-      appointmentTypeAr: json['appointment_types']?['appointment_type_ar'],
+      appointmentTypeEn:
+          json['appointment_types']?['appointment_type_en']?.toString().trim(),
+      appointmentTypeAr:
+          json['appointment_types']?['appointment_type_ar']?.toString().trim(),
       followUpDate: json['follow_up_date'] != null
           ? DateTime.parse(json['follow_up_date'])
           : null,

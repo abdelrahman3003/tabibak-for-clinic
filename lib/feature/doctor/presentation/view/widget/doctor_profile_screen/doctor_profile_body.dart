@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
@@ -28,30 +29,42 @@ class DoctorProfileBody extends StatelessWidget {
           PersonalImage(
             imageUrl: doctor.image,
           ),
-          16.hBox,
-          Text(doctor.name ?? AppString.unknown,
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall
-                  ?.copyWith(fontWeight: FontWeight.bold)),
-          4.hBox,
-          Text(doctor.email ?? AppString.unknown,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: AppColors.grey)),
-          12.hBox,
-          DoctorProfileStatus(statusEntity: doctor.status!),
-          12.hBox,
+          14.hBox,
           Text(
-            (context.locale.languageCode == 'ar'
-                    ? doctor.bioAr
-                    : doctor.bioEn) ??
-                "",
-            style: Theme.of(context).textTheme.bodyMedium,
-            textAlign: TextAlign.center,
+            doctor.name ?? AppString.unknown,
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.bold,
+              color: const Color(0xff1E293B),
+            ),
           ),
-          30.hBox,
+          4.hBox,
+          Text(
+            doctor.email ?? AppString.unknown,
+            style: TextStyle(
+              fontSize: 13.sp,
+              color: AppColors.grey,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          10.hBox,
+          DoctorProfileStatus(statusEntity: doctor.status!),
+          10.hBox,
+          if ((doctor.bioAr != null && doctor.bioAr!.isNotEmpty) ||
+              (doctor.bioEn != null && doctor.bioEn!.isNotEmpty))
+            Text(
+              (context.locale.languageCode == 'ar'
+                      ? doctor.bioAr
+                      : doctor.bioEn) ??
+                  "",
+              style: TextStyle(
+                fontSize: 13.sp,
+                color: const Color(0xff475569),
+                height: 1.4,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          24.hBox,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

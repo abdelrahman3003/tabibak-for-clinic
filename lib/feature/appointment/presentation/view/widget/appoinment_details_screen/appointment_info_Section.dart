@@ -8,17 +8,42 @@ import 'package:tabibak_for_clinic/feature/appointment/presentation/view/widget/
 class AppointmentInfoSection extends StatelessWidget {
   const AppointmentInfoSection({super.key, required this.entity});
   final AppointmentEntity entity;
+
   @override
   Widget build(BuildContext context) {
+    final isArabic = context.locale.languageCode == 'ar';
+    final appointmentTypeDisplay = (isArabic
+            ? entity.appointmentTypeAr
+            : entity.appointmentTypeEn) ??
+        entity.appointmentTypeAr ??
+        entity.appointmentTypeEn ??
+        '—';
+
+    final isMorning = entity.appointmentMorningShiftId != null;
+    final isEvening = entity.appointmentEveningShiftId != null;
+    final shiftDisplay = isMorning
+        ? 'Morning'.tr()
+        : (isEvening
+            ? 'Evening'.tr()
+            : (isArabic ? 'صباحي' : 'Morning'));
+
+    final shiftIcon = isMorning
+        ? Icons.wb_sunny_outlined
+        : (isEvening
+            ? Icons.nights_stay_outlined
+            : Icons.access_time_rounded);
+
+    final shiftColor = isMorning
+        ? const Color(0xFFF59E0B)
+        : const Color(0xFF8B5CF6);
+
     return SectionCard(
       title: 'Appointment Info'.tr(),
       children: [
         DetailRow(
-          icon: Icons.tag_rounded,
+          icon: Icons.medical_services_outlined,
           label: 'Appointment Type'.tr(),
-          value: entity.appointmentTypeEn != null
-              ? AppString.localizedType(entity.appointmentTypeEn)
-              : '—',
+          value: appointmentTypeDisplay,
           iconColor: const Color(0xFF14B8A6),
         ),
         DetailRow(
@@ -28,17 +53,10 @@ class AppointmentInfoSection extends StatelessWidget {
           iconColor: const Color(0xFF6366F1),
         ),
         DetailRow(
-          icon: entity.appointmentMorningShiftId != null
-              ? _shiftIcon(entity.appointmentMorningShiftId)
-              : _shiftIcon(entity.appointmentEveningShiftId),
+          icon: shiftIcon,
           label: 'Shift'.tr(),
-          value: entity.appointmentMorningShiftId != null
-              ? _shiftLabel(entity.appointmentMorningShiftId)
-              : _shiftLabel(entity.appointmentEveningShiftId),
-          iconColor: entity.appointmentMorningShiftId != null &&
-                  entity.appointmentMorningShiftId == 1
-              ? const Color(0xFFF59E0B)
-              : const Color(0xFF8B5CF6),
+          value: shiftDisplay,
+          iconColor: shiftColor,
         ),
         DetailRow(
           icon: Icons.tag_rounded,
@@ -57,17 +75,6 @@ class AppointmentInfoSection extends StatelessWidget {
           ),
       ],
     );
-  }
-
-  String _shiftLabel(int? shift) {
-    switch (shift) {
-      case 1:
-        return 'Morning'.tr();
-      case 2:
-        return 'Evening'.tr();
-      default:
-        return '—';
-    }
   }
 
   String _formatDate(DateTime? dt) {
@@ -89,7 +96,4 @@ class AppointmentInfoSection extends StatelessWidget {
     ];
     return '${dt.day} ${months[dt.month]} ${dt.year}';
   }
-
-  IconData _shiftIcon(int? shift) =>
-      shift == 1 ? Icons.wb_sunny_outlined : Icons.nights_stay_outlined;
 }

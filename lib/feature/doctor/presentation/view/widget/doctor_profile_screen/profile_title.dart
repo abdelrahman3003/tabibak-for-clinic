@@ -24,8 +24,11 @@ class ProfileTitle extends StatelessWidget {
         10.wBox,
         Text(
           title,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w500, fontSize: 18.sp, height: 18 / 28),
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 15.sp,
+            color: const Color(0xff1E293B),
+          ),
         ),
       ],
     );

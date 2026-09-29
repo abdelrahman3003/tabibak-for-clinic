@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
 
@@ -29,15 +30,20 @@ class SettingItem extends StatelessWidget {
         child: Row(
           children: [
             Icon(icon,
-                size: 20, color: isLogout ? AppColors.red : AppColors.black),
+                size: 18, color: isLogout ? AppColors.red : AppColors.black),
             12.wBox,
             Expanded(
-              child: Text(title,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: isLogout ? AppColors.red : AppColors.black)),
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w500,
+                  color: isLogout ? AppColors.red : const Color(0xff1E293B),
+                ),
+              ),
             ),
             Icon(Icons.chevron_right,
-                size: 20, color: isLogout ? AppColors.red : AppColors.grey),
+                size: 18, color: isLogout ? AppColors.red : AppColors.grey),
           ],
         ),
       ),

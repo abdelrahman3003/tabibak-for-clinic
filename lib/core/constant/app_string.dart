@@ -181,23 +181,33 @@ class AppString {
     final t = type?.trim().toLowerCase() ?? "";
     switch (t) {
       case 'consultation':
+      case 'كشف':
         return consultation;
       case 'follow-up':
       case 'follow up':
+      case 'متابعة':
+      case 'مراجعة':
+      case 'استشارة':
         return followUp;
       case 'checkup':
       case 'check-up':
+      case 'فحص':
         return checkup;
       case 'emergency':
+      case 'طوارئ':
         return emergency;
       case 'surgery':
+      case 'جراحة':
+      case 'عملية':
         return surgery;
       case 'new patient':
+      case 'مريض جديد':
         return newPatient;
       case 'vaccination':
+      case 'تطعيم':
         return vaccination;
       default:
-        return type ?? '';
+        return type?.trim() ?? '';
     }
   }
 

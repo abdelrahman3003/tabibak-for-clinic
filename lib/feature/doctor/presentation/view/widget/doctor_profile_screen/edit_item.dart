@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/doctor_profile_screen/text_button_widget.dart';
 
@@ -11,7 +12,7 @@ class EditItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.onSecondaryContainer,
         borderRadius: BorderRadius.circular(8),
@@ -29,20 +30,26 @@ class EditItem extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text(title,
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: const Color(0xff94A3B8),
-                        fontWeight: FontWeight.w500)),
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: const Color(0xff94A3B8),
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12.sp,
+                  ),
+                ),
               ),
               TextButtonWidget(text: AppString.edit, onTap: onTap)
             ],
           ),
+          const SizedBox(height: 2),
           Text(
             subtitle,
-            style: Theme.of(context)
-                .textTheme
-                .titleSmall
-                ?.copyWith(fontWeight: FontWeight.w500),
+            style: TextStyle(
+              fontSize: 13.sp,
+              fontWeight: FontWeight.w600,
+              color: const Color(0xff1E293B),
+            ),
           ),
         ],
       ),
