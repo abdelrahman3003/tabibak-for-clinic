@@ -1,6 +1,8 @@
+import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
@@ -77,9 +79,10 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
         );
         _refresh();
       } catch (_) {
-        if (mounted)
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(AppString.expenseSaveFailed)));
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(AppString.expenseSaveFailed)));
+        }
       }
     }
   }
@@ -91,6 +94,66 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
           : _selectedDate.add(Duration(days: delta));
       _load();
     });
+  }
+
+  Future<void> _shareReport(
+    ClinicReportEntity data,
+    BuildContext buttonContext,
+  ) async {
+    try {
+      final locale = context.locale.toString();
+      final period = _monthly
+          ? DateFormat.yMMMM(locale).format(_selectedDate)
+          : DateFormat.yMMMd(locale).format(_selectedDate);
+      final lines = <String>[
+        widget.clinic.clinicName ?? AppString.clinicReports,
+        '${_monthly ? AppString.monthlyReport : AppString.dailyReport}: $period',
+        '${AppString.totalBookings}: ${data.totalBookings}',
+        '${AppString.completedBookings}: ${data.completedBookings}',
+        '${AppString.cancelledBookings}: ${data.cancelledBookings}',
+        '${AppString.totalRevenue}: ${_money(data.totalRevenue, locale)}',
+        '${AppString.totalExpenses}: ${_money(data.totalExpenses, locale)}',
+        '${AppString.netProfit}: ${_money(data.netProfit, locale)}',
+      ];
+      if (_monthly) {
+        lines.add('');
+        lines.add('${AppString.dailyRevenueBreakdown}:');
+        for (var index = 0; index < data.dailyRevenue.length; index++) {
+          final day =
+              DateTime(_selectedDate.year, _selectedDate.month, index + 1);
+          lines.add(
+            '${DateFormat.yMMMd(locale).format(day)}: ${_money(data.dailyRevenue[index], locale)}',
+          );
+        }
+      }
+      lines.add('');
+      lines.add(AppString.revenueEstimateNote);
+
+      final text = lines.join('\n');
+
+      final buttonBox = buttonContext.findRenderObject() as RenderBox?;
+      final sharePositionOrigin = buttonBox == null
+          ? null
+          : buttonBox.localToGlobal(Offset.zero) & buttonBox.size;
+
+      await Share.share(
+        text,
+        subject:
+            '${_monthly ? AppString.monthlyReport : AppString.dailyReport} - $period',
+        sharePositionOrigin: sharePositionOrigin,
+      );
+    } catch (error, stackTrace) {
+      developer.log(
+        'Failed to share clinic report',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('${AppString.reportShareFailed} ($error)')),
+        );
+      }
+    }
   }
 
   @override
@@ -111,6 +174,15 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
                         .textTheme
                         .titleLarge
                         ?.copyWith(fontWeight: FontWeight.bold))),
+            Builder(
+              builder: (buttonContext) => IconButton(
+                  onPressed: () {
+                    final snapshot = _report;
+                    snapshot.then((data) => _shareReport(data, buttonContext));
+                  },
+                  tooltip: AppString.shareReport,
+                  icon: const Icon(Icons.share_outlined)),
+            ),
             IconButton(
                 onPressed: _addExpense,
                 tooltip: AppString.addExpense,
@@ -140,17 +212,39 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
                 onPressed: () => _changeDate(1),
                 icon: const Icon(Icons.chevron_right)),
           ]),
+          Center(
+            child: Text(
+              _monthly ? AppString.monthlyReport : AppString.dailyReport,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: AppColors.grey,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+          ),
+          const SizedBox(height: 12),
           FutureBuilder<ClinicReportEntity>(
             future: _report,
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting)
+              if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Padding(
                     padding: EdgeInsets.all(32),
                     child: Center(child: CircularProgressIndicator()));
-              if (snapshot.hasError)
+              }
+              if (snapshot.hasError) {
                 return Center(child: Text(AppString.reportLoadFailed));
+              }
               final data = snapshot.data!;
               return Column(children: [
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Text(AppString.revenueEstimateNote,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: AppColors.grey,
+                            )),
+                  ),
+                ),
                 GridView.count(
                   crossAxisCount: 2,
                   shrinkWrap: true,
@@ -174,10 +268,16 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
                         data.cancelledBookings.toString(),
                         Icons.cancel_outlined,
                         AppColors.statusCancelled),
-                    _metric(AppString.totalRevenue, _money(data.totalRevenue, locale),
-                        Icons.trending_up, AppColors.statusConfirmed),
-                    _metric(AppString.totalExpenses, _money(data.totalExpenses, locale),
-                        Icons.receipt_long_outlined, AppColors.orange),
+                    _metric(
+                        AppString.totalRevenue,
+                        _money(data.totalRevenue, locale),
+                        Icons.trending_up,
+                        AppColors.statusConfirmed),
+                    _metric(
+                        AppString.totalExpenses,
+                        _money(data.totalExpenses, locale),
+                        Icons.receipt_long_outlined,
+                        AppColors.orange),
                     _metric(
                         AppString.netProfit,
                         _money(data.netProfit, locale),
@@ -187,6 +287,38 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
                             : AppColors.statusCompleted),
                   ],
                 ),
+                if (_monthly) ...[
+                  const SizedBox(height: 20),
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text(AppString.dailyRevenueBreakdown,
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                )),
+                  ),
+                  const SizedBox(height: 8),
+                  ...List<Widget>.generate(data.dailyRevenue.length, (index) {
+                    final day = DateTime(
+                        _selectedDate.year, _selectedDate.month, index + 1);
+                    return ListTile(
+                      dense: true,
+                      contentPadding: EdgeInsets.zero,
+                      leading: CircleAvatar(
+                        radius: 16,
+                        child: Text('${index + 1}',
+                            style: Theme.of(context).textTheme.bodySmall),
+                      ),
+                      title: Text(DateFormat.yMMMd(locale).format(day)),
+                      trailing: Text(
+                        _money(data.dailyRevenue[index], locale),
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    );
+                  }),
+                ],
               ]);
             },
           ),

@@ -99,6 +99,7 @@ class AppString {
         return value!.tr();
     }
   }
+
   static String get checkEmail => "Check your email".tr();
   static String get verificationEmailSent =>
       "We have sent a verification email to your email address. Please check your inbox and follow the instructions to verify your account."
@@ -274,6 +275,13 @@ class AppString {
   static String get dashboard => "Dashboard".tr();
   static String get daily => "Daily".tr();
   static String get monthly => "Monthly".tr();
+  static String get dailyReport => "Daily report".tr();
+  static String get monthlyReport => "Monthly report".tr();
+  static String get dailyRevenueBreakdown => "Daily revenue breakdown".tr();
+  static String get shareReport => "Share report".tr();
+  static String get reportShared => "Report shared.".tr();
+  static String get reportShareFailed => "Could not share report.".tr();
+  static String get reportCopied => "Report copied to clipboard.".tr();
   static String get totalBookings => "Total bookings".tr();
   static String get completedBookings => "Completed bookings".tr();
   static String get cancelledBookings => "Cancelled bookings".tr();

@@ -37,6 +37,7 @@ dependencies:
   package_info_plus: ^9.0.1
   pretty_dio_logger: ^1.4.0
   shared_preferences: ^2.3.2
+  share_plus: ^10.1.4
   shimmer_animation: ^2.2.2
   skeletonizer: ^2.1.1
   supabase_flutter: ^2.9.1
