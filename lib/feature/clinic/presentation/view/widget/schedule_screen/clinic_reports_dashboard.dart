@@ -57,6 +57,7 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
     _report = ClinicReportRemoteDataSource(Supabase.instance.client).getReport(
       clinicId: widget.clinic.id!,
       consultationFee: widget.clinic.consultationFee ?? 0,
+      followUpFee: widget.clinic.followUpFee ?? 0,
       start: start,
       end: end,
     );
@@ -110,6 +111,7 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
         '${_monthly ? AppString.monthlyReport : AppString.dailyReport}: $period',
         '${AppString.totalBookings}: ${data.totalBookings}',
         '${AppString.completedBookings}: ${data.completedBookings}',
+        '${AppString.followUpBookings}: ${data.followUpBookings}',
         '${AppString.cancelledBookings}: ${data.cancelledBookings}',
         '${AppString.totalRevenue}: ${_money(data.totalRevenue, locale)}',
         '${AppString.totalExpenses}: ${_money(data.totalExpenses, locale)}',
@@ -263,6 +265,11 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
                         data.completedBookings.toString(),
                         Icons.check_circle_outline,
                         AppColors.statusCompleted),
+                    _metric(
+                        AppString.followUpBookings,
+                        data.followUpBookings.toString(),
+                        Icons.event_repeat_outlined,
+                        AppColors.primary),
                     _metric(
                         AppString.cancelledBookings,
                         data.cancelledBookings.toString(),

@@ -28,6 +28,9 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
       appointmentResult.fold(
         (error) {},
         (appointmentsList) {
+          final todayAppointments = (appointmentsList ?? [])
+              .where((appointment) => appointment.followUpDate == null)
+              .toList();
           doctorResult.fold(
             (error) {
               emit(AppointmentFailed(errorMessage: error.message!));
@@ -36,7 +39,7 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
               emit(
                 AppointmentSuccess(
                   doctor: doctor,
-                  appointmentsList: appointmentsList,
+                  appointmentsList: todayAppointments,
                 ),
               );
             },

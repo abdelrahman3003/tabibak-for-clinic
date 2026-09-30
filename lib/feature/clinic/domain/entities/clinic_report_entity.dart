@@ -2,6 +2,7 @@ class ClinicReportEntity {
   const ClinicReportEntity({
     required this.totalBookings,
     required this.completedBookings,
+    required this.followUpBookings,
     required this.cancelledBookings,
     required this.totalRevenue,
     required this.totalExpenses,
@@ -10,6 +11,7 @@ class ClinicReportEntity {
 
   final int totalBookings;
   final int completedBookings;
+  final int followUpBookings;
   final int cancelledBookings;
   final double totalRevenue;
   final double totalExpenses;

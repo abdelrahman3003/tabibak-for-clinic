@@ -284,6 +284,7 @@ class AppString {
   static String get reportCopied => "Report copied to clipboard.".tr();
   static String get totalBookings => "Total bookings".tr();
   static String get completedBookings => "Completed bookings".tr();
+  static String get followUpBookings => "Follow-ups".tr();
   static String get cancelledBookings => "Cancelled bookings".tr();
   static String get totalRevenue => "Total revenue".tr();
   static String get totalExpenses => "Total expenses".tr();

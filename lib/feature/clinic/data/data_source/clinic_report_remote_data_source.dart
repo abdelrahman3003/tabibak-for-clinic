@@ -9,6 +9,7 @@ class ClinicReportRemoteDataSource {
   Future<ClinicReportEntity> getReport({
     required int clinicId,
     required int consultationFee,
+    required int followUpFee,
     required DateTime start,
     required DateTime end,
   }) async {
@@ -20,7 +21,7 @@ class ClinicReportRemoteDataSource {
     final results = await Future.wait([
       _client
           .from('appointments')
-          .select('id,status,appointment_date')
+          .select('id,status,appointment_date,follow_up_date')
           .eq('doctor_id', doctorId)
           .gte('appointment_date', startDate)
           .lt('appointment_date', endDate),
@@ -35,16 +36,25 @@ class ClinicReportRemoteDataSource {
 
     final appointments = results[0] as List;
     final expenses = results[1] as List;
-    final completed = appointments.where((row) => row['status'] == 3).length;
+    final completedAppointments = appointments.where((row) => row['status'] == 3);
+    final followUpAppointments = appointments.where((row) =>
+        row['status'] == 2 && row['follow_up_date'] != null);
+    final completed = completedAppointments.length;
+    final followUps = followUpAppointments.length;
+    final totalRevenue = completed * consultationFee + followUps * followUpFee;
     final dailyRevenue = List<double>.filled(end.difference(start).inDays, 0);
     for (final row in appointments) {
-      if (row['status'] != 3) continue;
+      final isCompleted = row['status'] == 3;
+      final isFollowUp = row['status'] == 2 && row['follow_up_date'] != null;
+      if (!isCompleted && !isFollowUp) continue;
       final date = DateTime.parse(row['appointment_date'].toString());
       final index = DateTime(date.year, date.month, date.day)
           .difference(DateTime(start.year, start.month, start.day))
           .inDays;
       if (index >= 0 && index < dailyRevenue.length) {
-        dailyRevenue[index] += consultationFee.toDouble();
+        dailyRevenue[index] += isFollowUp
+            ? followUpFee.toDouble()
+            : consultationFee.toDouble();
       }
     }
 
@@ -55,8 +65,9 @@ class ClinicReportRemoteDataSource {
     return ClinicReportEntity(
       totalBookings: appointments.length,
       completedBookings: completed,
+      followUpBookings: followUps,
       cancelledBookings: appointments.where((row) => row['status'] == 4).length,
-      totalRevenue: completed * consultationFee.toDouble(),
+      totalRevenue: totalRevenue.toDouble(),
       totalExpenses: totalExpenses,
       dailyRevenue: dailyRevenue,
     );

@@ -77,15 +77,32 @@ class AppointmentDetailsBloc
         followUpDate: event.date,
         appointmentId: event.appointmentId,
       );
-      result.fold(
-          (error) =>
-              emit(AppointmentActionFailure(error.message ?? 'Unknown error')),
-          (_) {
-        getit<ClinicReportsRefreshNotifier>().notifyChanged();
-        appointmentBloc.add(const GetAppointmentEvent());
-        allAppointmentsBloc.add(RefreshAllAppointmentsEvent());
-        emit(AppointmentActionSuccess());
-      });
+      if (result.isLeft()) {
+        result.fold(
+          (error) => emit(
+              AppointmentActionFailure(error.message ?? 'Unknown error')),
+          (_) {},
+        );
+        return;
+      }
+
+      final statusResult = await updateAppointmentStatusUseCase.call(
+        appointmentId: event.appointmentId,
+        statusIndex: 2,
+      );
+      if (statusResult.isLeft()) {
+        statusResult.fold(
+          (error) => emit(
+              AppointmentActionFailure(error.message ?? 'Unknown error')),
+          (_) {},
+        );
+        return;
+      }
+
+      getit<ClinicReportsRefreshNotifier>().notifyChanged();
+      appointmentBloc.add(const GetAppointmentEvent());
+      allAppointmentsBloc.add(RefreshAllAppointmentsEvent());
+      emit(AppointmentActionSuccess());
     });
 
     on<PostponeAppointmentEvent>((event, emit) async {
