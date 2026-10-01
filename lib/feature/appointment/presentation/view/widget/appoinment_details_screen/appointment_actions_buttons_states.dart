@@ -11,10 +11,12 @@ class AppointmentActionsButtonsStates extends StatelessWidget {
     super.key,
     required this.appointmentId,
     required this.appointmentDate,
+    required this.followUpDate,
   });
 
   final int appointmentId;
   final DateTime appointmentDate;
+  final DateTime? followUpDate;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class AppointmentActionsButtonsStates extends StatelessWidget {
       builder: (context, state) {
         return AppointmentActionButtons(
           appointmentDate: appointmentDate,
+          followUpDate: followUpDate,
           isCompleteLoading: state is AppointmentActionLoading &&
               state.actionType == "complete",
           isFollowUpLoading: state is AppointmentActionLoading &&

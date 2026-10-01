@@ -85,6 +85,7 @@ class AppointmentDetailsBody extends StatelessWidget {
               AppointmentActionsButtonsStates(
                 appointmentId: e.appointmentId!,
                 appointmentDate: e.appointmentDate!,
+                followUpDate: e.followUpDate,
               ),
             20.hBox,
           ],
