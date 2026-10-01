@@ -41,7 +41,7 @@ async function recalculateWaitingList(
     `&appointment_date=eq.${appointment_date}` +
     `&${statusFilter}` +
     `&select=id,created_at,name` +
-    `&order=created_at.asc`;
+    `&order=created_at.asc,id.asc`;
 
   const res = await fetch(url, { headers: sbHeaders(supabaseKey) });
   if (!res.ok) return [];
