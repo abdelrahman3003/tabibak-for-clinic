@@ -86,6 +86,7 @@ class AppointmentDetailsBody extends StatelessWidget {
                 appointmentId: e.appointmentId!,
                 appointmentDate: e.appointmentDate!,
                 followUpDate: e.followUpDate,
+                waitingList: e.waitingList,
               ),
             20.hBox,
           ],

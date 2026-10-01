@@ -18,6 +18,7 @@ class AppointmentActionButtons extends StatelessWidget {
     this.isCancelLoading = false,
     required this.appointmentDate,
     this.followUpDate,
+    this.waitingList,
   });
 
   final VoidCallback? onComplete;
@@ -30,6 +31,7 @@ class AppointmentActionButtons extends StatelessWidget {
   final bool isCancelLoading;
   final DateTime appointmentDate;
   final DateTime? followUpDate;
+  final int? waitingList;
 
   Future<DateTime?> _pickDate(BuildContext context) async {
     return showDatePicker(
@@ -171,7 +173,8 @@ class AppointmentActionButtons extends StatelessWidget {
         isPostponeLoading ||
         isCancelLoading;
     final today = DateTime.now();
-    final isAppointmentToday = followUpDate == null &&
+    final isYourTurnToday = waitingList == 0 &&
+        followUpDate == null &&
         appointmentDate.year == today.year &&
         appointmentDate.month == today.month &&
         appointmentDate.day == today.day;
@@ -179,7 +182,7 @@ class AppointmentActionButtons extends StatelessWidget {
 
     return Column(
       children: [
-        if (isAppointmentToday) ...[
+        if (isYourTurnToday) ...[
           Row(
             children: [
               Expanded(
