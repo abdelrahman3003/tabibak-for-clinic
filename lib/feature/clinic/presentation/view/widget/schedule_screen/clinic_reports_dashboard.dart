@@ -56,8 +56,6 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
     final (start, end) = _range;
     _report = ClinicReportRemoteDataSource(Supabase.instance.client).getReport(
       clinicId: widget.clinic.id!,
-      consultationFee: widget.clinic.consultationFee ?? 0,
-      followUpFee: widget.clinic.followUpFee ?? 0,
       start: start,
       end: end,
     );

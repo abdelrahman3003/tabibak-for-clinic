@@ -8,8 +8,6 @@ class ClinicReportRemoteDataSource {
 
   Future<ClinicReportEntity> getReport({
     required int clinicId,
-    required int consultationFee,
-    required int followUpFee,
     required DateTime start,
     required DateTime end,
   }) async {
@@ -32,31 +30,56 @@ class ClinicReportRemoteDataSource {
           .eq('clinic_id', clinicId)
           .gte('expense_date', startDate)
           .lt('expense_date', endDate),
+      _client
+          .from('appointments')
+          .select(
+              'consultation_fee_charged,consultation_fee_charged_at,follow_up_fee_charged,follow_up_fee_charged_at')
+          .eq('doctor_id', doctorId)
+          .or('and(consultation_fee_charged_at.gte.$startDate,consultation_fee_charged_at.lt.$endDate),and(follow_up_fee_charged_at.gte.$startDate,follow_up_fee_charged_at.lt.$endDate)'),
+      _client
+          .from('appointments')
+          .select('follow_up_date,follow_up_fee_charged_at')
+          .eq('doctor_id', doctorId)
+          .eq('status', 3)
+          .not('follow_up_date', 'is', null)
+          .or('and(follow_up_fee_charged_at.gte.$startDate,follow_up_fee_charged_at.lt.$endDate),and(follow_up_fee_charged_at.is.null,follow_up_date.gte.$startDate,follow_up_date.lt.$endDate)'),
     ]);
 
     final appointments = results[0] as List;
     final expenses = results[1] as List;
-    final completedAppointments = appointments.where((row) => row['status'] == 3);
-    final followUpAppointments = appointments.where((row) =>
-        row['status'] == 2 && row['follow_up_date'] != null);
-    final completed = completedAppointments.length;
-    final followUps = followUpAppointments.length;
-    final totalRevenue = completed * consultationFee + followUps * followUpFee;
+    final charges = results[2] as List;
+    final completedFollowUps = results[3] as List;
+    final completed = appointments.where((row) {
+      return row['status'] == 3 ||
+          (row['status'] == 2 && row['follow_up_date'] != null);
+    }).length;
     final dailyRevenue = List<double>.filled(end.difference(start).inDays, 0);
-    for (final row in appointments) {
-      final isCompleted = row['status'] == 3;
-      final isFollowUp = row['status'] == 2 && row['follow_up_date'] != null;
-      if (!isCompleted && !isFollowUp) continue;
-      final date = DateTime.parse(row['appointment_date'].toString());
+
+    final followUps = completedFollowUps.length;
+
+    void addCharge(dynamic amountValue, dynamic dateValue) {
+      if (amountValue == null || dateValue == null) return;
+      final amount = double.tryParse(amountValue.toString()) ?? 0;
+      final date = DateTime.parse(dateValue.toString());
       final index = DateTime(date.year, date.month, date.day)
           .difference(DateTime(start.year, start.month, start.day))
           .inDays;
       if (index >= 0 && index < dailyRevenue.length) {
-        dailyRevenue[index] += isFollowUp
-            ? followUpFee.toDouble()
-            : consultationFee.toDouble();
+        dailyRevenue[index] += amount;
       }
     }
+
+    for (final row in charges) {
+      addCharge(
+        row['consultation_fee_charged'],
+        row['consultation_fee_charged_at'],
+      );
+      addCharge(
+        row['follow_up_fee_charged'],
+        row['follow_up_fee_charged_at'],
+      );
+    }
+    final totalRevenue = dailyRevenue.fold<double>(0, (sum, value) => sum + value);
 
     final totalExpenses = expenses.fold<double>(
       0,

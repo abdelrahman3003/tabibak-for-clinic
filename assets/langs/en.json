@@ -173,7 +173,7 @@
     "Save": "Save",
     "Refresh": "Refresh",
     "Revenue trend": "Revenue trend",
-    "Revenue is estimated from completed bookings and the clinic consultation fee.": "Revenue is estimated from completed bookings and the clinic consultation fee.",
+    "Consultation charges are recorded when a visit is completed or a follow-up is scheduled; follow-up charges are recorded when the follow-up is completed.": "Consultation charges are recorded when a visit is completed or a follow-up is scheduled; follow-up charges are recorded when the follow-up is completed.",
     "Could not load clinic reports.": "Could not load clinic reports.",
     "Could not save expense.": "Could not save expense.",
     "EGP": "EGP",

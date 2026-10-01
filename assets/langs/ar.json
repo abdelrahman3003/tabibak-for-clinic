@@ -172,7 +172,7 @@
     "Save": "حفظ",
     "Refresh": "تحديث",
     "Revenue trend": "اتجاه الإيرادات",
-    "Revenue is estimated from completed bookings and the clinic consultation fee.": "يتم تقدير الإيرادات من الحجوزات المكتملة وسعر الكشف بالعيادة.",
+    "Consultation charges are recorded when a visit is completed or a follow-up is scheduled; follow-up charges are recorded when the follow-up is completed.": "تُسجل رسوم الكشف عند إتمام الزيارة أو تحديد موعد متابعة، وتُسجل رسوم المتابعة عند إتمامها.",
     "Could not load clinic reports.": "تعذر تحميل تقارير العيادة.",
     "Could not save expense.": "تعذر حفظ المصروف.",
     "EGP": "جنيه",

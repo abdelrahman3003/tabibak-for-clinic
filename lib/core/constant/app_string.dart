@@ -295,7 +295,7 @@ class AppString {
   static String get refresh => "Refresh".tr();
   static String get revenueTrend => "Revenue trend".tr();
   static String get revenueEstimateNote =>
-      "Revenue is estimated from completed bookings and the clinic consultation fee."
+      "Consultation charges are recorded when a visit is completed or a follow-up is scheduled; follow-up charges are recorded when the follow-up is completed."
           .tr();
   static String get reportLoadFailed => "Could not load clinic reports.".tr();
   static String get expenseSaveFailed => "Could not save expense.".tr();
