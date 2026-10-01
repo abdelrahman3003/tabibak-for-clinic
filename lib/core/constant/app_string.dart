@@ -387,6 +387,7 @@ class AppString {
   static String get queueNumber => "Queue Number".tr();
   static String get waitingList => "Waiting list".tr();
   static String get yourTurn => "Your turn".tr();
+  static String get youAreFirst => "You're first".tr();
   static String get updateRequired => "Update required".tr();
   static String get updateRequiredMessage =>
       "Please update the app to continue.".tr();

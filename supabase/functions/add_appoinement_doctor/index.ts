@@ -25,11 +25,8 @@ function sbHeaders(key: string) {
   };
 }
 
-// Recomputes waiting_list for every active appointment for the same
-// doctor on the same day (morning + evening shifts share ONE queue),
-// and writes it back to each row.
-// Returns the ordered active list (index 0 = next patient).
-async function recalculateWaitingList(
+// Reads the queue positions assigned by the database trigger.
+async function getWaitingList(
   supabaseUrl: string,
   supabaseKey: string,
   doctor_id: string | number,
@@ -38,30 +35,16 @@ async function recalculateWaitingList(
   const statusFilter = `status=in.(${ACTIVE_STATUSES.join(",")})`;
   const url =
     `${supabaseUrl}/rest/v1/appointments?doctor_id=eq.${doctor_id}` +
-    `&appointment_date=eq.${appointment_date}` +
+    `&appointment_date=eq.${encodeURIComponent(appointment_date)}` +
     `&${statusFilter}` +
-    `&select=id,created_at,name` +
-    `&order=created_at.asc,id.asc`;
+    `&select=id,created_at,name,waiting_list` +
+    `&order=waiting_list.asc,id.asc`;
 
   const res = await fetch(url, { headers: sbHeaders(supabaseKey) });
-  if (!res.ok) return [];
-  const activeList = await res.json();
-
-  // patients ahead = position in the ordered list (0 = you're next)
-  await Promise.all(
-    activeList.map(async (row: any, index: number) => {
-      const patchRes = await fetch(`${supabaseUrl}/rest/v1/appointments?id=eq.${row.id}`, {
-        method: "PATCH",
-        headers: sbHeaders(supabaseKey),
-        body: JSON.stringify({ waiting_list: index }),
-      });
-      if (!patchRes.ok) {
-        console.log("WAITING_LIST PATCH FAILED for id", row.id, await patchRes.text());
-      }
-    })
-  );
-
-  return activeList;
+  if (!res.ok) {
+    throw new Error(`Failed to load waiting list: ${await res.text()}`);
+  }
+  return await res.json();
 }
 
 // =========================
@@ -180,17 +163,24 @@ serve(async (req) => {
     const appointmentId = appointmentRow?.id;
 
     // =========================
-    // 2. RECALCULATE waiting_list for the whole day's queue
-    // =========================
-    const activeList = await recalculateWaitingList(
+    // Read the database-assigned position after the insert trigger runs.
+    // Use the normalized date returned by Postgres, not the incoming ISO string.
+    const queueDate = String(appointmentRow?.appointment_date ?? appointment_date)
+      .slice(0, 10);
+    const activeList = await getWaitingList(
       supabaseUrl,
       supabaseKey,
       doctor_id,
-      appointment_date
+      queueDate
     );
 
-    const myIndex = activeList.findIndex((r: any) => r.id === appointmentId);
-    const myWaitingList = myIndex >= 0 ? myIndex : activeList.length - 1; // patients ahead
+    const queuedAppointment = activeList.find(
+      (row: any) => String(row.id) === String(appointmentId),
+    );
+    if (!queuedAppointment || queuedAppointment.waiting_list == null) {
+      throw new Error("The appointment was not assigned a waiting-list position");
+    }
+    const myWaitingList = Number(queuedAppointment.waiting_list); // patients ahead
     const totalWaiting = activeList.length;
 
     // =========================

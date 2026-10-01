@@ -167,6 +167,14 @@ class AppointmentCard extends StatelessWidget {
   }
 
   Widget _buildQueueNumber(BuildContext context) {
+    final queueDate =
+        appointmentEntity.followUpDate ?? appointmentEntity.appointmentDate;
+    final now = DateTime.now();
+    final isToday = queueDate != null &&
+        queueDate.year == now.year &&
+        queueDate.month == now.month &&
+        queueDate.day == now.day;
+
     return Row(
       children: [
         Icon(Icons.confirmation_number_outlined,
@@ -184,8 +192,10 @@ class AppointmentCard extends StatelessWidget {
         4.wBox,
         Text(
           appointmentEntity.waitingList == 0
-              ? AppString.yourTurn
-              : '${appointmentEntity.waitingList}',
+              ? (isToday && appointmentEntity.followUpDate == null
+                  ? AppString.yourTurn
+                  : AppString.youAreFirst)
+              : '${appointmentEntity.waitingList! + 1}',
           style: TextStyle(
             fontSize: 12.sp,
             fontWeight: FontWeight.w700,
