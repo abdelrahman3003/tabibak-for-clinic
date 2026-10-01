@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabibak_for_clinic/core/extention/spacing.dart';
 import 'package:tabibak_for_clinic/core/theme/app_colors.dart';
-import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/available_clinic_switch.dart';
 
 class ClinicHeader extends StatelessWidget {
   const ClinicHeader(
@@ -56,7 +55,6 @@ class ClinicHeader extends StatelessWidget {
             ],
           ),
         ),
-        AvailableClinicSwitch(clinicId: clinicId, initialValue: isAvailable)
       ],
     );
   }

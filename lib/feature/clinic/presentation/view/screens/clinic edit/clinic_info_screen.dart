@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tabibak_for_clinic/core/constant/app_padding.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
@@ -11,6 +12,7 @@ import 'package:tabibak_for_clinic/core/widgets/text_form_filed_widget.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info_save/clinic_info_save_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/clinic_structure_screen/%20clinic_is_online.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/view/widget/schedule_screen/available_clinic_switch.dart';
 
 class ClinicInfoScreen extends StatefulWidget {
   const ClinicInfoScreen({super.key});
@@ -22,6 +24,7 @@ class ClinicInfoScreen extends StatefulWidget {
 class _ClinicInfoScreenState extends State<ClinicInfoScreen> {
   late int id;
   late bool isOnline;
+  late bool isAvailable;
   late TextEditingController _clinicNameController;
   late TextEditingController _phoneController;
   late TextEditingController _feeController;
@@ -42,6 +45,7 @@ class _ClinicInfoScreenState extends State<ClinicInfoScreen> {
         ModalRoute.of(context)!.settings.arguments as ClinicInfoEntity;
     id = clinicInfo.id ?? 0;
     isOnline = clinicInfo.isBooking ?? false;
+    isAvailable = clinicInfo.isAvailable ?? false;
     _clinicNameController.text = clinicInfo.clinicName ?? '';
     _phoneController.text = clinicInfo.phoneNumber ?? '';
     _feeController.text = clinicInfo.consultationFee?.toString() ?? '';
@@ -63,6 +67,7 @@ class _ClinicInfoScreenState extends State<ClinicInfoScreen> {
                     consultationFee: int.tryParse(_feeController.text),
                     followUpFee: int.tryParse(_followUpFeeController.text),
                     isBooking: isOnline,
+                    isAvailable: isAvailable,
                   ),
                 ));
           },
@@ -83,36 +88,73 @@ class _ClinicInfoScreenState extends State<ClinicInfoScreen> {
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
-            child: Column(
-              children: [
-                TextFormFiledWidget(
-                  label: AppString.clinicName,
-                  controller: _clinicNameController,
-                ),
-                TextFormFiledWidget(
-                  label: AppString.phoneNumber,
-                  keyboardType: TextInputType.number,
-                  controller: _phoneController,
-                ),
-                TextFormFiledWidget(
-                  label: AppString.consultationFee,
-                  keyboardType: TextInputType.number,
-                  controller: _feeController,
-                  suffixText: AppString.egyptianPound,
-                ),
-                TextFormFiledWidget(
-                  label: AppString.followUpFee,
-                  keyboardType: TextInputType.number,
-                  controller: _followUpFeeController,
-                  suffixText: AppString.egyptianPound,
-                ),
-                ClinicIsOnline(
-                  value: isOnline,
-                  onChanged: (value) {
-                    isOnline = value!;
-                  },
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TextFormFiledWidget(
+                    label: AppString.clinicName,
+                    controller: _clinicNameController,
+                  ),
+                  TextFormFiledWidget(
+                    label: AppString.phoneNumber,
+                    keyboardType: TextInputType.number,
+                    controller: _phoneController,
+                  ),
+                  TextFormFiledWidget(
+                    label: AppString.consultationFee,
+                    keyboardType: TextInputType.number,
+                    controller: _feeController,
+                    suffixText: AppString.egyptianPound,
+                  ),
+                  TextFormFiledWidget(
+                    label: AppString.followUpFee,
+                    keyboardType: TextInputType.number,
+                    controller: _followUpFeeController,
+                    suffixText: AppString.egyptianPound,
+                  ),
+                  ClinicIsOnline(
+                    value: isOnline,
+                    onChanged: (value) {
+                      isOnline = value!;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.06),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            AppString.clinicAvailable,
+                            style: TextStyle(
+                              color: const Color(0xff1E293B),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                        ),
+                        AvailableClinicSwitch(
+                          clinicId: id,
+                          initialValue: isAvailable,
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              ),
             ),
           ),
         ));

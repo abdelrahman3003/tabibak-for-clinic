@@ -12,6 +12,7 @@ import 'package:tabibak_for_clinic/feature/doctor/presentation/view/widget/docto
 class ClinicInfoSection extends StatelessWidget {
   const ClinicInfoSection({super.key, required this.clinicInfoEntity});
   final ClinicInfoEntity clinicInfoEntity;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,12 +33,12 @@ class ClinicInfoSection extends StatelessWidget {
           title: AppString.clinicAddress,
           subtitle: context.locale.languageCode == "en"
               ? (clinicInfoEntity.address?.village?.nameEn ??
-                 clinicInfoEntity.address?.markaz?.nameEn ??
-                 clinicInfoEntity.address?.governorate?.nameEn ??
+                  clinicInfoEntity.address?.markaz?.nameEn ??
+                  clinicInfoEntity.address?.governorate?.nameEn ??
                   AppString.addressNotAvailable)
               : (clinicInfoEntity.address?.village?.nameAr ??
-                 clinicInfoEntity.address?.markaz?.nameAr ??
-                 clinicInfoEntity.address?.governorate?.nameAr ??
+                  clinicInfoEntity.address?.markaz?.nameAr ??
+                  clinicInfoEntity.address?.governorate?.nameAr ??
                   AppString.addressNotAvailable),
           onTap: () {
             context.pushNamed(Routes.clinicAddressScreen,
@@ -53,7 +54,7 @@ class ClinicInfoSection extends StatelessWidget {
                 title: AppString.featureUnavailableMessage);
             // context.pushNamed(Routes.clinicOfferScreen);
           },
-        )
+        ),
       ],
     );
   }
