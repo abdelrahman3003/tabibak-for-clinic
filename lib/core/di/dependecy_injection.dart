@@ -189,7 +189,8 @@ Future<void> initGetIt() async {
       getit<GetCitiesUseCase>(),
       getit<GetGovernoratesUseCase>(),
       getit<GetCitiesByGovernorateUseCase>(),
-      getit<GetCitiesByParentUseCase>()));
+      getit<GetCitiesByParentUseCase>(),
+      getit<SharedPrefHelper>()));
   getit.registerFactory(
       () => ClinicWorkingDayBloc(getDaysUseCase: getit<GetDaysUseCase>()));
   getit.registerFactory(
@@ -198,6 +199,7 @@ Future<void> initGetIt() async {
         getit<GetClinicInfoUseCase>(),
         getit<GetClinicWorkingDayShiftUseCase>(),
         getit<ToggleClinicAvailableUseCase>(),
+        getit<SharedPrefHelper>(),
       ));
   getit.registerFactory(
       () => ClinicInfoSaveBloc(getit<SaveClinicInfoUseCase>()));

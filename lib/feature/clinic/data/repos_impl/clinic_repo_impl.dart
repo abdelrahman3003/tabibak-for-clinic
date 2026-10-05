@@ -50,10 +50,8 @@ class ClinicRepoImpl implements ClinicRepo {
     try {
       final response = await clinicRemoteData.getClinicInfo();
 
-      return right(response);
+      return right(response.map<ClinicInfoEntity>((model) => model).toList());
     } catch (e) {
-      log("Error in getCities: $e");
-
       return left(ErrorHandler.handle(e));
     }
   }
@@ -170,4 +168,3 @@ class ClinicRepoImpl implements ClinicRepo {
     }
   }
 }
-

@@ -13,17 +13,21 @@ part 'appointment_state.dart';
 class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
   final GetAppointmentsUseCase getAppointmentsUseCase;
   final GetDoctorUseCase getDoctorUseCase;
+  int _appointmentRequestId = 0;
   AppointmentBloc(
     this.getAppointmentsUseCase,
     this.getDoctorUseCase,
   ) : super(AppointmentInitial()) {
     on<GetAppointmentEvent>((event, emit) async {
+      final requestId = ++_appointmentRequestId;
       emit(AppointmentLoading());
 
       final appointmentResult =
           await getAppointmentsUseCase.call(
               status: AppointmentStatus.confirmed.id, isToday: true);
       final doctorResult = await getDoctorUseCase.call();
+
+      if (requestId != _appointmentRequestId) return;
 
       appointmentResult.fold(
         (error) {},

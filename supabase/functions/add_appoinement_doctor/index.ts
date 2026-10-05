@@ -29,12 +29,12 @@ function sbHeaders(key: string) {
 async function getWaitingList(
   supabaseUrl: string,
   supabaseKey: string,
-  doctor_id: string | number,
+  clinic_id: string | number,
   appointment_date: string
 ) {
   const statusFilter = `status=in.(${ACTIVE_STATUSES.join(",")})`;
   const url =
-    `${supabaseUrl}/rest/v1/appointments?doctor_id=eq.${doctor_id}` +
+    `${supabaseUrl}/rest/v1/appointments?clinic_id=eq.${clinic_id}` +
     `&appointment_date=eq.${encodeURIComponent(appointment_date)}` +
     `&${statusFilter}` +
     `&select=id,created_at,name,waiting_list` +
@@ -92,6 +92,7 @@ serve(async (req) => {
     const {
       appointment_date,
       doctor_id,
+      clinic_id,
       user_id,
       status = 2,
       phone,
@@ -101,7 +102,7 @@ serve(async (req) => {
       shift_evening_id,
     } = await req.json();
 
-    if (!doctor_id || !name || !appointment_date) {
+    if (!doctor_id || !clinic_id || !name || !appointment_date) {
       return new Response(
         JSON.stringify({
           success: false,
@@ -112,6 +113,18 @@ serve(async (req) => {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         }
       );
+    }
+
+    const clinicRes = await fetch(
+      `${Deno.env.get("SUPABASE_URL")}/rest/v1/clinic_data?id=eq.${clinic_id}&doctor_id=eq.${doctor_id}&select=id`,
+      { headers: sbHeaders(Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!) },
+    );
+    const ownedClinics = clinicRes.ok ? await clinicRes.json() : [];
+    if (!Array.isArray(ownedClinics) || ownedClinics.length === 0) {
+      return new Response(JSON.stringify({ success: false, error: "Clinic not found for doctor" }), {
+        status: 403,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
@@ -140,6 +153,7 @@ serve(async (req) => {
       body: JSON.stringify({
         appointment_date,
         doctor_id,
+        clinic_id,
         user_id: validUserId,
         status,
         phone,
@@ -170,7 +184,7 @@ serve(async (req) => {
     const activeList = await getWaitingList(
       supabaseUrl,
       supabaseKey,
-      doctor_id,
+      clinic_id,
       queueDate
     );
 
@@ -220,6 +234,7 @@ serve(async (req) => {
           headers: { ...sbHeaders(supabaseKey), Prefer: "return=representation" },
           body: JSON.stringify({
             user_id: validUserId,
+            clinic_id,
             title: patientTitle,
             message: patientBody,
             type: "appointment",
@@ -280,6 +295,7 @@ serve(async (req) => {
                       },
                       data: {
                         appointment_id: String(appointmentId),
+                        clinic_id: String(clinic_id),
                         status: String(status),
                         waiting_list: String(myWaitingList),
                         patients_waiting: String(totalWaiting),

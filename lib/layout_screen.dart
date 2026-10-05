@@ -7,13 +7,15 @@ import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clin
 import 'package:tabibak_for_clinic/feature/clinic/presentation/view/screens/clinic_reports_screen.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_layout/clinic_layout_bloc.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
+import 'package:tabibak_for_clinic/feature/appointment/presentation/manager/all_appointment/all_appointments_bloc.dart';
 import 'package:tabibak_for_clinic/feature/doctor/presentation/view/screens/doctor_profile_screen.dart';
 
 import 'core/theme/app_colors.dart';
 
 class LayoutScreen extends StatefulWidget {
-  const LayoutScreen({super.key, this.initialIndex = 0});
+  const LayoutScreen({super.key, this.initialIndex = 0, this.refreshKey = 0});
   final int initialIndex;
+  final int refreshKey;
   @override
   State<LayoutScreen> createState() => _LayoutScreenState();
 }
@@ -27,12 +29,14 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
     super.initState();
     _selectedIndex = widget.initialIndex;
+    getit<AllAppointmentsBloc>().add(RefreshAllAppointmentsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => getit<ClinicLayoutBloc>(),
+      key: ValueKey(widget.refreshKey),
       child: Builder(builder: _buildLayout),
     );
   }

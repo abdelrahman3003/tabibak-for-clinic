@@ -24,6 +24,7 @@ class AllAppointmentsBloc
   String searchName = '';
   List<AppointmentEntity>? searchResults;
   int _searchRequestId = 0;
+  int _refreshRequestId = 0;
 
   AllAppointmentsBloc(
     this.getAppointmentsUseCase,
@@ -73,8 +74,15 @@ class AllAppointmentsBloc
     });
 
     on<RefreshAllAppointmentsEvent>((event, emit) async {
+      searchName = '';
+      searchResults = null;
+      upcomingList = [];
+      finishedList = [];
+      canceledList = [];
+      ++_searchRequestId;
       emit(AllAppointmentsRefreshing());
-      await _refreshLists();
+      final requestId = await _refreshLists();
+      if (requestId != _refreshRequestId) return;
       appointmentBloc.add(const GetAppointmentEvent());
       emit(AllAppointmentsRefreshed());
     });
@@ -138,12 +146,14 @@ class AllAppointmentsBloc
     });
   }
 
-  Future<void> _refreshLists() async {
+  Future<int> _refreshLists() async {
+    final requestId = ++_refreshRequestId;
     final results = await Future.wait([
       getAppointmentsUseCase.call(status: AppointmentStatus.pending.id),
       getAppointmentsUseCase.call(status: AppointmentStatus.confirmed.id),
       getAppointmentsUseCase.call(status: AppointmentStatus.cancelled.id),
     ]);
+    if (requestId != _refreshRequestId) return requestId;
     results[0].fold((_) {}, (appointments) {
       upcomingList = _sortAppointments(appointments ?? [], ascending: true);
     });
@@ -153,6 +163,7 @@ class AllAppointmentsBloc
     results[2].fold((_) {}, (appointments) {
       canceledList = _sortAppointments(appointments ?? [], ascending: false);
     });
+    return requestId;
   }
 
   List<AppointmentEntity> _sortAppointments(

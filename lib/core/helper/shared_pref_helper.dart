@@ -91,4 +91,5 @@ class SharedPrefKeys {
   static const String lang = "lang";
   static const String isDark = "isDark";
   static const String searchDoctors = "'searchDoctors'";
+  static const String currentClinicId = 'currentClinicId';
 }

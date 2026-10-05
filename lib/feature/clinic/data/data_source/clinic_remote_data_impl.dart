@@ -47,10 +47,11 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
         .from('clinic_data')
         .select('*, clinic_address(*, governorate(*), markaz:clinic_address_markaz_id_fkey(*), village:clinic_address_village_id_fkey(*))')
         .eq('doctor_id', supabase.auth.currentUser!.id);
-
-    return (response as List)
+    final clinics = (response as List)
         .map((json) => ClinicInfoModel.fromJson(json))
         .toList();
+    clinics.sort((a, b) => a.id!.compareTo(b.id!));
+    return clinics;
   }
 
   @override
@@ -201,4 +202,3 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
     return data.map((json) => CityModel.fromJson(json)).toList();
   }
 }
-

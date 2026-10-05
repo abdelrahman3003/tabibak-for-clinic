@@ -5,6 +5,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_info_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_working_day_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/toggle_clinic_available_use_case.dart';
+import 'package:tabibak_for_clinic/core/helper/shared_pref_helper.dart';
 
 part 'clinic_layout_event.dart';
 part 'clinic_layout_state.dart';
@@ -13,9 +14,11 @@ class ClinicLayoutBloc extends Bloc<ClinicLayoutEvent, ClinicLayoutState> {
   final GetClinicInfoUseCase getClinicInfoUseCase;
   final GetClinicWorkingDayShiftUseCase getClinicWorkingDayShiftUseCase;
   final ToggleClinicAvailableUseCase toggleClinicAvailableUseCase;
+  final SharedPrefHelper sharedPrefHelper;
 
   ClinicLayoutBloc(this.getClinicInfoUseCase,
-      this.getClinicWorkingDayShiftUseCase, this.toggleClinicAvailableUseCase)
+      this.getClinicWorkingDayShiftUseCase, this.toggleClinicAvailableUseCase,
+      this.sharedPrefHelper)
       : super(ClinicLayoutInitial()) {
     on<GetClinicInfoEvent>((event, emit) async {
       emit(ClinicLayoutLoading());
@@ -26,15 +29,26 @@ class ClinicLayoutBloc extends Bloc<ClinicLayoutEvent, ClinicLayoutState> {
           if (list.isEmpty) {
             emit(ClinicLayoutEmpty());
           } else {
+            final savedId = sharedPrefHelper.getInt(SharedPrefKeys.currentClinicId);
+            final clinic = list.firstWhere(
+              (item) => item.id == savedId,
+              orElse: () => list.first,
+            );
+            if (clinic.id != savedId) {
+              await sharedPrefHelper.setData(
+                key: SharedPrefKeys.currentClinicId,
+                value: clinic.id!,
+              );
+            }
             final result2 =
-                await getClinicWorkingDayShiftUseCase.call(list[0].id!);
+                await getClinicWorkingDayShiftUseCase.call(clinic.id!);
             await result2.fold(
                 (error) async =>
                     emit(ClinicLayoutFailed(errorMessage: error.message!)),
                 (workingShiftsDays) async {
               emit(
                 ClinicLayoutSuccess(
-                  clinicInfoEntity: list[0],
+                  clinicInfoEntity: clinic,
                   workingShiftsDays: workingShiftsDays,
                 ),
               );

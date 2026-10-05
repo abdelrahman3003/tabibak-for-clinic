@@ -7,6 +7,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/create_clinic_
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_cities_by_governorate_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_cities_by_parent_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_cities_use_case.dart';
+import 'package:tabibak_for_clinic/core/helper/shared_pref_helper.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_governorates_use_case.dart';
 
 part 'clinic_info_event.dart';
@@ -18,6 +19,7 @@ class ClinicInfoBloc extends Bloc<ClinicInfoEvent, ClinicInfoState> {
   final GetGovernoratesUseCase getGovernoratesUseCase;
   final GetCitiesByGovernorateUseCase getCitiesByGovernorateUseCase;
   final GetCitiesByParentUseCase getCitiesByParentUseCase;
+  final SharedPrefHelper sharedPrefHelper;
 
   ClinicInfoBloc(
     this.createClinicInfoUseCase,
@@ -25,18 +27,23 @@ class ClinicInfoBloc extends Bloc<ClinicInfoEvent, ClinicInfoState> {
     this.getGovernoratesUseCase,
     this.getCitiesByGovernorateUseCase,
     this.getCitiesByParentUseCase,
+    this.sharedPrefHelper,
   ) : super(ClinicInfoInitial()) {
     on<CreateClinicInfoEvent>((event, emit) async {
       emit(ClinicInfoLoading());
       final result = await createClinicInfoUseCase.call(event.clinicInfoEntity);
-      result.fold(
-        (error) {
-          emit(ClinicInfoFailed(errorMessage: error.message!));
-        },
-        (id) {
-          emit(ClinicInfoSuccess(clinicId: id));
-        },
+      if (result.isLeft()) {
+        final error = result.swap().getOrElse(() => throw StateError('Missing clinic creation error'));
+        emit(ClinicInfoFailed(errorMessage: error.message!));
+        return;
+      }
+
+      final id = result.getOrElse(() => throw StateError('Missing created clinic ID'));
+      await sharedPrefHelper.setData(
+        key: SharedPrefKeys.currentClinicId,
+        value: id,
       );
+      emit(ClinicInfoSuccess(clinicId: id));
     });
     on<GetCitiesEvent>((event, emit) async {
       final result = await getCitiesUseCase.call();

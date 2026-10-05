@@ -21,6 +21,7 @@ class ClinicReportRemoteDataSource {
           .from('appointments')
           .select('id,status,appointment_date,follow_up_date')
           .eq('doctor_id', doctorId)
+          .eq('clinic_id', clinicId)
           .gte('appointment_date', startDate)
           .lt('appointment_date', endDate),
       _client
@@ -35,11 +36,13 @@ class ClinicReportRemoteDataSource {
           .select(
               'consultation_fee_charged,consultation_fee_charged_at,follow_up_fee_charged,follow_up_fee_charged_at')
           .eq('doctor_id', doctorId)
+          .eq('clinic_id', clinicId)
           .or('and(consultation_fee_charged_at.gte.$startDate,consultation_fee_charged_at.lt.$endDate),and(follow_up_fee_charged_at.gte.$startDate,follow_up_fee_charged_at.lt.$endDate)'),
       _client
           .from('appointments')
           .select('follow_up_date,follow_up_fee_charged_at')
           .eq('doctor_id', doctorId)
+          .eq('clinic_id', clinicId)
           .eq('status', 3)
           .not('follow_up_date', 'is', null)
           .or('and(follow_up_fee_charged_at.gte.$startDate,follow_up_fee_charged_at.lt.$endDate),and(follow_up_fee_charged_at.is.null,follow_up_date.gte.$startDate,follow_up_date.lt.$endDate)'),

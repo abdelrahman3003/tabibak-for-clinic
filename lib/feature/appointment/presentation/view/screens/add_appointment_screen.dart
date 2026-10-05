@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
 import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
+import 'package:tabibak_for_clinic/core/helper/shared_pref_helper.dart';
 import 'package:tabibak_for_clinic/core/extention/navigation.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_bar_save.dart';
 import 'package:tabibak_for_clinic/core/widgets/app_snack_bar.dart';
@@ -90,6 +91,7 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
           context.read<CreateAppointmentBloc>().add(
                 AddAppointmentEvent(
                   appointment: AppointmentEntity(
+                    clinicId: getit<SharedPrefHelper>().getInt(SharedPrefKeys.currentClinicId),
                     doctorId: doctorId,
                     userId: null,
                     name: patientNameController.text.trim(),

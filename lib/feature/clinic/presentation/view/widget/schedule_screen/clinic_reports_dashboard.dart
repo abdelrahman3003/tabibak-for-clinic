@@ -59,6 +59,10 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
       start: start,
       end: end,
     );
+    developer.log(
+      'Loading clinic report for clinic ${widget.clinic.id} from $start to $end',
+      name: 'ClinicReportsDashboard',
+    );
   }
 
   void _refresh() => setState(_load);
@@ -231,9 +235,23 @@ class _ClinicReportsDashboardState extends State<ClinicReportsDashboard> {
                     child: Center(child: CircularProgressIndicator()));
               }
               if (snapshot.hasError) {
+                developer.log(
+                  'Failed to load clinic report',
+                  name: 'ClinicReportsDashboard',
+                  error: snapshot.error,
+                  stackTrace: snapshot.stackTrace,
+                );
+                return Center(
+                  child: Text(
+                    '${AppString.reportLoadFailed}\n${snapshot.error}',
+                    textAlign: TextAlign.center,
+                  ),
+                );
+              }
+              final data = snapshot.data;
+              if (data == null) {
                 return Center(child: Text(AppString.reportLoadFailed));
               }
-              final data = snapshot.data!;
               return Column(children: [
                 Align(
                   alignment: AlignmentDirectional.centerStart,

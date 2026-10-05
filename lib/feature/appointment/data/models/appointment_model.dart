@@ -3,6 +3,7 @@ import 'package:tabibak_for_clinic/feature/appointment/domain/entities/appointme
 class AppointmentModel extends AppointmentEntity {
   const AppointmentModel({
     super.appointmentId,
+    super.clinicId,
     super.appointmentDate,
     super.statusEn,
     super.statusAr,
@@ -24,6 +25,7 @@ class AppointmentModel extends AppointmentEntity {
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
     return AppointmentModel(
       appointmentId: json['id'],
+      clinicId: json['clinic_id'],
       appointmentDate: DateTime.parse(json['appointment_date']),
       userImage: json['users']?['image'],
       statusAr: json['appointments_status']?['status_ar'],
@@ -49,6 +51,7 @@ class AppointmentModel extends AppointmentEntity {
   Map<String, dynamic> toJson() {
     return {
       'doctor_id': doctorId,
+      'clinic_id': clinicId,
       'user_id': userId,
       'name': name,
       'appointment_date': appointmentDate?.toIso8601String(),
@@ -63,6 +66,7 @@ class AppointmentModel extends AppointmentEntity {
   factory AppointmentModel.fromEntity(AppointmentEntity entity) {
     return AppointmentModel(
       name: entity.name,
+      clinicId: entity.clinicId,
       doctorId: entity.doctorId,
       userId: entity.userId,
       statusId: entity.statusId,
