@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tabibak_for_clinic/core/constant/app_string.dart';
@@ -17,9 +19,38 @@ class ErrorHandler {
       return _handlePostgrestError(error);
     }
     if (error is FunctionException) {
+      return _handleFunctionError(error);
+    }
+
+    return ApiErrorModel(message: AppString.unknownError);
+  }
+
+  static ApiErrorModel _handleFunctionError(FunctionException error) {
+    final details = error.details;
+    if (details is Map) {
       return ApiErrorModel(
-        message: error.details?['error']?.toString() ?? AppString.unknownError,
+        message: (details['error'] ?? details['message'])?.toString() ??
+            AppString.unknownError,
+        code: details['code'],
+        errors: details['data'],
       );
+    }
+
+    if (details is String && details.isNotEmpty) {
+      try {
+        final decoded = jsonDecode(details);
+        if (decoded is Map) {
+          return ApiErrorModel(
+            message: (decoded['error'] ?? decoded['message'])?.toString() ??
+                AppString.unknownError,
+            code: decoded['code'],
+            errors: decoded['data'],
+          );
+        }
+      } on FormatException {
+        // Supabase may return a plain-text response body.
+      }
+      return ApiErrorModel(message: details);
     }
 
     return ApiErrorModel(message: AppString.unknownError);

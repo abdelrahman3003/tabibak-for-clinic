@@ -19,10 +19,41 @@ async function getAuthenticatedUserId(
   return typeof user?.id === "string" ? user.id : null;
 }
 
+function getWeekdayName(dateValue: string): string | null {
+  const date = dateValue.slice(0, 10);
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
+  if (!match) return null;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const parsed = new Date(Date.UTC(year, month - 1, day));
+  if (
+    parsed.getUTCFullYear() !== year ||
+    parsed.getUTCMonth() !== month - 1 ||
+    parsed.getUTCDate() !== day
+  ) {
+    return null;
+  }
+  return [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ][parsed.getUTCDay()];
+}
+
 serve(async (req) => {
   try {
     const { appointment_id, clinic_id, follow_up_date } = await req.json();
-    if (appointment_id == null || clinic_id == null || !follow_up_date) {
+    if (
+      appointment_id == null ||
+      clinic_id == null ||
+      typeof follow_up_date !== "string" ||
+      !follow_up_date
+    ) {
       return new Response(
         JSON.stringify({
           success: false,
@@ -68,6 +99,51 @@ serve(async (req) => {
       return new Response(
         JSON.stringify({ success: false, error: "Appointment not owned by doctor" }),
         { status: 403 },
+      );
+    }
+
+    const weekdayName = getWeekdayName(follow_up_date);
+    if (!weekdayName) {
+      return new Response(
+        JSON.stringify({ success: false, error: "Invalid follow-up date" }),
+        { status: 400 },
+      );
+    }
+
+    const scheduleParams = new URLSearchParams({
+      select: "is_selected,shift_morning_id,shift_evening_id,days!inner(day_en)",
+      clinic_id: `eq.${clinic_id}`,
+      is_selected: "eq.true",
+      "days.day_en": `eq.${weekdayName}`,
+    });
+    const scheduleRes = await fetch(
+      `${supabaseUrl}/rest/v1/working_day?${scheduleParams.toString()}`,
+      {
+        headers: {
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`,
+        },
+      },
+    );
+    if (!scheduleRes.ok) {
+      return new Response(
+        JSON.stringify({ success: false, error: "Could not check clinic schedule" }),
+        { status: 500 },
+      );
+    }
+    const scheduleRows = await scheduleRes.json();
+    const dayIsAvailable = Array.isArray(scheduleRows) && scheduleRows.some(
+      (row: { shift_morning_id?: number | null; shift_evening_id?: number | null }) =>
+        row.shift_morning_id != null || row.shift_evening_id != null,
+    );
+    if (!dayIsAvailable) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          code: "DAY_NOT_AVAILABLE",
+          error: "This day is not available in the clinic schedule.",
+        }),
+        { status: 400 },
       );
     }
 
