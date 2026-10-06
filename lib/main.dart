@@ -18,6 +18,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await EnvService.init();
+
   await Future.wait([
     EasyLocalization.ensureInitialized(),
     SupabaseService.init(),

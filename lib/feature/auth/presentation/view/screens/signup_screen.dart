@@ -69,7 +69,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 if (user != null) ...[
                   Text(user!.userMetadata?['full_name'] ?? ''),
                   Text(user!.email ?? ''),
-                  Text(user!.phone ?? ''),
+                  Text(user!.userMetadata?['phone'] ?? user!.phone ?? ''),
                   const SizedBox(height: 20),
                 ] else ...[
                   AuthField(

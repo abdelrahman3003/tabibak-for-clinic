@@ -73,7 +73,7 @@ class SignUpButton extends StatelessWidget {
                         email: user.email ?? '',
                         phone: phoneController.text.isNotEmpty
                             ? phoneController.text
-                            : user.phone ?? '',
+                            : (user.userMetadata?['phone'] ?? user.phone ?? ''),
                         specialty: specialization,
                       ),
                     )
