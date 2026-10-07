@@ -7,6 +7,7 @@ class AuthField extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool obscureText;
   final TextInputType? keyboardType;
+  final bool readOnly;
 
   const AuthField({
     super.key,
@@ -16,6 +17,7 @@ class AuthField extends StatelessWidget {
     this.validator,
     this.obscureText = false,
     this.keyboardType,
+    this.readOnly = false,
   });
 
   @override
@@ -25,6 +27,7 @@ class AuthField extends StatelessWidget {
       keyboardType: keyboardType,
       validator: validator,
       obscureText: obscureText,
+      readOnly: readOnly,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         hintText: label,

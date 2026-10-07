@@ -32,10 +32,10 @@ class _SignupScreenState extends State<SignupScreen> {
   void initState() {
     super.initState();
     user = getit<Supabase>().client.auth.currentUser;
-    nameController = TextEditingController();
-    emailController = TextEditingController();
+    nameController = TextEditingController(text: user?.userMetadata?['full_name'] ?? '');
+    emailController = TextEditingController(text: user?.email ?? '');
     passwordController = TextEditingController();
-    phoneController = TextEditingController();
+    phoneController = TextEditingController(text: user?.userMetadata?['phone'] ?? user?.phone ?? '');
   }
 
   @override
@@ -66,36 +66,32 @@ class _SignupScreenState extends State<SignupScreen> {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 40.hBox,
-                if (user != null) ...[
-                  Text(user!.userMetadata?['full_name'] ?? ''),
-                  Text(user!.email ?? ''),
-                  Text(user!.userMetadata?['phone'] ?? user!.phone ?? ''),
-                  const SizedBox(height: 20),
-                ] else ...[
-                  AuthField(
-                    label: AppString.fullName,
-                    controller: nameController,
-                    icon: Icons.person_outline,
-                    validator: (v) =>
-                        v == null || v.isEmpty ? AppString.required : null,
-                  ),
-                  const SizedBox(height: 20),
-                  AuthField(
-                    controller: emailController,
-                    label: AppString.email,
-                    icon: Icons.email_outlined,
-                    validator: Validation.validateEmail,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(height: 20),
-                  AuthField(
-                    controller: phoneController,
-                    label: AppString.phoneNumber,
-                    icon: Icons.phone_outlined,
-                    validator: Validation.validateNumber,
-                    keyboardType: TextInputType.phone,
-                  ),
-                  const SizedBox(height: 20),
+                AuthField(
+                  label: AppString.fullName,
+                  controller: nameController,
+                  icon: Icons.person_outline,
+                  validator: (v) =>
+                      v == null || v.isEmpty ? AppString.required : null,
+                ),
+                const SizedBox(height: 20),
+                AuthField(
+                  controller: emailController,
+                  label: AppString.email,
+                  icon: Icons.email_outlined,
+                  validator: Validation.validateEmail,
+                  keyboardType: TextInputType.emailAddress,
+                  readOnly: user != null,
+                ),
+                const SizedBox(height: 20),
+                AuthField(
+                  controller: phoneController,
+                  label: AppString.phoneNumber,
+                  icon: Icons.phone_outlined,
+                  validator: Validation.validateNumber,
+                  keyboardType: TextInputType.phone,
+                ),
+                const SizedBox(height: 20),
+                if (user == null) ...[
                   PasswordTextField(
                     controller: passwordController,
                     validator: Validation.validatePassword,
