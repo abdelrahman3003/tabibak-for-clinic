@@ -42,7 +42,30 @@ class ClinicReportsScreen extends StatelessWidget {
               ),
             );
           }
-          if (state is ClinicLayoutEmpty) return const ClinicInit();
+          if (state is ClinicLayoutEmpty) {
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Text(
+                      AppString.dashboard,
+                      style:
+                          Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                    ),
+                  ),
+                  ClinicInit(
+                    message: AppString.noClinicsAddedYetMessage,
+                    buttonTitle: AppString.addClinic,
+                    icon: Icons.analytics_outlined,
+                  ),
+                ],
+              ),
+            );
+          }
           if (state is ClinicLayoutFailed) {
             return Center(child: Text(state.errorMessage));
           }

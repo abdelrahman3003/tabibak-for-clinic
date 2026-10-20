@@ -33,14 +33,19 @@ class _VillageDropDownState extends State<VillageDropDown> {
     super.didUpdateWidget(oldWidget);
 
     if (widget.initialValue != oldWidget.initialValue) {
-      selectedVillage = widget.initialValue;
+      setState(() {
+        selectedVillage = widget.initialValue;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ClinicAddressBloc, ClinicAddressState>(
-      buildWhen: (previous, current) => current is GetVillagesSuccess,
+      buildWhen: (previous, current) =>
+          current is GetVillagesSuccess ||
+          current is GetMarkazSuccess ||
+          current is GetGovernoratesSuccess,
       builder: (context, state) {
         final List<CityEntity> items =
             state is GetVillagesSuccess ? state.cities : [];

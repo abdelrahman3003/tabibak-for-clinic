@@ -26,17 +26,29 @@ class ClinicAddressModel extends ClinicAddressEntity {
   }
 
   factory ClinicAddressModel.fromJson(Map<String, dynamic> json) {
-    final govMap = _extractMap(json["governorate"]);
+    final govMap = _extractMap(json["governorate"] ?? json["governorates"]);
     final markazMap = _extractMap(json["markaz"]);
-    final villageMap = _extractMap(json["village"]);
+    final villageMap = _extractMap(json["village"] ?? json["villages"]);
 
     return ClinicAddressModel(
       id: json["id"],
       clinicId: json["clinic_id"],
-      governorate: govMap != null ? GovernorateModel.fromJson(govMap) : null,
-      markaz: markazMap != null ? CityModel.fromJson(markazMap) : null,
-      village: villageMap != null ? CityModel.fromJson(villageMap) : null,
-      clinicAddress: json["street"],
+      governorate: govMap != null
+          ? GovernorateModel.fromJson(govMap)
+          : (json["governorate_id"] != null
+              ? GovernorateModel(id: json["governorate_id"] as int?)
+              : null),
+      markaz: markazMap != null
+          ? CityModel.fromJson(markazMap)
+          : (json["markaz_id"] != null
+              ? CityModel(id: json["markaz_id"] as int?)
+              : null),
+      village: villageMap != null
+          ? CityModel.fromJson(villageMap)
+          : (json["village_id"] != null
+              ? CityModel(id: json["village_id"] as int?)
+              : null),
+      clinicAddress: json["street"] ?? json["clinic_address"],
       street: json["street"],
       floor: json["floor"],
       department: json["department"],

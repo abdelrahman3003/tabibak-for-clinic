@@ -306,5 +306,7 @@
     "Please enter phone number": "Please enter phone number",
     "Please enter consultation fee": "Please enter consultation fee",
     "Please enter street": "Please enter street",
-    "Please select start and end times for all active shifts": "Please select start and end times for all active shifts"
+    "Please select start and end times for all active shifts": "Please select start and end times for all active shifts",
+    "No clinics added yet. Please add a clinic to get started.": "No clinics added yet. Please add a clinic to get started.",
+    "Add Clinic": "Add Clinic"
 }

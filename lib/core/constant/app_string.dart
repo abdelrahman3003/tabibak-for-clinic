@@ -396,4 +396,7 @@ class AppString {
       "This account is already active on two devices. Sign out from another device and try again."
           .tr();
   static String get deviceLimitReached => "Device limit reached".tr();
+  static String get noClinicsAddedYetMessage =>
+      "No clinics added yet. Please add a clinic to get started.".tr();
+  static String get addClinic => "Add Clinic".tr();
 }

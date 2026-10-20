@@ -48,15 +48,21 @@ class ScheduleScreen extends StatelessWidget {
   }
 
   String _clinicAddress(BuildContext context) {
-    final address = clinicInfoEntity.address;
-    final city = context.locale.languageCode == 'ar'
-        ? (address?.village?.nameAr ?? address?.markaz?.nameAr ?? address?.governorate?.nameAr)
-        : (address?.village?.nameEn ?? address?.markaz?.nameEn ?? address?.governorate?.nameEn);
-    final parts = [address?.clinicAddress, city]
-        .where((part) => part != null && part.trim().isNotEmpty)
-        .cast<String>()
-        .toList();
+    final isEn = context.locale.languageCode == 'en';
+    final addr = clinicInfoEntity.address;
+    if (addr == null) return AppString.addressNotAvailable;
 
-    return parts.isEmpty ? AppString.addressNotAvailable : parts.join(', ');
+    final parts = <String>[];
+    final govName = isEn ? addr.governorate?.nameEn : addr.governorate?.nameAr;
+    final markazName = isEn ? addr.markaz?.nameEn : addr.markaz?.nameAr;
+    final villageName = isEn ? addr.village?.nameEn : addr.village?.nameAr;
+    final street = addr.street ?? addr.clinicAddress;
+
+    if (govName != null && govName.trim().isNotEmpty) parts.add(govName.trim());
+    if (markazName != null && markazName.trim().isNotEmpty) parts.add(markazName.trim());
+    if (villageName != null && villageName.trim().isNotEmpty) parts.add(villageName.trim());
+    if (street != null && street.trim().isNotEmpty) parts.add(street.trim());
+
+    return parts.isEmpty ? AppString.addressNotAvailable : parts.join(' - ');
   }
 }

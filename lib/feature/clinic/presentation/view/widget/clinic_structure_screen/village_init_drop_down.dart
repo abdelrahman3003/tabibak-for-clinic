@@ -29,9 +29,22 @@ class _VillageInitDropDownState extends State<VillageInitDropDown> {
   }
 
   @override
+  void didUpdateWidget(covariant VillageInitDropDown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialValue != oldWidget.initialValue) {
+      setState(() {
+        selectedVillage = widget.initialValue;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<ClinicInfoBloc, ClinicInfoState>(
-      buildWhen: (previous, current) => current is GetVillagesSuccess,
+      buildWhen: (previous, current) =>
+          current is GetVillagesSuccess ||
+          current is GetMarkazSuccess ||
+          current is GetGovernoratesSuccess,
       builder: (context, state) {
         final List<CityEntity> items =
             state is GetVillagesSuccess ? state.cities : [];

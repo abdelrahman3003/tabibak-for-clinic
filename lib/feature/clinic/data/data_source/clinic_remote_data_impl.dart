@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tabibak_for_clinic/core/di/dependecy_injection.dart';
+import 'package:tabibak_for_clinic/core/helper/shared_pref_helper.dart';
 import 'package:tabibak_for_clinic/core/networking/api_consatnt.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/data_source/clinic_remote_data.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/city_model.dart';
@@ -52,13 +54,27 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
     try {
       response = await supabase
           .from('clinic_data')
-          .select('*, clinic_address(*, governorate(*), markaz:clinic_address_markaz_id_fkey(*), village:clinic_address_village_id_fkey(*))')
+          .select('*, clinic_address(*, governorates(*), markaz(*), villages(*))')
           .eq('doctor_id', currentUserId);
     } catch (_) {
-      response = await supabase
-          .from('clinic_data')
-          .select('*, clinic_address(*)')
-          .eq('doctor_id', currentUserId);
+      try {
+        response = await supabase
+            .from('clinic_data')
+            .select('*, clinic_address(*, governorate(*), markaz:clinic_address_markaz_id_fkey(*), village:clinic_address_village_id_fkey(*))')
+            .eq('doctor_id', currentUserId);
+      } catch (_) {
+        try {
+          response = await supabase
+              .from('clinic_data')
+              .select('*, clinic_address(*, governorate(*), markaz:city!clinic_address_markaz_id_fkey(*), village:city!clinic_address_village_id_fkey(*))')
+              .eq('doctor_id', currentUserId);
+        } catch (_) {
+          response = await supabase
+              .from('clinic_data')
+              .select('*, clinic_address(*)')
+              .eq('doctor_id', currentUserId);
+        }
+      }
     }
 
     final clinics = (response as List)
@@ -135,21 +151,30 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
   Future<void> saveClinicAddress({
     required ClinicAddressModel clinicAddressModel,
   }) async {
+    final clinicId = clinicAddressModel.clinicId ??
+        getit<SharedPrefHelper>().getInt(SharedPrefKeys.currentClinicId);
+
+    if (clinicId == null) {
+      throw Exception('Clinic ID is required to save address');
+    }
+
+    final data = clinicAddressModel.toJson()..['clinic_id'] = clinicId;
+
     final existing = await supabase
         .from('clinic_address')
         .select('id')
-        .eq('clinic_id', clinicAddressModel.clinicId!)
+        .eq('clinic_id', clinicId)
         .maybeSingle();
 
     if (existing != null) {
       await supabase
           .from('clinic_address')
-          .update(clinicAddressModel.toJson())
-          .eq('clinic_id', clinicAddressModel.clinicId!);
+          .update(data)
+          .eq('clinic_id', clinicId);
     } else {
       await supabase
           .from('clinic_address')
-          .insert(clinicAddressModel.toJson());
+          .insert(data);
     }
   }
 
@@ -175,44 +200,70 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
 
   @override
   Future<List<CityModel>> getCities() async {
-    final response = await supabase.from('city').select("*");
-
-    final data = response as List;
-    return data.map((json) => CityModel.fromJson(json)).toList();
+    try {
+      final response = await supabase.from('markaz').select("*");
+      final data = response as List;
+      return data.map((json) => CityModel.fromJson(json)).toList();
+    } catch (_) {
+      final response = await supabase.from('city').select("*");
+      final data = response as List;
+      return data.map((json) => CityModel.fromJson(json)).toList();
+    }
   }
 
   @override
   Future<List<GovernorateModel>> getGovernorates() async {
-    final response = await supabase.from('governorate').select("*");
-
-    final data = response as List;
-    return data.map((json) => GovernorateModel.fromJson(json)).toList();
+    try {
+      final response = await supabase.from('governorates').select("*");
+      final data = response as List;
+      return data.map((json) => GovernorateModel.fromJson(json)).toList();
+    } catch (_) {
+      final response = await supabase.from('governorate').select("*");
+      final data = response as List;
+      return data.map((json) => GovernorateModel.fromJson(json)).toList();
+    }
   }
 
   @override
   Future<List<CityModel>> getCitiesByGovernorate({
     required int governorateId,
   }) async {
-    final response = await supabase
-        .from('city')
-        .select("*")
-        .eq('governorate_id', governorateId)
-        .eq('type', 'markaz');
-
-    final data = response as List;
-    return data.map((json) => CityModel.fromJson(json)).toList();
+    try {
+      final response = await supabase
+          .from('markaz')
+          .select("*")
+          .eq('governorate_id', governorateId);
+      final data = response as List;
+      return data.map((json) => CityModel.fromJson(json)).toList();
+    } catch (_) {
+      final response = await supabase
+          .from('city')
+          .select("*")
+          .eq('governorate_id', governorateId)
+          .eq('type', 'markaz');
+      final data = response as List;
+      return data.map((json) => CityModel.fromJson(json)).toList();
+    }
   }
 
   @override
   Future<List<CityModel>> getCitiesByParent({
     required int parentId,
   }) async {
-    final response = await supabase
-        .from('city')
-        .select("*")
-        .eq('parent_id', parentId);
-
-    final data = response as List;
-    return data.map((json) => CityModel.fromJson(json)).toList();
+    try {
+      final response = await supabase
+          .from('villages')
+          .select("*")
+          .eq('markaz_id', parentId);
+      final data = response as List;
+      return data.map((json) => CityModel.fromJson(json)).toList();
+    } catch (_) {
+      final response = await supabase
+          .from('city')
+          .select("*")
+          .eq('parent_id', parentId);
+      final data = response as List;
+      return data.map((json) => CityModel.fromJson(json)).toList();
+    }
   }
 }

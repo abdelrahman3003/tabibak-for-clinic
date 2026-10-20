@@ -30,15 +30,7 @@ class ClinicInfoSection extends StatelessWidget {
         15.hBox,
         EditItem(
           title: AppString.clinicAddress,
-          subtitle: context.locale.languageCode == "en"
-              ? (clinicInfoEntity.address?.village?.nameEn ??
-                 clinicInfoEntity.address?.markaz?.nameEn ??
-                 clinicInfoEntity.address?.governorate?.nameEn ??
-                  AppString.addressNotAvailable)
-              : (clinicInfoEntity.address?.village?.nameAr ??
-                 clinicInfoEntity.address?.markaz?.nameAr ??
-                 clinicInfoEntity.address?.governorate?.nameAr ??
-                  AppString.addressNotAvailable),
+          subtitle: _formatAddress(context),
           onTap: () {
             context.pushNamed(Routes.clinicAddressScreen,
                 arguments: clinicInfoEntity);
@@ -56,5 +48,28 @@ class ClinicInfoSection extends StatelessWidget {
         )
       ],
     );
+  }
+
+  String _formatAddress(BuildContext context) {
+    final isEn = context.locale.languageCode == "en";
+    final addr = clinicInfoEntity.address;
+    if (addr == null) return AppString.addressNotAvailable;
+
+    final parts = <String>[];
+    final govName = isEn ? addr.governorate?.nameEn : addr.governorate?.nameAr;
+    final markazName = isEn ? addr.markaz?.nameEn : addr.markaz?.nameAr;
+    final villageName = isEn ? addr.village?.nameEn : addr.village?.nameAr;
+    final street = addr.street ?? addr.clinicAddress;
+
+    if (govName != null && govName.trim().isNotEmpty) parts.add(govName.trim());
+    if (markazName != null && markazName.trim().isNotEmpty) parts.add(markazName.trim());
+    if (villageName != null && villageName.trim().isNotEmpty) parts.add(villageName.trim());
+    if (street != null && street.trim().isNotEmpty) parts.add(street.trim());
+
+    if (parts.isEmpty) {
+      return AppString.addressNotAvailable;
+    }
+
+    return parts.join(' - ');
   }
 }

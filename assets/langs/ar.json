@@ -306,5 +306,7 @@
     "Please enter phone number": "يرجى إدخال رقم الهاتف",
     "Please enter consultation fee": "يرجى إدخال رسوم الكشف",
     "Please enter street": "يرجى إدخال اسم الشارع",
-    "Please select start and end times for all active shifts": "يرجى تحديد أوقات البدء والانتهاء لجميع الفترات المفعلة"
+    "Please select start and end times for all active shifts": "يرجى تحديد أوقات البدء والانتهاء لجميع الفترات المفعلة",
+    "No clinics added yet. Please add a clinic to get started.": "لم تتم إضافة أي عيادة بعد. يرجى إضافة عيادة للبدء.",
+    "Add Clinic": "إضافة عيادة"
 }

@@ -33,7 +33,9 @@ class _GovernorateDropDownState extends State<GovernorateDropDown> {
     super.didUpdateWidget(oldWidget);
 
     if (widget.initialValue != oldWidget.initialValue) {
-      selectedGovernorate = widget.initialValue;
+      setState(() {
+        selectedGovernorate = widget.initialValue;
+      });
     }
   }
 

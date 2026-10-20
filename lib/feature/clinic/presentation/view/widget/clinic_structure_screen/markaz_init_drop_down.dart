@@ -29,9 +29,20 @@ class _MarkazInitDropDownState extends State<MarkazInitDropDown> {
   }
 
   @override
+  void didUpdateWidget(covariant MarkazInitDropDown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialValue != oldWidget.initialValue) {
+      setState(() {
+        selectedMarkaz = widget.initialValue;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<ClinicInfoBloc, ClinicInfoState>(
-      buildWhen: (previous, current) => current is GetMarkazSuccess,
+      buildWhen: (previous, current) =>
+          current is GetMarkazSuccess || current is GetGovernoratesSuccess,
       builder: (context, state) {
         final List<CityEntity> items =
             state is GetMarkazSuccess ? state.cities : [];

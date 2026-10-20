@@ -30,6 +30,16 @@ class _GovernorateInitDropDownState extends State<GovernorateInitDropDown> {
   }
 
   @override
+  void didUpdateWidget(covariant GovernorateInitDropDown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialValue != oldWidget.initialValue) {
+      setState(() {
+        selectedGovernorate = widget.initialValue;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<ClinicInfoBloc, ClinicInfoState>(
       buildWhen: (previous, current) => current is GetGovernoratesSuccess,

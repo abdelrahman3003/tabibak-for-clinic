@@ -16,7 +16,7 @@ class CityModel extends CityEntity {
       nameAr: json['name_ar'],
       nameEn: json['name_en'],
       governorateId: json['governorate_id'],
-      parentId: json['parent_id'],
+      parentId: json['parent_id'] ?? json['markaz_id'],
       type: json['type'],
     );
   }
