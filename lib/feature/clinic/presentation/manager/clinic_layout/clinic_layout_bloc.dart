@@ -24,27 +24,33 @@ class ClinicLayoutBloc extends Bloc<ClinicLayoutEvent, ClinicLayoutState> {
       emit(ClinicLayoutLoading());
       final result = await getClinicInfoUseCase.call();
       await result.fold(
-        (error) async {},
+        (error) async => emit(ClinicLayoutFailed(
+            errorMessage: error.message ?? 'Unknown error')),
         (list) async {
           if (list.isEmpty) {
             emit(ClinicLayoutEmpty());
           } else {
-            final savedId = sharedPrefHelper.getInt(SharedPrefKeys.currentClinicId);
+            final savedId =
+                sharedPrefHelper.getInt(SharedPrefKeys.currentClinicId);
             final clinic = list.firstWhere(
               (item) => item.id == savedId,
               orElse: () => list.first,
             );
-            if (clinic.id != savedId) {
+            if (clinic.id != null && clinic.id != savedId) {
               await sharedPrefHelper.setData(
                 key: SharedPrefKeys.currentClinicId,
                 value: clinic.id!,
               );
             }
+            if (clinic.id == null) {
+              emit(ClinicLayoutEmpty());
+              return;
+            }
             final result2 =
                 await getClinicWorkingDayShiftUseCase.call(clinic.id!);
             await result2.fold(
-                (error) async =>
-                    emit(ClinicLayoutFailed(errorMessage: error.message!)),
+                (error) async => emit(ClinicLayoutFailed(
+                    errorMessage: error.message ?? 'Unknown error')),
                 (workingShiftsDays) async {
               emit(
                 ClinicLayoutSuccess(

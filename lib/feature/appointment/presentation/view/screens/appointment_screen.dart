@@ -18,7 +18,7 @@ class AppointmentScreen extends StatelessWidget {
               return const Center(child: AppLoadingWidget());
             }
             if (state is AppointmentFailed) {
-              return Center(child: ErrorWidget(state.errorMessage));
+              return Center(child: Text(state.errorMessage));
             }
             if (state is AppointmentSuccess) {
               return AppointmentBody(

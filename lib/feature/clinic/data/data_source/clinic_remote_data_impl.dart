@@ -43,14 +43,28 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
 
   @override
   Future<List<ClinicInfoModel>> getClinicInfo() async {
-    final response = await supabase
-        .from('clinic_data')
-        .select('*, clinic_address(*, governorate(*), markaz:clinic_address_markaz_id_fkey(*), village:clinic_address_village_id_fkey(*))')
-        .eq('doctor_id', supabase.auth.currentUser!.id);
+    final currentUserId = supabase.auth.currentUser?.id;
+    if (currentUserId == null) {
+      return [];
+    }
+
+    dynamic response;
+    try {
+      response = await supabase
+          .from('clinic_data')
+          .select('*, clinic_address(*, governorate(*), markaz:clinic_address_markaz_id_fkey(*), village:clinic_address_village_id_fkey(*))')
+          .eq('doctor_id', currentUserId);
+    } catch (_) {
+      response = await supabase
+          .from('clinic_data')
+          .select('*, clinic_address(*)')
+          .eq('doctor_id', currentUserId);
+    }
+
     final clinics = (response as List)
-        .map((json) => ClinicInfoModel.fromJson(json))
+        .map((json) => ClinicInfoModel.fromJson(json as Map<String, dynamic>))
         .toList();
-    clinics.sort((a, b) => a.id!.compareTo(b.id!));
+    clinics.sort((a, b) => (a.id ?? 0).compareTo(b.id ?? 0));
     return clinics;
   }
 

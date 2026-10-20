@@ -47,18 +47,35 @@ class AuthRemoteDataImp implements AuthRemoteData {
 
   @override
   Future<void> addDoctor({required DoctorModel doctorModel}) async {
-    final user = supabase.client.auth.currentUser!;
+    final user = supabase.client.auth.currentUser;
+    if (user == null) {
+      throw const AuthException('No authenticated user found');
+    }
     final fcmToken = await PushNotificationService.getToken();
     final data = doctorModel.toJson();
     data['doctor_id'] = user.id;
     data['image'] = user.userMetadata?['avatar_url'] ?? '';
     data['fcm_token'] = fcmToken;
+
+    String? licenseUrl = doctorModel.medicalLicense;
+    if (licenseUrl != null &&
+        licenseUrl.isNotEmpty &&
+        !licenseUrl.startsWith('http')) {
+      final uploadedUrl = await uploadFile(licenseUrl);
+      if (uploadedUrl != null) {
+        licenseUrl = uploadedUrl;
+      }
+      data['medical_liecense'] = licenseUrl;
+    }
+
     await supabase.client.from('doctors').insert(data);
     await _registerCurrentDevice(user.id, token: fcmToken);
-    await supabase.client.from('doctor_file').insert({
-      'doctor_id': user.id,
-      'file': doctorModel.medicalLicense,
-    });
+    if (licenseUrl != null && licenseUrl.isNotEmpty) {
+      await supabase.client.from('doctor_file').insert({
+        'doctor_id': user.id,
+        'file': licenseUrl,
+      });
+    }
   }
 
   @override

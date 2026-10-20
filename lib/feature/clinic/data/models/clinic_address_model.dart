@@ -15,20 +15,27 @@ class ClinicAddressModel extends ClinicAddressEntity {
     super.department,
   });
 
+  static Map<String, dynamic>? _extractMap(dynamic value) {
+    if (value is Map<String, dynamic>) return value;
+    if (value is List &&
+        value.isNotEmpty &&
+        value.first is Map<String, dynamic>) {
+      return value.first as Map<String, dynamic>;
+    }
+    return null;
+  }
+
   factory ClinicAddressModel.fromJson(Map<String, dynamic> json) {
+    final govMap = _extractMap(json["governorate"]);
+    final markazMap = _extractMap(json["markaz"]);
+    final villageMap = _extractMap(json["village"]);
+
     return ClinicAddressModel(
       id: json["id"],
       clinicId: json["clinic_id"],
-      governorate: json["governorate"] != null
-          ? GovernorateModel.fromJson(
-              json["governorate"] as Map<String, dynamic>)
-          : null,
-      markaz: json["markaz"] != null
-          ? CityModel.fromJson(json["markaz"] as Map<String, dynamic>)
-          : null,
-      village: json["village"] != null
-          ? CityModel.fromJson(json["village"] as Map<String, dynamic>)
-          : null,
+      governorate: govMap != null ? GovernorateModel.fromJson(govMap) : null,
+      markaz: markazMap != null ? CityModel.fromJson(markazMap) : null,
+      village: villageMap != null ? CityModel.fromJson(villageMap) : null,
       clinicAddress: json["street"],
       street: json["street"],
       floor: json["floor"],

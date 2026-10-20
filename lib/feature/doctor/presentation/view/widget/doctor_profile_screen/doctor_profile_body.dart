@@ -56,9 +56,10 @@ class DoctorProfileBody extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
           ),
-          10.hBox,
-          DoctorProfileStatus(statusEntity: doctor.status!),
-          10.hBox,
+          if (doctor.status != null) ...[
+            DoctorProfileStatus(statusEntity: doctor.status!),
+            10.hBox,
+          ],
           if ((doctor.bioAr != null && doctor.bioAr!.isNotEmpty) ||
               (doctor.bioEn != null && doctor.bioEn!.isNotEmpty))
             Text(
