@@ -22,7 +22,8 @@ class ClinicInit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveMessage = message ?? AppString.noClinicsAddedYetMessage;
+    final effectiveTitle = title ?? AppString.setupYourClinic;
+    final effectiveMessage = message ?? AppString.setupClinicSubtitle;
     final effectiveButtonTitle = buttonTitle ?? AppString.addClinic;
 
     return Center(
@@ -57,9 +58,9 @@ class ClinicInit extends StatelessWidget {
             children: [
               _buildIconBadge(),
               24.hBox,
-              if (title != null && title!.isNotEmpty) ...[
+              if (effectiveTitle.isNotEmpty) ...[
                 Text(
-                  title!,
+                  effectiveTitle,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.sp,
@@ -76,11 +77,11 @@ class ClinicInit extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize:
-                        (title != null && title!.isNotEmpty) ? 14.sp : 16.sp,
-                    fontWeight: (title != null && title!.isNotEmpty)
+                        effectiveTitle.isNotEmpty ? 14.sp : 16.sp,
+                    fontWeight: effectiveTitle.isNotEmpty
                         ? FontWeight.normal
                         : FontWeight.w600,
-                    color: (title != null && title!.isNotEmpty)
+                    color: effectiveTitle.isNotEmpty
                         ? const Color(0xff64748B)
                         : const Color(0xff1E293B),
                     height: 1.5,

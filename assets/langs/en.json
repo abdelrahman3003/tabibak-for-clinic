@@ -308,5 +308,7 @@
     "Please enter street": "Please enter street",
     "Please select start and end times for all active shifts": "Please select start and end times for all active shifts",
     "No clinics added yet. Please add a clinic to get started.": "No clinics added yet. Please add a clinic to get started.",
-    "Add Clinic": "Add Clinic"
+    "Add Clinic": "Add Clinic",
+    "No Reports Available": "No Reports Available",
+    "No clinics added yet. Please add a clinic to view dashboard and reports.": "No clinics added yet. Please add a clinic to view dashboard and reports."
 }

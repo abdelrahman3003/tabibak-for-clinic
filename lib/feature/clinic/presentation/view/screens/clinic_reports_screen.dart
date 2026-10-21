@@ -58,7 +58,8 @@ class ClinicReportsScreen extends StatelessWidget {
                     ),
                   ),
                   ClinicInit(
-                    message: AppString.noClinicsAddedYetMessage,
+                    title: AppString.noReportsAvailable,
+                    message: AppString.noClinicReportsMessage,
                     buttonTitle: AppString.addClinic,
                     icon: Icons.analytics_outlined,
                   ),

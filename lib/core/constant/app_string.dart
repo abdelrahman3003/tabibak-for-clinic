@@ -399,4 +399,7 @@ class AppString {
   static String get noClinicsAddedYetMessage =>
       "No clinics added yet. Please add a clinic to get started.".tr();
   static String get addClinic => "Add Clinic".tr();
+  static String get noReportsAvailable => "No Reports Available".tr();
+  static String get noClinicReportsMessage =>
+      "No clinics added yet. Please add a clinic to view dashboard and reports.".tr();
 }

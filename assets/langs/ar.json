@@ -308,5 +308,7 @@
     "Please enter street": "يرجى إدخال اسم الشارع",
     "Please select start and end times for all active shifts": "يرجى تحديد أوقات البدء والانتهاء لجميع الفترات المفعلة",
     "No clinics added yet. Please add a clinic to get started.": "لم تتم إضافة أي عيادة بعد. يرجى إضافة عيادة للبدء.",
-    "Add Clinic": "إضافة عيادة"
+    "Add Clinic": "إضافة عيادة",
+    "No Reports Available": "لا تتوفر تقارير",
+    "No clinics added yet. Please add a clinic to view dashboard and reports.": "لم تتم إضافة أي عيادة بعد. يرجى إضافة عيادة لعرض لوحة التحكم والتقارير."
 }

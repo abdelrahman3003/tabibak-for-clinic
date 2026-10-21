@@ -47,7 +47,7 @@ class ClinicLayout extends StatelessWidget {
                   ),
                   ClinicInit(
                     title: AppString.setupYourClinic,
-                    message: AppString.noClinicsAddedYetMessage,
+                    message: AppString.setupClinicSubtitle,
                     buttonTitle: AppString.addClinic,
                     icon: Icons.local_hospital_rounded,
                   ),
