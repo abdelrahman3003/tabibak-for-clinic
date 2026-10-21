@@ -43,7 +43,16 @@ class ClinicInfoSection extends StatelessWidget {
             context.pushNamed(Routes.clinicOfferScreen,
                 arguments: clinicInfoEntity);
           },
-        )
+        ),
+        15.hBox,
+        EditItem(
+          title: AppString.doctorServices,
+          subtitle: AppString.manageDoctorServices,
+          onTap: () {
+            context.pushNamed(Routes.doctorServicesScreen,
+                arguments: clinicInfoEntity);
+          },
+        ),
       ],
     );
   }

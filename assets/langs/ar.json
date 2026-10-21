@@ -329,5 +329,17 @@
     "Please enter a valid discount percentage (1-100)": "يرجى إدخال نسبة خصم صحيحة (1-100)",
     "End date must be after start date": "يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء",
     "No active offer": "لا يوجد عرض مفعّل",
-    "Offer expired": "العرض منتهي الصلاحية"
+    "Offer expired": "العرض منتهي الصلاحية",
+    "Doctor Services": "خدمات الطبيب",
+    "Manage medical services provided by the clinic": "إدارة الخدمات الطبية المقدمة في العيادة",
+    "Add Service": "إضافة خدمة",
+    "Edit Service": "تعديل الخدمة",
+    "Delete Service": "حذف الخدمة",
+    "Service Name": "اسم الخدمة",
+    "Please enter a service name": "يرجى إدخال اسم الخدمة",
+    "Service saved successfully": "تم حفظ الخدمة بنجاح",
+    "Service deleted successfully": "تم حذف الخدمة بنجاح",
+    "Are you sure you want to delete this service?": "هل أنت متأكد من حذف هذه الخدمة؟",
+    "No services added yet": "لم تتم إضافة أي خدمات بعد",
+    "Add your medical services to show them to patients.": "أضف خدماتك الطبية لعرضها على المرضى."
 }

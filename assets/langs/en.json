@@ -329,5 +329,17 @@
     "Please enter a valid discount percentage (1-100)": "Please enter a valid discount percentage (1-100)",
     "End date must be after start date": "End date must be after start date",
     "No active offer": "No active offer",
-    "Offer expired": "Offer expired"
+    "Offer expired": "Offer expired",
+    "Doctor Services": "Doctor Services",
+    "Manage medical services provided by the clinic": "Manage medical services provided by the clinic",
+    "Add Service": "Add Service",
+    "Edit Service": "Edit Service",
+    "Delete Service": "Delete Service",
+    "Service Name": "Service Name",
+    "Please enter a service name": "Please enter a service name",
+    "Service saved successfully": "Service saved successfully",
+    "Service deleted successfully": "Service deleted successfully",
+    "Are you sure you want to delete this service?": "Are you sure you want to delete this service?",
+    "No services added yet": "No services added yet",
+    "Add your medical services to show them to patients.": "Add your medical services to show them to patients."
 }

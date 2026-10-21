@@ -9,6 +9,7 @@ import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.d
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/offer_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/doctor_service_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/city_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_address_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_entity.dart';
@@ -16,6 +17,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_en
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/governorate_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/offer_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/doctor_service_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/repos/clinic_repo.dart';
 
 class ClinicRepoImpl implements ClinicRepo {
@@ -198,6 +200,43 @@ class ClinicRepoImpl implements ClinicRepo {
       {required int offerId}) async {
     try {
       await clinicRemoteData.deleteClinicOffer(offerId: offerId);
+      return right(null);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, List<DoctorServiceEntity>>> getDoctorServices(
+      {required int clinicId}) async {
+    try {
+      final models =
+          await clinicRemoteData.getDoctorServices(clinicId: clinicId);
+      final entities = models.map((m) => m.toEntity()).toList();
+      return right(entities);
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, DoctorServiceEntity>> saveDoctorService(
+      {required DoctorServiceEntity serviceEntity}) async {
+    try {
+      final model = DoctorServiceModel.fromEntity(serviceEntity);
+      final savedModel =
+          await clinicRemoteData.saveDoctorService(serviceModel: model);
+      return right(savedModel.toEntity());
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiErrorModel, void>> deleteDoctorService(
+      {required int serviceId}) async {
+    try {
+      await clinicRemoteData.deleteDoctorService(serviceId: serviceId);
       return right(null);
     } catch (e) {
       return left(ErrorHandler.handle(e));

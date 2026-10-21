@@ -3,6 +3,7 @@ import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_address_mod
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/doctor_service_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/governorate_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/offer_model.dart';
 
@@ -31,5 +32,8 @@ abstract class ClinicRemoteData {
   Future<OfferModel?> getClinicOffer({required int clinicId});
   Future<void> saveClinicOffer({required OfferModel offerModel});
   Future<void> deleteClinicOffer({required int offerId});
+  Future<List<DoctorServiceModel>> getDoctorServices({required int clinicId});
+  Future<DoctorServiceModel> saveDoctorService({required DoctorServiceModel serviceModel});
+  Future<void> deleteDoctorService({required int serviceId});
 }
 

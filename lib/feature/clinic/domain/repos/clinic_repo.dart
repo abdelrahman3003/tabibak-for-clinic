@@ -8,6 +8,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_en
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/governorate_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/offer_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/doctor_service_entity.dart';
 
 abstract class ClinicRepo {
   Future<Either<ApiErrorModel, List<ClinicInfoEntity>>> getClinicInfo();
@@ -43,5 +44,11 @@ abstract class ClinicRepo {
       {required OfferEntity offerEntity});
   Future<Either<ApiErrorModel, void>> deleteClinicOffer(
       {required int offerId});
+  Future<Either<ApiErrorModel, List<DoctorServiceEntity>>> getDoctorServices(
+      {required int clinicId});
+  Future<Either<ApiErrorModel, DoctorServiceEntity>> saveDoctorService(
+      {required DoctorServiceEntity serviceEntity});
+  Future<Either<ApiErrorModel, void>> deleteDoctorService(
+      {required int serviceId});
 }
 

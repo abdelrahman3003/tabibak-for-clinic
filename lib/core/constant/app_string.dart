@@ -431,4 +431,24 @@ class AppString {
       "End date must be after start date".tr();
   static String get noActiveOffer => "No active offer".tr();
   static String get offerExpired => "Offer expired".tr();
+
+  // Doctor Services Localization
+  static String get doctorServices => "Doctor Services".tr();
+  static String get manageDoctorServices =>
+      "Manage medical services provided by the clinic".tr();
+  static String get addService => "Add Service".tr();
+  static String get editService => "Edit Service".tr();
+  static String get deleteService => "Delete Service".tr();
+  static String get serviceName => "Service Name".tr();
+  static String get serviceNameValidator =>
+      "Please enter a service name".tr();
+  static String get serviceSavedSuccessfully =>
+      "Service saved successfully".tr();
+  static String get serviceDeletedSuccessfully =>
+      "Service deleted successfully".tr();
+  static String get deleteServiceConfirmation =>
+      "Are you sure you want to delete this service?".tr();
+  static String get noServicesAddedYet => "No services added yet".tr();
+  static String get noServicesDescription =>
+      "Add your medical services to show them to patients.".tr();
 }

@@ -9,6 +9,7 @@ import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_address_mod
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/doctor_service_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/governorate_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/offer_model.dart';
 
@@ -305,5 +306,54 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
   @override
   Future<void> deleteClinicOffer({required int offerId}) async {
     await supabase.from('offers').delete().eq('id', offerId);
+  }
+
+  @override
+  Future<List<DoctorServiceModel>> getDoctorServices({required int clinicId}) async {
+    final response = await supabase
+        .from('doctor_services')
+        .select('*')
+        .eq('clinic_id', clinicId)
+        .order('id', ascending: true);
+
+    final data = response as List;
+    return data.map((json) => DoctorServiceModel.fromJson(json)).toList();
+  }
+
+  @override
+  Future<DoctorServiceModel> saveDoctorService(
+      {required DoctorServiceModel serviceModel}) async {
+    final currentUserId = supabase.auth.currentUser?.id;
+    if (currentUserId == null) {
+      throw Exception("User is not authenticated");
+    }
+
+    final data = serviceModel.toJson();
+    data['doctor_id'] = currentUserId;
+
+    if (serviceModel.id != null && serviceModel.id! > 0) {
+      final id = serviceModel.id!;
+      data.remove('id');
+      final res = await supabase
+          .from('doctor_services')
+          .update(data)
+          .eq('id', id)
+          .select()
+          .single();
+      return DoctorServiceModel.fromJson(res);
+    } else {
+      data.remove('id');
+      final res = await supabase
+          .from('doctor_services')
+          .insert(data)
+          .select()
+          .single();
+      return DoctorServiceModel.fromJson(res);
+    }
+  }
+
+  @override
+  Future<void> deleteDoctorService({required int serviceId}) async {
+    await supabase.from('doctor_services').delete().eq('id', serviceId);
   }
 }
