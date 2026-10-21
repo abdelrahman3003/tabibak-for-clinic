@@ -4,6 +4,7 @@ import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.d
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/governorate_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/offer_model.dart';
 
 abstract class ClinicRemoteData {
   Future<List<ClinicInfoModel>> getClinicInfo();
@@ -27,5 +28,8 @@ abstract class ClinicRemoteData {
   Future<List<GovernorateModel>> getGovernorates();
   Future<List<CityModel>> getCitiesByGovernorate({required int governorateId});
   Future<List<CityModel>> getCitiesByParent({required int parentId});
+  Future<OfferModel?> getClinicOffer({required int clinicId});
+  Future<void> saveClinicOffer({required OfferModel offerModel});
+  Future<void> deleteClinicOffer({required int offerId});
 }
 

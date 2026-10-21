@@ -25,6 +25,7 @@ import 'package:tabibak_for_clinic/feature/auth/presentation/view/screens/signup
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_address/clinic_address_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info_save/clinic_info_save_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_offer/clinic_offer_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_schedule_update/clinic_schedule_update_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_shift/clinic_shift_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_working_day/clinic_working_day_bloc.dart';
@@ -168,7 +169,13 @@ class AppRouter {
         break;
 
       case Routes.clinicOfferScreen:
-        page = const RootScreenWrapper(child: ClinicOfferScreen());
+        final clinicInfo = settings.arguments as ClinicInfoEntity;
+        page = RootScreenWrapper(
+          child: BlocProvider(
+            create: (context) => getit<ClinicOfferBloc>(),
+            child: ClinicOfferScreen(clinicInfoEntity: clinicInfo),
+          ),
+        );
         break;
 
       case Routes.clinicStructureScreen:

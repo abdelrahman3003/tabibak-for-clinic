@@ -47,11 +47,14 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_cities_use
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_governorates_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_cities_by_governorate_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_cities_by_parent_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/delete_clinic_offer_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_info_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_offer_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_clinic_working_day_shift_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/get_days_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_address_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_info_use_case.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_offer_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/save_clinic_working_day_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/usecases/toggle_clinic_available_use_case.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_reports_refresh_notifier.dart';
@@ -59,6 +62,7 @@ import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_ad
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info/clinic_info_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_info_save/clinic_info_save_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_layout/clinic_layout_bloc.dart';
+import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_offer/clinic_offer_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_schedule_update/clinic_schedule_update_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_shift/clinic_shift_bloc.dart';
 import 'package:tabibak_for_clinic/feature/clinic/presentation/manager/clinic_working_day/clinic_working_day_bloc.dart';
@@ -182,6 +186,12 @@ Future<void> initGetIt() async {
       () => GetCitiesByGovernorateUseCase(clinicRepo: getit<ClinicRepo>()));
   getit.registerLazySingleton<GetCitiesByParentUseCase>(
       () => GetCitiesByParentUseCase(clinicRepo: getit<ClinicRepo>()));
+  getit.registerLazySingleton<GetClinicOfferUseCase>(
+      () => GetClinicOfferUseCase(clinicRepo: getit<ClinicRepo>()));
+  getit.registerLazySingleton<SaveClinicOfferUseCase>(
+      () => SaveClinicOfferUseCase(clinicRepo: getit<ClinicRepo>()));
+  getit.registerLazySingleton<DeleteClinicOfferUseCase>(
+      () => DeleteClinicOfferUseCase(clinicRepo: getit<ClinicRepo>()));
 
   // blocs
   getit.registerFactory(() => ClinicInfoBloc(
@@ -211,6 +221,11 @@ Future<void> initGetIt() async {
       getit<GetGovernoratesUseCase>(),
       getit<GetCitiesByGovernorateUseCase>(),
       getit<GetCitiesByParentUseCase>()));
+  getit.registerFactory(() => ClinicOfferBloc(
+        getClinicOfferUseCase: getit<GetClinicOfferUseCase>(),
+        saveClinicOfferUseCase: getit<SaveClinicOfferUseCase>(),
+        deleteClinicOfferUseCase: getit<DeleteClinicOfferUseCase>(),
+      ));
 
   //! Doctor Feature
   // remote data source

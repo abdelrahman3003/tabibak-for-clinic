@@ -402,4 +402,33 @@ class AppString {
   static String get noReportsAvailable => "No Reports Available".tr();
   static String get noClinicReportsMessage =>
       "No clinics added yet. Please add a clinic to view dashboard and reports.".tr();
+
+  // Clinic Offer Localization
+  static String get manageClinicOffer =>
+      "Manage clinic discounts & offers".tr();
+  static String get activeOffer => "Active Offer".tr();
+  static String get activeOfferSubtitle =>
+      "Enable this offer to appear for patients in the app".tr();
+  static String get offerTitleAr => "Offer title (Arabic)".tr();
+  static String get offerTitleEn => "Offer title (English)".tr();
+  static String get offerDetailsAr => "Offer details (Arabic)".tr();
+  static String get offerDetailsEn => "Offer details (English)".tr();
+  static String get discountPercentage => "Discount percentage".tr();
+  static String get selectStartDate => "Start date".tr();
+  static String get selectEndDate => "End date".tr();
+  static String get deleteOffer => "Delete offer".tr();
+  static String get deleteOfferConfirmation =>
+      "Are you sure you want to delete this offer?".tr();
+  static String get offerSavedSuccessfully =>
+      "Offer saved successfully".tr();
+  static String get offerDeletedSuccessfully =>
+      "Offer deleted successfully".tr();
+  static String get offerTitleValidator =>
+      "Please enter an offer title".tr();
+  static String get offerDiscountValidator =>
+      "Please enter a valid discount percentage (1-100)".tr();
+  static String get offerDatesValidator =>
+      "End date must be after start date".tr();
+  static String get noActiveOffer => "No active offer".tr();
+  static String get offerExpired => "Offer expired".tr();
 }

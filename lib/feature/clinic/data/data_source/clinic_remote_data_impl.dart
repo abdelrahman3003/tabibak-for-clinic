@@ -10,6 +10,7 @@ import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_day_model.d
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_info_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/clinic_working_day_model.dart';
 import 'package:tabibak_for_clinic/feature/clinic/data/models/governorate_model.dart';
+import 'package:tabibak_for_clinic/feature/clinic/data/models/offer_model.dart';
 
 class ClinicRemoteDataImpl implements ClinicRemoteData {
   final SupabaseClient supabase;
@@ -265,5 +266,44 @@ class ClinicRemoteDataImpl implements ClinicRemoteData {
       final data = response as List;
       return data.map((json) => CityModel.fromJson(json)).toList();
     }
+  }
+
+  @override
+  Future<OfferModel?> getClinicOffer({required int clinicId}) async {
+    final response = await supabase
+        .from('offers')
+        .select('*')
+        .eq('clinic_id', clinicId)
+        .order('id', ascending: false)
+        .limit(1)
+        .maybeSingle();
+
+    if (response == null) return null;
+    return OfferModel.fromJson(response);
+  }
+
+  @override
+  Future<void> saveClinicOffer({required OfferModel offerModel}) async {
+    final currentUserId = supabase.auth.currentUser?.id;
+    if (currentUserId == null) {
+      throw Exception("User is not authenticated");
+    }
+
+    final data = offerModel.toJson();
+    data['doctor_id'] = currentUserId;
+
+    if (offerModel.id != null && offerModel.id! > 0) {
+      final id = offerModel.id!;
+      data.remove('id');
+      await supabase.from('offers').update(data).eq('id', id);
+    } else {
+      data.remove('id');
+      await supabase.from('offers').insert(data);
+    }
+  }
+
+  @override
+  Future<void> deleteClinicOffer({required int offerId}) async {
+    await supabase.from('offers').delete().eq('id', offerId);
   }
 }

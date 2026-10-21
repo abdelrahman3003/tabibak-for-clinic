@@ -92,7 +92,7 @@ class DoctorProfileBody extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 20),
                 child: OutlinedButton.icon(
                   icon: const Text('🏥'),
-                  label: Text('${current.clinicName ?? 'Clinic'} ▼'),
+                  label: Text('${current.clinicName ?? AppString.clinic} ▼'),
                   onPressed: () => showModalBottomSheet<void>(
                     context: context,
                     builder: (sheetContext) => SafeArea(
@@ -100,7 +100,7 @@ class DoctorProfileBody extends StatelessWidget {
                         shrinkWrap: true,
                         children: [
                           ...clinics.map((clinic) => ListTile(
-                            title: Text(clinic.clinicName ?? 'Clinic'),
+                            title: Text(clinic.clinicName ?? AppString.clinic),
                             trailing: clinic.id == current.id ? const Icon(Icons.check) : null,
                             onTap: () async {
                               Navigator.pop(sheetContext);
@@ -116,7 +116,7 @@ class DoctorProfileBody extends StatelessWidget {
                           )),
                           ListTile(
                             leading: const Icon(Icons.add),
-                            title: const Text('+ Add New Clinic'),
+                            title: Text('+ ${AppString.addClinic}'),
                             onTap: () {
                               Navigator.pop(sheetContext);
                               Navigator.of(context).pushAndRemoveUntil(

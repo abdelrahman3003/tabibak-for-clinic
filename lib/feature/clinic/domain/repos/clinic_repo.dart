@@ -7,6 +7,7 @@ import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_day_ent
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_info_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/clinic_working_day_entity.dart';
 import 'package:tabibak_for_clinic/feature/clinic/domain/entities/governorate_entity.dart';
+import 'package:tabibak_for_clinic/feature/clinic/domain/entities/offer_entity.dart';
 
 abstract class ClinicRepo {
   Future<Either<ApiErrorModel, List<ClinicInfoEntity>>> getClinicInfo();
@@ -36,5 +37,11 @@ abstract class ClinicRepo {
       {required int governorateId});
   Future<Either<ApiErrorModel, List<CityEntity>>> getCitiesByParent(
       {required int parentId});
+  Future<Either<ApiErrorModel, OfferEntity?>> getClinicOffer(
+      {required int clinicId});
+  Future<Either<ApiErrorModel, void>> saveClinicOffer(
+      {required OfferEntity offerEntity});
+  Future<Either<ApiErrorModel, void>> deleteClinicOffer(
+      {required int offerId});
 }
 
