@@ -3,7 +3,15 @@
 The clinic-side companion app for [Tabibak](https://github.com/abdelrahman3003/Tabibak). Clinics use it to manage their practice on the Tabibak platform: doctors, schedules, and appointment requests coming from patients.
 [![Get it on Google Play](https://img.shields.io/badge/Google%20Play-Tabibak%20for%20Clinic-7C3AED?logo=google-play)](https://play.google.com/store/apps/details?id=app.temsah.tabibak_for_clinic)
 
-<!-- ## 📸 Screenshots - coming soon -->
+## 📸 Screenshots
+
+<p float="left">
+  <img src="screenshots/shot-1.png" width="200" />
+  <img src="screenshots/shot-2.png" width="200" />
+  <img src="screenshots/shot-3.png" width="200" />
+  <img src="screenshots/shot-4.png" width="200" />
+  <img src="screenshots/shot-5.png" width="200" />
+</p>
 
 ## ✨ Features
 
